@@ -11,7 +11,8 @@
     "babel-preset-react-native-stage-0": "^1.0.1",
     "exponent": "~11.0.1",
     "react": "~15.3.2",
-    "react-native": "git+https://github.com/exponentjs/react-native#sdk-11.0.3"
+    "react-native": "git+https://github.com/exponentjs/react-native#sdk-11.0.3",
+    "react-redux": "^4.4.5"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
