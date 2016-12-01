@@ -1,37 +1,97 @@
 import Exponent from 'exponent';
 import React from 'react';
-import { NavigationProvider, StackNavigation, createRouter } from '@exponent/ex-navigation';
-import HomeScreen from './screens/Homescreen.js';
-/**
-  * This is where we map route names to route components. Any React
-  * component can be a route, it only needs to have a static `route`
-  * property defined on it, as in HomeScreen below
-  */
-const Router = createRouter(() => ({
-  home: () => HomeScreen,
-}));
+import { StyleSheet, View } from 'react-native';
+import { NavigationProvider, withNavigation, StackNavigation } from '@exponent/ex-navigation';
+import { Provider as ReduxProvider, connect } from 'react-redux';
 
-class App extends React.Component {
+import Actions from './state/Actions';
+import Router from './navigation/Router';
+import Store from './state/Store';
+import { User } from './state/Records';
+import LocalStorage from './state/LocalStorage';
+
+class AppContainer extends React.Component {
   render() {
-    /**
-      * NavigationProvider is only needed at the top level of the app,
-      * similar to react-redux's Provider component. It passes down
-      * navigation objects and functions through context to children.
-      *
-      * StackNavigation represents a single stack of screens, you can
-      * think of a stack like a stack of playing cards, and each time
-      * you add a screen it slides in on top. Stacks can contain
-      * other stacks, for example if you have a tab bar, each of the
-      * tabs has its own individual stack. This is where the playing
-      * card analogy falls apart, but it's still useful when thinking
-      * of individual stacks.
-      */
     return (
-      <NavigationProvider router={Router}>
-        <StackNavigation initialRoute={Router.getRoute('home')} />
-      </NavigationProvider>
+     <ReduxProvider store={Store}>
+        <NavigationProvider router={Router}>
+          <App {...this.props} />
+        </NavigationProvider>
+     </ReduxProvider>
     );
   }
 }
 
-Exponent.registerRootComponent(App);
+
+@withNavigation
+@connect(data => App.getDataProps)
+class App extends React.Component {
+  static getDataProps(data) {
+    return {
+      currentUser: data.currentUser,
+    };
+  }
+
+  state = {
+    dataReady: false,
+  };
+
+  async componentDidMount() {
+    await this._loadCacheAsync();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.state.dataReady) {
+      return;
+    }
+
+    const rootNavigator = this.props.navigation.getNavigator('root');
+    const previouslySignedIn = isSignedIn(prevProps.currentUser) &&
+      prevState.dataReady === this.state.dataReady;
+    const currentlySignedIn = isSignedIn(this.props.currentUser);
+
+    if (!previouslySignedIn && currentlySignedIn) {
+      rootNavigator.replace('home');
+    } else if (previouslySignedIn && !currentlySignedIn) {
+      rootNavigator.replace('home');
+    }
+  }
+
+
+  _loadCacheAsync = async () => {
+    let user = new User(await LocalStorage.getUserAsync());
+    this.props.dispatch(Actions.setCurrentUser(user));
+
+    this.setState({
+      dataReady: true,
+    });
+  }
+
+  render() {
+    if (!this.state.dataReady) {
+      return <Exponent.Components.AppLoading />;
+    }
+
+    return (
+      <View style={styles.container}>
+        <StackNavigation
+          id="root"
+          initialRoute={Router.getRoute('home')}
+        />
+      </View>
+    );
+  }
+}
+
+
+function isSignedIn(userState) {
+  return !!userState.authToken || userState.isGuest;
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
+Exponent.registerRootComponent(AppContainer);
