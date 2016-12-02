@@ -2,12 +2,11 @@
 import { AsyncStorage } from 'react-native';
 
 const Keys = {
-User: 'AyupUser',
+  User: 'AyupUser',
 };
 
 async function getUserAsync() {
   let results = await AsyncStorage.getItem(Keys.User);
-
   try {
     return JSON.parse(results);
   } catch (e) {

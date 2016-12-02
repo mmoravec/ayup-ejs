@@ -5,6 +5,7 @@ export default defineActionConstants([
 ]);
 
 function defineActionConstants(names) {
+  console.log(names);
   return names.reduce((result, name) => {
     result[name] = name;
     return result;
