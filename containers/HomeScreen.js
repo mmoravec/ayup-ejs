@@ -16,7 +16,7 @@ export default class HomeScreen extends React.Component {
       >
         <Components.MapView.UrlTile
           urlTemplate="http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
-        />  
+        />
       </Components.MapView>
     );
   }
