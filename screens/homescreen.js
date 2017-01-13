@@ -1,6 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Components } from 'exponent';
+import Router from '../navigation/router';
+import ActionTypes from '../state/ActionTypes';
 
+@connect()
 export default class HomeScreen extends React.Component {
 
   render() {
@@ -13,11 +17,20 @@ export default class HomeScreen extends React.Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+        onRegionChange={::this.onRegionChange}
       >
         <Components.MapView.UrlTile
           urlTemplate="http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
         />
       </Components.MapView>
     );
+  }
+
+  onRegionChange(region) {
+    this.props.dispatch({
+      type: ActionTypes.REGION_CHANGE,
+      longitude: region.longitude,
+      latitude: region.latitude,
+    });
   }
 }

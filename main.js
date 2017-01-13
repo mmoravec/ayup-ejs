@@ -7,11 +7,11 @@ import {
 } from '@exponent/ex-navigation';
 import { Provider } from 'react-redux';
 import Router from './navigation/router'
-import Store from './store';
+import Store from './state/Store';
 
 const navigationContext = new NavigationContext({
   store: Store,
-  router: Router
+  router: Router,
 });
 
 class AppContainer extends React.Component {
@@ -20,6 +20,7 @@ class AppContainer extends React.Component {
       <Provider store={Store}>
         <NavigationProvider context={navigationContext}>
           <StackNavigation
+            id="root"
             initialRoute={Router.getRoute('home')}
           />
         </NavigationProvider>
