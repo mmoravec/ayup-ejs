@@ -1,8 +1,4 @@
-import { List, Record } from 'immutable';
-
-export const EventState = Record({
-  event: '',
-});
+import { Record } from 'immutable';
 
 export const User = Record({
   id: null,

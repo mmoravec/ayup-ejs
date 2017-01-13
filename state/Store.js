@@ -1,12 +1,27 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { effectsMiddleware } from 'redux-effex';
+import { combineReducers, applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { createNavigationEnabledStore, NavigationReducer } from '@exponent/ex-navigation';
+import EventsReducer from './EventsReducer'
+import sagas from '../sagas';
+import routeTracker from '../navigation/routeTracker';
 
-import CurrentUserReducer from './CurrentUserReducer';
-import Effects from '../effects';
+  const sagaMiddleware = createSagaMiddleware();
 
-export default createStore(
-  combineReducers({
-    currentUser: CurrentUserReducer,
-  }),
-  applyMiddleware(effectsMiddleware(Effects)),
-);
+  //ex-navigation requires use of this function to create the store
+  const createStoreWithNavigation = createNavigationEnabledStore({
+    createStore,
+    navigationStateKey: 'navigation',
+  });
+
+  const store = createStoreWithNavigation(
+    //combine all reducers here
+    combineReducers({
+      navigation: NavigationReducer,
+      events: EventsReducer,
+    }),
+    applyMiddleware(sagaMiddleware, routeTracker)
+  );
+
+  sagaMiddleware.run(sagas);
+
+  export default store;

@@ -2,10 +2,12 @@ import {
   createRouter,
 } from '@exponent/ex-navigation';
 
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/homeScreen';
+import LoginScreen from '../screens/loginScreen';
 
-export default createRouter(() => ({
+const Router = createRouter(() => ({
   home: () => HomeScreen,
-}), {
-  ignoreSerializableWarnings: true,
-});
+  login: () => LoginScreen,
+}));
+
+export default Router;

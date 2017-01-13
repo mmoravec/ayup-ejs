@@ -1,3 +1,6 @@
 {
-  "extends": "exponent"
+  "extends": "exponent",
+  "rules": {
+    "arrow-body-style": 0
+  }
 }
