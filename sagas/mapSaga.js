@@ -1,4 +1,4 @@
-import { takeEvery, delay } from 'redux-saga'
+import { takeLatest, delay } from 'redux-saga'
 import { put, call, take } from 'redux-saga/effects'
 import ActionTypes from '../state/ActionTypes'
 
@@ -6,19 +6,16 @@ import ActionTypes from '../state/ActionTypes'
 //use this endpoint for bus info in SF
 
 export function* watchRegionChange() {
-  while (true) {
-    const { latitude, longitude } = yield take(ActionTypes.REGION_CHANGE);
-    yield call(updateNearbyEvents, latitude, longitude);
-    yield delay(1000);
-  }
+  yield takeLatest(ActionTypes.REGION_CHANGE, updateNearbyEvents);
 }
 
-function* updateNearbyEvents(latitude, longitude) {
+function* updateNearbyEvents(action) {
+  let { latitude, longitude } = action;
   let response = yield call(
     fetch,
     `http://restbus.info/api/locations/${latitude},${longitude}/predictions`,
     { method: 'GET' }
   );
-  let meow = response.json();
+  let meow = yield response.json();
   yield put({ type: ActionTypes.SET_NEARBY, meow });
 }

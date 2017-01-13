@@ -17,7 +17,7 @@ export default class HomeScreen extends React.Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-        onRegionChange={::this.onRegionChange}
+        onRegionChangeComplete={::this.onRegionChange}
       >
         <Components.MapView.UrlTile
           urlTemplate="http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
