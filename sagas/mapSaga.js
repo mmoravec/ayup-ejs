@@ -9,9 +9,16 @@ export function* watchRegionChange() {
   while (true) {
     const { latitude, longitude } = yield take(ActionTypes.REGION_CHANGE);
     yield call(updateNearbyEvents, latitude, longitude);
+    yield delay(1000);
   }
 }
 
 function* updateNearbyEvents(latitude, longitude) {
-  yield put({ type: ActionTypes.SET_NEARBY, latitude, longitude});
+  let response = yield call(
+    fetch,
+    `http://restbus.info/api/locations/${latitude},${longitude}/predictions`,
+    { method: 'GET' }
+  );
+  let meow = response.json();
+  yield put({ type: ActionTypes.SET_NEARBY, meow });
 }
