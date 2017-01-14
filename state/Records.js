@@ -1,7 +1,7 @@
 import { List, Record } from 'immutable';
 
 export const EventState = Record({
-  event: '',
+  nearbyEvents: new List(),
 });
 
 export const User = Record({
