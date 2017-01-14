@@ -11,8 +11,8 @@ class EventsReducer {
   }
 
   static [ActionTypes.SET_NEARBY](state, action) {
-    console.log(action);
-    return state.set('event', 'meow');
+    console.log(action.data);
+    return state.set('nearbyEvents', action.data);
   }
 }
 

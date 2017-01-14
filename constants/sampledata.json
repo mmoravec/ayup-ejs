@@ -1,0 +1,297 @@
+[{
+    "location": {
+        "coordinates": [-122.452331546842, 37.7230803166757]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Overflowing",
+    "activity": "basketball",
+    "id": 0
+}, {
+    "location": {
+        "coordinates": [-122.449558686932, 37.7229614211437]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Overflowing",
+    "activity": "baseball",
+    "id": 1
+}, {
+    "location": {
+        "coordinates": [-122.419187412446, 37.766814022028]
+    },
+    "title": "General Requests",
+    "description": "Police - Homeless Concerns Queue",
+    "activity": "soccer",
+    "id": 2
+}, {
+    "location": {
+        "coordinates": [-122.402025278101, 37.7862480963577]
+    },
+    "title": "Sewer Issues",
+    "description": "PUC - Water - G",
+    "activity": "football",
+    "id": 3
+}, {
+    "location": {
+        "coordinates": [-122.460061772808, 37.720623878358]
+    },
+    "title": "Sewer Issues",
+    "description": "PUC Sewer Ops",
+    "activity": "running",
+    "id": 4
+}, {
+    "location": {
+        "coordinates": [-122.493446480801, 37.7816271704732]
+    },
+    "title": "Damaged Property",
+    "description": "Clear Channel - Transit Queue",
+    "activity": "basketball",
+    "id": 5
+}, {
+    "location": {
+        "coordinates": [-122.46486661868, 37.784653059144]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "hockey",
+    "id": 6
+}, {
+    "location": {
+        "coordinates": [-122.465393894971, 37.784628636791]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "DPW Ops Queue",
+    "activity": "basketball",
+    "id": 7
+}, {
+    "location": {
+        "coordinates": [-122.42147026036, 37.7693386881199]
+    },
+    "title": "General Requests",
+    "description": "DPW BSM Queue",
+    "activity": "badminton",
+    "id": 8
+}, {
+    "location": {
+        "coordinates": [-122.435690352986, 37.799154315541]
+    },
+    "title": "Noise Report",
+    "description": "311 Supervisor Queue",
+    "activity": "basketball",
+    "id": 9
+}, {
+    "location": {
+        "coordinates": [null, null]
+    },
+    "title": "General Requests",
+    "description": "Mayors Office of Neighborhood Services - G",
+    "activity": "basketball",
+    "id": 10
+}, {
+    "location": {
+        "coordinates": [-122.451454500311, 37.769542362612]
+    },
+    "title": "Noise Report",
+    "description": "311 Supervisor Queue",
+    "activity": "soccer",
+    "id": 11
+}, {
+    "location": {
+        "coordinates": [null, null]
+    },
+    "title": "General Requests",
+    "description": "DPT Paint Shop Queue",
+    "activity": "soccer",
+    "id": 12
+}, {
+    "location": {
+        "coordinates": [-122.422972091, 37.765623172]
+    },
+    "title": "Noise Report",
+    "description": "311 Supervisor Queue",
+    "activity": "pingpong",
+    "id": 13
+}, {
+    "location": {
+        "coordinates": [-122.406545249, 37.772860840868]
+    },
+    "title": "General Requests",
+    "description": "Police - Homeless Concerns Queue",
+    "activity": "soccer",
+    "id": 14
+}, {
+    "location": {
+        "coordinates": [-122.429575411252, 37.761663512705]
+    },
+    "title": "SFHA Requests",
+    "description": "Housing Authority SR Queue",
+    "activity": "soccer",
+    "id": 15
+}, {
+    "location": {
+        "coordinates": [-122.423600589705, 37.7535349460624]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "basketball",
+    "id": 16
+}, {
+    "location": {
+        "coordinates": [-122.416481162592, 37.780680041037]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "soccer",
+    "id": 17
+}, {
+    "location": {
+        "coordinates": [-122.418750285935, 37.7893755783164]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "baseball",
+    "id": 18
+}, {
+    "location": {
+        "coordinates": [-122.38714347343, 37.7412973973478]
+    },
+    "title": "Sidewalk or Curb",
+    "description": "DPW BSM Queue",
+    "activity": "baseball",
+    "id": 19
+}, {
+    "location": {
+        "coordinates": [-122.505276651476, 37.7510930964857]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "baseball",
+    "id": 20
+}, {
+    "location": {
+        "coordinates": [-122.415725823073, 37.734724221482]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "softball",
+    "id": 21
+}, {
+    "location": {
+        "coordinates": [-122.426807037508, 37.747759490126]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "softball",
+    "id": 22
+}, {
+    "location": {
+        "coordinates": [-122.422577513412, 37.741101814363]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "softball",
+    "id": 23
+}, {
+    "location": {
+        "coordinates": [-122.427609677469, 37.75661295465]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "softball",
+    "id": 24
+}, {
+    "location": {
+        "coordinates": [-122.422944011585, 37.735786319732]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "softball",
+    "id": 25
+}, {
+    "location": {
+        "coordinates": [-122.421417135917, 37.757942164219]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "softball",
+    "id": 26
+}, {
+    "location": {
+        "coordinates": [-122.451623935751, 37.7455341106614]
+    },
+    "title": "MUNI Feedback",
+    "description": "MUNI Work Queue",
+    "activity": "basketball",
+    "id": 27
+}, {
+    "location": {
+        "coordinates": [-122.386579668939, 37.771499818692]
+    },
+    "title": "Damaged Property",
+    "description": "311 Supervisor Queue",
+    "activity": "basketball",
+    "id": 28
+}, {
+    "location": {
+        "coordinates": [-122.417331490615, 37.750845600367]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "basketball",
+    "id": 29
+}, {
+    "location": {
+        "coordinates": [-122.408036846249, 37.7512566667655]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "baseball",
+    "id": 30
+}, {
+    "location": {
+        "coordinates": [-122.386579668939, 37.771499818692]
+    },
+    "title": "Graffiti Public Property",
+    "description": "DPW Ops Queue",
+    "activity": "basketball",
+    "id": 31
+}, {
+    "location": {
+        "coordinates": [-122.421858899832, 37.785501356445]
+    },
+    "title": "General Requests",
+    "description": "DPW - Bureau of Street Use and Mapping - G",
+    "activity": "basketball",
+    "id": 32
+}, {
+    "location": {
+        "coordinates": [-122.392184230792, 37.735475350989]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "baseball",
+    "id": 33
+}, {
+    "location": {
+        "coordinates": [-122.391970749143, 37.735715374176]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "Recology_Abandoned",
+    "activity": "basketball",
+    "id": 34
+}, {
+    "location": {
+        "coordinates": [-122.401394111247, 37.76961232902]
+    },
+    "title": "Street and Sidewalk Cleaning",
+    "description": "DPW Ops Queue",
+    "activity": "running",
+    "id": 35
+}, {
+    "location": {
+        "coordinates": [-122.433734607739, 37.7716883792214]
+    },
+    "title": "MUNI Feedback",
+    "description": "MUNI Work Queue",
+    "activity": "hockey",
+    "id": 36
+}]
