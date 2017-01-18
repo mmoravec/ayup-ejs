@@ -1,7 +1,8 @@
 import { combineReducers, applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { createNavigationEnabledStore, NavigationReducer } from '@exponent/ex-navigation';
-import EventsReducer from './EventsReducer'
+import EventsReducer from './EventsReducer';
+import UserReducer from './UserReducer';
 import sagas from '../sagas';
 import routeTracker from '../navigation/routeTracker';
 
@@ -18,6 +19,7 @@ import routeTracker from '../navigation/routeTracker';
     combineReducers({
       navigation: NavigationReducer,
       events: EventsReducer,
+      user: UserReducer,
     }),
     applyMiddleware(sagaMiddleware, routeTracker)
   );
