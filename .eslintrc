@@ -1,8 +1,7 @@
 {
-  "extends": "exponent",
+  "extends": "exponent/react",
   "rules": {
     "arrow-body-style": 0,
-    "react/jsx-uses-vars": [2],
   },
   "globals": {
     "fetch": false
