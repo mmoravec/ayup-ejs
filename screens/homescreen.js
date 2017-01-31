@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import { Components } from 'exponent';
 import ActionTypes from '../state/ActionTypes';
-import EventList from '../components/EventList';
+import EventListModal from '../components/EventListModal';
+import Actions from '../state/Actions';
 
 @connect(data => HomeScreen.getDataProps(data))
 export default class HomeScreen extends React.Component {
@@ -72,17 +73,13 @@ export default class HomeScreen extends React.Component {
             />
           </TouchableHighlight>
         </View>
-        <EventList {...listProps} />
+        <EventListModal {...listProps} />
       </View>
     );
   }
 
   onRegionChange = (region) => {
-    this.props.dispatch({
-      type: ActionTypes.REGION_CHANGE,
-      longitude: region.longitude,
-      latitude: region.latitude,
-    });
+    this.props.dispatch(Actions.regionChange(region.longitude, region.latitude));
   }
 
   _onListBtnPress = () => {
