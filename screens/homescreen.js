@@ -8,13 +8,19 @@ import {
 } from 'react-native';
 import { Components } from 'exponent';
 import ActionTypes from '../state/ActionTypes';
-import EventList from '../components/EventList';
+import EventListModal from '../components/EventListModal';
+import Actions from '../state/Actions';
 
 @connect(data => HomeScreen.getDataProps(data))
 export default class HomeScreen extends React.Component {
 
   state = {
     listVisible: false,
+    listBtnStyle: {
+      position: 'absolute',
+      right: 10,
+      bottom: 8,
+    },
   }
 
   static getDataProps(data) {
@@ -29,6 +35,7 @@ export default class HomeScreen extends React.Component {
       events: this.props.events,
       listVisible: this.state.listVisible,
       listBtnPress: this._onListBtnPress,
+      closeBtnPress: this._onCloseBtnPress,
     };
     return (
       <View style={{flex: 1}}>
@@ -64,7 +71,7 @@ export default class HomeScreen extends React.Component {
             style={styles.btnMain}
           />
         </View>
-        <View style={styles.btnListContainer}>
+        <View style={this.state.listBtnStyle}>
           <TouchableHighlight underlayColor="transparent" onPress={this._onListBtnPress}>
             <Image
               style={styles.btnList}
@@ -72,22 +79,33 @@ export default class HomeScreen extends React.Component {
             />
           </TouchableHighlight>
         </View>
-        <EventList {...listProps} />
+        <EventListModal {...listProps} />
       </View>
     );
   }
 
   onRegionChange = (region) => {
-    this.props.dispatch({
-      type: ActionTypes.REGION_CHANGE,
-      longitude: region.longitude,
-      latitude: region.latitude,
-    });
+    this.props.dispatch(Actions.regionChange(region.longitude, region.latitude));
   }
 
   _onListBtnPress = () => {
-    console.log(this.state);
     this.setState({listVisible: !this.state.listVisible});
+    this.setState({listBtnStyle: {
+      height: 0,
+      opacity: 0,
+      position: 'absolute',
+      right: 10,
+      bottom: 8,
+    }});
+  }
+
+  _onCloseBtnPress = () => {
+    this.setState({listVisible: !this.state.listVisible});
+    this.setState({listBtnStyle: {
+      position: 'absolute',
+      right: 10,
+      bottom: 8,
+    }});
   }
 }
 
@@ -99,11 +117,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  btnListContainer: {
-    position: 'absolute',
-    right: 10,
-    bottom: 8,
   },
   btnMain: {
     width: 110,
