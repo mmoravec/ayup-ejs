@@ -51,7 +51,6 @@ export default class AuthenticationScreen extends React.Component {
   }
 
   _continueAsGuest = () => {
-    console.log(this.props);
     this.props.dispatch({
       type: ActionTypes.SIGN_IN,
     });

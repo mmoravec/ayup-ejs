@@ -1,20 +1,52 @@
 import React from 'react';
 import {
   View,
+  ListView,
+  StyleSheet,
+  Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 
-@connect((data, props) => EventList.getDataProps(data, props))
+@connect((data) => EventList.getDataProps(data))
 export default class EventList extends React.Component {
-  static getDataProps(data, props) {
-    console.log(data);
-    console.log(props);
-    return data;
+  static getDataProps(data) {
+    return {
+      events: data.events.nearbyEvents,
+    };
+  }
+
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(this.props.events),
+    };
   }
 
   render() {
     return (
-      <View />
+      <View>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow}
+        />
+      </View>
+    );
+  }
+
+  _renderRow = (rowData) => {
+    console.log(rowData);
+    return (
+      <View style={styles.row}>
+        <Text>{rowData.title}</Text>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    padding: 15,
+  },
+});
