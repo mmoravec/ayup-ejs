@@ -9,6 +9,7 @@ import {
 import { Components } from 'exponent';
 import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
+import MenuModal from '../components/MenuModal';
 import Actions from '../state/Actions';
 
 @connect(data => HomeScreen.getDataProps(data))
@@ -21,6 +22,7 @@ export default class HomeScreen extends React.Component {
       right: 10,
       bottom: 8,
     },
+    menuVisible: false,
   }
 
   static getDataProps(data) {
@@ -37,6 +39,13 @@ export default class HomeScreen extends React.Component {
       listBtnPress: this._onListBtnPress,
       closeBtnPress: this._onCloseBtnPress,
     };
+
+    let menuProps = {
+      key: 'menu',
+      menuVisible: this.state.menuVisible,
+      menuBtnPress: this._onMenuBtnPress,
+    };
+
     return (
       <View style={{flex: 1}}>
         <Components.MapView
@@ -66,10 +75,12 @@ export default class HomeScreen extends React.Component {
           />
         </Components.MapView>
         <View style={styles.btnMainContainer}>
-          <Image
-            source={require('../assets/images/btn_main.png')}
-            style={styles.btnMain}
-          />
+          <TouchableHighlight underlayColor="transparent" onPress={this._onMenuBtnPress}>
+            <Image
+              source={require('../assets/images/btn_main.png')}
+              style={styles.btnMain}
+            />
+          </TouchableHighlight>
         </View>
         <View style={this.state.listBtnStyle}>
           <TouchableHighlight underlayColor="transparent" onPress={this._onListBtnPress}>
@@ -80,6 +91,7 @@ export default class HomeScreen extends React.Component {
           </TouchableHighlight>
         </View>
         <EventListModal {...listProps} />
+        <MenuModal {...menuProps} />
       </View>
     );
   }
@@ -107,6 +119,11 @@ export default class HomeScreen extends React.Component {
       bottom: 8,
     }});
   }
+
+  _onMenuBtnPress = () => {
+    this.setState({menuVisible: !this.state.menuVisible});
+  }
+
 }
 
 const styles = StyleSheet.create({
