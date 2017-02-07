@@ -5,14 +5,14 @@ export default class Actions {
     return {
       type: ActionTypes.SET_CURRENT_USER,
       user,
-    }
+    };
   }
 
   static signIn(user) {
     return {
       type: ActionTypes.SIGN_IN,
       user,
-    }
+    };
   }
 
   static regionChange(longitude, latitude) {
@@ -20,6 +20,13 @@ export default class Actions {
       type: ActionTypes.REGION_CHANGE,
       longitude,
       latitude,
-    }
+    };
+  }
+
+  static routeChange(newRoute) {
+    return {
+      type: ActionTypes.ROUTE_CHANGE,
+      newRoute,
+    };
   }
 }
