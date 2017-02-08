@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
   },
   btnListContainer: {
     position: 'absolute',
-    left: -3,
+    left: -10,
     bottom: 8,
   },
   btnClose: {
-    width: 85,
-    height: 85,
+    width: 100,
+    height: 100,
   },
 });

@@ -3,21 +3,17 @@ import {
   StyleSheet,
   View,
   Image,
-  Text,
   Dimensions,
   TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
+import Form from '../components/EventForm';
 const {height, width} = Dimensions.get('window');
 
 
 @connect()
 export default class NewEventScreen extends React.Component {
-
-  state = {
-    date: "2017-02-07",
-  }
 
   render() {
     return (
@@ -28,10 +24,17 @@ export default class NewEventScreen extends React.Component {
             style={styles.btnBack}
           />
         </TouchableHighlight>
-        <View style={styles.form}>
-          <View style={styles.halfHeight}>
-            <Text>HELLO</Text>
-          </View>
+        <Form />
+        <View style={styles.bottom}>
+          <TouchableHighlight
+            underlayColor="transparent"
+            style={styles.hlightSave}
+            onPress={this._saveBtnPress}>
+            <Image
+              style={styles.btnSave}
+              source={require('../assets/images/btn_save.png')}
+            />
+          </TouchableHighlight>
         </View>
       </Image>
     );
@@ -51,24 +54,25 @@ const styles = StyleSheet.create({
     height: undefined,
     backgroundColor:'transparent',
   },
-  halfHeight: {
-    backgroundColor: '#FF3366',
-  },
-  form: {
-    width: width * 0.9,
-    position: 'absolute',
-    top: height * 0.2,
-    left: width * 0.05,
-    height: height * 0.8,
-    backgroundColor: '#FFF',
-  },
-  quarterHeight: {
-    flex: 1,
-    backgroundColor: '#000'
+  hlightSave: {
+    alignSelf: 'center',
   },
   btnBack: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     margin: 15,
+  },
+  bottom: {
+    position: 'absolute',
+    backgroundColor: '#AF3',
+    bottom: 0,
+    height: height * 0.1,
+    width,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  btnSave: {
+    height: 38,
+    width: 140,
   },
 });

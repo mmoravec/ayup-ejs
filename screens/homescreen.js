@@ -136,11 +136,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnMain: {
-    width: 110,
-    height: 110,
+    width: 150,
+    height: 150,
   },
   btnList: {
-    width: 85,
-    height: 85,
+    width: 100,
+    height: 100,
   },
 });
