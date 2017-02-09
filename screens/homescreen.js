@@ -5,24 +5,22 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import { Components } from 'exponent';
 import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import Actions from '../state/Actions';
+const {height, width} = Dimensions.get('window');
 
 @connect(data => HomeScreen.getDataProps(data))
 export default class HomeScreen extends React.Component {
 
   state = {
     listVisible: false,
-    listBtnStyle: {
-      position: 'absolute',
-      right: 10,
-      bottom: 8,
-    },
     menuVisible: false,
+    listBtnStyle: styles.listBtnStyle,
   }
 
   static getDataProps(data) {
@@ -56,7 +54,7 @@ export default class HomeScreen extends React.Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          onRegionChangeComplete={this.onRegionChange}>
+          onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event => {
               let { location, title, id } = event;
@@ -70,9 +68,7 @@ export default class HomeScreen extends React.Component {
               );
             })
           }
-          <Components.MapView.UrlTile
-            urlTemplate="http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
-          />
+
         </Components.MapView>
         <View style={styles.btnMainContainer}>
           <TouchableHighlight underlayColor="transparent" onPress={this._onMenuBtnPress}>
@@ -90,34 +86,32 @@ export default class HomeScreen extends React.Component {
             />
           </TouchableHighlight>
         </View>
+        <View style={styles.filter}>
+          <TouchableHighlight underlayColor="transparent" onPress={this._onFilterBtnPress}>
+            <Image
+              style={styles.filterBtn}
+              source={require('../assets/images/filter2.png')}
+            />
+          </TouchableHighlight>
+        </View>
         <EventListModal {...listProps} />
         <MenuModal {...menuProps} />
       </View>
     );
   }
 
-  onRegionChange = (region) => {
+  _onRegionChange = (region) => {
     this.props.dispatch(Actions.regionChange(region.longitude, region.latitude));
   }
 
   _onListBtnPress = () => {
     this.setState({listVisible: !this.state.listVisible});
-    this.setState({listBtnStyle: {
-      height: 0,
-      opacity: 0,
-      position: 'absolute',
-      right: 10,
-      bottom: 8,
-    }});
+    this.setState({listBtnStyle: styles.listBtnHidden});
   }
 
   _onCloseBtnPress = () => {
     this.setState({listVisible: !this.state.listVisible});
-    this.setState({listBtnStyle: {
-      position: 'absolute',
-      right: 10,
-      bottom: 8,
-    }});
+    this.setState({listBtnStyle: styles.listBtnStyle});
   }
 
   _onMenuBtnPress = () => {
@@ -142,5 +136,23 @@ const styles = StyleSheet.create({
   btnList: {
     width: 100,
     height: 100,
+  },
+  listBtnStyle: {
+    position: 'absolute',
+    right: 10,
+    bottom: 8,
+  },
+  listBtnHidden: {
+    height: 0,
+    opacity: 0,
+  },
+  filter: {
+    position: 'absolute',
+    left: width * 0.1,
+    top: 15,
+  },
+  filterBtn: {
+    width: width * 0.8,
+    height: width * 0.14,
   },
 });

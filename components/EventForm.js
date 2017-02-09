@@ -11,14 +11,17 @@ import {
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
 const {height, width} = Dimensions.get('window');
+const dateFormat = require('dateformat');
 
 @connect()
 export default class EventForm extends React.Component {
 
   state = {
-    date: new Date(),
+    startTime: new Date(),
+    endTime: new Date(),
     title: 'title placeholder',
     desc: 'sample desc',
+    isEditable: true,
   }
 
   render() {
@@ -32,7 +35,7 @@ export default class EventForm extends React.Component {
               style={styles.input}
               value={this.state.title}
               onChangeText={(text) => this.setState({title: text})}
-              editable={true}
+              editable={this.state.isEditable}
             />
           </View>
           <View style={styles.bigRow}>
@@ -41,7 +44,7 @@ export default class EventForm extends React.Component {
               style={styles.input}
               value={this.state.desc}
               onChangeText={(text) => this.setState({desc: text})}
-              editable={true}
+              editable={this.state.isEditable}
               multiline={true}
             />
           </View>
@@ -58,11 +61,25 @@ export default class EventForm extends React.Component {
             />
           </View>
           <View style={styles.time}>
-            <Text style={styles.timeText}>Time</Text>
+            <Text style={styles.timeText}>Start Time</Text>
+            <TextInput
+              style={styles.input}
+              value={dateFormat(this.state.startTime, 'ddd, dd MMM h:mm tt')}
+              editable={false}
+            />
             <DatePickerIOS
-              date={this.state.date}
+              date={this.state.startTime}
               mode="datetime"
-              onDateChange={this._onDateChange}
+              onDateChange={this._onStartDateChange}
+            />
+          </View>
+          <View style={styles.time}>
+            <Text style={styles.timeText}>End Time</Text>
+            <DatePickerIOS
+              date={this.state.endTime}
+              mode="datetime"
+              onDateChange={this._onEndDateChange}
+              style={styles.endTime}
             />
           </View>
         </ScrollView>
@@ -70,8 +87,23 @@ export default class EventForm extends React.Component {
     );
   }
 
-  _onDateChange = (date) => {
-    console.log(date);
+  _onStartDateChange = (date) => {
+    let d1 = Date.parse(date);
+    let d2 = Date.parse(this.state.endTime);
+    if (d2 < d1) {
+      this.setState({endTime: date});
+    }
+    this.setState({startTime: date});
+  }
+
+  _onEndDateChange = (date) => {
+    let d1 = Date.parse(date);
+    let d2 = Date.parse(this.state.startTime);
+    if (d1 < d2) {
+      this.setState({endTime: this.state.startTime});
+    } else {
+      this.setState({endTime: date});
+    }
   }
 }
 
@@ -132,8 +164,10 @@ const styles = StyleSheet.create({
   },
   input: {
     width: width * 0.6,
-    justifyContent: 'flex-start',
+    alignSelf: 'flex-end',
     backgroundColor: '#AF6',
+    fontSize: 10,
+    height: 30,
   },
   mapView: {
     width: width * 0.7,
