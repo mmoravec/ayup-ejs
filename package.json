@@ -11,8 +11,10 @@
     "@exponent/vector-icons": "~2.0.3",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "exponent": "~11.0.1",
+    "optimizely-client-sdk": "^1.2.2",
     "react": "~15.3.2",
     "react-native": "git+https://github.com/exponentjs/react-native#sdk-11.0.3",
+    "react-navigation": "^1.0.0-beta.3",
     "react-redux": "^4.4.5",
     "redux-effex": "^1.1.2"
   },

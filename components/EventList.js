@@ -35,7 +35,6 @@ export default class EventList extends React.Component {
   }
 
   _renderRow = (rowData) => {
-    console.log(rowData);
     return (
       <View style={styles.row}>
         <Text>{rowData.title}</Text>

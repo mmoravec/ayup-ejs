@@ -21,7 +21,7 @@ class AppContainer extends React.Component {
         <NavigationProvider context={navigationContext}>
           <StackNavigation
             id="root"
-            initialRoute={Router.getRoute('home')}
+            initialRoute={Router.getRoute('activities')}
           />
         </NavigationProvider>
        </Provider>
