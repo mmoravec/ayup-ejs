@@ -10,6 +10,11 @@ export function* watchRegionChange() {
 
 function* updateNearbyEvents(action) {
   let { latitude, longitude } = action;
+  let region = {
+    latitude,
+    longitude,
+  };
+  yield put({ type: ActionTypes.SET_REGION, region});
   //TODO: call to rest api here
   const data = require('../constants/sampledata.json');
   yield put({ type: ActionTypes.SET_NEARBY, data });

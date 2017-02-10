@@ -26,6 +26,7 @@ export default class HomeScreen extends React.Component {
   static getDataProps(data) {
     return {
       events: data.events.nearbyEvents,
+      region: data.events.region,
     };
   }
 
@@ -48,12 +49,7 @@ export default class HomeScreen extends React.Component {
       <View style={{flex: 1}}>
         <Components.MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
+          initialRegion={this.props.region}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event => {

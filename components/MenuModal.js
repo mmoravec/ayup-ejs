@@ -67,6 +67,11 @@ export default class EventListModal extends React.Component {
     this.props.menuBtnPress();
     this.props.dispatch(Actions.routeChange('newEvent'));
   }
+
+  _activitiesBtnPress = () => {
+    this.props.menuBtnPress();
+    this.props.dispatch(Actions.routeChange('activities'));
+  }
 }
 
 const styles = StyleSheet.create({
