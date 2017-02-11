@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {
   View,
   StyleSheet,
@@ -7,27 +6,18 @@ import {
   TouchableHighlight,
   Dimensions,
 } from 'react-native';
-import { Components } from 'exponent';
 import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
-import Actions from '../state/Actions';
+import MapView from '../components/EventMap';
 const {height, width} = Dimensions.get('window');
 
-@connect(data => HomeScreen.getDataProps(data))
 export default class HomeScreen extends React.Component {
 
   state = {
     listVisible: false,
     menuVisible: false,
     listBtnStyle: styles.listBtnStyle,
-  }
-
-  static getDataProps(data) {
-    return {
-      events: data.events.nearbyEvents,
-      region: data.events.region,
-    };
   }
 
   render() {
@@ -47,25 +37,7 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View style={{flex: 1}}>
-        <Components.MapView
-          style={{ flex: 1, backgroundColor: '#fff' }}
-          initialRegion={this.props.region}
-          onRegionChangeComplete={this._onRegionChange}>
-          {
-            this.props.events.map(event => {
-              let { location, title, id } = event;
-              let coord = {longitude: location.coordinates[0], latitude: location.coordinates[1]};
-              return (
-                <Components.MapView.Marker
-                  key={id}
-                  coordinate={coord}
-                  title={title}
-                />
-              );
-            })
-          }
-
-        </Components.MapView>
+        <MapView />
         <View style={styles.btnMainContainer}>
           <TouchableHighlight underlayColor="transparent" onPress={this._onMenuBtnPress}>
             <Image
@@ -96,11 +68,8 @@ export default class HomeScreen extends React.Component {
     );
   }
 
-  _onRegionChange = (region) => {
-    this.props.dispatch(Actions.regionChange(region.longitude, region.latitude));
-  }
-
   _onListBtnPress = () => {
+    console.log('helllllooo');
     this.setState({listVisible: !this.state.listVisible});
     this.setState({listBtnStyle: styles.listBtnHidden});
   }

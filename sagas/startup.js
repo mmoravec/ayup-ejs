@@ -1,9 +1,12 @@
 import { put, call } from 'redux-saga/effects';
+import { Map, List } from 'immutable';
 import ActionTypes from '../state/ActionTypes';
 
 export default function* startup() {
-  yield call(loadFilters);
-  yield call(setInitialRegion);
+  yield [
+    call(loadFilters),
+    call(setInitialRegion),
+  ];
 }
 
 function* loadFilters() {
@@ -100,7 +103,8 @@ function* loadFilters() {
       "image": require("../assets/images/filters/volleyball.png"),
     },
   ];
-  yield put({ type: ActionTypes.SET_FILTERS, filters });
+  let filterList = new List(filters);
+  yield put({ type: ActionTypes.SET_FILTERS, filterList });
 }
 
 function* setInitialRegion() {
