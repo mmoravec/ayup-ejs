@@ -1,4 +1,4 @@
-import { List, Record } from 'immutable';
+import { List, Record, Map } from 'immutable';
 
 export const EventState = Record({
   nearbyEvents: new List(),
@@ -9,6 +9,7 @@ export const EventState = Record({
     latitudeDelta: null,
     longitudeDelta: null,
   },
+  icons: new Map(),
 });
 
 export const User = Record({
