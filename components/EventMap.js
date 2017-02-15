@@ -1,12 +1,12 @@
 import React from 'react';
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
-import Icons from '../constants/icons';
+import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
-
 
 @connect((data) => EventList.getDataProps(data))
 export default class EventList extends React.Component {
+
   static getDataProps(data) {
     return {
       events: data.events.nearbyEvents,
@@ -25,19 +25,9 @@ export default class EventList extends React.Component {
         initialRegion={this.props.region}
         onRegionChangeComplete={this._onRegionChange}>
         {
-          this.props.events.map(event => {
-            let { location, title, id, activity } = event;
-            let coord = {longitude: location.coordinates[0], latitude: location.coordinates[1]};
-            let icon = Icons[activity].icon;
-            return (
-              <Components.MapView.Marker
-                key={id}
-                coordinate={coord}
-                title={title}
-                image={icon}
-              />
-            );
-          })
+          this.props.events.map(event =>
+            <MapMarker key={event.id} event={event} />
+          )
         }
 
       </Components.MapView>

@@ -23,10 +23,17 @@ export default class Actions {
     };
   }
 
-  static routeChange(newRoute) {
+  static routeChange(newRoute, eventId) {
     return {
       type: ActionTypes.ROUTE_CHANGE,
       newRoute,
+    };
+  }
+
+  static selectEvent(selectedEvent) {
+    return {
+      type: ActionTypes.SET_SELECTED_EVENT,
+      selectedEvent,
     };
   }
 }

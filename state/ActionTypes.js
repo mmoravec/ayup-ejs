@@ -5,6 +5,7 @@ export default defineActionConstants([
   'SET_FILTERS',
   'SET_NEARBY',
   'SET_REGION',
+  'SET_SELECTED_EVENT',
   'SIGN_IN',
   'SIGN_OUT',
 ]);

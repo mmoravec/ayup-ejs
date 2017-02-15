@@ -69,14 +69,11 @@ export default class HomeScreen extends React.Component {
   }
 
   _onListBtnPress = () => {
-    console.log('helllllooo');
-    this.setState({listVisible: !this.state.listVisible});
-    this.setState({listBtnStyle: styles.listBtnHidden});
+    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnHidden});
   }
 
   _onCloseBtnPress = () => {
-    this.setState({listVisible: !this.state.listVisible});
-    this.setState({listBtnStyle: styles.listBtnStyle});
+    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnStyle});
   }
 
   _onMenuBtnPress = () => {
