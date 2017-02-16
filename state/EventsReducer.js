@@ -1,5 +1,6 @@
 import ActionTypes from './ActionTypes';
 import { EventState } from './Records';
+import { merge, List } from 'immutable';
 
 class EventsReducer {
   static reduce(state = new EventState(), action) {
@@ -11,7 +12,8 @@ class EventsReducer {
   }
 
   static [ActionTypes.SET_NEARBY](state, action) {
-    return state.set('nearbyEvents', action.data);
+    let newData = new List(action.data);
+    return state.set('nearbyEvents', state.nearbyEvents.merge(newData));
   }
 
   static [ActionTypes.SET_FILTERS](state, action) {

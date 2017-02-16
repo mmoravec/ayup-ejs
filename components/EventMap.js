@@ -3,6 +3,7 @@ import { Components } from 'exponent';
 import { connect } from 'react-redux';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
+import Immutable from 'immutable';
 
 @connect((data) => EventList.getDataProps(data))
 export default class EventList extends React.Component {
@@ -11,15 +12,15 @@ export default class EventList extends React.Component {
     return {
       events: data.events.nearbyEvents,
       region: data.events.region,
-      user: data.user,
     };
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.events !== this.props.events;
+    return !Immutable.is(nextProps.events, this.props.events);
   }
 
   render() {
+    console.log('render');
     return (
       <Components.MapView
         style={{ flex: 1, backgroundColor: '#fff' }}

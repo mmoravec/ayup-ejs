@@ -6,10 +6,8 @@ import {
   TouchableHighlight,
   Image,
 } from 'react-native';
-import { connect } from 'react-redux';
 import EventList from './EventList';
 
-@connect()
 export default class EventListModal extends React.Component {
 
   render() {
