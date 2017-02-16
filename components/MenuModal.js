@@ -21,7 +21,9 @@ export default class EventListModal extends React.Component {
         visible={this.props.menuVisible}>
         <View style={styles.container}>
           <View style={styles.btnMainContainer}>
-            <TouchableHighlight underlayColor="transparent" onPress={this.props.menuBtnPress}>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={this.props.menuBtnPress}>
               <Image
                 source={require('../assets/images/btn_menu_close.png')}
                 style={styles.btnMain}
@@ -71,6 +73,11 @@ export default class EventListModal extends React.Component {
   _activitiesBtnPress = () => {
     this.props.menuBtnPress();
     this.props.dispatch(Actions.routeChange('activities'));
+  }
+
+  _settingsBtnPress = () => {
+    this.props.menuBtnPress();
+    this.props.dispatch(Actions.routeChange('settings'));
   }
 }
 

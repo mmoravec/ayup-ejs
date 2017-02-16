@@ -16,5 +16,7 @@ export const User = Record({
   id: null,
   authToken: null,
   name: null,
-  isGuest: null,
+  email: null,
+  gender: null,
+  new: null,
 });

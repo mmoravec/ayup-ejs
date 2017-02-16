@@ -22,7 +22,6 @@ export default class EventScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     let event = this.props.selectedEvent;
     let coord = {
       longitude: event.location.coordinates[0],

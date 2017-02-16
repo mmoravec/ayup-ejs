@@ -1,39 +1,38 @@
-import { NavigationActions } from '@exponent/ex-navigation'
-import { takeEvery } from 'redux-saga'
-import { fork, call, take, put } from 'redux-saga/effects'
-import ActionTypes from '../state/ActionTypes'
-import Store from '../state/Store';
-import Router from '../navigation/router'
-// import Api from '...'
+import { takeEvery } from 'redux-saga';
+import { call, put } from 'redux-saga/effects';
+import {
+  Platform,
+} from 'react-native';
+import { Facebook } from 'exponent';
+import LocalStorage from '../state/LocalStorage';
+import ActionTypes from '../state/ActionTypes';
+import { User } from '../state/Records';
 
-//TODO: hookup actual fetch calls
-// function* authorize(user, password) {
-//   try {
-//     // const token = yield call(Api.authorize, user, password)
-//     // yield put({type: 'LOGIN_SUCCESS', token})
-//     // yield call(Api.storeItem, {token})
-//   } catch(error) {
-//     yield put({type: 'LOGIN_ERROR', error})
-//   }
-// }
-
-function* authorize() {
-  let navigatorUID = Store.getState().navigation.currentNavigatorUID;
-  Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('home')));
+function facebookLogin() {
+  return Facebook.logInWithReadPermissionsAsync('1521840934725105', {
+    permissions: ['public_profile', 'email', 'user_friends'],
+    behavior: Platform.OS === 'ios' ? 'web' : 'system',
+  });
 }
 
-//TODO: change this flow to more closely match exponents
-// function* loginFlow() {
-//   while (true) {
-//     const {user, password} = yield take('LOGIN_REQUEST')
-//     // fork return a Task object
-//     const task = yield fork(authorize, user, password)
-//     const action = yield take(['LOGOUT', 'LOGIN_ERROR'])
-//     // if (action.type === 'LOGOUT')
-//       // yield cancel(task)
-//     // yield call(Api.clearItem, 'token')
-//   }
-// }
+async function getInfo(token) {
+  let response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+  let info = await response.json();
+  return info;
+}
+
+function* authorize() {
+  let user = null;
+  const result = yield call(facebookLogin);
+  if (result.type === 'success') {
+    user = yield call(getInfo, result.token);
+  }
+  user = new User({'authToken': result.token, ...user});
+  console.log(LocalStorage.saveUserAsync);
+  yield call(LocalStorage.saveUserAsync(user));
+  yield put({ type: ActionTypes.SET_CURRENT_USER, user });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'home' });
+}
 
 export function* watchLogin() {
   yield takeEvery(ActionTypes.SIGN_IN, authorize);

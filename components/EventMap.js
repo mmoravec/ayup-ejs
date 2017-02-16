@@ -11,6 +11,7 @@ export default class EventList extends React.Component {
     return {
       events: data.events.nearbyEvents,
       region: data.events.region,
+      user: data.user,
     };
   }
 

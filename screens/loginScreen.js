@@ -1,14 +1,10 @@
 import React from 'react';
 import {
-  Alert,
-  Image,
-  Platform,
   StyleSheet,
   View,
   Text,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Facebook } from 'exponent';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import FadeIn from '@exponent/react-native-fade-in-image';
 import ActionTypes from '../state/ActionTypes';
@@ -31,18 +27,10 @@ export default class AuthenticationScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableNativeFeedback>
+        <TouchableNativeFeedback onPress={this._signInWithFacebook}>
           <View style={styles.facebookButton}>
             <Text>
               Sign in with Facebook
-            </Text>
-          </View>
-        </TouchableNativeFeedback>
-
-        <TouchableNativeFeedback onPress={this._continueAsGuest}>
-          <View style={styles.guestButton}>
-            <Text style={styles.guestButtonText}>
-              Continue as a guest
             </Text>
           </View>
         </TouchableNativeFeedback>
@@ -50,7 +38,7 @@ export default class AuthenticationScreen extends React.Component {
     );
   }
 
-  _continueAsGuest = () => {
+  _signInWithFacebook = () => {
     this.props.dispatch({
       type: ActionTypes.SIGN_IN,
     });
