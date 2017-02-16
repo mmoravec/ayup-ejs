@@ -1,6 +1,6 @@
 import {
-  createRouter,
-} from '@exponent/ex-navigation';
+    StackNavigator,
+} from 'react-navigation';
 
 import HomeScreen from '../screens/homeScreen';
 import LoginScreen from '../screens/loginScreen';
@@ -9,13 +9,15 @@ import ActivitiesScreen from '../screens/activitiesScreen';
 import EventScreen from '../screens/eventScreen';
 import SettingsScreen from '../screens/settingsScreen';
 
-const Router = createRouter(() => ({
-  home: () => HomeScreen,
-  login: () => LoginScreen,
-  newEvent: () => NewEventScreen,
-  activities: () => ActivitiesScreen,
-  event: () => EventScreen,
-  settings: () => SettingsScreen,
-}));
+const Nav = StackNavigator({
+  Home: {screen: HomeScreen},
+  Login: {screen: LoginScreen},
+  NewEvent: {screen: NewEventScreen},
+  Activities: {screen: ActivitiesScreen},
+  Event: {screen: EventScreen},
+  Settings: {screen: SettingsScreen},
+}, {
+  initialRouteName: 'Home',
+});
 
-export default Router;
+export default Nav;

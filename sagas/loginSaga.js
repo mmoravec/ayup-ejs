@@ -1,9 +1,9 @@
-import { takeEvery } from 'redux-saga';
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   Platform,
 } from 'react-native';
 import { Facebook } from 'exponent';
+import { NavigationActions } from ''
 import LocalStorage from '../state/LocalStorage';
 import ActionTypes from '../state/ActionTypes';
 import { User } from '../state/Records';
@@ -30,7 +30,7 @@ function* authorize() {
   user = new User({'authToken': result.token, ...user});
   LocalStorage.saveUserAsync(user);
   yield put({ type: ActionTypes.SET_CURRENT_USER, user });
-  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'home' });
+  NavigationActions.navigate({ routeName: 'Auth' })
 }
 
 export function* watchLogin() {

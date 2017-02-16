@@ -1,26 +1,22 @@
 import Exponent from 'exponent';
 import React from 'react';
-import {
-  NavigationContext,
-  NavigationProvider,
-  StackNavigation,
-} from '@exponent/ex-navigation';
 import { Provider, connect } from 'react-redux';
-import Router from './navigation/router'
+import {
+    StackNavigator,
+} from 'react-navigation';
 import Store from './state/Store';
-
-const navigationContext = new NavigationContext({
-  store: Store,
-  router: Router,
-});
+import HomeScreen from './screens/homeScreen';
+import LoginScreen from './screens/loginScreen';
+import NewEventScreen from './screens/newEventScreen';
+import ActivitiesScreen from './screens/activitiesScreen';
+import EventScreen from './screens/eventScreen';
+import SettingsScreen from './screens/settingsScreen';
 
 class AppContainer extends React.Component {
   render() {
     return (
       <Provider store={Store}>
-        <NavigationProvider context={navigationContext}>
-          <App {...this.props} />
-        </NavigationProvider>
+        <App {...this.props} />
       </Provider>
     );
   }
@@ -34,22 +30,30 @@ class App extends React.Component {
     };
   }
   render() {
-    console.log(this.props);
     if (!this.props.user.get('id') && !this.props.user.get('new')) {
       return <Exponent.Components.AppLoading />;
     } else {
-      let route = 'login';
+      let route = 'Login';
       if (this.props.user.get('id') && this.props.user.get('authToken')) {
-        route = 'home';
+        route = 'Home';
       }
+      let Nav = StackNavigator({
+        Home: {screen: HomeScreen},
+        Login: {screen: LoginScreen},
+        NewEvent: {screen: NewEventScreen},
+        Activities: {screen: ActivitiesScreen},
+        Event: {screen: EventScreen},
+        Settings: {screen: SettingsScreen},
+      }, {
+        initialRouteName: route,
+        headerMode: 'none',
+      });
       return (
-        <StackNavigation
-          id="root"
-          initialRoute={Router.getRoute(route)}
-        />
+        <Nav />
       );
     }
   }
 }
+
 
 Exponent.registerRootComponent(AppContainer);
