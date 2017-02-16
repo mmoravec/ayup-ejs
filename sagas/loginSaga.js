@@ -28,8 +28,7 @@ function* authorize() {
     user = yield call(getInfo, result.token);
   }
   user = new User({'authToken': result.token, ...user});
-  console.log(LocalStorage.saveUserAsync);
-  yield call(LocalStorage.saveUserAsync(user));
+  LocalStorage.saveUserAsync(user);
   yield put({ type: ActionTypes.SET_CURRENT_USER, user });
   yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'home' });
 }

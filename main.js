@@ -34,6 +34,7 @@ class App extends React.Component {
     };
   }
   render() {
+    console.log(this.props);
     if (!this.props.user.get('id') && !this.props.user.get('new')) {
       return <Exponent.Components.AppLoading />;
     } else {
