@@ -9,6 +9,9 @@ class EventsReducer {
       return state;
     }
   }
+  static [ActionTypes.SET_CURRENT_USER](state, action) {
+    return action.user;
+  }
 }
 
 export default EventsReducer.reduce;

@@ -13,7 +13,11 @@ export function* watchRouteChange() {
 }
 
 function* changeRoute(action) {
-  let { newRoute } = action;
+  let { newRoute, eventId } = action;
   let navigatorUID = Store.getState().navigation.currentNavigatorUID;
-  Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(newRoute)));
+  if (eventId !== undefined) {
+    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(newRoute, {eventId})));
+  } else {
+    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(newRoute)));
+  }
 }

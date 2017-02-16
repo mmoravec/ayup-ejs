@@ -5,7 +5,7 @@ import {
   NavigationProvider,
   StackNavigation,
 } from '@exponent/ex-navigation';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import Router from './navigation/router'
 import Store from './state/Store';
 
@@ -19,13 +19,36 @@ class AppContainer extends React.Component {
     return (
       <Provider store={Store}>
         <NavigationProvider context={navigationContext}>
-          <StackNavigation
-            id="root"
-            initialRoute={Router.getRoute('home')}
-          />
+          <App {...this.props} />
         </NavigationProvider>
-       </Provider>
+      </Provider>
     );
+  }
+}
+
+@connect(data => App.getDataProps(data))
+class App extends React.Component {
+  static getDataProps(data) {
+    return {
+      user: data.user,
+    };
+  }
+  render() {
+    console.log(this.props);
+    if (!this.props.user.get('id') && !this.props.user.get('new')) {
+      return <Exponent.Components.AppLoading />;
+    } else {
+      let route = 'login';
+      if (this.props.user.get('id') && this.props.user.get('authToken')) {
+        route = 'home';
+      }
+      return (
+        <StackNavigation
+          id="root"
+          initialRoute={Router.getRoute(route)}
+        />
+      );
+    }
   }
 }
 

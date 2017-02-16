@@ -18,9 +18,8 @@ class EventsReducer {
     return state.set('filters', action.filterList);
   }
 
-  static [ActionTypes.SET_ICONS](state, action) {
-    console.log(action);
-    return state.set('icons', action.iconMap);
+  static [ActionTypes.SET_SELECTED_EVENT](state, action) {
+    return state.set('selectedEvent', action.selectedEvent);
   }
 
   static [ActionTypes.SET_REGION](state, action) {

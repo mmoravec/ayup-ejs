@@ -39,7 +39,9 @@ export default class HomeScreen extends React.Component {
       <View style={{flex: 1}}>
         <MapView />
         <View style={styles.btnMainContainer}>
-          <TouchableHighlight underlayColor="transparent" onPress={this._onMenuBtnPress}>
+          <TouchableHighlight
+            underlayColor="transparent"
+            onPress={this._onMenuBtnPress}>
             <Image
               source={require('../assets/images/btn_main.png')}
               style={styles.btnMain}
@@ -69,14 +71,11 @@ export default class HomeScreen extends React.Component {
   }
 
   _onListBtnPress = () => {
-    console.log('helllllooo');
-    this.setState({listVisible: !this.state.listVisible});
-    this.setState({listBtnStyle: styles.listBtnHidden});
+    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnHidden});
   }
 
   _onCloseBtnPress = () => {
-    this.setState({listVisible: !this.state.listVisible});
-    this.setState({listBtnStyle: styles.listBtnStyle});
+    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnStyle});
   }
 
   _onMenuBtnPress = () => {

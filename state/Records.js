@@ -9,12 +9,14 @@ export const EventState = Record({
     latitudeDelta: null,
     longitudeDelta: null,
   },
-  icons: new Map(),
+  selectedEvent: null,
 });
 
 export const User = Record({
   id: null,
   authToken: null,
   name: null,
-  isGuest: null,
+  email: null,
+  gender: null,
+  new: null,
 });
