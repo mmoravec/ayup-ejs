@@ -20,7 +20,6 @@ export default class EventList extends React.Component {
   }
 
   render() {
-    console.log('render');
     return (
       <Components.MapView
         style={{ flex: 1, backgroundColor: '#fff' }}
