@@ -15,8 +15,6 @@ async function getUserAsync() {
 }
 
 function saveUserAsync(user) {
-  console.log('saveuser');
-  console.log(JSON.stringify(user));
   return AsyncStorage.setItem(Keys.User, JSON.stringify(user));
 }
 

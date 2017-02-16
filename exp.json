@@ -1,19 +1,19 @@
 {
-  "name": "ayup-ejs",
-  "description": "An empty new project",
+  "name": "Ayup",
+  "description": "Meet up with people!",
   "slug": "ayup-ejs",
   "sdkVersion": "11.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
-  "iconUrl": "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
+  "iconUrl": "https://firebasestorage.googleapis.com/v0/b/ayup-a9382.appspot.com/o/ayup_logo.png?alt=media&token=5629e9ba-619a-4322-a469-d4f7af6870b0",
   "notification": {
-    "iconUrl": "https://s3.amazonaws.com/exp-us-standard/placeholder-push-icon-blue-circle.png",
+    "iconUrl": "https://firebasestorage.googleapis.com/v0/b/ayup-a9382.appspot.com/o/ayup_logo.png?alt=media&token=5629e9ba-619a-4322-a469-d4f7af6870b0",
     "color": "#000000"
   },
   "loading": {
-    "iconUrl": "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
-    "hideExponentText": false
+    "iconUrl": "https://firebasestorage.googleapis.com/v0/b/ayup-a9382.appspot.com/o/ayup_logo.png?alt=media&token=5629e9ba-619a-4322-a469-d4f7af6870b0",
+    "hideExponentText": true
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
