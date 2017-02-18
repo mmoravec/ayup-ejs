@@ -17,6 +17,7 @@ export default class HomeScreen extends React.Component {
   state = {
     listVisible: false,
     menuVisible: false,
+    iconsVisible: true,
     listBtnStyle: styles.listBtnStyle,
   }
 
@@ -33,11 +34,12 @@ export default class HomeScreen extends React.Component {
       key: 'menu',
       menuVisible: this.state.menuVisible,
       menuBtnPress: this._onMenuBtnPress,
+      navAway: this._onNavAway,
     };
 
     return (
       <View style={{flex: 1}}>
-        <MapView />
+        <MapView iconsVisible={this.state.iconsVisible} />
         <View style={styles.btnMainContainer}>
           <TouchableHighlight
             underlayColor="transparent"
@@ -71,15 +73,31 @@ export default class HomeScreen extends React.Component {
   }
 
   _onListBtnPress = () => {
-    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnHidden});
+    this.setState({
+      listVisible: !this.state.listVisible,
+      listBtnStyle: styles.listBtnHidden,
+      iconsVisible: !this.state.iconsVisible,
+    });
   }
 
   _onCloseBtnPress = () => {
-    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnStyle});
+    this.setState({
+      listVisible: !this.state.listVisible,
+      listBtnStyle: styles.listBtnStyle,
+      iconsVisible: !this.state.iconsVisible,
+    });
   }
 
   _onMenuBtnPress = () => {
-    this.setState({menuVisible: !this.state.menuVisible});
+    this.setState({
+      menuVisible: !this.state.menuVisible,
+      iconsVisible: !this.state.iconsVisible,
+    });
+  }
+  _onNavAway = () => {
+    this.setState({
+      menuVisible: !this.state.menuVisible,
+    });
   }
 
 }

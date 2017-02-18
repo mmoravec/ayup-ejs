@@ -4,12 +4,12 @@ import {
   View,
   Text,
   Dimensions,
-  TextInput,
   DatePickerIOS,
   ScrollView,
 } from 'react-native';
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
+import Hoshi from './common/Hoshi';
 const {height, width} = Dimensions.get('window');
 const dateFormat = require('dateformat');
 
@@ -21,6 +21,7 @@ export default class EventForm extends React.Component {
     endTime: new Date(),
     title: 'title placeholder',
     desc: 'sample desc',
+    location: 'meow',
     isEditable: true,
   }
 
@@ -29,27 +30,35 @@ export default class EventForm extends React.Component {
       <View style={styles.scrollView}>
         <ScrollView
           contentContainerStyle={styles.form}>
-          <View style={styles.smallRow}>
-            <Text style={styles.text}>Title</Text>
-            <TextInput
-              style={styles.input}
-              value={this.state.title}
+          <View style={styles.input}>
+            <Hoshi
               onChangeText={(text) => this.setState({title: text})}
               editable={this.state.isEditable}
+              label={'Title'}
+              borderColor={'#4eb9ec'}
+              backgroundColor={'#FFF'}
             />
           </View>
-          <View style={styles.bigRow}>
-            <Text style={styles.text}>Description</Text>
-            <TextInput
-              style={styles.input}
-              value={this.state.desc}
+          <View style={styles.input}>
+            <Hoshi
               onChangeText={(text) => this.setState({desc: text})}
               editable={this.state.isEditable}
               multiline={true}
+              label={'Description'}
+              borderColor={'#4eb9ec'}
+              backgroundColor={'#FFF'}
             />
           </View>
-          <View style={styles.location}>
-            <Text style={styles.locationText}>Location</Text>
+          <View style={styles.input}>
+            <Hoshi
+              onChangeText={(text) => this.setState({location: text})}
+              editable={this.state.isEditable}
+              label={'Location'}
+              borderColor={'#FFF'}
+              backgroundColor={'#FFF'}
+
+            />
+
             <Components.MapView
               style={styles.mapView}
               initialRegion={{
@@ -62,11 +71,6 @@ export default class EventForm extends React.Component {
           </View>
           <View style={styles.time}>
             <Text style={styles.timeText}>Start Time</Text>
-            <TextInput
-              style={styles.input}
-              value={dateFormat(this.state.startTime, 'ddd, dd MMM h:mm tt')}
-              editable={false}
-            />
             <DatePickerIOS
               date={this.state.startTime}
               mode="datetime"
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
   bigRow: {
     backgroundColor: '#FF3366',
     marginTop: 20,
-    height: 40,
+    height: 100,
     flexDirection: 'row',
   },
   scrollView: {
@@ -163,11 +167,8 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   input: {
-    width: width * 0.6,
-    alignSelf: 'flex-end',
-    backgroundColor: '#AF6',
-    fontSize: 10,
-    height: 30,
+    width: width * 0.88,
+    paddingTop: 10,
   },
   mapView: {
     width: width * 0.7,

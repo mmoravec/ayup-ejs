@@ -27,7 +27,6 @@ export default class ActivitiesScreen extends React.Component {
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
         <TouchableHighlight underlayColor="transparent" onPress={this._backBtnPress}>
           <Image
-            source={require('../assets/images/btn_back.png')}
             style={styles.btnBack}
           />
         </TouchableHighlight>

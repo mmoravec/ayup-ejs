@@ -1,21 +1,27 @@
 {
   "name": "Ayup",
-  "description": "Meet up with people!",
+  "description": "Explore the world of sport around you",
   "slug": "ayup-ejs",
-  "sdkVersion": "11.0.0",
-  "version": "1.0.0",
+  "sdkVersion": "14.0.0",
+  "version": "0.0.2",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
-  "iconUrl": "https://firebasestorage.googleapis.com/v0/b/ayup-a9382.appspot.com/o/ayup_logo.png?alt=media&token=5629e9ba-619a-4322-a469-d4f7af6870b0",
+  "icon": "./assets/images/ayup_icon.png",
   "notification": {
-    "iconUrl": "https://firebasestorage.googleapis.com/v0/b/ayup-a9382.appspot.com/o/ayup_logo.png?alt=media&token=5629e9ba-619a-4322-a469-d4f7af6870b0",
+    "icon": "./assets/images/ayup_icon.png",
     "color": "#000000"
   },
   "loading": {
-    "iconUrl": "https://firebasestorage.googleapis.com/v0/b/ayup-a9382.appspot.com/o/ayup_logo.png?alt=media&token=5629e9ba-619a-4322-a469-d4f7af6870b0",
+    "icon": "./assets/images/ayup_logo.png",
     "hideExponentText": true
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
+  },
+  "ios": {
+  "bundleIdentifier": "com.ayupapp.exp",
+  },
+  "android": {
+    "package": "com.ionicframework.ayup140030",
   }
 }

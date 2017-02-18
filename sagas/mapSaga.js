@@ -1,5 +1,4 @@
-import { takeLatest } from 'redux-saga';
-import { put } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import ActionTypes from '../state/ActionTypes';
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
