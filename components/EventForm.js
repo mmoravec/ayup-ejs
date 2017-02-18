@@ -6,6 +6,7 @@ import {
   Dimensions,
   DatePickerIOS,
   ScrollView,
+  LayoutAnimation,
 } from 'react-native';
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
@@ -21,8 +22,13 @@ export default class EventForm extends React.Component {
     endTime: new Date(),
     title: 'title placeholder',
     desc: 'sample desc',
+    focusMap: false,
     location: 'meow',
     isEditable: true,
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
   }
 
   render() {
@@ -56,18 +62,10 @@ export default class EventForm extends React.Component {
               label={'Location'}
               borderColor={'#FFF'}
               backgroundColor={'#FFF'}
-
+              onFocus={() => this.setState({focusMap: !this.state.focusMap})}
+              onBlur={() => this.setState({focusMap: !this.state.focusMap})}
             />
-
-            <Components.MapView
-              style={styles.mapView}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            />
+            {this._renderMapView()}
           </View>
           <View style={styles.time}>
             <Text style={styles.timeText}>Start Time</Text>
@@ -107,6 +105,24 @@ export default class EventForm extends React.Component {
       this.setState({endTime: this.state.startTime});
     } else {
       this.setState({endTime: date});
+    }
+  }
+
+  _renderMapView = () => {
+    if (this.state.focusMap) {
+      return (
+        <Components.MapView
+          style={styles.mapView}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    } else {
+      return null;
     }
   }
 }
