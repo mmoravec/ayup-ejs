@@ -1,6 +1,7 @@
 import React from 'react';
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
+import { LayoutAnimation } from 'react-native';
 import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
@@ -14,6 +15,10 @@ export default class EventList extends React.Component {
 
   componentDidMount() {
     setTimeout(() => this.setState({loadDelay: true}), 1000);
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
   }
 
   static getDataProps(data) {

@@ -63,7 +63,7 @@ export default class EventScreen extends React.Component {
   }
 
   _backBtnPress = () => {
-    this.props.dispatch(Actions.routeChange('home'));
+    this.props.navigator.pop();
   }
 }
 
