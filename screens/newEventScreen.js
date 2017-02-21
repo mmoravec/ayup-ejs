@@ -40,9 +40,10 @@ export default class NewEventScreen extends React.Component {
     );
   }
   _onDateChange = (date) => {
+
   }
   _backBtnPress = () => {
-    this.props.dispatch(Actions.routeChange('home'));
+    this.props.navigator.pop();
   }
 }
 

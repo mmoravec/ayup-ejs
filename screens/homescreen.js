@@ -33,6 +33,7 @@ export default class HomeScreen extends React.Component {
       key: 'menu',
       menuVisible: this.state.menuVisible,
       menuBtnPress: this._onMenuBtnPress,
+      navAway: this._onNavAway,
     };
 
     return (
@@ -71,15 +72,28 @@ export default class HomeScreen extends React.Component {
   }
 
   _onListBtnPress = () => {
-    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnHidden});
+    this.setState({
+      listVisible: !this.state.listVisible,
+      listBtnStyle: styles.listBtnHidden,
+    });
   }
 
   _onCloseBtnPress = () => {
-    this.setState({listVisible: !this.state.listVisible, listBtnStyle: styles.listBtnStyle});
+    this.setState({
+      listVisible: !this.state.listVisible,
+      listBtnStyle: styles.listBtnStyle,
+    });
   }
 
   _onMenuBtnPress = () => {
-    this.setState({menuVisible: !this.state.menuVisible});
+    this.setState({
+      menuVisible: !this.state.menuVisible,
+    });
+  }
+  _onNavAway = () => {
+    this.setState({
+      menuVisible: !this.state.menuVisible,
+    });
   }
 
 }

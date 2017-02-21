@@ -1,9 +1,8 @@
-import { takeLatest, delay } from 'redux-saga'
-import { NavigationActions } from '@exponent/ex-navigation'
-import { put, call, take } from 'redux-saga/effects'
-import ActionTypes from '../state/ActionTypes'
+import { NavigationActions } from '@exponent/ex-navigation';
+import { takeLatest } from 'redux-saga/effects';
+import ActionTypes from '../state/ActionTypes';
 import Store from '../state/Store';
-import Router from '../navigation/router'
+import Router from '../navigation/Router';
 
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF

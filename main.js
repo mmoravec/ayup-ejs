@@ -6,7 +6,7 @@ import {
   StackNavigation,
 } from '@exponent/ex-navigation';
 import { Provider, connect } from 'react-redux';
-import Router from './navigation/router'
+import Router from './navigation/Router';
 import Store from './state/Store';
 
 const navigationContext = new NavigationContext({
@@ -34,7 +34,6 @@ class App extends React.Component {
     };
   }
   render() {
-    console.log(this.props);
     if (!this.props.user.get('id') && !this.props.user.get('new')) {
       return <Exponent.Components.AppLoading />;
     } else {

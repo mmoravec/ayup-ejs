@@ -5,79 +5,146 @@ import {
   View,
   Image,
   TouchableHighlight,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
+const {height, width} = Dimensions.get('window');
 
 @connect()
 export default class EventListModal extends React.Component {
 
+  state = {
+    opacity: new Animated.Value(0.1),
+    firstRowMarg: new Animated.Value(0),
+    secRowBottom: new Animated.Value(20),
+    secRowMarg: new Animated.Value(0),
+    thirdRowBottom: new Animated.Value(20),
+  }
+
   render() {
     //TODO: Finish filling in listview
+    if (this.props.menuVisible) {
+      Animated.timing(this.state.opacity, {toValue:1, duration: 500}).start();
+      Animated.spring(this.state.secRowBottom, {toValue:125}).start();
+      Animated.spring(this.state.firstRowMarg, {toValue:(width * 0.6)}).start();
+      Animated.spring(this.state.secRowMarg, {toValue:(width * 0.4)}).start();
+      Animated.spring(this.state.thirdRowBottom, {toValue:175}).start();
+    }
     return (
       <Modal
         animationType={"none"}
         transparent={true}
+        onRequestClose={this.props.menuBtnPress}
         visible={this.props.menuVisible}>
         <View style={styles.container}>
           <View style={styles.btnMainContainer}>
             <TouchableHighlight
               underlayColor="transparent"
-              onPress={this.props.menuBtnPress}>
+              onPress={this._menuBtnPress}>
               <Image
                 source={require('../assets/images/btn_menu_close.png')}
                 style={styles.btnMain}
               />
             </TouchableHighlight>
+          </View>
+          <Animated.View
+            style={[styles.ctnSettings,
+            {
+              opacity: this.state.opacity,
+              right: this.state.firstRowMarg,
+            }]}>
             <TouchableHighlight underlayColor="transparent" onPress={this._settingsBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_settings.png')}
                 style={styles.btnSettings}
               />
             </TouchableHighlight>
+          </Animated.View>
+          <Animated.View
+            style={[styles.ctnActivities,
+            {
+              opacity: this.state.opacity,
+              right: this.state.secRowMarg,
+              bottom: this.state.secRowBottom,
+            }]}>
             <TouchableHighlight underlayColor="transparent" onPress={this._activitiesBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_activities.png')}
                 style={styles.btnActivities}
               />
             </TouchableHighlight>
+          </Animated.View>
+          <Animated.View
+            style={[styles.ctnProfile,
+            {
+              opacity: this.state.opacity,
+              bottom: this.state.thirdRowBottom,
+            }]}>
             <TouchableHighlight underlayColor="transparent" onPress={this._profileBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_profile.png')}
                 style={styles.btnProfile}
               />
             </TouchableHighlight>
+          </Animated.View>
+          <Animated.View
+            style={[styles.ctnEvents,
+            {
+              opacity: this.state.opacity,
+              left: this.state.secRowMarg,
+              bottom: this.state.secRowBottom,
+            }]}>
             <TouchableHighlight underlayColor="transparent" onPress={this._myEventBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_events.png')}
                 style={styles.btnEvents}
               />
             </TouchableHighlight>
+          </Animated.View>
+          <Animated.View
+            style={[styles.ctnNewEvent,
+            {
+              opacity: this.state.opacity,
+              left: this.state.firstRowMarg,
+            }]}>
             <TouchableHighlight underlayColor="transparent" onPress={this._newEventBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_new_event.png')}
                 style={styles.btnNewEvent}
               />
             </TouchableHighlight>
-          </View>
+          </Animated.View>
         </View>
       </Modal>
     );
   }
 
   _newEventBtnPress = () => {
-    this.props.menuBtnPress();
+    this.props.navAway();
     this.props.dispatch(Actions.routeChange('newEvent'));
   }
 
   _activitiesBtnPress = () => {
-    this.props.menuBtnPress();
+    this.props.navAway();
     this.props.dispatch(Actions.routeChange('activities'));
   }
 
   _settingsBtnPress = () => {
-    this.props.menuBtnPress();
+    this.props.navAway();
     this.props.dispatch(Actions.routeChange('settings'));
+  }
+
+  _menuBtnPress = () => {
+    this.setState({
+      opacity: new Animated.Value(0.1),
+      firstRowMarg: new Animated.Value(0),
+      secRowBottom: new Animated.Value(20),
+      secRowMarg: new Animated.Value(0),
+      thirdRowBottom: new Animated.Value(20),
+    });
+    this.props.menuBtnPress();
   }
 }
 
@@ -98,39 +165,57 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
+  ctnSettings: {
+    position: 'absolute',
+    left: 0,
+    bottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   btnSettings: {
     width: 53,
     height: 72,
-    position: 'absolute',
-    bottom: 40,
-    right: 90,
   },
   btnActivities: {
     width: 81,
     height: 64,
+  },
+  ctnActivities: {
     position: 'absolute',
-    bottom: 125,
-    right: 40,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnProfile: {
     width: 55,
     height: 77,
+  },
+  ctnProfile: {
     position: 'absolute',
-    bottom: 160,
-    left: -30,
+    right: 0,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnEvents: {
     width: 64,
     height: 76,
+  },
+  ctnEvents: {
     position: 'absolute',
-    bottom: 125,
-    left: 45,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnNewEvent: {
     width: 71,
     height: 73,
+  },
+  ctnNewEvent: {
     position: 'absolute',
-    bottom: 40,
-    left: 90,
+    right: 0,
+    bottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

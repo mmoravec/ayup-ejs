@@ -1,12 +1,25 @@
 import React from 'react';
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
+import { LayoutAnimation } from 'react-native';
+import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
-import Immutable from 'immutable';
 
 @connect((data) => EventList.getDataProps(data))
 export default class EventList extends React.Component {
+
+  state = {
+    loadDelay: false,
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({loadDelay: true}), 1000);
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
+  }
 
   static getDataProps(data) {
     return {
@@ -15,25 +28,26 @@ export default class EventList extends React.Component {
     };
   }
 
-  shouldComponentUpdate(nextProps) {
-    return !Immutable.is(nextProps.events, this.props.events);
+  shouldComponentUpdate(nextProps, nextState) {
+    return !Immutable.is(nextProps.events, this.props.events) ||
+      this.props.iconsVisible !== nextProps.iconsVisible ||
+      this.state.loadDelay !== nextState.loadDelay;
   }
 
   render() {
-    console.log(this.props.events);
-    return (
-      <Components.MapView
-        style={{ flex: 1, backgroundColor: '#fff' }}
-        initialRegion={this.props.region}
-        onRegionChangeComplete={this._onRegionChange}>
-        {
-          this.props.events.map(event =>
-            <MapMarker key={event.id} event={event} />
-          )
-        }
+      return (
+        <Components.MapView
+          style={{ flex: 1, backgroundColor: '#fff' }}
+          initialRegion={this.props.region}
+          onRegionChangeComplete={this._onRegionChange}>
+          {
+            this.props.events.map(event =>
+              <MapMarker key={event.id} event={event} />
+            )
+          }
 
-      </Components.MapView>
-    );
+        </Components.MapView>
+      );
   }
 
   _onRegionChange = (region) => {
