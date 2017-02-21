@@ -42,7 +42,6 @@ export default class EventForm extends React.Component {
               editable={this.state.isEditable}
               label={'Title'}
               borderColor={'#4eb9ec'}
-              backgroundColor={'#FFF'}
             />
           </View>
           <View style={styles.input}>
@@ -51,7 +50,6 @@ export default class EventForm extends React.Component {
               editable={this.state.isEditable}
               label={'Description'}
               borderColor={'#4eb9ec'}
-              backgroundColor={'#FFF'}
             />
           </View>
           <View style={styles.input}>
@@ -60,7 +58,6 @@ export default class EventForm extends React.Component {
               editable={this.state.isEditable}
               label={'Location'}
               borderColor={'#FFF'}
-              backgroundColor={'#FFF'}
               onFocus={() => this.setState({focusMap: !this.state.focusMap})}
               onBlur={() => this.setState({focusMap: !this.state.focusMap})}
             />
