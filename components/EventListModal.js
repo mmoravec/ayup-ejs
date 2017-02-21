@@ -14,6 +14,7 @@ export default class EventListModal extends React.Component {
     //TODO: Finish filling in listview
     return (
       <Modal
+        onRequestClose={this.props.closeBtnPress}
         animationType={"slide"}
         transparent={true}
         visible={this.props.listVisible}>

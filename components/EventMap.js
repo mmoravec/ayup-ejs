@@ -31,7 +31,6 @@ export default class EventList extends React.Component {
 
   render() {
     let events = [];
-    console.log(this.state.loadDelay);
     if (this.props.iconsVisible && this.state.loadDelay) {
       events = this.props.events;
     }
