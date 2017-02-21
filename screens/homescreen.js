@@ -17,7 +17,6 @@ export default class HomeScreen extends React.Component {
   state = {
     listVisible: false,
     menuVisible: false,
-    iconsVisible: true,
     listBtnStyle: styles.listBtnStyle,
   }
 
@@ -39,7 +38,7 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View style={{flex: 1}}>
-        <MapView iconsVisible={this.state.iconsVisible} />
+        <MapView />
         <View style={styles.btnMainContainer}>
           <TouchableHighlight
             underlayColor="transparent"
@@ -76,7 +75,6 @@ export default class HomeScreen extends React.Component {
     this.setState({
       listVisible: !this.state.listVisible,
       listBtnStyle: styles.listBtnHidden,
-      iconsVisible: !this.state.iconsVisible,
     });
   }
 
@@ -84,14 +82,12 @@ export default class HomeScreen extends React.Component {
     this.setState({
       listVisible: !this.state.listVisible,
       listBtnStyle: styles.listBtnStyle,
-      iconsVisible: !this.state.iconsVisible,
     });
   }
 
   _onMenuBtnPress = () => {
     this.setState({
       menuVisible: !this.state.menuVisible,
-      iconsVisible: !this.state.iconsVisible,
     });
   }
   _onNavAway = () => {

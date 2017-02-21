@@ -35,17 +35,13 @@ export default class EventList extends React.Component {
   }
 
   render() {
-    let events = [];
-    if (this.props.iconsVisible && this.state.loadDelay) {
-      events = this.props.events;
-    }
       return (
         <Components.MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
           initialRegion={this.props.region}
           onRegionChangeComplete={this._onRegionChange}>
           {
-            events.map(event =>
+            this.props.events.map(event =>
               <MapMarker key={event.id} event={event} />
             )
           }

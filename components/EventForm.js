@@ -49,7 +49,6 @@ export default class EventForm extends React.Component {
             <Hoshi
               onChangeText={(text) => this.setState({desc: text})}
               editable={this.state.isEditable}
-              multiline={true}
               label={'Description'}
               borderColor={'#4eb9ec'}
               backgroundColor={'#FFF'}
