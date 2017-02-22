@@ -5,6 +5,7 @@ import {
   View,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
   Animated,
   Dimensions,
 } from 'react-native';
@@ -16,7 +17,7 @@ const {height, width} = Dimensions.get('window');
 export default class EventListModal extends React.Component {
 
   state = {
-    opacity: new Animated.Value(0.1),
+    opacity: new Animated.Value(0),
     firstRowMarg: new Animated.Value(0),
     secRowBottom: new Animated.Value(20),
     secRowMarg: new Animated.Value(0),
@@ -26,11 +27,16 @@ export default class EventListModal extends React.Component {
   render() {
     //TODO: Finish filling in listview
     if (this.props.menuVisible) {
-      Animated.timing(this.state.opacity, {toValue:1, duration: 500}).start();
-      Animated.spring(this.state.secRowBottom, {toValue:125}).start();
-      Animated.spring(this.state.firstRowMarg, {toValue:(width * 0.6)}).start();
-      Animated.spring(this.state.secRowMarg, {toValue:(width * 0.4)}).start();
-      Animated.spring(this.state.thirdRowBottom, {toValue:175}).start();
+      Animated.sequence([
+        Animated.delay(200),
+        Animated.parallel([
+          Animated.timing(this.state.opacity, {toValue:1, duration: 500}),
+          Animated.spring(this.state.secRowBottom, {toValue:125, tension: 60, friction: 6, velocity: 300}),
+          Animated.spring(this.state.firstRowMarg, {toValue:(width * 0.6), tension: 60, friction: 6, velocity: 300}),
+          Animated.spring(this.state.secRowMarg, {toValue:(width * 0.4), tension: 60, friction: 6, velocity: 300}),
+          Animated.spring(this.state.thirdRowBottom, {toValue:175, tension: 60, friction: 6, velocity: 300}),
+        ]),
+        ]).start();
     }
     return (
       <Modal
@@ -39,16 +45,15 @@ export default class EventListModal extends React.Component {
         onRequestClose={this.props.menuBtnPress}
         visible={this.props.menuVisible}>
         <View style={styles.container}>
-          <View style={styles.btnMainContainer}>
-            <TouchableHighlight
-              underlayColor="transparent"
+          <Animated.View style={styles.btnMainContainer}>
+            <TouchableOpacity
               onPress={this._menuBtnPress}>
               <Image
                 source={require('../assets/images/btn_menu_close.png')}
                 style={styles.btnMain}
               />
-            </TouchableHighlight>
-          </View>
+            </TouchableOpacity>
+          </Animated.View>
           <Animated.View
             style={[styles.ctnSettings,
             {
