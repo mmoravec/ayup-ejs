@@ -4,8 +4,12 @@ import {
   View,
   Text,
   Dimensions,
+  Platform,
   DatePickerIOS,
   ScrollView,
+  TouchableOpacity,
+  DatePickerAndroid,
+  TimePickerAndroid,
   LayoutAnimation,
 } from 'react-native';
 import { Components } from 'exponent';
@@ -18,13 +22,16 @@ const dateFormat = require('dateformat');
 export default class EventForm extends React.Component {
 
   state = {
-    startTime: new Date(),
-    endTime: new Date(),
+    startDate: new Date(),
+    startText: 'dismissed',
+    endDate: new Date(),
     title: 'title placeholder',
     desc: 'sample desc',
     focusMap: false,
     location: 'meow',
     isEditable: true,
+    focusStartDate: false,
+    focusEndDate: false,
   }
 
   componentWillUpdate() {
@@ -40,16 +47,18 @@ export default class EventForm extends React.Component {
             <Hoshi
               onChangeText={(text) => this.setState({title: text})}
               editable={this.state.isEditable}
+              onFocus={this._inputFocused}
               label={'Title'}
-              borderColor={'#4eb9ec'}
+              borderColor={'#8bd1c6'}
             />
           </View>
           <View style={styles.input}>
             <Hoshi
               onChangeText={(text) => this.setState({desc: text})}
               editable={this.state.isEditable}
+              onFocus={this._inputFocused}
               label={'Description'}
-              borderColor={'#4eb9ec'}
+              borderColor={'#8bd1c6'}
             />
           </View>
           <View style={styles.input}>
@@ -57,51 +66,135 @@ export default class EventForm extends React.Component {
               onChangeText={(text) => this.setState({location: text})}
               editable={this.state.isEditable}
               label={'Location'}
-              borderColor={'#FFF'}
+              borderColor={'#8bd1c6'}
               onFocus={() => this.setState({focusMap: !this.state.focusMap})}
-              onBlur={() => this.setState({focusMap: !this.state.focusMap})}
             />
             {this._renderMapView()}
           </View>
-          <View style={styles.time}>
-            <Text style={styles.timeText}>Start Time</Text>
-            <DatePickerIOS
-              date={this.state.startTime}
-              mode="datetime"
-              onDateChange={this._onStartDateChange}
+          <TouchableOpacity onPress={this._onStartDatePress} style={styles.input}>
+            <Hoshi
+              value={this.state.startDate.toString()}
+              editable={false}
+              label={'Start Time'}
+              borderColor={'#8bd1c6'}
             />
-          </View>
-          <View style={styles.time}>
-            <Text style={styles.timeText}>End Time</Text>
-            <DatePickerIOS
-              date={this.state.endTime}
-              mode="datetime"
-              onDateChange={this._onEndDateChange}
-              style={styles.endTime}
+            {this._renderStartDate()}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._onEndDatePress} style={styles.input}>
+            <Hoshi
+              value={this.state.endDate.toString()}
+              editable={false}
+              label={'End Time'}
+              borderColor={'#8bd1c6'}
+              onFocus={() => this.setState({focusMap: !this.state.focusEndDate})}
+              onBlur={() => this.setState({focusMap: !this.state.focusEndDate})}
             />
-          </View>
+            {this._renderEndDate()}
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
   }
 
+  _inputFocused = () => {
+    this.setState({focusEndDate: false});
+    this.setState({focusStartDate: false});
+    this.setState({focusMap: false});
+  }
+
+  _onStartDatePress = () => {
+    this.setState({focusStartDate: !this.state.focusStartDate});
+    if (Platform.OS === 'android') {
+      let result = this._showPicker('start', {date: this.state.startDate, mode: 'spinner'});
+    }
+  }
+
+  _onEndDatePress = () => {
+    this.setState({focusEndDate: !this.state.focusEndDate});
+  }
+
   _onStartDateChange = (date) => {
     let d1 = Date.parse(date);
-    let d2 = Date.parse(this.state.endTime);
+    let d2 = Date.parse(this.state.endDate);
     if (d2 < d1) {
-      this.setState({endTime: date});
+      this.setState({endDate: date});
     }
-    this.setState({startTime: date});
+    this.setState({startDate: date});
   }
 
   _onEndDateChange = (date) => {
     let d1 = Date.parse(date);
-    let d2 = Date.parse(this.state.startTime);
+    let d2 = Date.parse(this.state.startDate);
     if (d1 < d2) {
-      this.setState({endTime: this.state.startTime});
+      this.setState({endDate: this.state.startDate});
     } else {
-      this.setState({endTime: date});
+      this.setState({endDate: date});
     }
+  }
+
+  _renderStartDate = () => {
+    if (this.state.focusStartDate && Platform.OS === 'ios') {
+      return (
+        <DatePickerIOS
+          date={this.state.startDate}
+          mode="datetime"
+          onDateChange={this._onStartDateChange}
+        />
+      );
+    }
+  }
+
+  _renderEndDate = () => {
+    if (this.state.focusEndDate) {
+      if (Platform.OS === 'android') {
+        return this._showPicker.bind(this, 'start', {date: this.state.endDate});
+      } else {
+        return (
+          <DatePickerIOS
+            date={this.state.endDate}
+            mode="datetime"
+            onDateChange={this._onEndDateChange}
+          />
+        );
+      }
+    }
+  }
+
+  _showPicker = async (stateKey, options) => {
+    this.setState({startText: 'selecting'});
+    try {
+      var newState = {};
+      const {action, year, month, day} = await DatePickerAndroid.open(options);
+      if (action === DatePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = 'dismissed';
+      } else {
+        var date = new Date(year, month, day);
+        newState[stateKey + 'Text'] = date.toLocaleDateString();
+        newState[stateKey + 'Date'] = date;
+      }
+      console.log(newState);
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
+    try {
+      const {action, minute, hour} = await TimePickerAndroid.open(options);
+      var newState = {};
+      if (action === TimePickerAndroid.timeSetAction) {
+        newState[stateKey + 'Text'] = this._formatTime(hour, minute);
+        newState[stateKey + 'Hour'] = hour;
+        newState[stateKey + 'Minute'] = minute;
+      } else if (action === TimePickerAndroid.dismissedAction) {
+        newState[stateKey + 'Text'] = 'dismissed';
+      }
+      this.setState(newState);
+    } catch ({code, message}) {
+      console.warn(`Error in example '${stateKey}': `, message);
+    }
+  };
+
+  _formatTime(hour, minute) {
+    return hour + ':' + (minute < 10 ? '0' + minute : minute);
   }
 
   _renderMapView = () => {
@@ -124,18 +217,6 @@ export default class EventForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  smallRow: {
-    backgroundColor: '#FF3366',
-    marginTop: 20,
-    height: 30,
-    flexDirection: 'row',
-  },
-  bigRow: {
-    backgroundColor: '#FF3366',
-    marginTop: 20,
-    height: 100,
-    flexDirection: 'row',
-  },
   scrollView: {
     top: height * 0.1,
     backgroundColor: '#FFF',
@@ -147,36 +228,6 @@ const styles = StyleSheet.create({
   form: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-  },
-  text: {
-    width: width * 0.2,
-    backgroundColor: '#FF3',
-    textAlign: 'center',
-    alignSelf: 'center',
-  },
-  time: {
-    backgroundColor: '#FF3366',
-    marginTop: 20,
-    height: undefined,
-    flexDirection: 'column',
-  },
-  location: {
-    backgroundColor: '#FF3366',
-    marginTop: 20,
-    height: undefined,
-    flexDirection: 'column',
-  },
-  locationText: {
-    width: width * 0.2,
-    backgroundColor: '#FF3',
-    textAlign: 'center',
-    alignSelf: 'flex-start',
-  },
-  timeText: {
-    width: width * 0.2,
-    backgroundColor: '#FF3',
-    textAlign: 'center',
-    alignSelf: 'flex-start',
   },
   input: {
     width: width * 0.88,

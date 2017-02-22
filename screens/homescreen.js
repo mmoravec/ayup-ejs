@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import ActionTypes from '../state/ActionTypes';
@@ -40,22 +41,22 @@ export default class HomeScreen extends React.Component {
       <View style={{flex: 1}}>
         <MapView />
         <View style={styles.btnMainContainer}>
-          <TouchableHighlight
-            underlayColor="transparent"
+          <TouchableOpacity
+            activeOpacity={0.5}
             onPress={this._onMenuBtnPress}>
             <Image
               source={require('../assets/images/btn_main.png')}
               style={styles.btnMain}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
         <View style={this.state.listBtnStyle}>
-          <TouchableHighlight underlayColor="transparent" onPress={this._onListBtnPress}>
+          <TouchableOpacity activeOpacity={0.5} onPress={this._onListBtnPress}>
             <Image
               style={styles.btnList}
               source={require('../assets/images/btn_list.png')}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
         <View style={styles.filter}>
           <TouchableHighlight underlayColor="transparent" onPress={this._onFilterBtnPress}>

@@ -122,21 +122,29 @@ export default class EventListModal extends React.Component {
   }
 
   _newEventBtnPress = () => {
+    this._resetAnimState();
     this.props.navAway();
     this.props.dispatch(Actions.routeChange('newEvent'));
   }
 
   _activitiesBtnPress = () => {
+    this._resetAnimState();
     this.props.navAway();
     this.props.dispatch(Actions.routeChange('activities'));
   }
 
   _settingsBtnPress = () => {
+    this._resetAnimState();
     this.props.navAway();
     this.props.dispatch(Actions.routeChange('settings'));
   }
 
   _menuBtnPress = () => {
+    this._resetAnimState();
+    this.props.menuBtnPress();
+  }
+
+  _resetAnimState = () => {
     this.setState({
       opacity: new Animated.Value(0.1),
       firstRowMarg: new Animated.Value(0),
@@ -144,7 +152,6 @@ export default class EventListModal extends React.Component {
       secRowMarg: new Animated.Value(0),
       thirdRowBottom: new Animated.Value(20),
     });
-    this.props.menuBtnPress();
   }
 }
 
