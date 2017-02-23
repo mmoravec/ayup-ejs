@@ -30,13 +30,14 @@ class AppContainer extends React.Component {
 class App extends React.Component {
   static getDataProps(data) {
     return {
+      startup: data.startup,
       user: data.user,
     };
   }
   render() {
-    if (!this.props.user.get('id') && !this.props.user.get('new')) {
-      return <Exponent.Components.AppLoading />;
-    } else {
+    console.log(this.props.startup);
+    let {fontLoaded, regionLoaded, userLoaded, filtersLoaded} = this.props.startup;
+    if (fontLoaded && regionLoaded && userLoaded && filtersLoaded) {
       let route = 'login';
       if (this.props.user.get('id') && this.props.user.get('authToken')) {
         route = 'home';
@@ -47,6 +48,8 @@ class App extends React.Component {
           initialRoute={Router.getRoute(route)}
         />
       );
+    } else {
+      return <Exponent.Components.AppLoading />;
     }
   }
 }

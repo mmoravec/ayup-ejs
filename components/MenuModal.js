@@ -3,12 +3,17 @@ import {
   StyleSheet,
   Modal,
   View,
+  Linking,
   Image,
   TouchableHighlight,
   TouchableOpacity,
+  Text,
   Animated,
   Dimensions,
 } from 'react-native';
+import {
+  MaterialIcons,
+} from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
@@ -27,15 +32,12 @@ export default class EventListModal extends React.Component {
   render() {
     //TODO: Finish filling in listview
     if (this.props.menuVisible) {
-      Animated.sequence([
-        Animated.delay(200),
         Animated.parallel([
           Animated.timing(this.state.opacity, {toValue:1, duration: 500}),
           Animated.spring(this.state.secRowBottom, {toValue:125, tension: 60, friction: 6, velocity: 300}),
           Animated.spring(this.state.firstRowMarg, {toValue:(width * 0.6), tension: 60, friction: 6, velocity: 300}),
           Animated.spring(this.state.secRowMarg, {toValue:(width * 0.4), tension: 60, friction: 6, velocity: 300}),
           Animated.spring(this.state.thirdRowBottom, {toValue:175, tension: 60, friction: 6, velocity: 300}),
-        ]),
         ]).start();
     }
     return (
@@ -45,6 +47,15 @@ export default class EventListModal extends React.Component {
         onRequestClose={this.props.menuBtnPress}
         visible={this.props.menuVisible}>
         <View style={styles.container}>
+          <View style={styles.feedback}>
+            <TouchableOpacity onPress={this._onFeedback}>
+              <MaterialIcons
+                name={'message'}
+                size={30}
+              />
+              <Text>Feedback</Text>
+            </TouchableOpacity>
+          </View>
           <Animated.View style={styles.btnMainContainer}>
             <TouchableOpacity
               onPress={this._menuBtnPress}>
@@ -60,12 +71,12 @@ export default class EventListModal extends React.Component {
               opacity: this.state.opacity,
               right: this.state.firstRowMarg,
             }]}>
-            <TouchableHighlight underlayColor="transparent" onPress={this._settingsBtnPress}>
+            <TouchableOpacity underlayColor="transparent" onPress={this._settingsBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_settings.png')}
                 style={styles.btnSettings}
               />
-            </TouchableHighlight>
+            </TouchableOpacity>
           </Animated.View>
           <Animated.View
             style={[styles.ctnActivities,
@@ -74,12 +85,12 @@ export default class EventListModal extends React.Component {
               right: this.state.secRowMarg,
               bottom: this.state.secRowBottom,
             }]}>
-            <TouchableHighlight underlayColor="transparent" onPress={this._activitiesBtnPress}>
+            <TouchableOpacity underlayColor="transparent" onPress={this._activitiesBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_activities.png')}
                 style={styles.btnActivities}
               />
-            </TouchableHighlight>
+            </TouchableOpacity>
           </Animated.View>
           <Animated.View
             style={[styles.ctnProfile,
@@ -114,12 +125,12 @@ export default class EventListModal extends React.Component {
               opacity: this.state.opacity,
               left: this.state.firstRowMarg,
             }]}>
-            <TouchableHighlight underlayColor="transparent" onPress={this._newEventBtnPress}>
+            <TouchableOpacity underlayColor="transparent" onPress={this._newEventBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_new_event.png')}
                 style={styles.btnNewEvent}
               />
-            </TouchableHighlight>
+            </TouchableOpacity>
           </Animated.View>
         </View>
       </Modal>
@@ -149,6 +160,10 @@ export default class EventListModal extends React.Component {
     this.props.menuBtnPress();
   }
 
+  _onFeedback = () => {
+    Linking.openURL('https://goo.gl/forms/yoyvyrKkxR3PwLeu1');
+  }
+
   _resetAnimState = () => {
     this.setState({
       opacity: new Animated.Value(0.1),
@@ -172,6 +187,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  feedback: {
+    alignSelf: 'center',
+    top: 100,
   },
   btnMain: {
     width: 150,

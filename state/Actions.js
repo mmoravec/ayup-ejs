@@ -30,6 +30,13 @@ export default class Actions {
     };
   }
 
+  static filterActivity(id) {
+    return {
+      type: ActionTypes.FILTER_ACTIVITY,
+      id,
+    };
+  }
+
   static selectEvent(selectedEvent) {
     return {
       type: ActionTypes.SET_SELECTED_EVENT,

@@ -4,6 +4,7 @@ import {
   View,
   Image,
   Dimensions,
+  TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -18,12 +19,12 @@ export default class NewEventScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <TouchableHighlight underlayColor="transparent" onPress={this._backBtnPress}>
+        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
           <Image
             source={require('../assets/images/btn_back.png')}
             style={styles.btnBack}
           />
-        </TouchableHighlight>
+        </TouchableOpacity>
         <Form />
         <View style={styles.bottom}>
           <TouchableHighlight
@@ -61,6 +62,10 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     margin: 15,
+  },
+  ctnBack: {
+    position: 'absolute',
+    zIndex: 2,
   },
   bottom: {
     position: 'absolute',

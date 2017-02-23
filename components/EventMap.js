@@ -5,6 +5,7 @@ import { LayoutAnimation } from 'react-native';
 import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
+import MapStyle from '../constants/mapstyle';
 
 @connect((data) => EventList.getDataProps(data))
 export default class EventList extends React.Component {
@@ -25,6 +26,7 @@ export default class EventList extends React.Component {
     return {
       events: data.events.nearbyEvents,
       region: data.events.region,
+      filters: data.events.filters,
     };
   }
 
@@ -39,6 +41,8 @@ export default class EventList extends React.Component {
         <Components.MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
           initialRegion={this.props.region}
+          provider={"google"}
+          customMapStyle={MapStyle}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>

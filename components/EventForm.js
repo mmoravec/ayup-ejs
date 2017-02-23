@@ -2,10 +2,11 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Dimensions,
   Platform,
+  Text,
   DatePickerIOS,
+  Image,
   ScrollView,
   TouchableOpacity,
   DatePickerAndroid,
@@ -15,8 +16,10 @@ import {
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
 import Hoshi from './common/Hoshi';
+import ActivitySelector from './ActivitySelector';
 const {height, width} = Dimensions.get('window');
 const dateFormat = require('dateformat');
+const { Svg } = Components;
 
 @connect()
 export default class EventForm extends React.Component {
@@ -43,6 +46,7 @@ export default class EventForm extends React.Component {
       <View style={styles.scrollView}>
         <ScrollView
           contentContainerStyle={styles.form}>
+          <ActivitySelector />
           <View style={styles.input}>
             <Hoshi
               onChangeText={(text) => this.setState({title: text})}
@@ -63,13 +67,11 @@ export default class EventForm extends React.Component {
           </View>
           <View style={styles.input}>
             <Hoshi
-              onChangeText={(text) => this.setState({location: text})}
+              onChangeText={(location) => this.setState({location})}
               editable={this.state.isEditable}
               label={'Location'}
               borderColor={'#8bd1c6'}
-              onFocus={() => this.setState({focusMap: !this.state.focusMap})}
             />
-            {this._renderMapView()}
           </View>
           <TouchableOpacity onPress={this._onStartDatePress} style={styles.input}>
             <Hoshi
@@ -91,6 +93,9 @@ export default class EventForm extends React.Component {
             />
             {this._renderEndDate()}
           </TouchableOpacity>
+          <View style={styles.btmPadding}>
+
+          </View>
         </ScrollView>
       </View>
     );
@@ -172,7 +177,6 @@ export default class EventForm extends React.Component {
         newState[stateKey + 'Text'] = date.toLocaleDateString();
         newState[stateKey + 'Date'] = date;
       }
-      console.log(newState);
       this.setState(newState);
     } catch ({code, message}) {
       console.warn(`Error in example '${stateKey}': `, message);
@@ -217,24 +221,23 @@ export default class EventForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  btmPadding: {
+    height: height * 0.1,
+    backgroundColor: '#fff',
+  },
   scrollView: {
-    top: height * 0.1,
-    backgroundColor: '#FFF',
+    backgroundColor: 'rgba(0,0,0,0)',
     borderRadius: 10,
     marginLeft: width * 0.05,
     marginRight: width * 0.05,
-    height: height * 0.7,
+    height,
   },
   form: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
   input: {
-    width: width * 0.88,
     paddingTop: 10,
-  },
-  mapView: {
-    width: width * 0.7,
-    height: width * 0.7,
+    backgroundColor: '#fff',
   },
 });
