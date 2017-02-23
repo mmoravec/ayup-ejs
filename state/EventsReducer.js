@@ -20,6 +20,17 @@ class EventsReducer {
     return state.set('filters', action.filterList);
   }
 
+  static [ActionTypes.FILTER_ACTIVITY](state, action) {
+    let list = state.filters.update(
+      state.filters.findIndex(function(item) {
+        return item.get("id") === action.id;
+      }), function(item) {
+        return item.set("selected", !item.get('selected'));
+      }
+    );
+    return state.set('filters', list);
+  }
+
   static [ActionTypes.SET_SELECTED_EVENT](state, action) {
     return state.set('selectedEvent', action.selectedEvent);
   }

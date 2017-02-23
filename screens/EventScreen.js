@@ -6,7 +6,7 @@ import {
   Text,
   Dimensions,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icons from '../constants/icons';
@@ -44,12 +44,12 @@ export default class EventScreen extends React.Component {
             image={icon}
           />
         </Components.MapView>
-        <TouchableHighlight style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
+        <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
           <Image
             source={require('../assets/images/btn_back.png')}
             style={styles.btnBack}
           />
-        </TouchableHighlight>
+        </TouchableOpacity>
         <View style={styles.info}>
           <View style={styles.header}>
             <Text>{event.title}</Text>

@@ -2,12 +2,15 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   ScrollView,
   TouchableHighlight,
+  TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import {
+  FontAwesome,
+} from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
@@ -25,28 +28,28 @@ export default class ActivitiesScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <TouchableHighlight underlayColor="transparent" onPress={this._backBtnPress}>
+        <TouchableOpacity underlayColor="transparent" onPress={this._backBtnPress}>
           <Image
             source={require('../assets/images/btn_back.png')}
             style={styles.btnBack}
           />
-        </TouchableHighlight>
-        <View style={styles.search}>
-        </View>
+        </TouchableOpacity>
         <View style={styles.scrollView}>
           <ScrollView contentContainerStyle={styles.form}>
           {
             this.props.filters.map(icon => {
-              let { id, image } = icon;
+              let { id, image, selected } = icon;
               return (
                 <TouchableHighlight
                   style={styles.icon}
                   key={id}
+                  onPress={() => this._filterClick(id, selected)}
                   underlayColor="transparent">
                   <Image
                     style={styles.image}
-                    source={image}
-                  />
+                    source={image}>
+                    {this._renderCheck(selected)}
+                  </Image>
                 </TouchableHighlight>
               );
             })
@@ -57,8 +60,29 @@ export default class ActivitiesScreen extends React.Component {
     );
   }
 
+  _filterClick = (id, selected) => {
+    this.props.dispatch(Actions.filterActivity(id));
+  }
+
   _backBtnPress = () => {
     this.props.navigator.pop();
+  }
+
+  _renderCheck(selected) {
+    if (selected) {
+      return (
+        <View style={styles.checkContainer}>
+          <FontAwesome
+            name={'smile-o'}
+            size={20}
+            color={'#8bd1c6'}
+            style={styles.check}
+          />
+        </View>
+      );
+    } else {
+      return null;
+    }
   }
 }
 
@@ -73,6 +97,11 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     margin: 15,
+  },
+  checkContainer: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
   icon: {
     width: 0.225 * width,
@@ -99,12 +128,12 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   scrollView: {
-    top: height * 0.25,
+    top: height * 0.1,
     backgroundColor: '#FFF',
     borderRadius: 10,
     marginLeft: width * 0.05,
     marginRight: width * 0.05,
-    height: height * 0.7,
+    height: height * 0.9,
     width: width * 0.9,
     position: 'absolute',
     zIndex: 0,

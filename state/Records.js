@@ -20,3 +20,17 @@ export const User = Record({
   gender: null,
   new: null,
 });
+
+export const Filter = Record({
+  id: null,
+  title: null,
+  image: null,
+  selected: true,
+});
+
+export const Startup = Record({
+  userLoaded: false,
+  fontLoaded: false,
+  filtersLoaded: false,
+  regionLoaded: false,
+});

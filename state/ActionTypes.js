@@ -1,6 +1,10 @@
 export default defineActionConstants([
+  'FILTER_ACTIVITY',
+  'FILTERS_LOADED',
+  'FONT_LOADED',
   'REGION_CHANGE',
   'ROUTE_CHANGE',
+  'REGION_LOADED',
   'SET_CURRENT_USER',
   'SET_FILTERS',
   'SET_NEARBY',
@@ -8,6 +12,7 @@ export default defineActionConstants([
   'SET_SELECTED_EVENT',
   'SIGN_IN',
   'SIGN_OUT',
+  'USER_LOADED',
 ]);
 
 function defineActionConstants(names) {
