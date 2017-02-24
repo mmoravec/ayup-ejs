@@ -16,7 +16,6 @@ import Actions from '../state/Actions';
 import Filter from '../utils/filters';
 const { Svg } = Components;
 const {height, width} = Dimensions.get('window');
-import filters from '../constants/filters';
 
 @connect((data) => ActivitySelector.getDataProps(data))
 export default class ActivitySelector extends React.Component {
@@ -36,21 +35,15 @@ export default class ActivitySelector extends React.Component {
      return (
        <View>
          <View style={styles.activity}>
-           <TouchableOpacity style={styles.circle} onPress={this._activityPunch}>
-             <Svg
-               height="150"
-               width="150">
-               <Svg.Circle
-                 cx="75"
-                 cy="90"
-                 r="50"
-                 fill="white"
-               />
-               <Image
-                 source={this.props.filters[this.state.filterSelected].image}
-                 style={styles.activityImage}
-               />
-             </Svg>
+           <TouchableOpacity onPress={this._activityPunch}>
+             <View>
+               <Image style={styles.circle} source={require('../assets/images/small_circle.png')}>
+                 <Image
+                   source={this.props.filters[this.state.filterSelected].image}
+                   style={styles.activityImage}
+                 />
+               </Image>
+             </View>
            </TouchableOpacity>
          </View>
          {this._renderSelectForm()}
@@ -61,7 +54,7 @@ export default class ActivitySelector extends React.Component {
    _renderSelectForm() {
      if (this.state.showSelect) {
        return (
-         <Modal style={styles.scrollView}>
+         <Modal style={styles.scrollView} onRequestClose={this._activityPunch}>
            <Text style={styles.pickText}> Select an Activity</Text>
            <ScrollView contentContainerStyle={styles.form}>
              {
@@ -135,8 +128,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 60,
     resizeMode: 'contain',
-    top: 60,
+    top: 20,
+    zIndex: 2,
   },
   circle: {
+    width: 100,
+    height: 100,
   },
 });

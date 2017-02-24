@@ -13,6 +13,7 @@ import {
 } from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
+import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
 
 @connect(data => ActivitiesScreen.getDataProps(data))
@@ -20,7 +21,7 @@ export default class ActivitiesScreen extends React.Component {
 
   static getDataProps(data) {
     return {
-      filters: data.events.filters,
+      filters: Filters.filtersFromIds(data.events.filters),
       events: data.events.nearbyEvents,
     };
   }
@@ -61,7 +62,11 @@ export default class ActivitiesScreen extends React.Component {
   }
 
   _filterClick = (id, selected) => {
-    this.props.dispatch(Actions.filterActivity(id));
+    if (selected) {
+      this.props.dispatch(Actions.removeActivity(id));
+    } else {
+      this.props.dispatch(Actions.addActivity(id));
+    }
   }
 
   _backBtnPress = () => {

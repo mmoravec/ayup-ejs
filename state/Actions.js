@@ -30,9 +30,16 @@ export default class Actions {
     };
   }
 
-  static filterActivity(id) {
+  static addActivity(id) {
     return {
-      type: ActionTypes.FILTER_ACTIVITY,
+      type: ActionTypes.ADD_ACTIVITY,
+      id,
+    };
+  }
+
+  static removeActivity(id) {
+    return {
+      type: ActionTypes.REMOVE_ACTIVITY,
       id,
     };
   }

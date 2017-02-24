@@ -21,13 +21,6 @@ export const User = Record({
   new: null,
 });
 
-export const Filter = Record({
-  id: null,
-  title: null,
-  image: null,
-  selected: true,
-});
-
 export const Startup = Record({
   userLoaded: false,
   fontLoaded: false,

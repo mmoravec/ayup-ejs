@@ -5,7 +5,6 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
@@ -27,7 +26,7 @@ export default class NewEventScreen extends React.Component {
         </TouchableOpacity>
         <Form />
         <View style={styles.bottom}>
-          <TouchableHighlight
+          <TouchableOpacity
             underlayColor="transparent"
             style={styles.hlightSave}
             onPress={this._saveBtnPress}>
@@ -35,7 +34,7 @@ export default class NewEventScreen extends React.Component {
               style={styles.btnSave}
               source={require('../assets/images/btn_save.png')}
             />
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </Image>
     );

@@ -6,6 +6,7 @@ import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
 import MapStyle from '../constants/mapstyle';
+import Filters from '../utils/filters';
 
 @connect((data) => EventList.getDataProps(data))
 export default class EventList extends React.Component {
@@ -26,15 +27,16 @@ export default class EventList extends React.Component {
     return {
       events: data.events.nearbyEvents,
       region: data.events.region,
-      filters: data.events.filters,
+      filters: Filters.getSelectedActivitiesObject(data.events.filters),
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !Immutable.is(nextProps.events, this.props.events) ||
-      this.props.iconsVisible !== nextProps.iconsVisible ||
-      this.state.loadDelay !== nextState.loadDelay;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return !Immutable.is(nextProps.events, this.props.events) ||
+  //     this.props.iconsVisible !== nextProps.iconsVisible ||
+  //     this.state.loadDelay !== nextState.loadDelay ||
+  //     this.state.filters !== nextState.filters;
+  // }
 
   render() {
       return (
@@ -42,11 +44,10 @@ export default class EventList extends React.Component {
           style={{ flex: 1, backgroundColor: '#fff' }}
           initialRegion={this.props.region}
           provider={"google"}
-          customMapStyle={MapStyle}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>
-              <MapMarker key={event.id} event={event} />
+              this.props.filters[event.activity] ? <MapMarker key={event.id} event={event} /> : null
             )
           }
 

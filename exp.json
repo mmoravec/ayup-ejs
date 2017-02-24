@@ -3,7 +3,7 @@
   "description": "Explore the world of sport around you",
   "slug": "ayup-ejs",
   "sdkVersion": "14.0.0",
-  "privacy": "private",
+  "privacy": "unlisted",
   "version": "0.0.2",
   "orientation": "portrait",
   "primaryColor": "#cccccc",

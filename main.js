@@ -35,7 +35,6 @@ class App extends React.Component {
     };
   }
   render() {
-    console.log(this.props.startup);
     let {fontLoaded, regionLoaded, userLoaded, filtersLoaded} = this.props.startup;
     if (fontLoaded && regionLoaded && userLoaded && filtersLoaded) {
       let route = 'login';

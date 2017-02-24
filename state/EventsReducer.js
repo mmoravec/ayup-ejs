@@ -20,15 +20,13 @@ class EventsReducer {
     return state.set('filters', action.filterList);
   }
 
-  static [ActionTypes.FILTER_ACTIVITY](state, action) {
-    let list = state.filters.update(
-      state.filters.findIndex(function(item) {
-        return item.get("id") === action.id;
-      }), function(item) {
-        return item.set("selected", !item.get('selected'));
-      }
-    );
-    return state.set('filters', list);
+  static [ActionTypes.ADD_ACTIVITY](state, action) {
+    return state.set('filters', state.filters.push(action.id));
+  }
+
+  static [ActionTypes.REMOVE_ACTIVITY](state, action) {
+    let index = state.filters.indexOf(action.id);
+    return state.set('filters', state.filters.delete(index));
   }
 
   static [ActionTypes.SET_SELECTED_EVENT](state, action) {

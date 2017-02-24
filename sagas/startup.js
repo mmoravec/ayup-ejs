@@ -33,8 +33,7 @@ function* loadFonts() {
 
 function* loadFilters() {
     let filterList = new List(filters.map(filter => {
-        let f = Filter(filter);
-        return f;
+        return filter.id;
     }));
     yield put({
         type: ActionTypes.SET_FILTERS,
@@ -77,5 +76,5 @@ function* setInitialRegion() {
 }
 
 async function getFonts() {
- Font.loadAsync({ 'Lato': require('../assets/fonts/Lato-Regular.ttf')});
+ Font.loadAsync({ 'Lato-Regular': require('../assets/fonts/Lato-Regular.ttf')});
 }

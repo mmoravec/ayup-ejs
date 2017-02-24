@@ -37,6 +37,7 @@ export default class EventScreen extends React.Component {
           onRegionChangeComplete={this._onRegionChange}
           zoomEnabled={false}
           scrollEnabled={false}
+          provider={"google"}
           initialRegion={coord}>
           <Components.MapView.Marker
             key={0}
