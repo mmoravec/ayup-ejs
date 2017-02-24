@@ -1,10 +1,11 @@
 export default defineActionConstants([
-  'FILTER_ACTIVITY',
+  'ADD_ACTIVITY',
   'FILTERS_LOADED',
   'FONT_LOADED',
   'REGION_CHANGE',
   'ROUTE_CHANGE',
   'REGION_LOADED',
+  'REMOVE_ACTIVITY',
   'SET_CURRENT_USER',
   'SET_FILTERS',
   'SET_NEARBY',

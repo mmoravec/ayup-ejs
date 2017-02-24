@@ -9,6 +9,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  TouchableHighlight,
   DatePickerAndroid,
   TimePickerAndroid,
   LayoutAnimation,
@@ -17,6 +18,7 @@ import { Components } from 'exponent';
 import { connect } from 'react-redux';
 import Hoshi from './common/Hoshi';
 import ActivitySelector from './ActivitySelector';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const {height, width} = Dimensions.get('window');
 const dateFormat = require('dateformat');
 const { Svg } = Components;
@@ -47,7 +49,7 @@ export default class EventForm extends React.Component {
         <ScrollView
           contentContainerStyle={styles.form}>
           <ActivitySelector />
-          <View style={styles.input}>
+          <View style={[styles.input, styles.topInput]}>
             <Hoshi
               onChangeText={(text) => this.setState({title: text})}
               editable={this.state.isEditable}
@@ -66,33 +68,60 @@ export default class EventForm extends React.Component {
             />
           </View>
           <View style={styles.input}>
-            <Hoshi
-              onChangeText={(location) => this.setState({location})}
-              editable={this.state.isEditable}
-              label={'Location'}
-              borderColor={'#8bd1c6'}
+            <GooglePlacesAutocomplete
+              placeholder='Enter Location'
+              minLength={2}
+              autoFocus={false}
+              fetchDetails={true}
+              query={{
+                // available options: https://developers.google.com/places/web-service/autocomplete
+                key: 'AIzaSyBJrRZZzqMfcfZwHy5oxg_7R_gjlNCHiTQ',
+                language: 'en', // language of the results
+              }}
+              styles={{
+                textInputContainer: {
+                  backgroundColor: 'rgba(0,0,0,0)',
+                  borderTopWidth: 0,
+                  borderBottomWidth:0
+                },
+                textInput: {
+                  marginLeft: 0,
+                  marginRight: 0,
+                  height: 38,
+                  color: '#5d5d5d',
+                  fontSize: 16
+                },
+                predefinedPlacesDescription: {
+                  color: '#1faadb'
+                },
+              }}
+              currentLocation={false}
             />
           </View>
-          <TouchableOpacity onPress={this._onStartDatePress} style={styles.input}>
-            <Hoshi
-              value={this.state.startDate.toString()}
-              editable={false}
-              label={'Start Time'}
-              borderColor={'#8bd1c6'}
-            />
-            {this._renderStartDate()}
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this._onEndDatePress} style={styles.input}>
-            <Hoshi
-              value={this.state.endDate.toString()}
-              editable={false}
-              label={'End Time'}
-              borderColor={'#8bd1c6'}
-              onFocus={() => this.setState({focusMap: !this.state.focusEndDate})}
-              onBlur={() => this.setState({focusMap: !this.state.focusEndDate})}
-            />
-            {this._renderEndDate()}
-          </TouchableOpacity>
+          <TouchableHighlight onPress={this._onStartDatePress} underlayColor={'#f1f1f1'} style={styles.input}>
+            <View>
+              <Hoshi
+                value={this.state.startDate.toString()}
+                editable={false}
+                label={'Start Time'}
+                borderColor={'#8bd1c6'}
+              />
+              {this._renderStartDate()}
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={this._onEndDatePress} underlayColor={'#f1f1f1'} style={styles.input}>
+            <View>
+              <Hoshi
+                value={this.state.endDate.toString()}
+                editable={false}
+                label={'End Time'}
+                borderColor={'#8bd1c6'}
+                onFocus={() => this.setState({focusMap: !this.state.focusEndDate})}
+                onBlur={() => this.setState({focusMap: !this.state.focusEndDate})}
+              />
+              {this._renderEndDate()}
+            </View>
+          </TouchableHighlight>
           <View style={styles.btmPadding}>
 
           </View>
@@ -222,7 +251,7 @@ export default class EventForm extends React.Component {
 
 const styles = StyleSheet.create({
   btmPadding: {
-    height: height * 0.1,
+    height: height * 0.5,
     backgroundColor: '#fff',
   },
   scrollView: {
@@ -239,5 +268,9 @@ const styles = StyleSheet.create({
   input: {
     paddingTop: 10,
     backgroundColor: '#fff',
+  },
+  topInput: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
 });

@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     color: '#6a7989',
+    fontFamily: 'Lato-Regular',
   },
   textInput: {
     position: 'absolute',
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
     color: '#6a7989',
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'Lato-Regular',
   },
   labelMask: {
     height: 24,
