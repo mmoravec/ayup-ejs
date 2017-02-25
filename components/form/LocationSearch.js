@@ -36,6 +36,7 @@ export default class LocationSearch extends React.Component {
      if (this.state.showPicker) {
        return (
          <Modal style={styles.scrollView} onRequestClose={this._onRequestClose} animationType={"slide"}>
+           <Text style={styles.pickText}>Start Typing to Pick Location</Text>
            <GooglePlacesAutocomplete
              placeholder={'Enter Location'}
              minLength={2}
