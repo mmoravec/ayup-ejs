@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
-import Form from '../components/EventForm';
+import Form from '../components/form/EventForm';
 const {height, width} = Dimensions.get('window');
 
 

@@ -10,7 +10,7 @@ import {
 
 import BaseInput from './BaseInput';
 
-const PADDING = 16;
+const PADDING = 24;
 
 export default class Hoshi extends BaseInput {
 
@@ -46,7 +46,6 @@ export default class Hoshi extends BaseInput {
       focusedAnim,
       value,
     } = this.state;
-
     return (
       <View
         style={[styles.container, containerStyle, {
@@ -68,7 +67,7 @@ export default class Hoshi extends BaseInput {
           onFocus={this._onFocus}
           underlineColorAndroid={'transparent'}
         />
-        <TouchableWithoutFeedback onPress={this.focus}>
+        <TouchableWithoutFeedback onPress={this.props.editable ? this.focus : null}>
           <Animated.View style={[styles.labelContainer, {
             opacity: focusedAnim.interpolate({
               inputRange: [0, 0.5, 1],
@@ -76,11 +75,11 @@ export default class Hoshi extends BaseInput {
             }),
             top: focusedAnim.interpolate({
               inputRange: [0, 0.5, 0.51, 1],
-              outputRange: [24, 24, 0, 0],
+              outputRange: [PADDING * 1.5, PADDING * 1.5, 10, 10],
             }),
             left: focusedAnim.interpolate({
               inputRange: [0, 0.5, 0.51, 1],
-              outputRange: [PADDING, 2 * PADDING, 0, PADDING],
+              outputRange: [PADDING * 0.5, PADDING, 0, PADDING * 0.5],
             }),
           }]}>
             <Text style={[styles.label, labelStyle]}>
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
   textInput: {
     position: 'absolute',
     bottom: 2,
-    left: PADDING,
+    left: PADDING * 0.5,
     padding: 0,
     color: '#6a7989',
     fontSize: 18,
