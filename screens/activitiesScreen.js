@@ -78,9 +78,9 @@ export default class ActivitiesScreen extends React.Component {
       return (
         <View style={styles.checkContainer}>
           <FontAwesome
-            name={'smile-o'}
-            size={20}
-            color={'#8bd1c6'}
+            name={'check'}
+            size={46}
+            color={'#5BC800'}
             style={styles.check}
           />
         </View>
@@ -105,8 +105,11 @@ const styles = StyleSheet.create({
   },
   checkContainer: {
     position: 'absolute',
-    right: 0,
     top: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
     width: 0.225 * width,

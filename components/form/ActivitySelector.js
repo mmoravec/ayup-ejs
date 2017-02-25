@@ -12,9 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Actions from '../state/Actions';
-import Filter from '../utils/filters';
-const { Svg } = Components;
+import Filter from '../../utils/filters';
 const {height, width} = Dimensions.get('window');
 
 @connect((data) => ActivitySelector.getDataProps(data))
@@ -37,7 +35,7 @@ export default class ActivitySelector extends React.Component {
          <View style={styles.activity}>
            <TouchableOpacity onPress={this._activityPunch}>
              <View>
-               <Image style={styles.circle} source={require('../assets/images/small_circle.png')}>
+               <Image style={styles.circle} source={require('../../assets/images/small_circle.png')}>
                  <Image
                    source={this.props.filters[this.state.filterSelected].image}
                    style={styles.activityImage}
