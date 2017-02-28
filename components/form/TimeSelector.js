@@ -10,6 +10,7 @@ import {
   TimePickerAndroid,
 } from 'react-native';
 import Hoshi from '../common/Hoshi';
+const dismissKeyboard = require('dismissKeyboard');
 
 export default class TimeSelector extends React.Component {
 
@@ -17,26 +18,37 @@ export default class TimeSelector extends React.Component {
     focusDate: false,
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.focus.find(el =>
+      el.stateKey === this.props.stateKey
+    ).focus) {
+      this.setState({focusDate: true});
+      dismissKeyboard();
+    } else {
+      this.setState({focusDate: false});
+    }
+  }
+
   render() {
     return (
-      <TouchableHighlight onPress={this._onDatePress} underlayColor={'#f1f1f1'}>
+      <TouchableHighlight
+        onPress={this._onDatePress}
+        underlayColor={'#f1f1f1'}>
         <View>
-          <Hoshi
-            value={this.props.date.toString()}
-            editable={false}
-            label={this.props.label}
-            borderColor={'#8bd1c6'}
-            onFocus={this._focusDate}
-            onBlur={this._focusDate}
-          />
+          <View pointerEvents={'none'}>
+            <Hoshi
+              ref={'time'}
+              value={this.props.date.toString()}
+              editable={false}
+              label={this.props.label}
+              borderColor={'#8bd1c6'}
+              onFocus={this._onDatePress}
+            />
+          </View>
           {this._renderDate()}
         </View>
       </TouchableHighlight>
     );
-  }
-
-  _focusDate = () => {
-    this.setState({focusDate: !this.state.focusDate});
   }
 
   _renderDate = () => {
@@ -58,7 +70,7 @@ export default class TimeSelector extends React.Component {
   }
 
   _onDatePress = async () => {
-    this.setState({focusDate: !this.state.focusDate});
+    this.props.onFocus(this.props.stateKey);
     if (Platform.OS === 'android') {
       let date, time;
       let now = new Date();

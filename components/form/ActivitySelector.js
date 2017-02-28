@@ -11,6 +11,9 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
+import {
+  Ionicons,
+} from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import Filter from '../../utils/filters';
 const {height, width} = Dimensions.get('window');
@@ -54,6 +57,12 @@ export default class ActivitySelector extends React.Component {
        return (
          <Modal style={styles.scrollView} onRequestClose={this._activityPunch}>
            <Text style={styles.pickText}> Select an Activity</Text>
+           <TouchableOpacity onPress={this._activityPunch} style={styles.back}>
+             <Ionicons
+               size={40}
+               name={'ios-close-circle-outline'}
+             />
+           </TouchableOpacity>
            <ScrollView contentContainerStyle={styles.form}>
              {
              this.props.filters.map(icon => {
@@ -91,6 +100,11 @@ export default class ActivitySelector extends React.Component {
 
 }
 const styles = StyleSheet.create({
+  back: {
+    position: 'absolute',
+    left: 15,
+    top: 15,
+  },
   icon: {
     width: 0.25 * width,
     height: 0.175 * height,
@@ -108,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     fontSize: 20,
-    marginTop: 20,
+    marginTop: 30,
   },
   form: {
     flexDirection: 'row',

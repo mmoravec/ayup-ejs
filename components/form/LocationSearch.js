@@ -5,7 +5,11 @@ import {
   Dimensions,
   Text,
   Modal,
+  TouchableOpacity,
 } from 'react-native';
+import {
+  FontAwesome,
+} from '@exponent/vector-icons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Hoshi from '../common/Hoshi';
 const {height, width} = Dimensions.get('window');
@@ -20,67 +24,56 @@ export default class LocationSearch extends React.Component {
      let isEditable = true;
      return (
        <View style={styles.view} >
-         <Hoshi
-           editable={isEditable}
-           label={'Location'}
-           onFocus={() => this.setState({showPicker: true})}
-           borderColor={'#8bd1c6'}
-           value={this.props.location}
+         <GooglePlacesAutocomplete
+           ref="gplaces"
+           placeholder={'Enter Location'}
+           minLength={2}
+           autoFocus={false}
+           fetchDetails={true}
+           onPress={this._getLocation}
+           query={{
+             // available options: https://developers.google.com/places/web-service/autocomplete
+             key: 'AIzaSyBJrRZZzqMfcfZwHy5oxg_7R_gjlNCHiTQ',
+             language: 'en', // language of the results
+           }}
+           textInputProps={{
+             onFocus: this._inputFocused,
+           }}
+           styles={{
+             container: {
+               borderBottomWidth: 2,
+               borderBottomColor: '#b9c1ca',
+             },
+             textInputContainer: {
+               backgroundColor: '#fff',
+               borderTopWidth: 0,
+               marginTop: 20,
+               marginBottom: 3,
+             },
+             textInput: {
+               marginLeft: 0,
+               marginRight: 0,
+               height: 38,
+               color: '#5d5d5d',
+               fontSize: 16,
+             },
+             predefinedPlacesDescription: {
+               color: '#1faadb',
+             },
+           }}
+           currentLocation={false}
          />
-         {this._renderLocationPicker()}
        </View>
      );
    }
 
-   _renderLocationPicker() {
-     if (this.state.showPicker) {
-       return (
-         <Modal style={styles.scrollView} onRequestClose={this._onRequestClose} animationType={"slide"}>
-           <Text style={styles.pickText}>Start Typing to Pick Location</Text>
-           <GooglePlacesAutocomplete
-             placeholder={'Enter Location'}
-             minLength={2}
-             autoFocus={true}
-             fetchDetails={true}
-             onPress={this._getLocation}
-             query={{
-               // available options: https://developers.google.com/places/web-service/autocomplete
-               key: 'AIzaSyBJrRZZzqMfcfZwHy5oxg_7R_gjlNCHiTQ',
-               language: 'en', // language of the results
-             }}
-             styles={{
-               textInputContainer: {
-                 backgroundColor: 'rgba(0,0,0,0)',
-                 borderTopWidth: 0,
-                 borderBottomWidth:0,
-               },
-               textInput: {
-                 marginLeft: 0,
-                 marginRight: 0,
-                 height: 38,
-                 color: '#5d5d5d',
-                 fontSize: 16,
-               },
-               predefinedPlacesDescription: {
-                 color: '#1faadb',
-               },
-             }}
-             currentLocation={false}
-           />
-         </Modal>
-       );
-     } else {
-       return null;
-     }
-   }
-
-   _onRequestClose = () => {
-     this.setState({showPicker: false});
-   }
-
    _getLocation = (data, details) => {
      this.props.onChange(details.name, details.geometry);
-     this.setState({showPicker: false});
+   }
+
+   _inputFocused = () => {
+     this.props.scrollTo(height * 0.4);
+     this.props.onFocus();
    }
 
 }
@@ -89,12 +82,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     fontSize: 20,
-    marginTop: 20,
+    marginTop: 50,
   },
   scrollView: {
     backgroundColor: '#FFF',
   },
-  view: {
-
-  }
+  back: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
 });
