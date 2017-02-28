@@ -76,5 +76,5 @@ function* setInitialRegion() {
 }
 
 async function getFonts() {
- Font.loadAsync({ 'Lato-Regular': require('../assets/fonts/Lato-Regular.ttf')});
+ Font.loadAsync({ 'LatoRegular': require('../assets/fonts/Lato-Regular.ttf')});
 }
