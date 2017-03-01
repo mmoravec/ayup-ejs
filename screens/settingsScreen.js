@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux';
 import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
 import Actions from '../state/Actions';
-import LocalStorage from '../state/LocalStorage';
+import LocalStorage from '../utils/LocalStorage';
 
 @connect()
 export default class SettingsScreen extends React.Component {
@@ -23,12 +23,33 @@ export default class SettingsScreen extends React.Component {
             </Text>
           </View>
         </TouchableNativeFeedback>
+        <TouchableNativeFeedback onPress={this._signIn}>
+          <View style={styles.signOutButton}>
+            <Text>
+              Go to Login
+            </Text>
+          </View>
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback onPress={this._home}>
+          <View style={styles.signOutButton}>
+            <Text>
+              Back to Homescreen
+            </Text>
+          </View>
+        </TouchableNativeFeedback>
       </View>
     );
   }
   _signOut = () => {
     LocalStorage.clearAllAsync();
     this.props.dispatch(Actions.routeChange('home'));
+  }
+  _signIn = () => {
+    LocalStorage.clearAllAsync();
+    this.props.dispatch(Actions.routeChange('login'));
+  }
+  _home = () => {
+    this.props.navigator.pop();
   }
 }
 
