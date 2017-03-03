@@ -28,6 +28,8 @@ function* authorize() {
     user = yield call(getInfo, result.token);
   }
   user = new User({'authToken': result.token, ...user});
+  // let resp = yield call(saveUser, user);
+  //add secret to the user object and authenticate all calls
   LocalStorage.saveUserAsync(user);
   yield put({ type: ActionTypes.SET_CURRENT_USER, user });
   yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'home' });
@@ -35,4 +37,16 @@ function* authorize() {
 
 export function* watchLogin() {
   yield takeEvery(ActionTypes.SIGN_IN, authorize);
+}
+
+
+async function saveUser(user) {
+  let userStr = JSON.stringify(user.toJS());
+  console.log(userStr);
+  let response = await fetch('http://localhost:8000/auth/', {
+    method: 'post',
+    body: userStr,
+  });
+//  let info = await response.json();
+  return null;
 }

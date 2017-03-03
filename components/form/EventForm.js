@@ -4,6 +4,9 @@ import {
   View,
   Dimensions,
   ScrollView,
+  Animated,
+  Text,
+  Switch,
   LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -17,13 +20,49 @@ const dateFormat = require('dateformat');
 @connect()
 export default class EventForm extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this._inputProps = {
+      style: styles.hoshi,
+      editable: true,
+      borderColor: '#8bd1c6',
+    };
+    this._titleProps = {
+      onChangeText: ((text) => this.setState({title: text})),
+      onFocus: this._focusElement.bind(this, 'title'),
+      label: 'Title',
+      ...this._inputProps,
+    };
+    this._descProps = {
+      onChangeText: ((text) => this.setState({desc: text})),
+      onFocus: this._focusElement.bind(this, 'desc'),
+      label: 'Description',
+      ...this._inputProps,
+    };
+    this._locProps = {
+      scrollTo: this._scrollTo.bind(this, 200),
+      onFocus: this._focusElement.bind(this, 'location'),
+    };
+
+    this._startProps = {
+      scrollTo: this._scrollTo.bind(this, 300),
+    };
+
+    this._endProps = {
+      scrollTo: this._scrollTo.bind(this, 380),
+    };
+
+  }
+
   state = {
     startDate: '',
     endDate: '',
     title: 'title placeholder',
     desc: 'sample desc',
     location: '',
+    scrollY: new Animated.Value(0),
     latlng: null,
+    public: true,
     focus: [
       {stateKey: 'title', focus: false},
       {stateKey: 'desc', focus: false},
@@ -38,7 +77,6 @@ export default class EventForm extends React.Component {
   }
 
   render() {
-    let isEditable = true;
     return (
       <View style={styles.scrollView}>
         <ScrollView
@@ -47,32 +85,18 @@ export default class EventForm extends React.Component {
           contentContainerStyle={styles.form}>
           <ActivitySelector />
           <View style={[styles.input, styles.topInput]}>
-            <Hoshi
-              onChangeText={(text) => this.setState({title: text})}
-              editable={isEditable}
-              style={styles.hoshi}
-              onFocus={this._focusElement.bind(this, 'title')}
-              label={'Title'}
-              borderColor={'#8bd1c6'}
-              ref={'title'}
-            />
+            <Hoshi {...this._titleProps} />
           </View>
           <View style={styles.input}>
-            <Hoshi
-              onChangeText={(text) => this.setState({desc: text})}
-              editable={isEditable}
-              onFocus={this._focusElement.bind(this, 'desc')}
-              label={'Description'}
-              borderColor={'#8bd1c6'}
-            />
+            <Hoshi {...this._descProps} />
           </View>
           <View style={styles.input}>
             <LocationSearch
-              scrollTo={this._scrollTo}
-              onFocus={this._focusElement.bind(this, 'location')}
+              {...this._locProps}
               location={this.state.location}
               focus={this.state.focus}
-              onChange={this._changeLocation} />
+              onChange={this._changeLocation}
+            />
           </View>
           <View style={styles.input}>
             <TimeSelector
@@ -82,6 +106,7 @@ export default class EventForm extends React.Component {
               label={'Start Date'}
               onChange={this._onChange}
               stateKey={'startDate'}
+              {...this._startProps}
             />
           </View>
           <View style={styles.input}>
@@ -93,6 +118,15 @@ export default class EventForm extends React.Component {
               label={'End Date'}
               onChange={this._onChange}
               stateKey={'endDate'}
+              {...this._endProps}
+            />
+          </View>
+          <View style={styles.switch}>
+            <Text style={styles.text}>Public</Text>
+            <Switch
+              style={styles.swButton}
+              onValueChange={this._privateSwitch}
+              value={this.state.public}
             />
           </View>
           <View style={styles.btmPadding} />
@@ -126,6 +160,10 @@ export default class EventForm extends React.Component {
     this.refs.scrollView.scrollTo({y: num, animated: true});
   }
 
+  _privateSwitch = () => {
+    this.setState({public: !this.state.public});
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -153,5 +191,24 @@ const styles = StyleSheet.create({
   },
   hoshi: {
     paddingTop: 10,
+  },
+  switch: {
+    backgroundColor: '#fff',
+    borderBottomWidth: 2,
+    borderBottomColor: '#b9c1ca',
+    height: 72,
+  },
+  text: {
+    fontSize: 16,
+    fontFamily: 'LatoRegular',
+    position: 'absolute',
+    bottom: 16,
+    left: 14,
+    color: '#6a7989',
+  },
+  swButton: {
+    position: 'absolute',
+    right: 16,
+    bottom: 10,
   },
 });

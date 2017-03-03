@@ -19,7 +19,7 @@ export default class EventListModal extends React.Component {
         transparent={true}
         visible={this.props.listVisible}>
         <View style={styles.container}>
-          <EventList />
+          <EventList closeBtn={this.props.closeBtnPress} />
         </View>
         <View style={styles.btnListContainer}>
           <TouchableHighlight underlayColor="transparent" onPress={this.props.closeBtnPress}>

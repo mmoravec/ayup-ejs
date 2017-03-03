@@ -23,7 +23,7 @@ export default class LocationSearch extends React.Component {
    render() {
      let isEditable = true;
      return (
-       <View style={styles.view} >
+       <View ref="view" style={styles.view} >
          <GooglePlacesAutocomplete
            ref="gplaces"
            placeholder={'Enter Location'}
@@ -72,7 +72,7 @@ export default class LocationSearch extends React.Component {
    }
 
    _inputFocused = () => {
-     this.props.scrollTo(height * 0.4);
+     this.props.scrollTo();
      this.props.onFocus();
    }
 

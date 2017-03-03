@@ -29,6 +29,12 @@ export default class EventScreen extends React.Component {
       latitudeDelta: 0.003850375166415176,
       longitudeDelta: 0.01609325556559327,
     };
+    let marker = {
+      longitude: event.location.coordinates[0],
+      latitude: event.location.coordinates[1] - 0.001,
+      latitudeDelta: 0.003850375166415176,
+      longitudeDelta: 0.01609325556559327,
+    };
     let icon = Icons[event.activity].icon;
     return (
       <View style={styles.container}>
@@ -41,7 +47,7 @@ export default class EventScreen extends React.Component {
           initialRegion={coord}>
           <Components.MapView.Marker
             key={0}
-            coordinate={coord}
+            coordinate={marker}
             image={icon}
           />
         </Components.MapView>

@@ -17,6 +17,7 @@ export default class TimeSelector extends React.Component {
   state = {
     focusDate: false,
   }
+  _yOffset = 0;
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.focus.find(el =>
@@ -34,10 +35,9 @@ export default class TimeSelector extends React.Component {
       <TouchableHighlight
         onPress={this._onDatePress}
         underlayColor={'#f1f1f1'}>
-        <View>
-          <View pointerEvents={'none'}>
+        <View ref={view => { this._view = view; }}>
+          <View ref="view" pointerEvents={'none'}>
             <Hoshi
-              ref={'time'}
               value={this.props.date.toString()}
               editable={false}
               label={this.props.label}
@@ -50,6 +50,7 @@ export default class TimeSelector extends React.Component {
       </TouchableHighlight>
     );
   }
+
 
   _renderDate = () => {
     if (this.state.focusDate && Platform.OS === 'ios') {
@@ -71,6 +72,7 @@ export default class TimeSelector extends React.Component {
 
   _onDatePress = async () => {
     this.props.onFocus(this.props.stateKey);
+    this.props.scrollTo();
     if (Platform.OS === 'android') {
       let date, time;
       let now = new Date();
