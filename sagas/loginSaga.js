@@ -28,7 +28,7 @@ function* authorize() {
     user = yield call(getInfo, result.token);
   }
   user = new User({'authToken': result.token, ...user});
-  let resp = yield call(saveUser, user);
+  // let resp = yield call(saveUser, user);
   //add secret to the user object and authenticate all calls
   LocalStorage.saveUserAsync(user);
   yield put({ type: ActionTypes.SET_CURRENT_USER, user });

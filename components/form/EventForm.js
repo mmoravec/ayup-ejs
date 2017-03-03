@@ -22,14 +22,36 @@ export default class EventForm extends React.Component {
 
   constructor(props) {
     super(props);
+    this._inputProps = {
+      style: styles.hoshi,
+      editable: true,
+      borderColor: '#8bd1c6',
+    };
     this._titleProps = {
       onChangeText: ((text) => this.setState({title: text})),
       onFocus: this._focusElement.bind(this, 'title'),
-      style: styles.hoshi,
-      editable: true,
       label: 'Title',
-      borderColor: '#8bd1c6',
+      ...this._inputProps,
     };
+    this._descProps = {
+      onChangeText: ((text) => this.setState({desc: text})),
+      onFocus: this._focusElement.bind(this, 'desc'),
+      label: 'Description',
+      ...this._inputProps,
+    };
+    this._locProps = {
+      scrollTo: this._scrollTo.bind(this, 200),
+      onFocus: this._focusElement.bind(this, 'location'),
+    };
+
+    this._startProps = {
+      scrollTo: this._scrollTo.bind(this, 300),
+    };
+
+    this._endProps = {
+      scrollTo: this._scrollTo.bind(this, 380),
+    };
+
   }
 
   state = {
@@ -55,7 +77,6 @@ export default class EventForm extends React.Component {
   }
 
   render() {
-    let isEditable = true;
     return (
       <View style={styles.scrollView}>
         <ScrollView
@@ -67,31 +88,25 @@ export default class EventForm extends React.Component {
             <Hoshi {...this._titleProps} />
           </View>
           <View style={styles.input}>
-            <Hoshi
-              onChangeText={(text) => this.setState({desc: text})}
-              editable={isEditable}
-              onFocus={this._focusElement.bind(this, 'desc')}
-              label={'Description'}
-              borderColor={'#8bd1c6'}
-            />
+            <Hoshi {...this._descProps} />
           </View>
           <View style={styles.input}>
             <LocationSearch
-              scrollTo={this._scrollTo.bind(this, 200)}
-              onFocus={this._focusElement.bind(this, 'location')}
+              {...this._locProps}
               location={this.state.location}
               focus={this.state.focus}
-              onChange={this._changeLocation} />
+              onChange={this._changeLocation}
+            />
           </View>
           <View style={styles.input}>
             <TimeSelector
               focus={this.state.focus}
               onFocus={this._focusElement}
-              scrollTo={this._scrollTo.bind(this, 300)}
               date={this.state.startDate}
               label={'Start Date'}
               onChange={this._onChange}
               stateKey={'startDate'}
+              {...this._startProps}
             />
           </View>
           <View style={styles.input}>
@@ -99,11 +114,11 @@ export default class EventForm extends React.Component {
               ref="endDate"
               focus={this.state.focus}
               onFocus={this._focusElement}
-              scrollTo={this._scrollTo.bind(this, 380)}
               date={this.state.endDate}
               label={'End Date'}
               onChange={this._onChange}
               stateKey={'endDate'}
+              {...this._endProps}
             />
           </View>
           <View style={styles.switch}>
@@ -111,7 +126,8 @@ export default class EventForm extends React.Component {
             <Switch
               style={styles.swButton}
               onValueChange={this._privateSwitch}
-              value={this.state.public} />
+              value={this.state.public}
+            />
           </View>
           <View style={styles.btmPadding} />
         </ScrollView>
@@ -194,5 +210,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     bottom: 10,
-  }
+  },
 });
