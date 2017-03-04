@@ -20,6 +20,10 @@ class EventsReducer {
     return state.set('filters', action.filterList);
   }
 
+  static [ActionTypes.SET_FILTER](state, action) {
+    return state.set('filter', {startTime: action.filterStart, endTime: action.filterEnd});
+  }
+
   static [ActionTypes.ADD_ACTIVITY](state, action) {
     return state.set('filters', state.filters.push(action.id));
   }

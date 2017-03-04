@@ -16,6 +16,7 @@ function facebookLogin() {
 }
 
 async function getInfo(token) {
+  console.log("fb access token: " + token);
   let response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
   let info = await response.json();
   return info;
@@ -27,6 +28,7 @@ function* authorize() {
   if (result.type === 'success') {
     user = yield call(getInfo, result.token);
   }
+  console.log('fb user info: ' + JSON.stringify(user));
   user = new User({'authToken': result.token, ...user});
   // let resp = yield call(saveUser, user);
   //add secret to the user object and authenticate all calls

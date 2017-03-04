@@ -5,7 +5,10 @@ import {
 import {
     List,
 } from 'immutable';
-import { Font } from 'exponent';
+import {
+  Image,
+} from 'react-native';
+import { Font, Asset } from 'exponent';
 import ActionTypes from '../state/ActionTypes';
 import LocalStorage from '../state/LocalStorage';
 import {
@@ -21,8 +24,17 @@ export default function* startup() {
         call(getUser),
         call(loadFilters),
         call(loadFonts),
+        call(loadImages),
     ];
 }
+
+function* loadImages() {
+  yield call(exLoadImages);
+  yield put({
+      type: ActionTypes.IMAGES_LOADED,
+  });
+}
+
 
 function* loadFonts() {
   yield call(getFonts);
@@ -77,4 +89,30 @@ function* setInitialRegion() {
 
 async function getFonts() {
  Font.loadAsync({ 'LatoRegular': require('../assets/fonts/Lato-Regular.ttf')});
+}
+
+async function exLoadImages() {
+  let images = [
+      require('../assets/images/heart.png'),
+      require('../assets/images/btn_main.png'),
+      require('../assets/images/btn_close.png'),
+      require('../assets/images/btn_list.png'),
+      require('../assets/images/menu/btn_activities.png'),
+      require('../assets/images/menu/btn_events.png'),
+      require('../assets/images/menu/btn_new_event.png'),
+      require('../assets/images/menu/btn_profile.png'),
+      require('../assets/images/menu/btn_settings.png'),
+      require('../assets/images/btn_menu_close.png'),
+    ];
+  cacheImages(images);
+}
+
+function cacheImages(images) {
+  return images.map(image => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
 }

@@ -50,4 +50,12 @@ export default class Actions {
       selectedEvent,
     };
   }
+
+  static setFilter(filterStart, filterEnd) {
+    return   {
+        type: ActionTypes.SET_FILTER,
+        filterStart,
+        filterEnd,
+      };
+  }
 }

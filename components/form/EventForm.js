@@ -15,7 +15,6 @@ import ActivitySelector from './ActivitySelector';
 import TimeSelector from './TimeSelector';
 import Hoshi from '../common/Hoshi';
 const {height, width} = Dimensions.get('window');
-const dateFormat = require('dateformat');
 
 @connect()
 export default class EventForm extends React.Component {

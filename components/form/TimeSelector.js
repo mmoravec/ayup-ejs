@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Hoshi from '../common/Hoshi';
 const dismissKeyboard = require('dismissKeyboard');
+const dateFormat = require('dateformat');
 
 export default class TimeSelector extends React.Component {
 
@@ -38,7 +39,7 @@ export default class TimeSelector extends React.Component {
         <View ref={view => { this._view = view; }}>
           <View ref="view" pointerEvents={'none'}>
             <Hoshi
-              value={this.props.date.toString()}
+              value={dateFormat(this.props.date, 'ddd h:MM TT, mmm dd')}
               editable={false}
               label={this.props.label}
               borderColor={'#8bd1c6'}
@@ -58,6 +59,7 @@ export default class TimeSelector extends React.Component {
         <DatePickerIOS
           date={this.props.date instanceof Date ? this.props.date : new Date()}
           mode="datetime"
+          minuteInterval={15}
           onDateChange={this._onChange}
         />
       );

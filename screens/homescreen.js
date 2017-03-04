@@ -20,7 +20,6 @@ export default class HomeScreen extends React.Component {
     listVisible: false,
     menuVisible: false,
     listBtnStyle: styles.listBtnStyle,
-    filterVisible: false,
   }
 
   render() {
@@ -60,25 +59,11 @@ export default class HomeScreen extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.filter}>
-          <TouchableOpacity activeOpacity={0.5} underlayColor="transparent" onPress={this._onFilterBtnPress}>
-            <Image
-              style={styles.filterBtn}
-              source={require('../assets/images/filter2.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        <FilterModal visible={this.state.filterVisible} close={this._onFilterBtnPress} />
+        <FilterModal visible={this.state.filterVisible} saveFilter={this._onFilterBtnPress} />
         <EventListModal {...listProps} />
         <MenuModal {...menuProps} />
       </View>
     );
-  }
-
-  _onFilterBtnPress = () => {
-    this.setState({
-      filterVisible: !this.state.filterVisible,
-    });
   }
 
   _onListBtnPress = () => {
