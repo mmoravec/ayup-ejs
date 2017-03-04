@@ -11,6 +11,7 @@ import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import MapView from '../components/EventMap';
+import FilterModal from '../components/FilterModal';
 const {height, width} = Dimensions.get('window');
 
 export default class HomeScreen extends React.Component {
@@ -58,14 +59,7 @@ export default class HomeScreen extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.filter}>
-          <TouchableHighlight underlayColor="transparent" onPress={this._onFilterBtnPress}>
-            <Image
-              style={styles.filterBtn}
-              source={require('../assets/images/filter2.png')}
-            />
-          </TouchableHighlight>
-        </View>
+        <FilterModal visible={this.state.filterVisible} saveFilter={this._onFilterBtnPress} />
         <EventListModal {...listProps} />
         <MenuModal {...menuProps} />
       </View>
@@ -128,7 +122,7 @@ const styles = StyleSheet.create({
   filter: {
     position: 'absolute',
     left: width * 0.1,
-    top: 15,
+    top: 30,
   },
   filterBtn: {
     width: width * 0.8,

@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   activity: {
     backgroundColor: 'rgba(0,0,0,0)',
-    height: height * 0.25,
+    height: height * 0.3,
     justifyContent: 'center',
     alignItems: 'center',
   },

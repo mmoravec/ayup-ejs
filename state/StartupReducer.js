@@ -26,6 +26,10 @@ class StartupReducer {
     return state.set('fontLoaded', true);
   }
 
+  static [ActionTypes.IMAGES_LOADED](state, action) {
+    return state.set('imagesLoaded', true);
+  }
+
 }
 
 export default StartupReducer.reduce;

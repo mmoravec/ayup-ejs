@@ -3,6 +3,10 @@ import { List, Record, Map } from 'immutable';
 export const EventState = Record({
   nearbyEvents: new List(),
   filters: new List(),
+  filter: {
+    startTime: null,
+    endTime: null,
+  },
   region: {
     latitude: null,
     longitude: null,
@@ -26,4 +30,5 @@ export const Startup = Record({
   fontLoaded: false,
   filtersLoaded: false,
   regionLoaded: false,
+  imagesLoaded: false,
 });

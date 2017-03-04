@@ -35,8 +35,8 @@ class App extends React.Component {
     };
   }
   render() {
-    let {fontLoaded, regionLoaded, userLoaded, filtersLoaded} = this.props.startup;
-    if (fontLoaded && regionLoaded && userLoaded && filtersLoaded) {
+    let {fontLoaded, regionLoaded, userLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
+    if (fontLoaded && regionLoaded && userLoaded && filtersLoaded && imagesLoaded) {
       let route = 'login';
       if (this.props.user.get('id') && this.props.user.get('authToken')) {
         route = 'home';

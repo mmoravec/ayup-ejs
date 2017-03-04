@@ -7,10 +7,9 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Dimensions,
+  Text,
+  Animated,
 } from 'react-native';
-import {
-  FontAwesome,
-} from '@exponent/vector-icons';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
 import Filters from '../utils/filters';
@@ -37,21 +36,10 @@ export default class ActivitiesScreen extends React.Component {
         </TouchableOpacity>
         <View style={styles.scrollView}>
           <ScrollView contentContainerStyle={styles.form}>
-          {
+            {
             this.props.filters.map(icon => {
-              let { id, image, selected } = icon;
               return (
-                <TouchableHighlight
-                  style={styles.icon}
-                  key={id}
-                  onPress={() => this._filterClick(id, selected)}
-                  underlayColor="transparent">
-                  <Image
-                    style={styles.image}
-                    source={image}>
-                    {this._renderCheck(selected)}
-                  </Image>
-                </TouchableHighlight>
+                <Activity key={icon.id} icon={icon} selected={icon.selected} />
               );
             })
           }
@@ -61,6 +49,39 @@ export default class ActivitiesScreen extends React.Component {
     );
   }
 
+  _backBtnPress = () => {
+    this.props.navigator.pop();
+  }
+}
+
+@connect()
+class Activity extends React.Component {
+
+  render() {
+    let { id, image, selected, title } = this.props.icon;
+    let opacity = 1;
+    if (!selected) {
+      opacity = 0.3;
+    }
+    return (
+      <TouchableHighlight
+        style={styles.icon}
+        key={id}
+        onPress={() => this._filterClick(id, selected)}
+        underlayColor="transparent">
+        <View style={{paddingBottom: 20}}>
+          <Image
+            style={styles.image}
+            opacity={opacity}
+            source={image}>
+          </Image>
+          <Heart selected={selected} />
+          <Text style={{textAlign: 'center', position: 'absolute', bottom: 0, left: 0, right: 0}}>{title}</Text>
+        </View>
+      </TouchableHighlight>
+      );
+  }
+
   _filterClick = (id, selected) => {
     if (selected) {
       this.props.dispatch(Actions.removeActivity(id));
@@ -68,27 +89,80 @@ export default class ActivitiesScreen extends React.Component {
       this.props.dispatch(Actions.addActivity(id));
     }
   }
+}
 
-  _backBtnPress = () => {
-    this.props.navigator.pop();
+class Heart extends React.Component {
+
+  state = {
+    removed: false,
   }
 
-  _renderCheck(selected) {
-    if (selected) {
+  render() {
+    if (this.props.selected) {
+      let height = new Animated.Value(0),
+          left = new Animated.Value(10),
+          top = 0,
+          opacity = new Animated.Value(1);
+      Animated.sequence([
+          Animated.delay(200),
+          Animated.timing(height, {toValue: 60, duration: 700}),
+          Animated.timing(height, {toValue: 55, duration: 200}),
+          Animated.timing(height, {toValue: 60, duration: 200}),
+          Animated.delay(200),
+          Animated.parallel([
+            Animated.timing(height, {toValue: 12, duration: 500}),
+            Animated.timing(left, {toValue: 2, duration: 300}),
+          ]),
+        Animated.timing(opacity, {toValue: 0, duration: 0}),
+      ]).start();
       return (
-        <View style={styles.checkContainer}>
-          <FontAwesome
-            name={'check'}
-            size={46}
-            color={'#5BC800'}
-            style={styles.check}
-          />
-        </View>
+        <Animated.Image
+          source={require('../assets/images/heart.png')}
+          style={{
+            position:'absolute',
+            top,
+            left,
+            width: height,
+            height,
+            resizeMode: 'contain',
+          }}
+        />
       );
     } else {
-      return null;
+      let height = new Animated.Value(22),
+          left = new Animated.Value(-4),
+          opacity = new Animated.Value(1),
+          top = new Animated.Value(-2);
+          Animated.sequence([
+            Animated.delay(100),
+            Animated.parallel([
+              Animated.timing(height, {toValue: 46, duration: 800}),
+              Animated.timing(left, {toValue: 20, duration: 600}),
+              Animated.timing(top, {toValue: 5, duration: 600}),
+            ]),
+            Animated.delay(2000),
+            Animated.timing(opacity, {toValue: 0, duration: 0}),
+            Animated.timing(height, {toValue: 22, duration: 0}),
+            Animated.timing(left, {toValue: -4, duration: 0}),
+            Animated.timing(top, {toValue: -2, duration: 0}),
+          ]).start();
+      return (
+        <Animated.Image
+          source={require('../assets/images/heart_breaking.gif')}
+          style={{
+            position:'absolute',
+            top,
+            left,
+            width: height,
+            height,
+            resizeMode: 'contain',
+            opacity,
+          }}
+        />
+      );
     }
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -102,6 +176,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     margin: 15,
+    marginTop: 25,
   },
   checkContainer: {
     position: 'absolute',
@@ -113,10 +188,15 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 0.225 * width,
-    height: 0.175 * height,
+    height: 0.16 * height,
     justifyContent: 'center',
   },
   image: {
+    alignSelf: 'center',
+    height: 50,
+    resizeMode: 'contain',
+  },
+  unSelectedImage: {
     alignSelf: 'center',
     height: 60,
     resizeMode: 'contain',
@@ -136,7 +216,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   scrollView: {
-    top: height * 0.1,
+    top: height * 0.12,
     backgroundColor: '#FFF',
     borderRadius: 10,
     marginLeft: width * 0.05,
