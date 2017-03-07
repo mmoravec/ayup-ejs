@@ -46,6 +46,7 @@ export default class ActivitySelector extends React.Component {
                </Image>
              </View>
            </TouchableOpacity>
+           <Text style={styles.text}>Tap to Select Activity</Text>
          </View>
          {this._renderSelectForm()}
        </View>
@@ -56,7 +57,7 @@ export default class ActivitySelector extends React.Component {
      if (this.state.showSelect) {
        return (
          <Modal style={styles.scrollView} onRequestClose={this._activityPunch}>
-           <Text style={styles.pickText}> Select an Activity</Text>
+           <Text style={styles.pickText}>Select an Activity</Text>
            <TouchableOpacity onPress={this._activityPunch} style={styles.back}>
              <Ionicons
                size={40}
@@ -110,6 +111,11 @@ const styles = StyleSheet.create({
     height: 0.175 * height,
     justifyContent: 'center',
   },
+  text: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    fontFamily: 'LatoRegular',
+  },
   image: {
     alignSelf: 'center',
     height: 60,
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
   },
   activity: {
     backgroundColor: 'rgba(0,0,0,0)',
-    height: height * 0.3,
+    height: height * 0.25,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -65,7 +65,7 @@ class ListRow extends React.Component {
           </View>
           <View style={styles.info}>
             <Text style={styles.title}>{rowData.title}</Text>
-            <Text style={styles.author}>{rowData.author}</Text>
+            <Text style={styles.author}>{rowData.author.name}</Text>
           </View>
           <View style={styles.bubble}>
             <Image
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
-    marginTop: 10,
+    marginTop: 5,
     marginLeft: 5,
     height: 80,
     justifyContent: 'space-between',

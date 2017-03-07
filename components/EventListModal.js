@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(240, 240, 240, 0.6)',
-    marginLeft: 30,
   },
   btnListContainer: {
     position: 'absolute',
