@@ -14,8 +14,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 7,
-    "confirmed": 3
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "capacity": 22
 }, {
     "location": {
         "coordinates": [-122.449558686932, 37.7229614211437],
@@ -32,8 +67,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 10,
-    "confirmed": 6
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "accepted": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }],
+    "rejected": [{
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }],
+    "capacity": 18
 }, {
     "location": {
         "coordinates": [-122.419187412446, 37.766814022028],
@@ -50,8 +120,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 9,
-    "confirmed": 5
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "accepted": [{
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }],
+    "invited": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "capacity": 12
 }, {
     "location": {
         "coordinates": [-122.402025278101, 37.7862480963577],
@@ -68,8 +173,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 5,
-    "confirmed": 2
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "rejected": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "capacity": 9
 }, {
     "location": {
         "coordinates": [-122.460061772808, 37.720623878358],
@@ -86,8 +226,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 7,
-    "confirmed": 2
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "accepted": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "capacity": 16
 }, {
     "location": {
         "coordinates": [-122.493446480801, 37.7816271704732],
@@ -104,8 +279,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 7,
-    "confirmed": 4
+    "requested": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "rejected": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }],
+    "capacity": 19
 }, {
     "location": {
         "coordinates": [-122.46486661868, 37.784653059144],
@@ -122,8 +332,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 6,
-    "confirmed": 5
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "invited": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 10
 }, {
     "location": {
         "coordinates": [-122.465393894971, 37.784628636791],
@@ -140,8 +385,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 1,
-    "confirmed": 1
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "invited": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 14
 }, {
     "location": {
         "coordinates": [-122.42147026036, 37.7693386881199],
@@ -158,8 +438,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 0,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "accepted": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "rejected": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 17
 }, {
     "location": {
         "coordinates": [-122.435690352986, 37.799154315541],
@@ -176,8 +491,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 0,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "accepted": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "rejected": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 12
 }, {
     "location": {
         "coordinates": [-122.490454500311, 37.789542362612],
@@ -194,8 +544,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 0,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "rejected": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "invited": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "capacity": 13
 }, {
     "location": {
         "coordinates": [-122.451454500311, 37.769542362612],
@@ -212,8 +597,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 5,
-    "confirmed": 3
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "rejected": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "capacity": 19
 }, {
     "location": {
         "coordinates": [-122.541454500311, 37.869542362612],
@@ -230,8 +650,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 2,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "invited": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "capacity": 23
 }, {
     "location": {
         "coordinates": [-122.422972091, 37.765623172],
@@ -248,8 +703,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 0,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "accepted": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 11
 }, {
     "location": {
         "coordinates": [-122.406545249, 37.772860840868],
@@ -266,8 +756,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 8,
-    "confirmed": 8
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "accepted": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "capacity": 23
 }, {
     "location": {
         "coordinates": [-122.429575411252, 37.761663512705],
@@ -284,8 +809,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 5,
-    "confirmed": 1
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "accepted": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "rejected": [],
+    "invited": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "capacity": 19
 }, {
     "location": {
         "coordinates": [-122.423600589705, 37.7535349460624],
@@ -302,8 +862,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 1,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [],
+    "capacity": 9
 }, {
     "location": {
         "coordinates": [-122.416481162592, 37.780680041037],
@@ -320,8 +915,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 1,
-    "confirmed": 1
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [],
+    "rejected": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "invited": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 18
 }, {
     "location": {
         "coordinates": [-122.418750285935, 37.7893755783164],
@@ -338,8 +968,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 3,
-    "confirmed": 1
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }],
+    "accepted": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 10
 }, {
     "location": {
         "coordinates": [-122.38714347343, 37.7412973973478],
@@ -356,8 +1021,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 1,
-    "confirmed": 0
+    "requested": [],
+    "accepted": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 13
 }, {
     "location": {
         "coordinates": [-122.505276651476, 37.7510930964857],
@@ -374,8 +1074,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 10,
-    "confirmed": 6
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "accepted": [],
+    "rejected": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 9
 }, {
     "location": {
         "coordinates": [-122.415725823073, 37.734724221482],
@@ -392,8 +1127,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 8,
-    "confirmed": 5
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "accepted": [{
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "rejected": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "capacity": 14
 }, {
     "location": {
         "coordinates": [-122.426807037508, 37.747759490126],
@@ -410,8 +1180,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 4,
-    "confirmed": 1
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "rejected": [],
+    "invited": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "capacity": 18
 }, {
     "location": {
         "coordinates": [-122.422577513412, 37.741101814363],
@@ -428,8 +1233,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 1,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [],
+    "capacity": 17
 }, {
     "location": {
         "coordinates": [-122.427609677469, 37.75661295465],
@@ -446,8 +1286,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 8,
-    "confirmed": 8
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }],
+    "accepted": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "rejected": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 20
 }, {
     "location": {
         "coordinates": [-122.422944011585, 37.735786319732],
@@ -464,8 +1339,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 8,
-    "confirmed": 7
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "accepted": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "capacity": 19
 }, {
     "location": {
         "coordinates": [-122.421417135917, 37.757942164219],
@@ -482,8 +1392,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 6,
-    "confirmed": 5
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "accepted": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "rejected": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 18
 }, {
     "location": {
         "coordinates": [-122.451623935751, 37.7455341106614],
@@ -500,8 +1445,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 7,
-    "confirmed": 2
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "accepted": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "invited": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 10
 }, {
     "location": {
         "coordinates": [-122.386579668939, 37.771499818692],
@@ -518,8 +1498,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 7,
-    "confirmed": 3
+    "requested": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }],
+    "invited": [{
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 14
 }, {
     "location": {
         "coordinates": [-122.417331490615, 37.750845600367],
@@ -536,8 +1551,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 1,
-    "confirmed": 1
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "accepted": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [],
+    "capacity": 11
 }, {
     "location": {
         "coordinates": [-122.408036846249, 37.7512566667655],
@@ -554,8 +1604,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 9,
-    "confirmed": 4
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "rejected": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [],
+    "capacity": 17
 }, {
     "location": {
         "coordinates": [-122.386579668939, 37.771499818692],
@@ -572,8 +1657,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 1,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "accepted": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "rejected": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }],
+    "invited": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }],
+    "capacity": 23
 }, {
     "location": {
         "coordinates": [-122.421858899832, 37.785501356445],
@@ -590,8 +1710,43 @@
     },
     "startTime": "2017-03-10T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 2,
-    "confirmed": 0
+    "requested": [],
+    "accepted": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [{
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 17
 }, {
     "location": {
         "coordinates": [-122.392184230792, 37.735475350989],
@@ -608,8 +1763,43 @@
     },
     "startTime": "2017-03-09T01:00:00.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 10,
-    "confirmed": 3
+    "requested": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "accepted": [{
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "rejected": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "invited": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 13
 }, {
     "location": {
         "coordinates": [-122.391970749143, 37.735715374176],
@@ -626,8 +1816,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-15T22:03:02.000Z",
-    "requested": 9,
-    "confirmed": 2
+    "requested": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }],
+    "accepted": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "invited": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "capacity": 16
 }, {
     "location": {
         "coordinates": [-122.401394111247, 37.76961232902],
@@ -644,8 +1869,43 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-16T01:00:00.000Z",
-    "requested": 10,
-    "confirmed": 10
+    "requested": [],
+    "accepted": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }],
+    "rejected": [{
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "invited": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "capacity": 22
 }, {
     "location": {
         "coordinates": [-122.433734607739, 37.7716883792214],
@@ -662,6 +1922,41 @@
     },
     "startTime": "2017-03-08T22:03:02.000Z",
     "endTime": "2017-03-17T01:23:00.000Z",
-    "requested": 0,
-    "confirmed": 0
+    "requested": [{
+        "userId": "10153271091861463",
+        "name": "Duaine Booker",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.30.120.120/p120x120/1920486_10151927425826463_898282421_n.jpg?oh=0d0caff081f7e8fa43e8c4be02af333d&oe=592C27B2"
+    }, {
+        "userId": "10155102579674082",
+        "name": "Elena Elfimova",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/14907641_10154690104309082_4921466484895149004_n.jpg?oh=81d135d083057e2944eba4286e671947&oe=592A80FE"
+    }, {
+        "userId": "10105741117795848",
+        "name": "Matt Foster",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15578523_10107378316326868_2099070976879010656_n.jpg?oh=7f075bf49578f05be611fb4b7710df99&oe=593C2B77"
+    }],
+    "accepted": [{
+        "userId": "10153530036627802",
+        "name": "Uksz Py",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12196266_10154257451797802_7362952771965493511_n.jpg?oh=316d183cae6796b7ad42c7f6ae6e69e7&oe=5932CD10"
+    }, {
+        "userId": "10100237032604427",
+        "name": "Alex Bulman",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15894993_10100417276524167_8757861306961210735_n.jpg?oh=964685585ab2511900af62c12bc938c4&oe=59340C25"
+    }],
+    "rejected": [{
+        "userId": "10211709054909093",
+        "name": "Brett Schultz",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.120.120/p120x120/10410338_10204019299070003_2968215975908372392_n.jpg?oh=718c7537bfcc0c3d88696c2e1d8db08f&oe=5971CDF9"
+    }, {
+        "userId": "10158194230320246",
+        "name": "Shaunak Mali",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/12647064_10156431983185246_1002055997475004910_n.jpg?oh=a82b2832390bddcd263ae3b8c07bd856&oe=5966B0EE"
+    }],
+    "invited": [{
+        "userId": "10210276875656147",
+        "name": "Katherine Moravec",
+        "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p120x120/15747759_10209736249420829_5485440573859387248_n.jpg?oh=e63262798da416b2026a48f6a013ec94&oe=592EB437"
+    }],
+    "capacity": 17
 }]

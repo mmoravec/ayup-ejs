@@ -72,8 +72,12 @@ class ListRow extends React.Component {
               source={require('../assets/images/joined_notjoined.png')}
               style={styles.joinedBubble}
             />
-            <Text style={styles.joined}>{rowData.confirmed}</Text>
-            <Text style={styles.left}>{rowData.requested - rowData.confirmed}</Text>
+            <Text style={styles.joined}>{rowData.accepted.length}</Text>
+            {
+              (rowData.capacity - rowData.accepted.length) > 9  ?
+                <Text style={[styles.left, {right: 14}]}>{rowData.capacity - rowData.accepted.length}</Text> :
+                <Text style={[styles.left, {right: 16}]}>{rowData.capacity - rowData.accepted.length}</Text>
+            }
           </View>
         </View>
       </TouchableOpacity>
@@ -115,7 +119,7 @@ const styles = StyleSheet.create({
   info: {
     justifyContent: 'flex-end',
     flexGrow: 1,
-    maxWidth: width*0.5,
+    maxWidth: width * 0.5,
   },
   title: {
     fontSize: 16,
@@ -143,7 +147,6 @@ const styles = StyleSheet.create({
   left: {
     position: 'absolute',
     color: '#fff',
-    left: 28,
     top: 34,
     fontSize: 10,
     backgroundColor: 'rgba(0,0,0,0)',
