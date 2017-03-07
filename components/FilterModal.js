@@ -148,9 +148,9 @@ const styles = StyleSheet.create({
   dayFilter: {
     position: 'absolute',
     width: 80,
-    left: 60,
-    fontSize: 18,
-    top: 14,
+    left: 70,
+    fontSize: 12,
+    bottom: 19,
   },
   timeFilter: {
     position: 'absolute',

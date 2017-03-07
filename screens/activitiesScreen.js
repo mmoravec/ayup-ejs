@@ -28,12 +28,13 @@ export default class ActivitiesScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <TouchableOpacity underlayColor="transparent" onPress={this._backBtnPress}>
+        <TouchableOpacity style={styles.backPress} underlayColor="transparent" onPress={this._backBtnPress}>
           <Image
             source={require('../assets/images/btn_back.png')}
             style={styles.btnBack}
           />
         </TouchableOpacity>
+        <Text style={styles.title}>Tap to Filter Activities</Text>
         <View style={styles.scrollView}>
           <ScrollView contentContainerStyle={styles.form}>
             {
@@ -57,6 +58,10 @@ export default class ActivitiesScreen extends React.Component {
 @connect()
 class Activity extends React.Component {
 
+  state = {
+    activityClicked: false,
+  }
+
   render() {
     let { id, image, selected, title } = this.props.icon;
     let opacity = 1;
@@ -75,7 +80,7 @@ class Activity extends React.Component {
             opacity={opacity}
             source={image}>
           </Image>
-          <Heart selected={selected} />
+          <Heart selected={selected} clicked={this.state.activityClicked} />
           <Text style={{textAlign: 'center', position: 'absolute', bottom: 0, left: 0, right: 0}}>{title}</Text>
         </View>
       </TouchableHighlight>
@@ -83,6 +88,7 @@ class Activity extends React.Component {
   }
 
   _filterClick = (id, selected) => {
+    this.setState({activityClicked: true});
     if (selected) {
       this.props.dispatch(Actions.removeActivity(id));
     } else {
@@ -103,18 +109,23 @@ class Heart extends React.Component {
           left = new Animated.Value(10),
           top = 0,
           opacity = new Animated.Value(1);
-      Animated.sequence([
-          Animated.delay(200),
-          Animated.timing(height, {toValue: 60, duration: 700}),
-          Animated.timing(height, {toValue: 55, duration: 200}),
-          Animated.timing(height, {toValue: 60, duration: 200}),
-          Animated.delay(200),
-          Animated.parallel([
-            Animated.timing(height, {toValue: 12, duration: 500}),
-            Animated.timing(left, {toValue: 2, duration: 300}),
-          ]),
-        Animated.timing(opacity, {toValue: 0, duration: 0}),
-      ]).start();
+      if (this.props.clicked) {
+        Animated.sequence([
+            Animated.delay(200),
+            Animated.timing(height, {toValue: 60, duration: 700}),
+            Animated.timing(height, {toValue: 55, duration: 200}),
+            Animated.timing(height, {toValue: 60, duration: 200}),
+            Animated.delay(200),
+            Animated.parallel([
+              Animated.timing(height, {toValue: 12, duration: 500}),
+              Animated.timing(left, {toValue: 2, duration: 300}),
+            ]),
+          Animated.timing(opacity, {toValue: 0, duration: 0}),
+        ]).start();
+      } else {
+        height = new Animated.Value(12);
+        left = new Animated.Value(2);
+      }
       return (
         <Animated.Image
           source={require('../assets/images/heart.png')}
@@ -133,19 +144,23 @@ class Heart extends React.Component {
           left = new Animated.Value(-4),
           opacity = new Animated.Value(1),
           top = new Animated.Value(-2);
-          Animated.sequence([
-            Animated.delay(100),
-            Animated.parallel([
-              Animated.timing(height, {toValue: 46, duration: 800}),
-              Animated.timing(left, {toValue: 20, duration: 600}),
-              Animated.timing(top, {toValue: 5, duration: 600}),
-            ]),
-            Animated.delay(2000),
-            Animated.timing(opacity, {toValue: 0, duration: 0}),
-            Animated.timing(height, {toValue: 22, duration: 0}),
-            Animated.timing(left, {toValue: -4, duration: 0}),
-            Animated.timing(top, {toValue: -2, duration: 0}),
-          ]).start();
+      if (this.props.clicked) {
+        Animated.sequence([
+          Animated.delay(100),
+          Animated.parallel([
+            Animated.timing(height, {toValue: 46, duration: 800}),
+            Animated.timing(left, {toValue: 20, duration: 600}),
+            Animated.timing(top, {toValue: 5, duration: 600}),
+          ]),
+          Animated.delay(2000),
+          Animated.timing(opacity, {toValue: 0, duration: 0}),
+          Animated.timing(height, {toValue: 22, duration: 0}),
+          Animated.timing(left, {toValue: -4, duration: 0}),
+          Animated.timing(top, {toValue: -2, duration: 0}),
+        ]).start();
+      } else {
+        opacity = new Animated.Value(0);
+      }
       return (
         <Animated.Image
           source={require('../assets/images/heart_breaking.gif')}
@@ -177,6 +192,19 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 15,
     marginTop: 25,
+  },
+  backPress: {
+    zIndex: 2,
+  },
+  title: {
+    position: 'absolute',
+    textAlign: 'center',
+    fontSize: 20,
+    left: 0,
+    right: 0,
+    top: 30,
+    fontFamily: 'LatoRegular',
+    zIndex: 1,
   },
   checkContainer: {
     position: 'absolute',

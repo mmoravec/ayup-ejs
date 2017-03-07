@@ -12,7 +12,7 @@ export default class Filters {
   }
 
   static getSelectedActivitiesArray(ids) {
-    return all.map(fil => {
+    return all.filter(fil => {
       if (ids.indexOf(fil.id) > -1) {
         return fil;
       }

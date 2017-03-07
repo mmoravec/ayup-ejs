@@ -87,9 +87,6 @@ export default class EventForm extends React.Component {
             <Hoshi {...this._titleProps} />
           </View>
           <View style={styles.input}>
-            <Hoshi {...this._descProps} />
-          </View>
-          <View style={styles.input}>
             <LocationSearch
               {...this._locProps}
               location={this.state.location}
@@ -128,10 +125,18 @@ export default class EventForm extends React.Component {
               value={this.state.public}
             />
           </View>
+          {this._renderOptionalFields()}
           <View style={styles.btmPadding} />
         </ScrollView>
       </View>
     );
+  }
+
+  _renderOptionalFields = () => {
+    let opt = {
+      desc: (<View style={styles.input}><Hoshi {...this._descProps} /></View>),
+    }
+    return null;
   }
 
   _focusElement = (el) => {
