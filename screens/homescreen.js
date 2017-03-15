@@ -7,14 +7,24 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import { connect } from 'react-redux';
 import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import MapView from '../components/EventMap';
 import FilterModal from '../components/FilterModal';
+import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
 
+@connect((data) => HomeScreen.getDataProps(data))
 export default class HomeScreen extends React.Component {
+
+  static getDataProps(data) {
+    return {
+      events: Filters.filterEvents(data.events.nearbyEvents, data.events.filters),
+      region: data.events.region,
+    };
+  }
 
   state = {
     listVisible: false,
@@ -38,9 +48,14 @@ export default class HomeScreen extends React.Component {
       navAway: this._onNavAway,
     };
 
+    let mapProps = {
+      events: this.props.events,
+      region: this.props.region,
+    }
+
     return (
       <View style={{flex: 1}}>
-        <MapView />
+        <MapView {...mapProps} />
         <View style={styles.btnMainContainer}>
           <TouchableOpacity
             activeOpacity={0.5}
@@ -118,14 +133,5 @@ const styles = StyleSheet.create({
   listBtnHidden: {
     height: 0,
     opacity: 0,
-  },
-  filter: {
-    position: 'absolute',
-    left: width * 0.1,
-    top: 30,
-  },
-  filterBtn: {
-    width: width * 0.8,
-    height: width * 0.14,
   },
 });

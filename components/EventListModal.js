@@ -19,7 +19,7 @@ export default class EventListModal extends React.Component {
         transparent={true}
         visible={this.props.listVisible}>
         <View style={styles.container}>
-          <EventList closeBtn={this.props.closeBtnPress} />
+          <EventList filters={this.props.filters} events={this.props.events} closeBtn={this.props.closeBtnPress} />
         </View>
         <View style={styles.btnListContainer}>
           <TouchableHighlight underlayColor="transparent" onPress={this.props.closeBtnPress}>
@@ -37,7 +37,8 @@ export default class EventListModal extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(240, 240, 240, 0.6)',
+    backgroundColor: 'rgba(240, 240, 240, 0.8)',
+    paddingLeft: 25,
   },
   btnListContainer: {
     position: 'absolute',

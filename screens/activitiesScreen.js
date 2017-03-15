@@ -80,7 +80,6 @@ class Activity extends React.Component {
             opacity={opacity}
             source={image}>
           </Image>
-          <Heart selected={selected} clicked={this.state.activityClicked} />
           <Text style={{textAlign: 'center', position: 'absolute', bottom: 0, left: 0, right: 0}}>{title}</Text>
         </View>
       </TouchableHighlight>
@@ -199,7 +198,7 @@ const styles = StyleSheet.create({
   title: {
     position: 'absolute',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 16,
     left: 0,
     right: 0,
     top: 30,

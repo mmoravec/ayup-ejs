@@ -9,32 +9,21 @@ import {
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Icons from '../constants/icons';
+import ImmutableListView from 'react-native-immutable-list-view';
+import Icons from '../constants/figures';
 import Actions from '../state/Actions';
 const dateFormat = require('dateformat');
 const {height, width} = Dimensions.get('window');
 
-@connect((data) => EventList.getDataProps(data))
+@connect()
 export default class EventList extends React.Component {
-  static getDataProps(data) {
-    return {
-      events: data.events.nearbyEvents,
-    };
-  }
 
-  constructor(props) {
-    super(props);
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows(this.props.events.toJS()),
-    };
-  }
 
   render() {
     return (
       <View>
-        <ListView
-          dataSource={this.state.dataSource}
+        <ImmutableListView
+          immutableData={this.props.events}
           renderRow={this._renderRow}
         />
       </View>
@@ -43,7 +32,7 @@ export default class EventList extends React.Component {
 
   _renderRow = (rowData) => {
     return (
-      <ListRow data={rowData} closeBtn={this.props.closeBtn}/>
+      <ListRow data={rowData} closeBtn={this.props.closeBtn} />
     );
   }
 }
@@ -108,10 +97,10 @@ const styles = StyleSheet.create({
     fontFamily: 'LatoRegular',
   },
   activityImage: {
-    height: 40,
-    width: 40,
+    height: 30,
+    width: 30,
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 20,
   },
   icon: {
     height: 80,

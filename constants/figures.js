@@ -54,3 +54,4 @@ export default {
     "icon": require("../assets/images/figures/volleyball.png"),
   },
 };
+//TODO: remove the icon object and just put at parent level

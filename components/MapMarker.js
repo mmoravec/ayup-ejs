@@ -1,11 +1,16 @@
 import React from 'react';
 import { Components } from 'exponent';
 import { connect } from 'react-redux';
+import { LayoutAnimation } from 'react-native';
 import Icons from '../constants/icons';
 import Actions from '../state/Actions';
 
 @connect()
 export default class EventList extends React.Component {
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
+  }
 
  render() {
    let { location, id, activity } = this.props.event;
