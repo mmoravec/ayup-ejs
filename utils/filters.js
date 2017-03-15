@@ -1,6 +1,27 @@
 import all from '../constants/filters';
 
 export default class Filters {
+  static sortComments(comments) {
+    let unsorted = [];
+    comments = comments.sort(function(a, b) {
+      return b.posted - a.posted;
+    });
+    comments = comments.filter(comment => {
+      if (comment.get('parentid') === null) {
+        return comment;
+      } else {
+        unsorted.splice(0, 0, comment);
+      }
+    });
+    if (unsorted.length > 0) {
+      unsorted.map(unsort => {
+        var result = comments.findIndex(function(obj) { return obj.get('id') === unsort.parentid; });
+        console.log(result);
+        comments = comments.splice(result + 1, 0, unsort);
+      });
+    }
+    return comments;
+  }
   static getSelectedActivitiesObject(ids) {
     let activities = {};
     all.map(fil => {
@@ -15,6 +36,23 @@ export default class Filters {
     return all.filter(fil => {
       if (ids.indexOf(fil.id) > -1) {
         return fil;
+      }
+    });
+  }
+
+  static filterEvents(events, filters) {
+    let actMap = {};
+    let activities = all.filter(filter => {
+      if (filters.indexOf(filter.id) > -1) {
+        return filter;
+      }
+    });
+    activities.map(filter => {
+      actMap[filter.title] = true;
+    });
+    return events.filter(event => {
+      if (actMap[event.activity]) {
+        return event;
       }
     });
   }

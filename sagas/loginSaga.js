@@ -7,6 +7,7 @@ import { Facebook } from 'exponent';
 import LocalStorage from '../state/LocalStorage';
 import ActionTypes from '../state/ActionTypes';
 import { User } from '../state/Records';
+import sampledata from '../constants/user';
 
 function facebookLogin() {
   return Facebook.logInWithReadPermissionsAsync('1521840934725105', {
@@ -17,7 +18,7 @@ function facebookLogin() {
 
 async function getInfo(token) {
   console.log("fb access token: " + token);
-  let response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+  let response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=name,id,gender,picture.width(240).height(240),email`);
   let info = await response.json();
   return info;
 }
@@ -29,7 +30,13 @@ function* authorize() {
     user = yield call(getInfo, result.token);
   }
   console.log('fb user info: ' + JSON.stringify(user));
-  user = new User({'authToken': result.token, ...user});
+  user = new User({
+    'authToken': result.token,
+    'profilePic': user.picture.data.url,
+    ...user,
+    ...sampledata,
+  });
+  console.log(user);
   // let resp = yield call(saveUser, user);
   //add secret to the user object and authenticate all calls
   LocalStorage.saveUserAsync(user);

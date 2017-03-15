@@ -155,6 +155,12 @@ export default class EventListModal extends React.Component {
     this.props.dispatch(Actions.routeChange('settings'));
   }
 
+  _profileBtnPress = () => {
+    this._resetAnimState();
+    this.props.navAway();
+    this.props.dispatch(Actions.routeChange('profile'));
+  }
+
   _menuBtnPress = () => {
     this._resetAnimState();
     this.props.menuBtnPress();
