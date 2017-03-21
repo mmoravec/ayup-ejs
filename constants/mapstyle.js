@@ -58,7 +58,7 @@ export default [{
         "featureType": "poi.park",
         "elementType": "geometry",
         "stylers": [{
-            "color": "#dedede"
+            "color": "#d1d1d1"
         }, {
             "lightness": 21
         }]
@@ -124,4 +124,4 @@ export default [{
             "weight": 1.2
         }]
     }
-]
+];

@@ -58,14 +58,14 @@ export default class EventScreen extends React.Component {
             coordinate={marker}
             image={icon}
           />
-          <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
-            <Image
-              source={require('../assets/images/btn_back.png')}
-              style={styles.btnBack}
-            />
-          </TouchableOpacity>
-          <Comments header={this._renderHeader} />
         </Components.MapView>
+        <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
+          <Image
+            source={require('../assets/images/btn_back.png')}
+            style={styles.btnBack}
+          />
+        </TouchableOpacity>
+        <Comments header={this._renderHeader} />
       </View>
     );
   }
@@ -134,6 +134,10 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+    zIndex: 0,
+    position: 'absolute',
+    height,
+    width,
   },
   seeAll: {
     fontSize: 18,

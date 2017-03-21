@@ -1,5 +1,4 @@
 import React from 'react';
-import { Components } from 'exponent';
 import {
   StyleSheet,
   View,
@@ -8,12 +7,11 @@ import {
   Text,
   Modal,
   ScrollView,
-  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import {
   Ionicons,
-} from '@exponent/vector-icons';
+} from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import Filter from '../../utils/filters';
 const {height, width} = Dimensions.get('window');

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {
   MaterialIcons,
-} from '@exponent/vector-icons';
+} from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
@@ -214,8 +214,8 @@ const styles = StyleSheet.create({
     height: 72,
   },
   btnActivities: {
-    width: 81,
-    height: 64,
+    width: 68,
+    height: 66,
   },
   ctnActivities: {
     position: 'absolute',

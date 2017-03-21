@@ -1,4 +1,4 @@
-import { NavigationActions } from '@exponent/ex-navigation';
+import { NavigationActions } from '@expo/ex-navigation';
 import { takeLatest } from 'redux-saga/effects';
 import ActionTypes from '../state/ActionTypes';
 import Store from '../state/Store';

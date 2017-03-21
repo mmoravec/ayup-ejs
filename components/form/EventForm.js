@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import LocationSearch from './LocationSearch';
 import ActivitySelector from './ActivitySelector';
 import TimeSelector from './TimeSelector';
+import FriendSelector from './FriendSelector';
 import Hoshi from '../common/Hoshi';
 const {height, width} = Dimensions.get('window');
 
@@ -39,16 +40,16 @@ export default class EventForm extends React.Component {
       ...this._inputProps,
     };
     this._locProps = {
-      scrollTo: this._scrollTo.bind(this, 200),
+      scrollTo: this._scrollTo.bind(this, 180),
       onFocus: this._focusElement.bind(this, 'location'),
     };
 
     this._startProps = {
-      scrollTo: this._scrollTo.bind(this, 300),
+      scrollTo: this._scrollTo.bind(this, 240),
     };
 
     this._endProps = {
-      scrollTo: this._scrollTo.bind(this, 380),
+      scrollTo: this._scrollTo.bind(this, 300),
     };
 
   }
@@ -125,6 +126,15 @@ export default class EventForm extends React.Component {
               value={this.state.public}
             />
           </View>
+          <View style={styles.input}>
+            <FriendSelector
+              ref="friends"
+              focus={this.state.focus}
+              onFocus={this._focusElement}
+              onChange={this._onChange}
+              stateKey={'friends'}
+            />
+          </View>
           {this._renderOptionalFields()}
           <View style={styles.btmPadding} />
         </ScrollView>
@@ -135,8 +145,8 @@ export default class EventForm extends React.Component {
   _renderOptionalFields = () => {
     let opt = {
       desc: (<View style={styles.input}><Hoshi {...this._descProps} /></View>),
-    }
-    return null;
+    };
+    //return opt.desc;
   }
 
   _focusElement = (el) => {

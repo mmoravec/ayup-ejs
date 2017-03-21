@@ -1,6 +1,6 @@
 import {
   createRouter,
-} from '@exponent/ex-navigation';
+} from '@expo/ex-navigation';
 
 import HomeScreen from '../screens/homeScreen';
 import LoginScreen from '../screens/loginScreen';

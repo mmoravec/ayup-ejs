@@ -12,6 +12,9 @@ class EventsReducer {
   static [ActionTypes.SET_CURRENT_USER](state, action) {
     return action.user;
   }
+  static [ActionTypes.SET_FRIENDS](state, action) {
+    return state.set('friends', action.friends);
+  }
 }
 
 export default EventsReducer.reduce;

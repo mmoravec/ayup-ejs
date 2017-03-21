@@ -16,7 +16,6 @@ export default class Filters {
     if (unsorted.length > 0) {
       unsorted.map(unsort => {
         var result = comments.findIndex(function(obj) { return obj.get('id') === unsort.parentid; });
-        console.log(result);
         comments = comments.splice(result + 1, 0, unsort);
       });
     }

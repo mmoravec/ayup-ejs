@@ -5,8 +5,8 @@ import {
   Text,
 } from 'react-native';
 import { connect } from 'react-redux';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
-import FadeIn from '@exponent/react-native-fade-in-image';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
+import FadeIn from '@expo/react-native-fade-in-image';
 import ActionTypes from '../state/ActionTypes';
 
 
