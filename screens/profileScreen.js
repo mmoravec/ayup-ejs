@@ -75,7 +75,6 @@ export default class ProfileScreen extends React.Component {
           borderBottomWidth: 2}}>
         {
           user.activities.map(act => {
-            console.log(Activities[act.name]);
             alt++;
             if (alt % 2 > 0) {
               return (

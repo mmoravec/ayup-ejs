@@ -4,10 +4,11 @@ import {
   NavigationContext,
   NavigationProvider,
   StackNavigation,
-} from '@exponent/ex-navigation';
+} from '@expo/ex-navigation';
 import { Provider, connect } from 'react-redux';
 import Router from './navigation/Router';
 import Store from './state/Store';
+import Actions from './state/Actions';
 
 const navigationContext = new NavigationContext({
   store: Store,

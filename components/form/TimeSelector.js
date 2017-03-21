@@ -17,6 +17,7 @@ export default class TimeSelector extends React.Component {
 
   state = {
     focusDate: false,
+    hasFocused: false,
   }
   _yOffset = 0;
 
@@ -25,6 +26,7 @@ export default class TimeSelector extends React.Component {
       el.stateKey === this.props.stateKey
     ).focus) {
       this.setState({focusDate: true});
+      this.setState({hasFocused: true});
       dismissKeyboard();
     } else {
       this.setState({focusDate: false});
@@ -32,6 +34,10 @@ export default class TimeSelector extends React.Component {
   }
 
   render() {
+    let time = "";
+    if (this.state.hasFocused) {
+      time = dateFormat(this.props.date, 'ddd h:MM TT, mmm dd');
+    }
     return (
       <TouchableHighlight
         onPress={this._onDatePress}
@@ -39,7 +45,7 @@ export default class TimeSelector extends React.Component {
         <View ref={view => { this._view = view; }}>
           <View ref="view" pointerEvents={'none'}>
             <Hoshi
-              value={dateFormat(this.props.date, 'ddd h:MM TT, mmm dd')}
+              value={time}
               editable={false}
               label={this.props.label}
               borderColor={'#8bd1c6'}

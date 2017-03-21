@@ -1,9 +1,9 @@
 import { combineReducers, applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { createNavigationEnabledStore, NavigationReducer } from '@exponent/ex-navigation';
+import { createNavigationEnabledStore, NavigationReducer } from '@expo/ex-navigation';
 import EventsReducer from './EventsReducer';
 import UserReducer from './UserReducer';
-import StartupReducer from './StartupReducer';
+import PhoneStateReducer from './PhoneStateReducer';
 import sagas from '../sagas';
 import routeTracker from '../navigation/routeTracker';
 
@@ -21,7 +21,7 @@ import routeTracker from '../navigation/routeTracker';
       navigation: NavigationReducer,
       events: EventsReducer,
       user: UserReducer,
-      startup: StartupReducer,
+      startup: PhoneStateReducer,
     }),
     applyMiddleware(sagaMiddleware, routeTracker)
   );

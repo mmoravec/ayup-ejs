@@ -1,5 +1,4 @@
-import { takeEvery } from 'redux-saga';
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   Platform,
 } from 'react-native';
@@ -7,7 +6,7 @@ import { Facebook } from 'exponent';
 import LocalStorage from '../state/LocalStorage';
 import ActionTypes from '../state/ActionTypes';
 import { User } from '../state/Records';
-import sampledata from '../constants/user';
+import sampledata from '../sample/user';
 
 function facebookLogin() {
   return Facebook.logInWithReadPermissionsAsync('1521840934725105', {
@@ -26,6 +25,7 @@ async function getInfo(token) {
 function* authorize() {
   let user = null;
   const result = yield call(facebookLogin);
+  console.log(result);
   if (result.type === 'success') {
     user = yield call(getInfo, result.token);
   }
@@ -33,6 +33,7 @@ function* authorize() {
   user = new User({
     'authToken': result.token,
     'profilePic': user.picture.data.url,
+    'expires': new Date(Date.now() + result.expires),
     ...user,
     ...sampledata,
   });
@@ -49,13 +50,13 @@ export function* watchLogin() {
 }
 
 
-async function saveUser(user) {
-  let userStr = JSON.stringify(user.toJS());
-  console.log(userStr);
-  let response = await fetch('http://localhost:8000/auth/', {
-    method: 'post',
-    body: userStr,
-  });
-//  let info = await response.json();
-  return null;
-}
+// async function saveUser(user) {
+//   let userStr = JSON.stringify(user.toJS());
+//   console.log(userStr);
+//   let response = await fetch('http://localhost:8000/auth/', {
+//     method: 'post',
+//     body: userStr,
+//   });
+// //  let info = await response.json();
+//   return null;
+// }

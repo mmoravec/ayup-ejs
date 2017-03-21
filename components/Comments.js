@@ -7,12 +7,13 @@ import {
   Text,
   Image,
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
 import Actions from '../state/Actions';
 import { User, Comment } from '../state/Records';
-import sampleComments from '../constants/comments';
+import sampleComments from '../sample/comments';
 import Filter from '../utils/filters';
 const dateFormat = require('dateformat');
 const {height, width} = Dimensions.get('window');
@@ -32,7 +33,6 @@ export default class Comments extends React.Component {
   }
 
   render() {
-    console.log(this._comments.toJS());
     if (this._comments !== null) {
       return (
         <ImmutableListView
@@ -60,13 +60,46 @@ export default class Comments extends React.Component {
               style={styles.commentPic}
             />
           </View>
-          <View style={styles.contentBox}>
-            <MyText style={styles.name}>{rowData.author.name}</MyText>
-            <MyText style={styles.content}>{rowData.content}</MyText>
+          <View style={styles.contentParent}>
+            <View style={styles.contentBox}>
+              <MyText style={styles.name}>{rowData.author.name}</MyText>
+              <MyText style={styles.content}>{rowData.content}</MyText>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <MaterialIcons
+                name={'reply'}
+                size={14}
+                color={"#c7c7c7"}
+              />
+              <MyText style={{color:"#5f5f5f"}}> Reply</MyText>
+              <MyText style={{color:"#c7c7c7"}}> • </MyText>
+              {this._renderTime(rowData.posted)}
+            </View>
           </View>
         </View>
       </View>
     );
+  }
+
+  _renderTime = (date) => {
+    let now = new Date();
+    let then = new Date(date);
+    let diff = now - then;
+    let minutes = Math.floor(diff / 60000);
+    if (minutes < 60) {
+      return <MyText style={{color:"#5f5f5f"}}>{minutes} mins </MyText>;
+    } else if (minutes < 2880) {
+      let hours = Math.floor(minutes / 60);
+      return <MyText style={{color:"#5f5f5f"}}>{hours} hrs</MyText>;
+    } else if (minutes < 14400) {
+      let days = Math.floor(minutes / 1440);
+      return <MyText style={{color:"#5f5f5f"}}>{days} days</MyText>;
+    } else if (minutes < 525600) {
+      return <MyText style={{color:"#5f5f5f"}}>{dateFormat(then, 'mmm d')}, {dateFormat(then, 'h:mm tt')}</MyText>;
+    } else {
+      let years = Math.floor(minutes / 525600);
+      return <MyText style={{color:"#5f5f5f"}}>{dateFormat(then, 'mmm d yyyy')}, {dateFormat(then, 'shortTime')}</MyText>;
+    }
   }
 }
 
@@ -106,6 +139,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#edf7f6',
     borderRadius: 10,
     padding: 10,
+  },
+  contentParent: {
     flex: 4,
     margin: 5,
   },

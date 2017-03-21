@@ -8,6 +8,13 @@ export default class Actions {
     };
   }
 
+  static getFriends(user) {
+    return {
+      type: ActionTypes.GET_FRIENDS,
+      user,
+    };
+  }
+
   static signIn(user) {
     return {
       type: ActionTypes.SIGN_IN,

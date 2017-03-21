@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {
   FontAwesome,
-} from '@exponent/vector-icons';
+} from '@expo/vector-icons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Hoshi from '../common/Hoshi';
 const {height, width} = Dimensions.get('window');
@@ -27,6 +27,7 @@ export default class LocationSearch extends React.Component {
          <GooglePlacesAutocomplete
            ref="gplaces"
            placeholder={'Enter Location'}
+           placeholderTextColor={'#6a7989'}
            minLength={2}
            autoFocus={false}
            fetchDetails={true}
@@ -54,11 +55,15 @@ export default class LocationSearch extends React.Component {
                marginLeft: 0,
                marginRight: 0,
                height: 38,
-               color: '#5d5d5d',
+               color: '#6a7989',
                fontSize: 16,
+               fontFamily: 'LatoRegular',
              },
              predefinedPlacesDescription: {
-               color: '#1faadb',
+               color: '#000',
+             },
+             description: {
+               color: '#6a7989',
              },
            }}
            currentLocation={false}

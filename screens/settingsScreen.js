@@ -6,7 +6,7 @@ import {
   Text,
 } from 'react-native';
 import { connect } from 'react-redux';
-import TouchableNativeFeedback from '@exponent/react-native-touchable-native-feedback-safe';
+import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import Actions from '../state/Actions';
 import LocalStorage from '../utils/LocalStorage';
 

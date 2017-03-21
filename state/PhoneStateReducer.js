@@ -1,10 +1,10 @@
 import ActionTypes from './ActionTypes';
 import { Startup } from './Records';
 
-class StartupReducer {
+class PhoneStateReducer {
   static reduce(state = new Startup(), action) {
-    if (StartupReducer[action.type]) {
-      return StartupReducer[action.type](state, action);
+    if (PhoneStateReducer[action.type]) {
+      return PhoneStateReducer[action.type](state, action);
     } else {
       return state;
     }
@@ -32,4 +32,4 @@ class StartupReducer {
 
 }
 
-export default StartupReducer.reduce;
+export default PhoneStateReducer.reduce;
