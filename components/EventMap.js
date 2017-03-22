@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from 'exponent';
+import { Components } from 'expo';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
 import MapMarker from './MapMarker';

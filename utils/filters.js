@@ -1,6 +1,7 @@
 import all from '../constants/filters';
 
 export default class Filters {
+
   static sortComments(comments) {
     let unsorted = [];
     comments = comments.sort(function(a, b) {

@@ -8,7 +8,7 @@ import {
 import {
   Image,
 } from 'react-native';
-import { Font, Asset } from 'exponent';
+import { Font, Asset } from 'expo';
 import ActionTypes from '../state/ActionTypes';
 import LocalStorage from '../state/LocalStorage';
 import {
@@ -62,15 +62,17 @@ function* getUser() {
         user = {
             'new': true,
         };
+    } else {
+      user = new User(user);
+      yield put({
+          type: ActionTypes.SET_CURRENT_USER,
+          user,
+      });
     }
-    user = new User(user);
-    yield put({
-        type: ActionTypes.SET_CURRENT_USER,
-        user,
-    });
     yield put({
         type: ActionTypes.USER_LOADED,
     });
+    return user;
 }
 
 function* setInitialRegion() {

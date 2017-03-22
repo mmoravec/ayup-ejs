@@ -1,4 +1,4 @@
-import Exponent from 'exponent';
+import Expo from 'expo';
 import React from 'react';
 import {
   NavigationContext,
@@ -39,7 +39,7 @@ class App extends React.Component {
     let {fontLoaded, regionLoaded, userLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
     if (fontLoaded && regionLoaded && userLoaded && filtersLoaded && imagesLoaded) {
       let route = 'login';
-      if (this.props.user.get('id') && this.props.user.get('authToken')) {
+      if (this.props.user.get('id')) {
         route = 'home';
       }
       return (
@@ -49,9 +49,9 @@ class App extends React.Component {
         />
       );
     } else {
-      return <Exponent.Components.AppLoading />;
+      return <Expo.Components.AppLoading />;
     }
   }
 }
 
-Exponent.registerRootComponent(AppContainer);
+Expo.registerRootComponent(AppContainer);
