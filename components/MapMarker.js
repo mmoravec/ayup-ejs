@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from 'exponent';
+import { Components } from 'expo';
 import { connect } from 'react-redux';
 import { LayoutAnimation } from 'react-native';
 import Icons from '../constants/icons';
