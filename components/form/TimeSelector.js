@@ -21,6 +21,14 @@ export default class TimeSelector extends React.Component {
   }
   _yOffset = 0;
 
+  componentDidMount() {
+    setTimeout(() => {
+      this._view.measure((fx, fy, width, height, px, py) => {
+        this._scrollY = py;
+      });
+    }, 200);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.focus.find(el =>
       el.stateKey === this.props.stateKey
@@ -41,9 +49,10 @@ export default class TimeSelector extends React.Component {
     return (
       <TouchableHighlight
         onPress={this._onDatePress}
+        ref={view => { this._view = view; }}
         underlayColor={'#f1f1f1'}>
-        <View ref={view => { this._view = view; }}>
-          <View ref="view" pointerEvents={'none'}>
+        <View>
+          <View pointerEvents={'none'}>
             <Hoshi
               value={time}
               editable={false}
@@ -80,7 +89,6 @@ export default class TimeSelector extends React.Component {
 
   _onDatePress = async () => {
     this.props.onFocus(this.props.stateKey);
-    this.props.scrollTo();
     if (Platform.OS === 'android') {
       let date, time;
       let now = new Date();
@@ -101,6 +109,8 @@ export default class TimeSelector extends React.Component {
 
       let d = new Date(date.year, date.month, date.day, time.hour, time.minute);
       this._onChange(d);
+    } else {
+      this.props.scrollTo(this._scrollY - 80);
     }
   }
 

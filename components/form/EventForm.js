@@ -44,14 +44,6 @@ export default class EventForm extends React.Component {
       onFocus: this._focusElement.bind(this, 'location'),
     };
 
-    this._startProps = {
-      scrollTo: this._scrollTo.bind(this, 240),
-    };
-
-    this._endProps = {
-      scrollTo: this._scrollTo.bind(this, 300),
-    };
-
   }
 
   state = {
@@ -60,6 +52,7 @@ export default class EventForm extends React.Component {
     title: 'title placeholder',
     desc: 'sample desc',
     location: '',
+    friends: [],
     scrollY: new Animated.Value(0),
     latlng: null,
     public: true,
@@ -69,6 +62,7 @@ export default class EventForm extends React.Component {
       {stateKey: 'location', focus: false},
       {stateKey: 'startDate', focus: false},
       {stateKey: 'endDate', focus: false},
+      {stateKey: 'friends', focus: false},
     ],
   }
 
@@ -103,7 +97,7 @@ export default class EventForm extends React.Component {
               label={'Start Date'}
               onChange={this._onChange}
               stateKey={'startDate'}
-              {...this._startProps}
+              scrollTo={this._scrollTo}
             />
           </View>
           <View style={styles.input}>
@@ -115,7 +109,7 @@ export default class EventForm extends React.Component {
               label={'End Date'}
               onChange={this._onChange}
               stateKey={'endDate'}
-              {...this._endProps}
+              scrollTo={this._scrollTo}
             />
           </View>
           <View style={styles.switch}>
@@ -133,6 +127,7 @@ export default class EventForm extends React.Component {
               onFocus={this._focusElement}
               onChange={this._onChange}
               stateKey={'friends'}
+              scrollTo={this._scrollTo}
             />
           </View>
           {this._renderOptionalFields()}
@@ -182,7 +177,7 @@ export default class EventForm extends React.Component {
 
 const styles = StyleSheet.create({
   btmPadding: {
-    height: height * 0.5,
+    height: height,
     backgroundColor: '#fff',
   },
   scrollView: {

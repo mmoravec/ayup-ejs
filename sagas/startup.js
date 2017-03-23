@@ -63,7 +63,14 @@ function* getUser() {
             'new': true,
         };
     } else {
+      user.hosted = new List(user.hosted);
+      user.invited = new List(user.invited);
+      user.joined = new List(user.joined);
+      user.rejected = new List(user.rejected);
+      user.requested = new List(user.requested);
+      user.completed = new List(user.completed);
       user = new User(user);
+      console.log(user);
       yield put({
           type: ActionTypes.SET_CURRENT_USER,
           user,
