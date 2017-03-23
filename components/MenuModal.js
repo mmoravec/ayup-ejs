@@ -98,12 +98,12 @@ export default class EventListModal extends React.Component {
               opacity: this.state.opacity,
               bottom: this.state.thirdRowBottom,
             }]}>
-            <TouchableHighlight underlayColor="transparent" onPress={this._profileBtnPress}>
+            <TouchableOpacity underlayColor="transparent" onPress={this._profileBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_profile.png')}
                 style={styles.btnProfile}
               />
-            </TouchableHighlight>
+            </TouchableOpacity>
           </Animated.View>
           <Animated.View
             style={[styles.ctnEvents,
@@ -112,12 +112,12 @@ export default class EventListModal extends React.Component {
               left: this.state.secRowMarg,
               bottom: this.state.secRowBottom,
             }]}>
-            <TouchableHighlight underlayColor="transparent" onPress={this._myEventBtnPress}>
+            <TouchableOpacity underlayColor="transparent" onPress={this._myEventBtnPress}>
               <Image
                 source={require('../assets/images/menu/btn_events.png')}
                 style={styles.btnEvents}
               />
-            </TouchableHighlight>
+            </TouchableOpacity>
           </Animated.View>
           <Animated.View
             style={[styles.ctnNewEvent,

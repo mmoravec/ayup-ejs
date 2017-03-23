@@ -30,12 +30,29 @@ export default class MyEventsScreen extends React.Component {
 
   state = {
     allLeft: new Animated.Value(width * 2 + width * 0.05),
-    myLeft: new Animated.Value(width * 3 + width * 0.05),
-    joinedLeft: new Animated.Value(width * 4 + width * 0.05),
+    myLeft: new Animated.Value(width * 2 + width * 0.1),
+    joinedLeft: new Animated.Value(width * 2 + width * 0.15),
+    allOpac: new Animated.Value(1),
+    myOpac: new Animated.Value(0.4),
+    joinOpac: new Animated.Value(0.4),
+  }
+
+  componentDidMount() {
+    Animated.sequence([
+      Animated.delay(1000),
+      Animated.parallel([
+        Animated.timing(this.state.allLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
+        Animated.timing(this.state.myLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
+        Animated.timing(this.state.joinedLeft, {toValue: width * 4 + width * 0.05, duration: 500}),
+        Animated.timing(this.state.allOpac, {toValue: 1, duration: 500}),
+        Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
+        Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
+      ]),
+    ]).start();
+
   }
 
   render() {
-    let user = this.props.user;
     let listData = new List(data);
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
@@ -53,13 +70,13 @@ export default class MyEventsScreen extends React.Component {
             source={require('../assets/images/event_bar.png')}
             style={styles.contextBar}>
             <TouchableOpacity onPress={this._selectAll}>
-              <MyText style={{marginLeft: 5, marginTop: 20}}>All</MyText>
+              <Animated.Text style={{fontFamily: 'LatoRegular', marginLeft: 5, marginTop: 20, opacity: this.state.allOpac}}>All</Animated.Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this._selectMine}>
-              <MyText style={{marginTop: 20}}>Created by Me</MyText>
+              <Animated.Text style={{fontFamily: 'LatoRegular', marginTop: 20, opacity: this.state.myOpac}}>Created by Me</Animated.Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this._selectJoined}>
-              <MyText style={{marginRight: 5, marginTop: 20}}>Joined</MyText>
+              <Animated.Text style={{fontFamily: 'LatoRegular', marginRight: 5, marginTop: 20, opacity: this.state.joinOpac}}>Joined</Animated.Text>
             </TouchableOpacity>
           </Image>
         </View>
@@ -96,6 +113,9 @@ export default class MyEventsScreen extends React.Component {
       Animated.timing(this.state.allLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
       Animated.timing(this.state.myLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
       Animated.timing(this.state.joinedLeft, {toValue: width * 4 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.allOpac, {toValue: 1, duration: 500}),
+      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
     ]).start();
   }
   _selectMine = () => {
@@ -103,6 +123,9 @@ export default class MyEventsScreen extends React.Component {
       Animated.timing(this.state.allLeft, {toValue: width * 1 + width * 0.05, duration: 500}),
       Animated.timing(this.state.myLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
       Animated.timing(this.state.joinedLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.myOpac, {toValue: 1, duration: 500}),
+      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
     ]).start();
   }
   _selectJoined = () => {
@@ -110,6 +133,9 @@ export default class MyEventsScreen extends React.Component {
       Animated.timing(this.state.allLeft, {toValue: width * 0.05, duration: 500}),
       Animated.timing(this.state.myLeft, {toValue: width * 1 + width * 0.05, duration: 500}),
       Animated.timing(this.state.joinedLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.joinOpac, {toValue: 1, duration: 500}),
     ]).start();
   }
   _backBtnPress = () => {
@@ -163,6 +189,7 @@ const styles = StyleSheet.create({
     width: width * 5,
     height: height - 110,
     alignSelf: 'center',
+    flexDirection: 'row',
   },
   myEventsText: {
     backgroundColor: 'rgba(0,0,0,0)',
