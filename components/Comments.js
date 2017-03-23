@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
   Dimensions,
   Text,
   Image,
@@ -11,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
+import Bubble from './common/Bubble';
 import Figures from '../constants/figures';
 import { Comment } from '../state/Records';
 import sampleComments from '../sample/comments';
@@ -31,6 +33,19 @@ export default class Comments extends React.Component {
       comments.push(push);
     });
     this._comments = Filter.sortComments(new List(comments));
+    // setTimeout(() => {
+    //   this._commentsRef.measure((fx, fy, width, height, px, py) => {
+    //     this._commentValueY = py;
+    //   });
+    // }, 200);
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this._commentsRef.measure((fx, fy, width, height, px, py) => {
+        this._commentValueY = py;
+      });
+    }, 200);
   }
 
   render() {
@@ -87,12 +102,15 @@ export default class Comments extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <MyText style={{color: '#5bc4a5', fontSize: 16, margin: 14, marginRight: 2}}>People going </MyText>
             <MyText style={{color: '#ee366f', fontSize: 16, marginTop: 14}}>/ Unconfirmed</MyText>
+            <Bubble data={event} style={{alignSelf: 'center', position:'absolute', right: 10}} />
           </View>
           <EventGuests guests={guests} />
         </View>
-        <TouchableOpacity ref={view => { this._commentsRef = view; }} style={{backgroundColor: '#fff'}} onPress={this._scrollToComments}>
-          <MyText style={styles.seeAll}>See all comments</MyText>
-        </TouchableOpacity>
+        <TouchableHighlight ref={view => { this._commentsRef = view; }} underlayColor={'#f2f2f2'} style={{backgroundColor: '#fff'}} onPress={this._scrollToComments}>
+          <View>
+            <MyText style={styles.seeAll}>See all comments</MyText>
+          </View>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -133,9 +151,7 @@ export default class Comments extends React.Component {
   }
 
   _scrollToComments = () => {
-    this._commentsRef.measure((fx, fy, width, height, px, py) => {
-        this._listView.scrollTo({x: 0, y: py, animated: true});
-    });
+    this._listView.scrollTo({x: 0, y: this._commentValueY, animated: true});
   }
 
   _renderTime = (date) => {

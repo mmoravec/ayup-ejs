@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  ListView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,6 +9,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import ImmutableListView from 'react-native-immutable-list-view';
+import Bubble from './common/Bubble';
 import Icons from '../constants/figures';
 import Actions from '../state/Actions';
 const dateFormat = require('dateformat');
@@ -57,16 +57,7 @@ class ListRow extends React.Component {
             <Text style={styles.author}>{rowData.author.name}</Text>
           </View>
           <View style={styles.bubble}>
-            <Image
-              source={require('../assets/images/joined_notjoined.png')}
-              style={styles.joinedBubble}
-            />
-            <Text style={styles.joined}>{rowData.accepted.length}</Text>
-            {
-              (rowData.capacity - rowData.accepted.length) > 9  ?
-                <Text style={[styles.left, {right: 14}]}>{rowData.capacity - rowData.accepted.length}</Text> :
-                <Text style={[styles.left, {right: 16}]}>{rowData.capacity - rowData.accepted.length}</Text>
-            }
+            <Bubble data={rowData} />
           </View>
         </View>
       </TouchableOpacity>
@@ -120,26 +111,6 @@ const styles = StyleSheet.create({
     color: '#808080',
     fontFamily: 'LatoRegular',
     marginBottom: 16,
-  },
-  joinedBubble: {
-    height: 26,
-    width: 40,
-  },
-  joined: {
-    position: 'absolute',
-    left: 8,
-    top: 30,
-    backgroundColor: 'rgba(0,0,0,0)',
-    color: '#fff',
-    fontFamily: 'LatoRegular',
-  },
-  left: {
-    position: 'absolute',
-    color: '#fff',
-    top: 34,
-    fontSize: 10,
-    backgroundColor: 'rgba(0,0,0,0)',
-    fontFamily: 'LatoRegular',
   },
   bubble: {
     justifyContent: 'center',

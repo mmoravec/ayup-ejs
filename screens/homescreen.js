@@ -74,7 +74,6 @@ export default class HomeScreen extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        <FilterModal visible={this.state.filterVisible} saveFilter={this._onFilterBtnPress} />
         <EventListModal {...listProps} />
         <MenuModal {...menuProps} />
       </View>

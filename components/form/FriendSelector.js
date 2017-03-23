@@ -32,6 +32,7 @@ export default class FriendSelector extends React.Component {
     invitedFriends: new List(),
     filteredFriends: new List(),
     inputText: "",
+    incScrollY: 0,
   }
 
   _fuseOptions = {
@@ -49,6 +50,14 @@ export default class FriendSelector extends React.Component {
 
   _fuse = new Fuse(this.props.friends.toJS(), this._fuseOptions);
 
+  componentDidMount() {
+    setTimeout(() => {
+      this._view.measure((fx, fy, width, height, px, py) => {
+        this._scrollY = py;
+      });
+    }, 200);
+  }
+
   componetDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
       this._fuse = new Fuse(this.props.friends.toJS(), this._fuseOptions);
@@ -57,7 +66,7 @@ export default class FriendSelector extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View ref={view => { this._view = view; }} style={styles.container}>
         <MyText style={styles.label}>Add Friends:</MyText>
         {this._renderInvitedFriends()}
         {this._renderAddButton()}
@@ -99,6 +108,10 @@ export default class FriendSelector extends React.Component {
     );
   }
   _addFriend = () => {
+    if (!this.state.addingFriend) {
+      this.setState({inputText: ''});
+      this.props.scrollTo(this._scrollY + this.state.invitedFriends.size * 60);
+    }
     this.setState({addingFriend: !this.state.addingFriend});
   }
 
