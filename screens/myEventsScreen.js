@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
 import Bubble from '../components/common/Bubble';
 import MyText from '../components/common/MyText';
@@ -16,6 +17,7 @@ import Icons from '../constants/figures';
 import Actions from '../state/Actions';
 const dateFormat = require('dateformat');
 const {height, width} = Dimensions.get('window');
+const data = require('../sample/sampledata.json');
 
 @connect(data => MyEventsScreen.getDataProps(data))
 export default class MyEventsScreen extends React.Component {
@@ -26,13 +28,26 @@ export default class MyEventsScreen extends React.Component {
     };
   }
 
+  state = {
+    allLeft: new Animated.Value(width * 2 + width * 0.05),
+    myLeft: new Animated.Value(width * 3 + width * 0.05),
+    joinedLeft: new Animated.Value(width * 4 + width * 0.05),
+  }
+
   render() {
     let user = this.props.user;
+    let listData = new List(data);
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
         <View style={styles.myEventsText}>
-          <MyText style={{alignSelf: 'center', fontSize: 20, marginTop: 20}}>My Events</MyText>
+          <MyText style={{alignSelf: 'center', fontSize: 20, marginTop: 25}}>My Events</MyText>
         </View>
+        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
+          <Image
+            source={require('../assets/images/btn_back.png')}
+            style={styles.btnBack}
+          />
+        </TouchableOpacity>
         <View style={styles.contextParent}>
           <Image
             source={require('../assets/images/event_bar.png')}
@@ -48,10 +63,22 @@ export default class MyEventsScreen extends React.Component {
             </TouchableOpacity>
           </Image>
         </View>
-        <View style={{backgroundColor: '#000'}}>
-          <Animated.View>
+        <View style={styles.listParent}>
+          <Animated.View style={[styles.eventList, {left: this.state.allLeft}]}>
             <ImmutableListView
-              immutableData={user.hosted}
+              immutableData={listData}
+              renderRow={this._renderRow}
+            />
+          </Animated.View>
+          <Animated.View style={[styles.eventList, {left: this.state.myLeft}]}>
+            <ImmutableListView
+              immutableData={listData}
+              renderRow={this._renderRow}
+            />
+          </Animated.View>
+          <Animated.View style={[styles.eventList, {left: this.state.joinedLeft}]}>
+            <ImmutableListView
+              immutableData={listData}
               renderRow={this._renderRow}
             />
           </Animated.View>
@@ -63,6 +90,30 @@ export default class MyEventsScreen extends React.Component {
     return (
       <ListRow data={rowData} closeBtn={this.props.closeBtn} />
     );
+  }
+  _selectAll = () => {
+    Animated.parallel([
+      Animated.timing(this.state.allLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.myLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.joinedLeft, {toValue: width * 4 + width * 0.05, duration: 500}),
+    ]).start();
+  }
+  _selectMine = () => {
+    Animated.parallel([
+      Animated.timing(this.state.allLeft, {toValue: width * 1 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.myLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.joinedLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
+    ]).start();
+  }
+  _selectJoined = () => {
+    Animated.parallel([
+      Animated.timing(this.state.allLeft, {toValue: width * 0.05, duration: 500}),
+      Animated.timing(this.state.myLeft, {toValue: width * 1 + width * 0.05, duration: 500}),
+      Animated.timing(this.state.joinedLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
+    ]).start();
+  }
+  _backBtnPress = () => {
+    this.props.navigator.pop();
   }
 }
 
@@ -102,6 +153,17 @@ class ListRow extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  eventList: {
+    width: width * 0.9,
+    position: 'absolute',
+    height: height - 110,
+  },
+  listParent: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    width: width * 5,
+    height: height - 110,
+    alignSelf: 'center',
+  },
   myEventsText: {
     backgroundColor: 'rgba(0,0,0,0)',
     height: 50,
@@ -122,5 +184,56 @@ const styles = StyleSheet.create({
     width: undefined,
     height: undefined,
     backgroundColor:'transparent',
+  },
+  row: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    height: 80,
+    justifyContent: 'space-between',
+  },
+  btnBack: {
+    width: 40,
+    height: 40,
+    margin: 15,
+  },
+  ctnBack: {
+    position: 'absolute',
+    zIndex: 2,
+  },
+  time: {
+    fontSize: 8,
+    margin: 5,
+    fontFamily: 'LatoRegular',
+  },
+  activityImage: {
+    height: 30,
+    width: 30,
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  icon: {
+    height: 80,
+  },
+  info: {
+    justifyContent: 'flex-end',
+    flexGrow: 1,
+    maxWidth: width * 0.5,
+  },
+  title: {
+    fontSize: 16,
+    fontFamily: 'LatoRegular',
+    marginBottom: 4,
+  },
+  author: {
+    fontSize: 10,
+    color: '#808080',
+    fontFamily: 'LatoRegular',
+    marginBottom: 16,
+  },
+  bubble: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    height: 80,
+    width: 50,
   },
 });
