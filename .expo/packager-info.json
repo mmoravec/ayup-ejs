@@ -1,10 +1,10 @@
 {
   "exponentServerPort": null,
   "packagerPort": 19001,
-  "packagerPid": 25703,
+  "packagerPid": 29352,
   "exponentServerNgrokUrl": null,
-  "packagerNgrokUrl": "https://packager.g4-wk9.mmoravec.ayup-ejs.exp.direct",
-  "ngrokPid": 25725,
+  "packagerNgrokUrl": "https://packager.vn-cej.mmoravec.ayup-ejs.exp.direct",
+  "ngrokPid": 27908,
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://g4-wk9.mmoravec.ayup-ejs.exp.direct"
+  "expoServerNgrokUrl": "https://vn-cej.mmoravec.ayup-ejs.exp.direct"
 }
