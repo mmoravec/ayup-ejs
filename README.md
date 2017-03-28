@@ -4,3 +4,4 @@
 
 # Launch Checklist
 1. Make sure all .toJS() are out.
+2. Resolve all //TODOs
