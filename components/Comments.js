@@ -33,11 +33,6 @@ export default class Comments extends React.Component {
       comments.push(push);
     });
     this._comments = Filter.sortComments(new List(comments));
-    // setTimeout(() => {
-    //   this._commentsRef.measure((fx, fy, width, height, px, py) => {
-    //     this._commentValueY = py;
-    //   });
-    // }, 200);
   }
 
   componentDidMount() {
@@ -100,7 +95,7 @@ export default class Comments extends React.Component {
         </View>
         <View style={styles.bottomInfo}>
           <View style={{flexDirection: 'row'}}>
-            <MyText style={{color: '#5bc4a5', fontSize: 16, margin: 14, marginRight: 2}}>People going </MyText>
+            <MyText style={{color: '#5bc4a5', fontSize: 16, margin: 14, marginRight: 2}}>Going </MyText>
             <MyText style={{color: '#ee366f', fontSize: 16, marginTop: 14}}>/ Unconfirmed</MyText>
             <Bubble data={event} style={{alignSelf: 'center', position:'absolute', right: 10}} />
           </View>

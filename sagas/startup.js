@@ -70,7 +70,6 @@ function* getUser() {
       user.requested = new List(user.requested);
       user.completed = new List(user.completed);
       user = new User(user);
-      console.log(user);
       yield put({
           type: ActionTypes.SET_CURRENT_USER,
           user,

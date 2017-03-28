@@ -14,7 +14,6 @@ const PADDING = 24;
 
 export default class Hoshi extends BaseInput {
 
-
   static propTypes = {
     borderColor: PropTypes.string,
 
@@ -75,16 +74,19 @@ export default class Hoshi extends BaseInput {
             }),
             top: focusedAnim.interpolate({
               inputRange: [0, 0.5, 0.51, 1],
-              outputRange: [PADDING * 1.5, PADDING * 1.5, 10, 10],
+              outputRange: [PADDING * 1.5, PADDING * 1.5, 15, 15],
             }),
             left: focusedAnim.interpolate({
               inputRange: [0, 0.5, 0.51, 1],
               outputRange: [PADDING * 0.5, PADDING, 0, PADDING * 0.5],
             }),
           }]}>
-            <Text style={[styles.label, labelStyle]}>
+            <Animated.Text style={[styles.label, labelStyle, {fontSize: focusedAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [16, 12],
+            })}]}>
               {label}
-            </Text>
+            </Animated.Text>
           </Animated.View>
         </TouchableWithoutFeedback>
         <View style={[styles.labelMask, { backgroundColor: maskColor }]} />
@@ -117,12 +119,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     position: 'absolute',
-    bottom: 2,
+    bottom: 0,
     left: PADDING * 0.5,
     padding: 0,
     color: '#6a7989',
     fontSize: 18,
-    fontWeight: 'bold',
     fontFamily: 'LatoRegular',
   },
   labelMask: {

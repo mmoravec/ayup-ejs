@@ -13,6 +13,6 @@ export default function* root() {
     fork(watchRegionChange),
     fork(watchLogin),
     fork(watchRouteChange),
-    fork(refreshUserFriends),
+    // fork(refreshUserFriends),
   ];
 }

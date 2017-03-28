@@ -1,12 +1,47 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { delay } from 'redux-saga'
+import { call, put, takeEvery, select } from 'redux-saga/effects';
 import {
   Platform,
 } from 'react-native';
-import { Facebook } from 'exponent';
+import { Facebook } from 'expo';
 import LocalStorage from '../state/LocalStorage';
 import ActionTypes from '../state/ActionTypes';
 import { User } from '../state/Records';
 import sampledata from '../sample/user';
+import { ayupLogin } from '../utils/fetch';
+// import { ayupGet } from '../utils/fetch';
+import { URL } from '../constants/rest';
+
+export function* watchLogin() {
+  yield takeEvery(ActionTypes.SIGN_IN, authorize);
+}
+
+function* authorize() {
+  const fbLogin = yield call(facebookLogin);
+  if (fbLogin.type === 'success') {
+    let fbInfo = yield call(getInfo, fbLogin.token);
+    //TODO: log error message after call
+    console.log('fbInfo: ' + JSON.stringify(fbInfo));
+    let ayUser = yield call(ayupLogin, URL + "/v1.0/auth/facebook/?id=" + fbInfo.id, fbLogin.token);
+    //TODO: log error message after call
+    let saveUser = new User({
+      'authToken': ayUser.authToken,
+      'profilePic': fbInfo.picture.data.url,
+      'expires': new Date(Date.now() + fbLogin.expires),
+      'email': fbInfo.email,
+      'gender': fbInfo.gender,
+      'name': fbInfo.name,
+      'fbid': fbLogin.id,
+      'id': ayUser.id,
+      'secret': ayUser.secret,
+    });
+    LocalStorage.saveUserAsync(saveUser);
+    yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
+    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home' });
+  } else {
+    //TODO: throw error message
+  }
+}
 
 function facebookLogin() {
   return Facebook.logInWithReadPermissionsAsync('1521840934725105', {
@@ -20,33 +55,6 @@ async function getInfo(token) {
   let response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=name,id,gender,picture.width(240).height(240),email`);
   let info = await response.json();
   return info;
-}
-
-function* authorize() {
-  let user = null;
-  const result = yield call(facebookLogin);
-  console.log(result);
-  if (result.type === 'success') {
-    user = yield call(getInfo, result.token);
-  }
-  console.log('fb user info: ' + JSON.stringify(user));
-  user = new User({
-    'authToken': result.token,
-    'profilePic': user.picture.data.url,
-    'expires': new Date(Date.now() + result.expires),
-    ...user,
-    ...sampledata,
-  });
-  console.log(user);
-  // let resp = yield call(saveUser, user);
-  //add secret to the user object and authenticate all calls
-  LocalStorage.saveUserAsync(user);
-  yield put({ type: ActionTypes.SET_CURRENT_USER, user });
-  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'home' });
-}
-
-export function* watchLogin() {
-  yield takeEvery(ActionTypes.SIGN_IN, authorize);
 }
 
 

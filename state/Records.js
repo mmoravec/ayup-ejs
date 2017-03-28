@@ -36,6 +36,7 @@ export const User = Record({
   about: null,
   badges: null,
   activities: null,
+  secret: null,
 });
 
 export const Startup = Record({

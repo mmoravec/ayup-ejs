@@ -1,10 +1,7 @@
 import React from 'react';
-import { Components } from 'exponent';
 import {
   StyleSheet,
   View,
-  Text,
-  Dimensions,
   ScrollView,
   Image,
   TouchableOpacity,
@@ -13,6 +10,7 @@ import { connect } from 'react-redux';
 import MyText from '../components/common/MyText';
 import Badges from '../constants/badges';
 import Activities from '../constants/figures';
+import Actions from '../state/Actions';
 
 @connect(data => ProfileScreen.getDataProps(data))
 export default class ProfileScreen extends React.Component {
@@ -102,7 +100,7 @@ export default class ProfileScreen extends React.Component {
   }
 
   _onCloseBtnPress = () => {
-    this.props.navigator.pop();
+    this.props.dispatch(Actions.routeChange('Back'));
   }
 }
 
