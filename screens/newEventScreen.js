@@ -25,17 +25,6 @@ export default class NewEventScreen extends React.Component {
           />
         </TouchableOpacity>
         <Form />
-        <View style={styles.bottom}>
-          <TouchableOpacity
-            underlayColor="transparent"
-            style={styles.hlightSave}
-            onPress={this._saveBtnPress}>
-            <Image
-              style={styles.btnSave}
-              source={require('../assets/images/btn_save.png')}
-            />
-          </TouchableOpacity>
-        </View>
       </Image>
     );
   }
@@ -54,9 +43,6 @@ const styles = StyleSheet.create({
     height: undefined,
     backgroundColor:'transparent',
   },
-  hlightSave: {
-    alignSelf: 'center',
-  },
   btnBack: {
     width: 40,
     height: 40,
@@ -65,18 +51,5 @@ const styles = StyleSheet.create({
   ctnBack: {
     position: 'absolute',
     zIndex: 2,
-  },
-  bottom: {
-    position: 'absolute',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    bottom: 0,
-    height: height * 0.1,
-    width,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  btnSave: {
-    height: 38,
-    width: 140,
   },
 });

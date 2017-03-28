@@ -20,10 +20,18 @@ export default class LocationSearch extends React.Component {
     showPicker: false,
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this._view.measure((fx, fy, width, height, px, py) => {
+        this._scrollY = py;
+      });
+    }, 500);
+  }
+
    render() {
      let isEditable = true;
      return (
-       <View ref="view" style={styles.view} >
+       <View ref={view => { this._view = view; }} style={styles.view} >
          <GooglePlacesAutocomplete
            ref="gplaces"
            placeholder={'Enter Location'}
@@ -73,11 +81,13 @@ export default class LocationSearch extends React.Component {
    }
 
    _getLocation = (data, details) => {
-     this.props.onChange(details.name, details.geometry);
+     let coord = [details.geometry.location.lng, details.geometry.location.lat];
+     this.props.onChange(details.name, coord);
+     console.log(details.geometry);
    }
 
    _inputFocused = () => {
-     this.props.scrollTo();
+     this.props.scrollTo(this._scrollY - 80);
      this.props.onFocus();
    }
 

@@ -10,16 +10,23 @@ export function* watchRegionChange() {
 }
 
 function* updateNearbyEvents(action) {
-  let { latitude, longitude } = action;
-  let region = {
-    latitude,
-    longitude,
-  };
-  yield put({ type: ActionTypes.SET_REGION, region});
   //TODO: call to rest api here
   const user = yield select(state => state.user);
+  let scope = 500;
+  if (action.latitudeDelta < 0.01) {
+    scope = 100;
+  } else if (action.latitudeDelta < 0.02 && action.latitudeDelta > 0.01) {
+    scope = 1000;
+  } else if (action.latitudeDelta < 0.03 && action.latitudeDelta > 0.02) {
+    scope = 5000;
+  } else if (action.latitudeDelta < 0.06 && action.latitudeDelta > 0.03) {
+    scope = 100000;
+  } else if (action.latitudeDelta > 0.06) {
+    scope = 1000000;
+  }
+  console.log(scope);
   const data = yield call(request, GET, URL + "/v1.0/events/?lat=" +
-    region.latitude + "&long=" + region.longitude + "&scope=1000",
+    action.latitude + "&long=" + action.longitude + "&scope=" + scope,
     {Authorization: user.secret, UserId: user.fbid}
   );
   yield put({ type: ActionTypes.SET_NEARBY, data });

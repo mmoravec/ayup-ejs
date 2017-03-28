@@ -110,6 +110,7 @@ export default class FriendSelector extends React.Component {
   _addFriend = () => {
     if (!this.state.addingFriend) {
       this.setState({inputText: ''});
+      this.props.onFocus(this.props.stateKey);
       this.props.scrollTo(this._scrollY + this.state.invitedFriends.size * 60);
     }
     this.setState({addingFriend: !this.state.addingFriend});
@@ -204,8 +205,10 @@ export default class FriendSelector extends React.Component {
     let friends = this.state.invitedFriends;
     var result = friends.find(obj => obj.name === friend.name);
     if (!result) {
-      let newFriends = friends.push(friend);
-      this.setState({invitedFriends: newFriends});
+      friends = friends.push(friend);
+      console.log(friends);
+      this.setState({invitedFriends: friends});
+      this.props.onChange(this.props.stateKey, friends);
     }
   }
 
@@ -213,6 +216,7 @@ export default class FriendSelector extends React.Component {
     let friends = this.state.invitedFriends;
     let newFriends = friends.filter(obj => obj.id !== friend.id);
     this.setState({invitedFriends: newFriends});
+    this.props.onChange(this.props.stateKey, newFriends);
   }
 }
 

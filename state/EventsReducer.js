@@ -37,12 +37,12 @@ class EventsReducer {
     return state.set('selectedEvent', action.selectedEvent);
   }
 
-  static [ActionTypes.SET_REGION](state, action) {
+  static [ActionTypes.REGION_CHANGE](state, action) {
     let region = {
-      latitude: action.region.latitude,
-      longitude: action.region.longitude,
-      latitudeDelta: action.region.latitudeDelta ? action.region.latitudeDelta : 0.0922,
-      longitudeDelta: action.region.longitudeDelta ? action.region.longitudeDelta : 0.0421,
+      latitude: action.latitude,
+      longitude: action.longitude,
+      latitudeDelta: 0.0249666,
+      longitudeDelta: 0.017766,
     };
     return state.set('region', region);
   }

@@ -20,7 +20,7 @@ import Navigator from '../navigation/Navigator';
       navigation: navReducer,
       events: EventsReducer,
       user: UserReducer,
-      startup: PhoneStateReducer,
+      phone: PhoneStateReducer,
     }),
     applyMiddleware(sagaMiddleware, routeTracker)
   );

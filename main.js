@@ -20,7 +20,7 @@ class AppContainer extends React.Component {
 class App extends React.Component {
   static getDataProps(data) {
     return {
-      startup: data.startup,
+      startup: data.phone,
       user: data.user,
       nav: data.navigation,
     };

@@ -82,13 +82,10 @@ function* getUser() {
 }
 
 function* setInitialRegion() {
-    let region = {
+    yield put({
+        type: ActionTypes.REGION_CHANGE,
         latitude: 37.78825,
         longitude: -122.4324,
-    };
-    yield put({
-        type: ActionTypes.SET_REGION,
-        region,
     });
     yield put({
         type: ActionTypes.REGION_LOADED,

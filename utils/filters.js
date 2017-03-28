@@ -51,6 +51,7 @@ export default class Filters {
       actMap[filter.title] = true;
     });
     return events.filter(event => {
+      event.activity = "basketball";
       if (actMap[event.activity]) {
         return event;
       }

@@ -22,11 +22,13 @@ export default class Actions {
     };
   }
 
-  static regionChange(longitude, latitude) {
+  static regionChange(longitude, latitude, longitudeDelta, latitudeDelta) {
     return {
       type: ActionTypes.REGION_CHANGE,
       longitude,
       latitude,
+      longitudeDelta,
+      latitudeDelta,
     };
   }
 
@@ -63,6 +65,12 @@ export default class Actions {
         type: ActionTypes.SET_FILTER,
         filterStart,
         filterEnd,
+      };
+  }
+  static saveEvent(event) {
+    return   {
+        type: ActionTypes.SAVE_EVENT,
+        event,
       };
   }
 }

@@ -39,12 +39,13 @@ export const User = Record({
   secret: null,
 });
 
-export const Startup = Record({
+export const PhoneState = Record({
   userLoaded: false,
   fontLoaded: false,
   filtersLoaded: false,
   regionLoaded: false,
   imagesLoaded: false,
+  request: false,
 });
 
 export const Comment = Record({

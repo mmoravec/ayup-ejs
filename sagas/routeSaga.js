@@ -10,6 +10,10 @@ export function* watchRouteChange() {
   yield takeLatest(ActionTypes.ROUTE_CHANGE, changeRoute);
 }
 
+export function* watchUnauthenticated() {
+  yield takeLatest(ActionTypes.REQUEST_UNAUTHENTICATED, goToLogin);
+}
+
 function* changeRoute(action) {
   console.log(action);
   if (action.newRoute === "Back") {
@@ -17,4 +21,8 @@ function* changeRoute(action) {
   } else {
     Store.dispatch(NavigationActions.navigate({ routeName: action.newRoute }));
   }
+}
+
+function* goToLogin() {
+  Store.dispatch(NavigationActions.navigate({ routeName: "Login" }));
 }

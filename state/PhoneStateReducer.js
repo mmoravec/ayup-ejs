@@ -1,8 +1,8 @@
 import ActionTypes from './ActionTypes';
-import { Startup } from './Records';
+import { PhoneState } from './Records';
 
 class PhoneStateReducer {
-  static reduce(state = new Startup(), action) {
+  static reduce(state = new PhoneState(), action) {
     if (PhoneStateReducer[action.type]) {
       return PhoneStateReducer[action.type](state, action);
     } else {
@@ -28,6 +28,14 @@ class PhoneStateReducer {
 
   static [ActionTypes.IMAGES_LOADED](state, action) {
     return state.set('imagesLoaded', true);
+  }
+
+  static [ActionTypes.REQUEST_STARTED](state, action) {
+    return state.set('request', true);
+  }
+
+  static [ActionTypes.REQUEST_ENDED](state, action) {
+    return state.set('request', false);
   }
 
 }

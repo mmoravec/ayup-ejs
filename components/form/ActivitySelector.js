@@ -94,6 +94,7 @@ export default class ActivitySelector extends React.Component {
 
    _filterClick = (id) => {
      this.setState({filterSelected: id});
+     this.props.selectActivity(id);
      this.setState({showSelect: !this.state.showSelect});
    }
 
@@ -101,8 +102,8 @@ export default class ActivitySelector extends React.Component {
 const styles = StyleSheet.create({
   back: {
     position: 'absolute',
-    left: 15,
-    top: 15,
+    right: 20,
+    top: 20,
   },
   icon: {
     width: 0.25 * width,

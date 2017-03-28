@@ -1,6 +1,6 @@
 import { call, put, takeEvery, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-const getUser = state => state.user;
+import ActionTypes from '../state/ActionTypes';
 
 export function* ayupLogin(url, token) {
   let response = yield call(fetch, url, {
@@ -15,33 +15,39 @@ export function* ayupLogin(url, token) {
     resJSON.secret = response.headers.get('authorization');
     return resJSON;
   } else if (response.status === 401) {
-    let error = yield response.error();
+    let error = yield response.json();
     return error;
     //TODO: create unauthorized func
   } else {
-    let error = yield response.error();
+    let error = yield response.json();
     return error;
   }
 }
 
-export function* request(type, url, headers) {
+export function* request(type, url, headers, body) {
+  yield put({ type: ActionTypes.REQUEST_STARTED });
   let response = yield call(fetch, url, {
     method: type,
     headers: {
       "Content-Type": "application/json",
       ...headers,
     },
+    body,
   });
   console.log(response);
+  yield put({ type: ActionTypes.REQUEST_ENDED });
   if (response.status === 200) {
+    yield put({ type: ActionTypes.REQUEST_SUCCESS });
     let resJSON = yield response.json();
     return resJSON;
   } else if (response.status === 401) {
     let error = yield response.json();
+    console.log(error);
     return error;
     //TODO: create unauthorized func
   } else {
     let error = yield response.json();
+    yield put({ type: ActionTypes.REQUEST_ERROR, error });
     return error;
   }
 }
