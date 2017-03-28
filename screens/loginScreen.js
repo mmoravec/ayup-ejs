@@ -8,14 +8,27 @@ import { connect } from 'react-redux';
 import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import FadeIn from '@expo/react-native-fade-in-image';
 import ActionTypes from '../state/ActionTypes';
+import Actions from '../state/Actions';
 
 
-@connect()
+@connect(data => AuthenticationScreen.getDataProps(data))
 export default class AuthenticationScreen extends React.Component {
+  static getDataProps(data) {
+    return {
+      user: data.user,
+    };
+  }
   static route = {
     navigationBar: {
       visible: false,
     },
+  }
+
+  componentWillMount() {
+    console.log(this.props.user);
+    if (this.props.user.get('id') !== null) {
+      this.props.dispatch(Actions.routeChange('Home'));
+    }
   }
 
   // <FadeIn placeholderStyle={{backgroundColor: 'transparent'}}>

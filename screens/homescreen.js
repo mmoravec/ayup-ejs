@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Image,
-  TouchableHighlight,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
@@ -12,7 +11,6 @@ import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import MapView from '../components/EventMap';
-import FilterModal from '../components/FilterModal';
 import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
 

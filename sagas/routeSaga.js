@@ -1,8 +1,7 @@
-import { NavigationActions } from '@expo/ex-navigation';
+import { NavigationActions } from 'react-navigation';
 import { takeLatest } from 'redux-saga/effects';
 import ActionTypes from '../state/ActionTypes';
 import Store from '../state/Store';
-import Router from '../navigation/Router';
 
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
@@ -12,11 +11,10 @@ export function* watchRouteChange() {
 }
 
 function* changeRoute(action) {
-  let { newRoute, eventId } = action;
-  let navigatorUID = Store.getState().navigation.currentNavigatorUID;
-  if (eventId !== undefined) {
-    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(newRoute, {eventId})));
+  console.log(action);
+  if (action.newRoute === "Back") {
+    Store.dispatch(NavigationActions.back());
   } else {
-    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute(newRoute)));
+    Store.dispatch(NavigationActions.navigate({ routeName: action.newRoute }));
   }
 }

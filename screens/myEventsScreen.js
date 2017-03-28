@@ -139,7 +139,7 @@ export default class MyEventsScreen extends React.Component {
     ]).start();
   }
   _backBtnPress = () => {
-    this.props.navigator.pop();
+    this.props.dispatch(Actions.routeChange('Back'));
   }
 }
 
@@ -174,7 +174,7 @@ class ListRow extends React.Component {
     //TODO: create a saga for this when fetching comments becomes
     this.props.closeBtn();
     this.props.dispatch(Actions.selectEvent(this.props.data));
-    this.props.dispatch(Actions.routeChange('event'));
+    this.props.dispatch(Actions.routeChange('Event'));
   }
 }
 

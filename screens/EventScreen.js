@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from 'exponent';
+import { MapView } from 'expo';
 import {
   StyleSheet,
   View,
@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import Icons from '../constants/icons';
 import Comments from '../components/Comments';
 import MapStyle from '../constants/mapstyle';
+import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
 @connect(data => EventScreen.getDataProps(data))
@@ -39,7 +40,7 @@ export default class EventScreen extends React.Component {
     let icon = Icons[event.activity].icon;
     return (
       <View style={styles.scrollView}>
-        <Components.MapView
+        <MapView
           style={styles.map}
           onRegionChangeComplete={this._onRegionChange}
           zoomEnabled={false}
@@ -47,12 +48,12 @@ export default class EventScreen extends React.Component {
           scrollEnabled={false}
           provider={"google"}
           initialRegion={coord}>
-          <Components.MapView.Marker
+          <MapView.Marker
             key={0}
             coordinate={marker}
             image={icon}
           />
-        </Components.MapView>
+        </MapView>
         <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
           <Image
             source={require('../assets/images/btn_back.png')}
@@ -65,7 +66,7 @@ export default class EventScreen extends React.Component {
   }
 
   _backBtnPress = () => {
-    this.props.navigator.pop();
+    this.props.dispatch(Actions.routeChange('Back'));
   }
 }
 

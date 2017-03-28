@@ -43,7 +43,7 @@ export default class NewEventScreen extends React.Component {
 
   }
   _backBtnPress = () => {
-    this.props.navigator.pop();
+    this.props.dispatch(Actions.routeChange('Back'));
   }
 }
 

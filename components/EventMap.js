@@ -1,5 +1,5 @@
 import React from 'react';
-import { Components } from 'expo';
+import { MapView } from 'expo';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
 import MapMarker from './MapMarker';
@@ -19,7 +19,7 @@ export default class EventList extends React.Component {
 
   render() {
       return (
-        <Components.MapView
+        <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
           initialRegion={this.props.region}
           provider={"google"}
@@ -31,7 +31,7 @@ export default class EventList extends React.Component {
             )
           }
 
-        </Components.MapView>
+        </MapView>
       );
   }
 

@@ -51,7 +51,7 @@ export default class ActivitiesScreen extends React.Component {
   }
 
   _backBtnPress = () => {
-    this.props.navigator.pop();
+    this.props.dispatch(Actions.routeChange('Back'));
   }
 }
 

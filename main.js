@@ -1,27 +1,16 @@
 import Expo from 'expo';
 import React from 'react';
-import {
-  NavigationContext,
-  NavigationProvider,
-  StackNavigation,
-} from '@expo/ex-navigation';
+import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
-import Router from './navigation/Router';
+import Navigation from './navigation/Navigator';
 import Store from './state/Store';
 import Actions from './state/Actions';
-
-const navigationContext = new NavigationContext({
-  store: Store,
-  router: Router,
-});
 
 class AppContainer extends React.Component {
   render() {
     return (
       <Provider store={Store}>
-        <NavigationProvider context={navigationContext}>
-          <App {...this.props} />
-        </NavigationProvider>
+        <App />
       </Provider>
     );
   }
@@ -33,23 +22,23 @@ class App extends React.Component {
     return {
       startup: data.startup,
       user: data.user,
+      nav: data.navigation,
     };
   }
   render() {
     let {fontLoaded, regionLoaded, userLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
     if (fontLoaded && regionLoaded && userLoaded && filtersLoaded && imagesLoaded) {
-      let route = 'login';
-      if (this.props.user.get('id')) {
-        route = 'home';
-      }
+      console.log(userLoaded);
       return (
-        <StackNavigation
-          id="root"
-          initialRoute={Router.getRoute(route)}
+        <Navigation
+          navigation={addNavigationHelpers({
+            dispatch: this.props.dispatch,
+            state: this.props.nav,
+          })}
         />
       );
     } else {
-      return <Expo.Components.AppLoading />;
+      return <Expo.AppLoading />;
     }
   }
 }
