@@ -1,10 +1,8 @@
 import {call, put, take} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
-import {Platform} from 'react-native';
 import { List } from 'immutable';
 import ActionTypes from '../state/ActionTypes';
 import { GET } from '../constants/rest';
-import {User} from '../state/Records';
 import { request } from '../utils/fetch';
 
 export function* refreshUserFriends() {

@@ -15,6 +15,10 @@ const {height, width} = Dimensions.get('window');
 @connect()
 export default class NewEventScreen extends React.Component {
 
+  state = {
+    warn: false,
+  }
+
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
@@ -27,9 +31,6 @@ export default class NewEventScreen extends React.Component {
         <Form />
       </Image>
     );
-  }
-  _onDateChange = (date) => {
-
   }
   _backBtnPress = () => {
     this.props.dispatch(Actions.routeChange('Back'));
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   btnBack: {
     width: 40,
     height: 40,
-    margin: 15,
+    margin: 25,
   },
   ctnBack: {
     position: 'absolute',

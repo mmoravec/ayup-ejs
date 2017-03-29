@@ -58,7 +58,7 @@ function* loadFilters() {
 
 function* getUser() {
     let user = yield call(LocalStorage.getUserAsync);
-    if (user === null || !user.id) {
+    if (user === null || !user.fbid) {
         user = {
             'new': true,
         };

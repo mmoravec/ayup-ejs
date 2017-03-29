@@ -15,7 +15,6 @@ export function* watchUnauthenticated() {
 }
 
 function* changeRoute(action) {
-  console.log(action);
   if (action.newRoute === "Back") {
     Store.dispatch(NavigationActions.back());
   } else {

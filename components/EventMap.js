@@ -36,7 +36,7 @@ export default class EventList extends React.Component {
   }
 
   _onRegionChange = (region) => {
-    console.log(region);
+    (region);
     this.props.dispatch(Actions.regionChange(
       region.longitude,
       region.latitude,

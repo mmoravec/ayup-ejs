@@ -25,6 +25,11 @@ export function* ayupLogin(url, token) {
 }
 
 export function* request(type, url, headers, body) {
+  let bodyString = "";
+  if (body) {
+    bodyString = JSON.stringify(body);
+    console.log(bodyString);
+  }
   yield put({ type: ActionTypes.REQUEST_STARTED });
   let response = yield call(fetch, url, {
     method: type,
@@ -32,9 +37,8 @@ export function* request(type, url, headers, body) {
       "Content-Type": "application/json",
       ...headers,
     },
-    body,
+    bodyString,
   });
-  console.log(response);
   yield put({ type: ActionTypes.REQUEST_ENDED });
   if (response.status === 200) {
     yield put({ type: ActionTypes.REQUEST_SUCCESS });
@@ -42,7 +46,7 @@ export function* request(type, url, headers, body) {
     return resJSON;
   } else if (response.status === 401) {
     let error = yield response.json();
-    console.log(error);
+    yield put({ type: ActionTypes.REQUEST_UNAUTHENTICATED, error });
     return error;
     //TODO: create unauthorized func
   } else {

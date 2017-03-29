@@ -25,7 +25,7 @@ export default class AuthenticationScreen extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.props.user);
+    (this.props.user);
     if (this.props.user.get('id') !== null) {
       this.props.dispatch(Actions.routeChange('Home'));
     }

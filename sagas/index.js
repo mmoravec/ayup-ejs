@@ -1,9 +1,9 @@
 import { fork } from 'redux-saga/effects';
 import startup from './startup';
-import { watchRegionChange } from './mapSaga';
 import { watchLogin } from './loginSaga';
 import { watchUnauthenticated, watchRouteChange } from './routeSaga';
 import { refreshUserFriends } from './userSaga';
+import { watchEventSave, watchRegionChange } from './eventSaga';
 /*
  * The entry point for all the sagas used in this application.
  */
@@ -15,5 +15,6 @@ export default function* root() {
     fork(watchRouteChange),
     fork(refreshUserFriends),
     fork(watchUnauthenticated),
+    fork(watchEventSave),
   ];
 }

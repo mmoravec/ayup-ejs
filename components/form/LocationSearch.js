@@ -83,7 +83,7 @@ export default class LocationSearch extends React.Component {
    _getLocation = (data, details) => {
      let coord = [details.geometry.location.lng, details.geometry.location.lat];
      this.props.onChange(details.name, coord);
-     console.log(details.geometry);
+     (details.geometry);
    }
 
    _inputFocused = () => {

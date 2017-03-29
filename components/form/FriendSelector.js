@@ -111,7 +111,7 @@ export default class FriendSelector extends React.Component {
     if (!this.state.addingFriend) {
       this.setState({inputText: ''});
       this.props.onFocus(this.props.stateKey);
-      this.props.scrollTo(this._scrollY + this.state.invitedFriends.size * 60);
+      this.props.scrollTo(this._scrollY + this.state.invitedFriends.size * 60 - 80);
     }
     this.setState({addingFriend: !this.state.addingFriend});
   }
@@ -143,6 +143,7 @@ export default class FriendSelector extends React.Component {
         <ImmutableListView
           immutableData={this.state.invitedFriends}
           renderRow={this._renderInvitedRow}
+          keyboardShouldPersistTaps={'always'}
         />
       );
     }
@@ -154,6 +155,7 @@ export default class FriendSelector extends React.Component {
         <ImmutableListView
           immutableData={this.state.filteredFriends}
           renderRow={this._renderFilterRow}
+          keyboardShouldPersistTaps={'always'}
         />
       );
     }
@@ -206,7 +208,7 @@ export default class FriendSelector extends React.Component {
     var result = friends.find(obj => obj.name === friend.name);
     if (!result) {
       friends = friends.push(friend);
-      console.log(friends);
+      (friends);
       this.setState({invitedFriends: friends});
       this.props.onChange(this.props.stateKey, friends);
     }
@@ -224,6 +226,7 @@ const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 2,
     borderBottomColor: '#b9c1ca',
+    paddingBottom: 10,
   },
   label: {
     marginTop: 15,
@@ -254,7 +257,7 @@ const styles = StyleSheet.create({
   input: {
     width: width * 0.6,
     height: 40,
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: 'LatoRegular',
   },
   friendPic: {

@@ -17,6 +17,7 @@ export const EventState = Record({
 });
 
 export const User = Record({
+  fbid: null,
   id: null,
   authToken: null,
   name: null,
@@ -46,6 +47,7 @@ export const PhoneState = Record({
   regionLoaded: false,
   imagesLoaded: false,
   request: false,
+  status: '',
 });
 
 export const Comment = Record({

@@ -16,12 +16,20 @@ import LocationSearch from './LocationSearch';
 import ActivitySelector from './ActivitySelector';
 import TimeSelector from './TimeSelector';
 import FriendSelector from './FriendSelector';
+import MyText from '../common/MyText';
 import Hoshi from '../common/Hoshi';
+import ActionButton from '../common/ActionButton';
 import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
-@connect()
+@connect((data) => EventForm.getDataProps(data))
 export default class EventForm extends React.Component {
+
+  static getDataProps(data) {
+    return {
+      phone: data.phone,
+    };
+  }
 
   constructor(props) {
     super(props);
@@ -46,14 +54,19 @@ export default class EventForm extends React.Component {
       scrollTo: this._scrollTo,
       onFocus: this._focusElement.bind(this, 'location'),
     };
-
+    this._actionProps = {
+      action: this._saveBtnPress,
+      image: require('../../assets/images/btn_save.png'),
+      warnMessage: "Please fill out Title, Start Date, End Date, and Location",
+    };
   }
 
   state = {
     startDate: '',
     endDate: '',
-    title: 'title placeholder',
-    desc: 'sample desc',
+    title: '',
+    warn: false,
+    desc: '',
     location: '',
     friends: [],
     scrollY: new Animated.Value(0),
@@ -108,7 +121,7 @@ export default class EventForm extends React.Component {
                 onFocus={this._focusElement}
                 date={this.state.startDate}
                 label={'Start Date'}
-                onChange={this._onChange}
+                onChange={this._onDateChange}
                 stateKey={'startDate'}
                 scrollTo={this._scrollTo}
               />
@@ -120,7 +133,7 @@ export default class EventForm extends React.Component {
                 onFocus={this._focusElement}
                 date={this.state.endDate}
                 label={'End Date'}
-                onChange={this._onChange}
+                onChange={this._onDateChange}
                 stateKey={'endDate'}
                 scrollTo={this._scrollTo}
               />
@@ -139,19 +152,34 @@ export default class EventForm extends React.Component {
             <View style={styles.btmPadding} />
           </ScrollView>
         </View>
-        <View style={styles.bottom}>
-          <TouchableOpacity
-            underlayColor="transparent"
-            style={styles.hlightSave}
-            onPress={this._saveBtnPress}>
-            <Image
-              style={styles.btnSave}
-              source={require('../../assets/images/btn_save.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <ActionButton {...this._actionProps} event={this.state} />
       </View>
     );
+  }
+
+  _saveBtnPress = () => {
+    let invited = [];
+    this.state.friends.map(friend => {
+      invited.push(friend.id);
+    });
+    let event = {
+      starttime: this.state.startDate,
+      endtime: this.state.endDate,
+      title: this.state.title,
+      desc: this.state.desc,
+      location: {
+        coordinates: this.state.latlng,
+        text: this.state.location,
+      },
+      invited,
+      activity: this.state.activity,
+    };
+    if (event.starttime === "" || event.endtime === "" || event.title === "" || event.location === "") {
+      console.log(this);
+      this._warnUser();
+    } else {
+      this.props.dispatch(Actions.saveEvent(event));
+    }
   }
 
   _selectActivity = (act) => {
@@ -186,6 +214,18 @@ export default class EventForm extends React.Component {
     this.setState(obj);
   }
 
+  _onDateChange = (key, value) => {
+    if (key === 'startDate' && this.state.endDate < value) {
+      this.setState({endDate: value});
+    }
+    if (key === 'endDate' && value < this.state.startDate) {
+      value = this.state.startDate;
+    }
+    let obj = {};
+    obj[key] = value;
+    this.setState(obj);
+  }
+
   _scrollTo = (num) => {
     this.refs.scrollView.scrollTo({y: num, animated: true});
   }
@@ -194,28 +234,11 @@ export default class EventForm extends React.Component {
     this.setState({public: !this.state.public});
   }
 
-  _saveBtnPress = () => {
-    let event = {
-      starttime: this.state.startDate,
-      endtime: this.state.endDate,
-      title: this.state.title,
-      desc: this.state.desc,
-      location: {
-        coordinates: this.state.latlng,
-        text: this.state.location,
-      },
-      invited: this.state.friends.toJS(),
-      activity: this.state.activity,
-    };
-    console.log(event);
-    this.props.dispatch(Actions.saveEvent(event));
-  }
-
 }
 
 const styles = StyleSheet.create({
   btmPadding: {
-    height: height,
+    height,
     backgroundColor: '#fff',
   },
   scrollView: {
@@ -260,18 +283,5 @@ const styles = StyleSheet.create({
   },
   hlightSave: {
     alignSelf: 'center',
-  },
-  bottom: {
-    position: 'absolute',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    bottom: 0,
-    height: height * 0.1,
-    width,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  btnSave: {
-    height: 38,
-    width: 140,
   },
 });

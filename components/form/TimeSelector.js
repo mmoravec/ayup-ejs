@@ -43,7 +43,7 @@ export default class TimeSelector extends React.Component {
 
   render() {
     let time = "";
-    if (this.state.hasFocused) {
+    if (this.state.hasFocused && this.props.date !== '') {
       time = dateFormat(this.props.date, 'ddd h:MM TT, mmm dd');
     }
     return (
@@ -67,12 +67,20 @@ export default class TimeSelector extends React.Component {
     );
   }
 
+  _getNextTime = () => {
+    let date = new Date();
+    let time = date.getTime();
+    let mint = date.getMinutes();
+    let nDate = new Date(time + (Math.ceil((mint / 15)) * 15 - mint) * 60000);
+    return nDate;
+  }
 
   _renderDate = () => {
     if (this.state.focusDate && Platform.OS === 'ios') {
+      let date = this.props.date;
       return (
         <DatePickerIOS
-          date={this.props.date instanceof Date ? this.props.date : new Date()}
+          date={date}
           mode="datetime"
           minuteInterval={15}
           onDateChange={this._onChange}
@@ -88,6 +96,7 @@ export default class TimeSelector extends React.Component {
   }
 
   _onDatePress = async () => {
+    this._onChange(this.props.date instanceof Date ? this.props.date : this._getNextTime());
     this.props.onFocus(this.props.stateKey);
     if (Platform.OS === 'android') {
       let date, time;

@@ -1,5 +1,4 @@
-import { delay } from 'redux-saga'
-import { call, put, takeEvery, select } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   Platform,
 } from 'react-native';
@@ -7,7 +6,6 @@ import { Facebook } from 'expo';
 import LocalStorage from '../state/LocalStorage';
 import ActionTypes from '../state/ActionTypes';
 import { User } from '../state/Records';
-import sampledata from '../sample/user';
 import { ayupLogin } from '../utils/fetch';
 // import { ayupGet } from '../utils/fetch';
 import { URL } from '../constants/rest';
@@ -21,7 +19,6 @@ function* authorize() {
   if (fbLogin.type === 'success') {
     let fbInfo = yield call(getInfo, fbLogin.token);
     //TODO: log error message after call
-    console.log('fbInfo: ' + JSON.stringify(fbInfo));
     let ayUser = yield call(ayupLogin, URL + "/v1.0/auth/facebook/?id=" + fbInfo.id, fbLogin.token);
     //TODO: log error message after call
     let saveUser = new User({
@@ -31,7 +28,7 @@ function* authorize() {
       'email': fbInfo.email,
       'gender': fbInfo.gender,
       'name': fbInfo.name,
-      'fbid': fbLogin.id,
+      'fbid': fbInfo.id,
       'id': ayUser.id,
       'secret': ayUser.secret,
     });
@@ -51,7 +48,6 @@ function facebookLogin() {
 }
 
 async function getInfo(token) {
-  console.log("fb access token: " + token);
   let response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=name,id,gender,picture.width(240).height(240),email`);
   let info = await response.json();
   return info;
@@ -60,7 +56,7 @@ async function getInfo(token) {
 
 // async function saveUser(user) {
 //   let userStr = JSON.stringify(user.toJS());
-//   console.log(userStr);
+//   (userStr);
 //   let response = await fetch('http://localhost:8000/auth/', {
 //     method: 'post',
 //     body: userStr,

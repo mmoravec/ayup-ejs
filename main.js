@@ -28,7 +28,6 @@ class App extends React.Component {
   render() {
     let {fontLoaded, regionLoaded, userLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
     if (fontLoaded && regionLoaded && userLoaded && filtersLoaded && imagesLoaded) {
-      console.log(userLoaded);
       return (
         <Navigation
           navigation={addNavigationHelpers({

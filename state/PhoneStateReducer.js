@@ -38,6 +38,14 @@ class PhoneStateReducer {
     return state.set('request', false);
   }
 
+  static [ActionTypes.REQUEST_SUCCESS](state, action) {
+    return state.set('status', 'success');
+  }
+
+  static [ActionTypes.REQUEST_ERROR](state, action) {
+    return state.set('status', 'error');
+  }
+
 }
 
 export default PhoneStateReducer.reduce;
