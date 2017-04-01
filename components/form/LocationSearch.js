@@ -37,6 +37,7 @@ export default class LocationSearch extends React.Component {
            placeholder={'Enter Location'}
            placeholderTextColor={'#6a7989'}
            minLength={2}
+           keyboardShouldPersistTaps={'always'}
            autoFocus={false}
            fetchDetails={true}
            onPress={this._getLocation}
@@ -82,8 +83,7 @@ export default class LocationSearch extends React.Component {
 
    _getLocation = (data, details) => {
      let coord = [details.geometry.location.lng, details.geometry.location.lat];
-     this.props.onChange(details.name, coord);
-     (details.geometry);
+     this.props.onChange(details.formatted_address, coord);
    }
 
    _inputFocused = () => {

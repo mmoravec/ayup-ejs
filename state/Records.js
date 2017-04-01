@@ -46,7 +46,6 @@ export const PhoneState = Record({
   filtersLoaded: false,
   regionLoaded: false,
   imagesLoaded: false,
-  request: false,
   status: '',
 });
 

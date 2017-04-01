@@ -68,8 +68,6 @@ export default class Actions {
       };
   }
   static saveEvent(event) {
-    ('event saving action');
-    (event);
     return   {
         type: ActionTypes.SAVE_EVENT,
         event,

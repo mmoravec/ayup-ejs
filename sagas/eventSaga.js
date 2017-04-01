@@ -1,4 +1,5 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
+import {delay} from 'redux-saga';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
 import { URL, POST, GET } from '../constants/rest';
@@ -15,12 +16,31 @@ export function* watchRegionChange() {
 
 function* saveEvent(action) {
   const user = yield select(state => state.user);
-  console.log(user.secret);
-  console.log(user);
+  action.event.host = {
+    userId: user.id,
+    profilePic: user.profilePic,
+    name: user.name,
+  };
+  yield put({ type: ActionTypes.ALERT_SAVING });
   const data = yield call(request, POST, URL + "/v1.0/events/",
-    {Authorization: user.secret, UserId: user.fbid}, action.event
+    {Authorization: user.secret, UserId: user.id}, action.event
   );
-  console.log(data);
+  if (data && data.error) {
+    //TODO: do something
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
+  } else if (data) {
+    yield put({ type: ActionTypes.ALERT_SUCCESS });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
+    yield put({
+      type: ActionTypes.REGION_CHANGE,
+      longitude: action.event.location.coordinates[0],
+      latitude: action.event.location.coordinates[1],
+     });
+    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home'});
+  }
 }
 
 function* updateNearbyEvents(action) {
@@ -38,13 +58,13 @@ function* updateNearbyEvents(action) {
   } else if (action.latitudeDelta > 0.06) {
     scope = 1000000;
   }
-  const data = yield call(request, GET, URL + "/v1.0/events/?lat=" +
+  const data = yield call(request, GET, URL + "/v1.0/events?lat=" +
     action.latitude + "&long=" + action.longitude + "&scope=" + scope,
-    {Authorization: user.secret, UserId: user.fbid}
+    {Authorization: user.secret, UserId: user.id}
   );
   if (data && data.error) {
     //TODO: do something
-  } else {
-    yield put({ type: ActionTypes.SET_NEARBY, data });
+  } else if (data) {
+    yield put({ type: ActionTypes.SET_NEARBY, data: data.body });
   }
 }

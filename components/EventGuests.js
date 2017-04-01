@@ -55,9 +55,6 @@ export default class EventGuests extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  scrollview: {
-    height: 80,
-  },
   image: {
     height: 50,
     width: 50,

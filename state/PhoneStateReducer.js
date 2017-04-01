@@ -30,20 +30,20 @@ class PhoneStateReducer {
     return state.set('imagesLoaded', true);
   }
 
-  static [ActionTypes.REQUEST_STARTED](state, action) {
-    return state.set('request', true);
+  static [ActionTypes.ALERT_SAVING](state, action) {
+    return state.set('status', 'saving');
   }
 
-  static [ActionTypes.REQUEST_ENDED](state, action) {
-    return state.set('request', false);
-  }
-
-  static [ActionTypes.REQUEST_SUCCESS](state, action) {
+  static [ActionTypes.ALERT_SUCCESS](state, action) {
     return state.set('status', 'success');
   }
 
-  static [ActionTypes.REQUEST_ERROR](state, action) {
+  static [ActionTypes.ALERT_ERROR](state, action) {
     return state.set('status', 'error');
+  }
+
+  static [ActionTypes.RESET_ALERT](state, action) {
+    return state.set('status', '');
   }
 
 }

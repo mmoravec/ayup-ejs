@@ -7,7 +7,6 @@ import {
   Animated,
   TouchableOpacity,
   Image,
-  Text,
   Switch,
   LayoutAnimation,
 } from 'react-native';
@@ -16,20 +15,15 @@ import LocationSearch from './LocationSearch';
 import ActivitySelector from './ActivitySelector';
 import TimeSelector from './TimeSelector';
 import FriendSelector from './FriendSelector';
+import Capacity from './Capacity';
 import MyText from '../common/MyText';
 import Hoshi from '../common/Hoshi';
 import ActionButton from '../common/ActionButton';
 import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
-@connect((data) => EventForm.getDataProps(data))
+@connect()
 export default class EventForm extends React.Component {
-
-  static getDataProps(data) {
-    return {
-      phone: data.phone,
-    };
-  }
 
   constructor(props) {
     super(props);
@@ -73,6 +67,7 @@ export default class EventForm extends React.Component {
     activity: 0,
     latlng: [],
     public: false,
+    capacity: 0,
     focus: [
       {stateKey: 'title', focus: false},
       {stateKey: 'desc', focus: false},
@@ -100,7 +95,7 @@ export default class EventForm extends React.Component {
               <Hoshi {...this._titleProps} />
             </View>
             <View style={styles.switch}>
-              <Text style={styles.text}>Public</Text>
+              <MyText style={styles.text}>Public</MyText>
               <Switch
                 style={styles.swButton}
                 onValueChange={this._privateSwitch}
@@ -148,6 +143,11 @@ export default class EventForm extends React.Component {
                 scrollTo={this._scrollTo}
               />
             </View>
+            <Capacity
+              onChange={this._onChange}
+              stateKey={'capacity'}
+              capacity={this.state.capacity}
+            />
             {this._renderOptionalFields()}
             <View style={styles.btmPadding} />
           </ScrollView>
@@ -155,31 +155,6 @@ export default class EventForm extends React.Component {
         <ActionButton {...this._actionProps} event={this.state} />
       </View>
     );
-  }
-
-  _saveBtnPress = () => {
-    let invited = [];
-    this.state.friends.map(friend => {
-      invited.push(friend.id);
-    });
-    let event = {
-      starttime: this.state.startDate,
-      endtime: this.state.endDate,
-      title: this.state.title,
-      desc: this.state.desc,
-      location: {
-        coordinates: this.state.latlng,
-        text: this.state.location,
-      },
-      invited,
-      activity: this.state.activity,
-    };
-    if (event.starttime === "" || event.endtime === "" || event.title === "" || event.location === "") {
-      console.log(this);
-      this._warnUser();
-    } else {
-      this.props.dispatch(Actions.saveEvent(event));
-    }
   }
 
   _selectActivity = (act) => {
@@ -280,8 +255,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     bottom: 10,
-  },
-  hlightSave: {
-    alignSelf: 'center',
   },
 });

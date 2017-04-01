@@ -6,9 +6,9 @@ import { Facebook } from 'expo';
 import LocalStorage from '../state/LocalStorage';
 import ActionTypes from '../state/ActionTypes';
 import { User } from '../state/Records';
-import { ayupLogin } from '../utils/fetch';
+import { request } from '../utils/fetch';
 // import { ayupGet } from '../utils/fetch';
-import { URL } from '../constants/rest';
+import { URL, POST } from '../constants/rest';
 
 export function* watchLogin() {
   yield takeEvery(ActionTypes.SIGN_IN, authorize);
@@ -19,7 +19,9 @@ function* authorize() {
   if (fbLogin.type === 'success') {
     let fbInfo = yield call(getInfo, fbLogin.token);
     //TODO: log error message after call
-    let ayUser = yield call(ayupLogin, URL + "/v1.0/auth/facebook/?id=" + fbInfo.id, fbLogin.token);
+    let ayUser = yield call(request, POST,  URL + "/v1.0/auth/facebook?id=" + fbInfo.id, {Token: fbLogin.token});
+    console.log("this is ayuser");
+    console.log(ayUser.headers.get('authorization'));
     //TODO: log error message after call
     let saveUser = new User({
       'authToken': ayUser.authToken,
@@ -29,8 +31,8 @@ function* authorize() {
       'gender': fbInfo.gender,
       'name': fbInfo.name,
       'fbid': fbInfo.id,
-      'id': ayUser.id,
-      'secret': ayUser.secret,
+      'id': ayUser.body.id,
+      'secret': ayUser.headers.get('authorization'),
     });
     LocalStorage.saveUserAsync(saveUser);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
@@ -50,6 +52,8 @@ function facebookLogin() {
 async function getInfo(token) {
   let response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=name,id,gender,picture.width(240).height(240),email`);
   let info = await response.json();
+  console.log('getInfo');
+  console.log(info);
   return info;
 }
 

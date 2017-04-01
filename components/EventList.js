@@ -54,7 +54,7 @@ class ListRow extends React.Component {
           </View>
           <View style={styles.info}>
             <Text style={styles.title}>{rowData.title}</Text>
-            <Text style={styles.author}>{rowData.author.name}</Text>
+            <Text style={styles.author}>{rowData.host.name}</Text>
           </View>
           <View style={styles.bubble}>
             <Bubble data={rowData} />

@@ -70,19 +70,19 @@ export default class Comments extends React.Component {
       <View style={{backgroundColor: 'rgba(0,0,0,0.0)'}}>
         <View style={{height: 150, backgroundColor: 'rgba(0,0,0,0.0)'}} />
         <View style={styles.topInfo}>
-          <View style={{height: 100, width: 100}}>
+          <View>
             <Image
-              source={{uri: event.author.profilePic}}
+              source={{uri: event.host.profilePic}}
               style={styles.profilePic}
             />
           </View>
           <View style={styles.headerName}>
-            <Text style={{fontFamily: 'LatoRegular', fontSize: 20}}>{event.author.name}</Text>
+            <Text style={{fontFamily: 'LatoRegular', fontSize: 20}}>{event.host.name}</Text>
           </View>
           <View style={styles.figure}>
             <Image
               source={Figures[event.activity].icon}
-              style={{height: 40, width: 40, marginLeft: 20}}
+              style={{height: 40, width: 40, alignSelf: 'center'}}
             />
             <MyText style={{marginTop: 8}}>4am - 4:15am</MyText>
           </View>
@@ -90,7 +90,7 @@ export default class Comments extends React.Component {
         <View style={styles.middleInfo}>
           <MyText style={{fontSize: 24, margin: 14, marginBottom: 6}}>{event.title}</MyText>
           <MyText style={{fontSize: 14, marginLeft: 14}}>{event.location.text}</MyText>
-          {event.description &&
+          {event.description !== "" &&
             <MyText style={{fontSize: 16, margin: 14, color: '#808080'}}>{event.description}</MyText>}
         </View>
         <View style={styles.bottomInfo}>
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   headerName: {
     height: 100,
-    width: 150,
+    width: width * 0.4,
     justifyContent: 'center',
     paddingLeft: 10,
   },
@@ -225,10 +225,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     flexDirection: 'row',
     backgroundColor: '#fff',
+    justifyContent: 'space-between',
   },
   figure: {
     justifyContent: 'center',
-    marginLeft: 20,
+    width: width * 0.3,
   },
   content: {
     fontSize: 14,

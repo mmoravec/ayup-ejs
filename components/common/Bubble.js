@@ -8,10 +8,11 @@ import MyText from './MyText';
 
 export default class Bubble extends React.Component {
     render() {
+      let image = this.props.data.capacity === 0 ? require('../../assets/images/joined.png') : require('../../assets/images/joined_notjoined.png');
       return (
         <View style={[styles.container, this.props.style]}>
           <Image
-            source={require('../../assets/images/joined_notjoined.png')}
+            source={image}
             style={styles.joinedBubble}
           />
           <MyText style={styles.joined}>{this.props.data.accepted.length}</MyText>

@@ -33,15 +33,14 @@ export default class ActionButton extends React.Component {
   render() {
     return (
       <View style={styles.bottom}>
-        {this._renderCreate(this.props.image)}
-        {this._renderWarning(this.props.warn)}
+        {this._renderCreate()}
+        {this._renderWarning()}
       </View>
     );
   }
 
-  _renderCreate = (image) => {
-    (this.props.phone);
-    if (!this.props.phone.request) {
+  _renderCreate = () => {
+    if (this.props.phone.status === '') {
       return (
         <TouchableOpacity
           underlayColor="transparent"
@@ -49,9 +48,23 @@ export default class ActionButton extends React.Component {
           onPress={this._saveBtnPress}>
           <Image
             style={styles.btnSave}
-            source={image}
+            source={this.props.image}
           />
         </TouchableOpacity>
+      );
+    } else if (this.props.phone.status === 'success') {
+      return (
+        <View style={styles.woohoo}>
+          <MyText style={styles.success}> Success! </MyText>
+        </View>
+      );
+    } else if (this.props.phone.status === 'error') {
+      return (
+        <View style={styles.warn}>
+          <MyText style={{fontSize: 16, color: '#fff', textAlign: 'center'}}>
+            Something went wrong :(
+          </MyText>
+        </View>
       );
     } else {
       return <ActivityIndicator />;
@@ -67,7 +80,11 @@ export default class ActionButton extends React.Component {
     let eventState = this.props.event;
     let invited = [];
     eventState.friends.map(friend => {
-      invited.push(friend.id);
+      invited.push({
+        fbid: friend.id,
+        profilePic: friend.picture.data.url,
+        name: friend.name,
+      });
     });
     let event = {
       starttime: eventState.startDate,
@@ -80,9 +97,9 @@ export default class ActionButton extends React.Component {
       },
       invited,
       activity: eventState.activity,
+      capacity: eventState.capacity,
     };
     if (event.starttime === "" || event.endtime === "" || event.title === "" || event.location === "") {
-      (this);
       this._warnUser();
     } else {
       this.props.dispatch(Actions.saveEvent(event));
@@ -91,7 +108,6 @@ export default class ActionButton extends React.Component {
 
   _renderWarning = () => {
     if (this.state.warn) {
-      ('warning!');
       return (
         <View style={styles.warn}>
           <MyText style={{fontSize: 16, color: '#fff', textAlign: 'center'}}>
@@ -126,7 +142,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#ee366f',
     justifyContent: 'center',
   },
+  woohoo: {
+    position: 'absolute',
+    height: height * 0.1,
+    width,
+    backgroundColor: '#8bd1c6',
+    justifyContent: 'center',
+  },
   hlightSave: {
     alignSelf: 'center',
+  },
+  success: {
+    fontSize: 18,
+    alignSelf: 'center',
+    color: '#fff',
   },
 });

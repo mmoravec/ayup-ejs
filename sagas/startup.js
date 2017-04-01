@@ -78,6 +78,7 @@ function* getUser() {
     yield put({
         type: ActionTypes.USER_LOADED,
     });
+    // yield put({ type: ActionTypes.GET_PROFILE });
     return user;
 }
 
