@@ -1,6 +1,7 @@
 import {
     put,
     call,
+    take,
 } from 'redux-saga/effects';
 import {
     List,
@@ -8,9 +9,9 @@ import {
 import {
   Image,
 } from 'react-native';
-import { Font, Asset } from 'expo';
+import { Font, Asset, Constants, Location, Permissions } from 'expo';
 import ActionTypes from '../state/ActionTypes';
-import LocalStorage from '../state/LocalStorage';
+import LocalStorage from '../utils/LocalStorage';
 import {
     User,
     Filter,
@@ -19,13 +20,19 @@ import filters from '../constants/filters';
 
 //TODO: Add caching scheme for fonts and images from crash example
 export default function* startup() {
-    yield [
+    let result = yield [
         call(setInitialRegion),
         call(getUser),
         call(loadFilters),
         call(loadFonts),
         call(loadImages),
     ];
+    let user = result[1];
+    if (user.new) {
+      yield take(ActionTypes.ROUTE_CHANGE, getLocation);
+    } else {
+      yield call(getLocation);
+    }
 }
 
 function* loadImages() {
@@ -56,9 +63,26 @@ function* loadFilters() {
     });
 }
 
+function* getLocation() {
+  console.log('getLocation called');
+  let permission = yield call(Permissions.askAsync, Permissions.LOCATION);
+  if (permission.status !== 'granted') {
+    yield put({ type: ActionTypes.SET_LOCATION, location: 'denied'});
+  } else {
+    let location = yield call(Location.getCurrentPositionAsync, {});
+    console.log(location);
+    yield put({ type: ActionTypes.SET_LOCATION, location});
+    yield put({
+      type: ActionTypes.REGION_CHANGE,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    });
+  }
+}
+
 function* getUser() {
     let user = yield call(LocalStorage.getUserAsync);
-    if (user === null || !user.fbid) {
+    if (user === null || !user.fbid || !user.id) {
         user = {
             'new': true,
         };
@@ -69,15 +93,22 @@ function* getUser() {
       user.rejected = new List(user.rejected);
       user.requested = new List(user.requested);
       user.completed = new List(user.completed);
-      user = new User(user);
-      yield put({
-          type: ActionTypes.SET_CURRENT_USER,
-          user,
-      });
+      user.badges = new List(user.badges);
+      user.activities = new List(user.activities);
+      user.friends = new List(user.friends);
+      user.new = false;
     }
+    user = new User(user);
+    yield put({
+        type: ActionTypes.SET_CURRENT_USER,
+        user,
+    });
     yield put({
         type: ActionTypes.USER_LOADED,
     });
+    if (!user.new) {
+      yield put({ type: ActionTypes.SYNC_PROFILE });
+    }
     // yield put({ type: ActionTypes.GET_PROFILE });
     return user;
 }
@@ -94,7 +125,7 @@ function* setInitialRegion() {
 }
 
 async function getFonts() {
- Font.loadAsync({ 'LatoRegular': require('../assets/fonts/Lato-Regular.ttf')});
+  Font.loadAsync({ 'LatoRegular': require('../assets/fonts/Lato-Regular.ttf')});
 }
 
 async function exLoadImages() {

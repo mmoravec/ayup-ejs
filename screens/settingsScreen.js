@@ -41,8 +41,7 @@ export default class SettingsScreen extends React.Component {
     );
   }
   _signOut = () => {
-    LocalStorage.clearAllAsync();
-    this.props.dispatch(Actions.routeChange('Login'));
+    this.props.dispatch(Actions.logOut());
   }
   _home = () => {
     this.props.dispatch(Actions.routeChange('Back'));

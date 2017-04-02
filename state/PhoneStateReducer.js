@@ -46,6 +46,10 @@ class PhoneStateReducer {
     return state.set('status', '');
   }
 
+  static [ActionTypes.SET_LOCATION](state, action) {
+    return state.set('location', action.location);
+  }
+
 }
 
 export default PhoneStateReducer.reduce;

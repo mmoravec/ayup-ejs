@@ -8,6 +8,7 @@ export default defineActionConstants([
   'GET_FRIENDS',
   'GET_PROFILE',
   'IMAGES_LOADED',
+  'LOG_OUT',
   'REGION_CHANGE',
   'ROUTE_CHANGE',
   'REGION_LOADED',
@@ -24,11 +25,14 @@ export default defineActionConstants([
   'SET_FILTERS',
   'SET_FILTER',
   'SET_FRIENDS',
+  'SET_LOCATION',
   'SET_NEARBY',
   'SET_REGION',
   'SET_SELECTED_EVENT',
   'SIGN_IN',
   'SIGN_OUT',
+  'SYNC_PROFILE',
+  'UPDATE_PROFILE',
   'USER_LOADED',
 ]);
 

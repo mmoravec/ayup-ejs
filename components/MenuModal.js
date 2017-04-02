@@ -216,8 +216,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnAction: {
-    width: 75,
-    height: 75,
+    width: 85,
+    height: 85,
   },
   ctnActivities: {
     position: 'absolute',

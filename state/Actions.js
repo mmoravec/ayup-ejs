@@ -15,6 +15,18 @@ export default class Actions {
     };
   }
 
+  static getProfile() {
+    return {
+      type: ActionTypes.GET_PROFILE,
+    };
+  }
+
+  static logOut() {
+    return {
+      type: ActionTypes.LOG_OUT,
+    };
+  }
+
   static signIn(user) {
     return {
       type: ActionTypes.SIGN_IN,

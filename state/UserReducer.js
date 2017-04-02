@@ -1,5 +1,6 @@
 import ActionTypes from './ActionTypes';
 import { User } from './Records';
+import LocalStorage from '../utils/LocalStorage';
 
 class EventsReducer {
   static reduce(state = new User(), action) {
@@ -14,6 +15,10 @@ class EventsReducer {
   }
   static [ActionTypes.SET_FRIENDS](state, action) {
     return state.set('friends', action.friends);
+  }
+  static [ActionTypes.LOG_OUT](state, action) {
+    LocalStorage.clearAllAsync();
+    return state.set('secret', null);
   }
 }
 

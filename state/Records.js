@@ -22,21 +22,21 @@ export const User = Record({
   authToken: null,
   name: null,
   profilePic: null,
-  friends: null,
+  friends: new List(),
   email: null,
   gender: null,
   new: null,
   expires: null,
   playedWith: null,
   invited: new List(),
-  rejected: null,
+  rejected: new List(),
   joined: new List(),
   hosted: new List(),
   requested: new List(),
   completed: new List(),
   about: null,
-  badges: null,
-  activities: null,
+  badges: new List(),
+  activities: new List(),
   secret: null,
 });
 
@@ -47,6 +47,7 @@ export const PhoneState = Record({
   regionLoaded: false,
   imagesLoaded: false,
   status: '',
+  location: false,
 });
 
 export const Comment = Record({

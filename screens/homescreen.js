@@ -5,6 +5,9 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
+  Text,
+  Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
 import ActionTypes from '../state/ActionTypes';
@@ -21,6 +24,7 @@ export default class HomeScreen extends React.Component {
     return {
       events: Filters.filterEvents(data.events.nearbyEvents, data.events.filters),
       region: data.events.region,
+      phone: data.phone,
     };
   }
 
@@ -50,32 +54,57 @@ export default class HomeScreen extends React.Component {
       events: this.props.events,
       region: this.props.region,
     }
+    if (this.props.phone.location !== false) {
+      return (
+        <View style={{flex: 1}}>
+          <MapView {...mapProps} />
+          <View style={styles.btnMainContainer}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={this._onMenuBtnPress}>
+              <Image
+                source={require('../assets/images/btn_main.png')}
+                style={styles.btnMain}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={this.state.listBtnStyle}>
+            <TouchableOpacity activeOpacity={0.5} onPress={this._onListBtnPress}>
+              <Image
+                style={styles.btnList}
+                source={require('../assets/images/btn_list.png')}
+              />
+            </TouchableOpacity>
+          </View>
+          <EventListModal {...listProps} />
+          <MenuModal {...menuProps} />
+          {this._renderLocationWarning()}
+        </View>
+      );
+    } else {
+      return <ActivityIndicator style={{alignSelf: 'center'}} />
+    }
+  }
 
-    return (
-      <View style={{flex: 1}}>
-        <MapView {...mapProps} />
-        <View style={styles.btnMainContainer}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={this._onMenuBtnPress}>
-            <Image
-              source={require('../assets/images/btn_main.png')}
-              style={styles.btnMain}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={this.state.listBtnStyle}>
-          <TouchableOpacity activeOpacity={0.5} onPress={this._onListBtnPress}>
-            <Image
-              style={styles.btnList}
-              source={require('../assets/images/btn_list.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        <EventListModal {...listProps} />
-        <MenuModal {...menuProps} />
-      </View>
-    );
+  _renderLocationWarning = () => {
+    console.log(this.props.phone);
+    if (this.props.phone.location === "denied") {
+      return (
+        <Modal
+          animationType={"none"}
+          transparent={false}
+          onRequestClose={this._locationWarningClose}
+          visible={this.props.menuVisible}>
+          <View style={{marginTop: 100}}>
+            <Text>You must enable location in settings!</Text>
+          </View>
+        </Modal>
+      );
+    }
+  }
+
+  _locationWarningClose = () => {
+    console.log("won't close");
   }
 
   _onListBtnPress = () => {
