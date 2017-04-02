@@ -27,7 +27,6 @@ export const User = Record({
   gender: null,
   new: null,
   expires: null,
-  playedWith: null,
   invited: new List(),
   rejected: new List(),
   joined: new List(),

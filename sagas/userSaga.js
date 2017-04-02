@@ -4,7 +4,7 @@ import { List } from 'immutable';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
 import { User } from '../state/Records';
-import { URL, POST, GET } from '../constants/rest';
+import { URL, PUT, GET } from '../constants/rest';
 
 export function* watchGetProfile() {
   yield takeLatest(ActionTypes.GET_PROFILE, getProfile);
@@ -12,10 +12,6 @@ export function* watchGetProfile() {
 
 export function* watchSyncProfile() {
   yield takeLatest(ActionTypes.SYNC_PROFILE, syncProfile);
-}
-
-export function* watchUpdateProfile() {
-  yield takeLatest(ActionTypes.UPDATE_PROFILE, updateProfile);
 }
 
 export function* refreshUserFriends() {
@@ -78,19 +74,17 @@ function* syncProfile() {
     };
     user = new User(user);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user });
-    yield call(updateProfile);
-    //yield call(updateProfile);
+    yield call(updateProfile, user);
   }
-
-  //TODO: merge current profile with profile from server and save
 }
 
-function* updateProfile() {
-  const user = yield select(state => state.user);
+function* updateProfile(user) {
+  user = user ? user : yield select(state => state.user);
   if (user.secret) {
-    const data = yield call(request, POST, URL + "/v1.0/profile?id=" + user.id,
-      {Authorization: user.secret, UserId: user.id}, JSON.stringify(user)
+    const data = yield call(request, PUT, URL + "/v1.0/profile?id=" + user.id,
+      {Authorization: user.secret, UserId: user.id}, user.toJS()
     );
+    console.log(data);
     return data;
   }
 }
