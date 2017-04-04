@@ -89,7 +89,7 @@ export default class Comments extends React.Component {
         </View>
         <View style={styles.middleInfo}>
           <MyText style={{fontSize: 24, margin: 14, marginBottom: 6}}>{event.title}</MyText>
-          <MyText style={{fontSize: 14, marginLeft: 14}}>{event.location.text}</MyText>
+          <MyText style={{fontSize: 14, marginLeft: 14, marginBottom: 14}}>{event.location.text}</MyText>
           {event.description !== "" &&
             <MyText style={{fontSize: 16, margin: 14, color: '#808080'}}>{event.description}</MyText>}
         </View>

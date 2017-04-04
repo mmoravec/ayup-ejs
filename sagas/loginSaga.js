@@ -15,16 +15,17 @@ export function* watchLogin() {
 }
 
 function* authorize() {
+  yield put({ type: ActionTypes.ALERT_SAVING });
   const fbLogin = yield call(facebookLogin);
   if (fbLogin.type === 'success') {
     let fbInfo = yield call(getInfo, fbLogin.token);
     //TODO: log error message after call
     let ayUser = yield call(request, POST,  URL + "/v1.0/auth/facebook?id=" + fbInfo.id, {Token: fbLogin.token});
     console.log("this is ayuser");
-    console.log(ayUser.headers.get('authorization'));
+    console.log(ayUser);
     //TODO: log error message after call
     let saveUser = new User({
-      'authToken': ayUser.authToken,
+      'authToken': ayUser.body.authToken,
       'profilePic': fbInfo.picture.data.url,
       'expires': new Date(Date.now() + fbLogin.expires),
       'email': fbInfo.email,
@@ -39,6 +40,7 @@ function* authorize() {
     yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home' });
     yield put({ type: ActionTypes.SYNC_PROFILE });
+    yield put({ type: ActionTypes.RESET_ALERT });
   } else {
     //TODO: throw error message
   }
@@ -54,8 +56,6 @@ function facebookLogin() {
 async function getInfo(token) {
   let response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=name,id,gender,picture.width(240).height(240),email`);
   let info = await response.json();
-  console.log('getInfo');
-  console.log(info);
   return info;
 }
 

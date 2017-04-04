@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
+import EventButton from '../components/EventButton'
 import Icons from '../constants/icons';
 import Comments from '../components/Comments';
 import MapStyle from '../constants/mapstyle';
@@ -61,6 +62,7 @@ export default class EventScreen extends React.Component {
           />
         </TouchableOpacity>
         <Comments event={this.props.selectedEvent} />
+        <EventButton />
       </View>
     );
   }

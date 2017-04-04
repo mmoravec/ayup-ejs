@@ -21,16 +21,24 @@ export function* refreshUserFriends() {
       "?fields=name,id,picture.width(120).height(120)&" +
       "access_token=" + action.user.authToken,
     );
-    yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.body.data)});
+    if (friends && friends.error) {
+      //TODO: create error logging
+    } else if (friends) {
+      yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.data)});
+    }
     while (true) {
         yield call(delay, 30000);
         let newFriends = yield call(request, GET,
           "https://graph.facebook.com/v2.8/me/friends/" +
           "?fields=name,id,picture.width(120).height(120)&access_token=" + action.user.authToken,
         );
-        if (newFriends.body.data.length !== friends.body.data.length) {
-            friends = newFriends;
-            yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.data)});
+        if (newFriends && newFriends.error) {
+          //TODO: create error logging
+        } else if (newFriends) {
+          if (newFriends.body.data.length !== friends.body.data.length) {
+              friends = newFriends;
+              yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.data)});
+          }
         }
     }
 }
@@ -39,7 +47,7 @@ function* getProfile() {
   const user = yield select(state => state.user);
   if (user.secret) {
     const data = yield call(request, GET, URL + "/v1.0/profile?id=" + user.id,
-      {Authorization: user.secret, UserId: user.id}
+      {Authorization: user.secret, UserID: user.id}
     );
     return data;
   }
@@ -75,6 +83,9 @@ function* syncProfile() {
     user = new User(user);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user });
     yield call(updateProfile, user);
+  } else {
+    console.log('Error fetching profile! Error message:');
+    console.log(profile.error);
   }
 }
 
@@ -82,7 +93,7 @@ function* updateProfile(user) {
   user = user ? user : yield select(state => state.user);
   if (user.secret) {
     const data = yield call(request, PUT, URL + "/v1.0/profile?id=" + user.id,
-      {Authorization: user.secret, UserId: user.id}, user.toJS()
+      {Authorization: user.secret, UserID: user.id}, user.toJS()
     );
     console.log(data);
     return data;

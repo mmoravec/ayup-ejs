@@ -2,6 +2,7 @@ import {
     put,
     call,
     take,
+    select,
 } from 'redux-saga/effects';
 import {
     List,
@@ -29,7 +30,8 @@ export default function* startup() {
     ];
     let user = result[1];
     if (user.new) {
-      yield take(ActionTypes.ROUTE_CHANGE, getLocation);
+        yield take(ActionTypes.ROUTE_CHANGE);
+        yield call(getLocation);
     } else {
       yield call(getLocation);
     }
@@ -64,13 +66,11 @@ function* loadFilters() {
 }
 
 function* getLocation() {
-  console.log('getLocation called');
   let permission = yield call(Permissions.askAsync, Permissions.LOCATION);
   if (permission.status !== 'granted') {
     yield put({ type: ActionTypes.SET_LOCATION, location: 'denied'});
   } else {
     let location = yield call(Location.getCurrentPositionAsync, {});
-    console.log(location);
     yield put({ type: ActionTypes.SET_LOCATION, location});
     yield put({
       type: ActionTypes.REGION_CHANGE,

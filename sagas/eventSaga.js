@@ -14,6 +14,14 @@ export function* watchRegionChange() {
   yield takeLatest(ActionTypes.REGION_CHANGE, updateNearbyEvents);
 }
 
+export function* watchAcceptEvent() {
+  yield takeLatest(ActionTypes.ACCEPT_EVENT, acceptEvent);
+}
+
+export function* watchRequestEvent() {
+  yield takeLatest(ActionTypes.REQUEST_EVENT, requestEvent);
+}
+
 function* saveEvent(action) {
   const user = yield select(state => state.user);
   action.event.host = {
@@ -22,8 +30,8 @@ function* saveEvent(action) {
     name: user.name,
   };
   yield put({ type: ActionTypes.ALERT_SAVING });
-  const data = yield call(request, POST, URL + "/v1.0/events/",
-    {Authorization: user.secret, UserId: user.id}, action.event
+  const data = yield call(request, POST, URL + "/v1.0/events",
+    {Authorization: user.secret, UserID: user.id}, action.event
   );
   if (data && data.error) {
     //TODO: do something
@@ -60,11 +68,50 @@ function* updateNearbyEvents(action) {
   }
   const data = yield call(request, GET, URL + "/v1.0/events?lat=" +
     action.latitude + "&long=" + action.longitude + "&scope=" + scope,
-    {Authorization: user.secret, UserId: user.id}
+    {Authorization: user.secret, UserID: user.id}
   );
   if (data && data.error) {
     //TODO: do something
   } else if (data) {
     yield put({ type: ActionTypes.SET_NEARBY, data: data.body });
+  }
+}
+
+function* acceptEvent(action) {
+  const user = yield select(state => state.user);
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  const data = yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
+    "?userid=" + user.id + "&action=accept",
+    {Authorization: user.secret, UserID: user.id}
+  );
+  if (data && data.error) {
+    //TODO: do something
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
+  } else if (data) {
+    yield put({ type: ActionTypes.ALERT_SUCCESS });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
+  }
+}
+
+function* requestEvent(action) {
+  console.log('request event working');
+  const user = yield select(state => state.user);
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  const data = yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
+    "?userid=" + user.id + "&action=request",
+    {Authorization: user.secret, UserID: user.id}
+  );
+  if (data && data.error) {
+    //TODO: do something
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
+  } else if (data) {
+    yield put({ type: ActionTypes.ALERT_SUCCESS });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
   }
 }

@@ -3,7 +3,7 @@ import startup from './startup';
 import { watchLogin } from './loginSaga';
 import { watchUnauthenticated, watchRouteChange } from './routeSaga';
 import { refreshUserFriends, watchGetProfile, watchSyncProfile } from './userSaga';
-import { watchEventSave, watchRegionChange } from './eventSaga';
+import { watchEventSave, watchRegionChange, watchAcceptEvent, watchRequestEvent } from './eventSaga';
 /*
  * The entry point for all the sagas used in this application.
  */
@@ -13,10 +13,12 @@ export default function* root() {
     fork(watchRegionChange),
     fork(watchLogin),
     fork(watchRouteChange),
-    // fork(refreshUserFriends),
+    fork(refreshUserFriends),
     fork(watchUnauthenticated),
     fork(watchEventSave),
     fork(watchGetProfile),
     fork(watchSyncProfile),
+    fork(watchRequestEvent),
+    fork(watchAcceptEvent),
   ];
 }

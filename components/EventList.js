@@ -65,9 +65,9 @@ class ListRow extends React.Component {
   }
   _onItemPress = () => {
     //TODO: create a saga for this when fetching comments becomes
-    this.props.closeBtn();
     this.props.dispatch(Actions.selectEvent(this.props.data));
-    this.props.dispatch(Actions.routeChange('event'));
+    this.props.dispatch(Actions.routeChange('Event'));
+    this.props.closeBtn();
   }
 }
 

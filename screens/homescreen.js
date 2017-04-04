@@ -82,12 +82,11 @@ export default class HomeScreen extends React.Component {
         </View>
       );
     } else {
-      return <ActivityIndicator style={{alignSelf: 'center'}} />
+      return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} />;
     }
   }
 
   _renderLocationWarning = () => {
-    console.log(this.props.phone);
     if (this.props.phone.location === "denied") {
       return (
         <Modal

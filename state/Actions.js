@@ -34,6 +34,28 @@ export default class Actions {
     };
   }
 
+  static joinEvent(eventID) {
+    return {
+      type: ActionTypes.JOIN_EVENT,
+      eventID,
+    };
+  }
+
+  static requestEvent(eventID) {
+    return {
+      type: ActionTypes.REQUEST_EVENT,
+      eventID,
+    };
+  }
+
+  static rejectEvent(eventID, userID) {
+    return {
+      type: ActionTypes.REJECT_EVENT,
+      eventID,
+      userID,
+    };
+  }
+
   static regionChange(longitude, latitude, longitudeDelta, latitudeDelta) {
     return {
       type: ActionTypes.REGION_CHANGE,

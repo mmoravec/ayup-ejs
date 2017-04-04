@@ -34,8 +34,9 @@ export function* request(type, url, headers, body) {
       return error;
       //TODO: create unauthorized func
     } else {
+      let error = yield response.json();
       yield put({ type: ActionTypes.REQUEST_ERROR });
-      return {error: "Something is broken :("};
+      return {error};
     }
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });
