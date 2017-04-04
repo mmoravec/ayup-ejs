@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import MyText from '../components/common/MyText';
 import Badges from '../constants/badges';
-import Activities from '../constants/figures';
+import Activities from '../constants/activities';
 import Actions from '../state/Actions';
 
 @connect(data => ProfileScreen.getDataProps(data))

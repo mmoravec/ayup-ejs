@@ -156,11 +156,13 @@ const styles = StyleSheet.create({
     width,
     backgroundColor: '#ee366f',
     justifyContent: 'center',
+    bottom: 0,
   },
   woohoo: {
     position: 'absolute',
     height: height * 0.1,
     width,
+    bottom: 0,
     backgroundColor: '#8bd1c6',
     justifyContent: 'center',
   },

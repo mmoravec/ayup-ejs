@@ -13,7 +13,7 @@ import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
 import Bubble from './common/Bubble';
-import Figures from '../constants/figures';
+import Figures from '../constants/activities';
 import { Comment } from '../state/Records';
 import sampleComments from '../sample/comments';
 import EventGuests from '../components/EventGuests';
@@ -81,7 +81,7 @@ export default class Comments extends React.Component {
           </View>
           <View style={styles.figure}>
             <Image
-              source={Figures[event.activity].icon}
+              source={Figures[event.activity].image}
               style={{height: 40, width: 40, alignSelf: 'center'}}
             />
             <MyText style={{marginTop: 8}}>4am - 4:15am</MyText>

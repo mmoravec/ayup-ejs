@@ -7,12 +7,13 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Dimensions,
-  Text,
   Animated,
 } from 'react-native';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
-import Filters from '../utils/filters';
+import Activities from '../constants/activities'
+import MyText from '../components/common/MyText';
 const {height, width} = Dimensions.get('window');
 
 @connect(data => ActivitiesScreen.getDataProps(data))
@@ -20,7 +21,7 @@ export default class ActivitiesScreen extends React.Component {
 
   static getDataProps(data) {
     return {
-      filters: Filters.filtersFromIds(data.events.filters),
+      filters: data.events.filters,
       events: data.events.nearbyEvents,
     };
   }
@@ -34,14 +35,21 @@ export default class ActivitiesScreen extends React.Component {
             style={styles.btnBack}
           />
         </TouchableOpacity>
-        <Text style={styles.title}>Tap to Filter Activities</Text>
+        <MyText style={styles.title}>Tap to Filter Activities</MyText>
         <View style={styles.scrollView}>
           <ScrollView contentContainerStyle={styles.form}>
             {
-            this.props.filters.map(icon => {
-              return (
-                <Activity key={icon.id} icon={icon} selected={icon.selected} />
-              );
+              _.values(Activities).map(activity => {
+                if (this.props.filters.indexOf(activity.type) > -1) {
+                  return (
+                    <Activity key={activity.type} activity={activity} selected={true} />
+                  );
+                } else {
+                  return (
+                    <Activity key={activity.type} activity={activity} selected={false} />
+                  );
+                }
+
             })
           }
           </ScrollView>
@@ -63,16 +71,16 @@ class Activity extends React.Component {
   }
 
   render() {
-    let { id, image, selected, title } = this.props.icon;
+    let { image, type, name } = this.props.activity;
     let opacity = 1;
-    if (!selected) {
+    if (!this.props.selected) {
       opacity = 0.3;
     }
     return (
       <TouchableHighlight
         style={styles.icon}
-        key={id}
-        onPress={() => this._filterClick(id, selected)}
+        key={type}
+        onPress={this._filterClick}
         underlayColor="transparent">
         <View style={{paddingBottom: 20}}>
           <Image
@@ -80,18 +88,18 @@ class Activity extends React.Component {
             opacity={opacity}
             source={image}>
           </Image>
-          <Text style={{textAlign: 'center', position: 'absolute', bottom: 0, left: 0, right: 0}}>{title}</Text>
+          <MyText style={{textAlign: 'center', position: 'absolute', bottom: 0, left: 0, right: 0}}>{name}</MyText>
         </View>
       </TouchableHighlight>
       );
   }
 
-  _filterClick = (id, selected) => {
+  _filterClick = () => {
     this.setState({activityClicked: true});
-    if (selected) {
-      this.props.dispatch(Actions.removeActivity(id));
+    if (this.props.selected) {
+      this.props.dispatch(Actions.removeActivity(this.props.activity.type));
     } else {
-      this.props.dispatch(Actions.addActivity(id));
+      this.props.dispatch(Actions.addActivity(this.props.activity.type));
     }
   }
 }

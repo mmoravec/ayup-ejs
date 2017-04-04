@@ -9,12 +9,12 @@ import {
   LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
-import MyText from './MyText';
+import MyText from '../common/MyText';
 import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
-@connect((data) => ActionButton.getDataProps(data))
-export default class ActionButton extends React.Component {
+@connect((data) => SaveButton.getDataProps(data))
+export default class SaveButton extends React.Component {
 
   static getDataProps(data) {
     return {
@@ -87,8 +87,8 @@ export default class ActionButton extends React.Component {
       });
     });
     let event = {
-      starttime: eventState.startDate,
-      endtime: eventState.endDate,
+      startDate: eventState.startDate.toISOString(),
+      endDate: eventState.endDate.toISOString(),
       title: eventState.title,
       desc: eventState.desc,
       location: {
@@ -99,7 +99,7 @@ export default class ActionButton extends React.Component {
       activity: eventState.activity,
       capacity: eventState.capacity,
     };
-    if (event.starttime === "" || event.endtime === "" || event.title === "" || event.location === "") {
+    if (event.startDate === "" || event.endDate === "" || event.title === "" || event.location === "") {
       this._warnUser();
     } else {
       this.props.dispatch(Actions.saveEvent(event));

@@ -1,4 +1,4 @@
-import all from '../constants/filters';
+import all from '../constants/activities';
 
 export default class Filters {
 
@@ -41,21 +41,7 @@ export default class Filters {
   }
 
   static filterEvents(events, filters) {
-    let actMap = {};
-    let activities = all.filter(filter => {
-      if (filters.indexOf(filter.id) > -1) {
-        return filter;
-      }
-    });
-    activities.map(filter => {
-      actMap[filter.title] = true;
-    });
-    return events.filter(event => {
-      event.activity = "basketball";
-      if (actMap[event.activity]) {
-        return event;
-      }
-    });
+    return events;
   }
 
   static filtersFromIds(ids) {

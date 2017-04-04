@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import EventButton from '../components/EventButton'
-import Icons from '../constants/icons';
+import Icons from '../constants/activities';
 import Comments from '../components/Comments';
 import MapStyle from '../constants/mapstyle';
 import Actions from '../state/Actions';

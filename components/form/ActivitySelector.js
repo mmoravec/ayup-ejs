@@ -13,24 +13,21 @@ import {
   Ionicons,
 } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import Filter from '../../utils/filters';
+import _ from 'lodash';
+import Activities from '../../constants/activities';
+import MyText from '../common/MyText';
 const {height, width} = Dimensions.get('window');
 
-@connect((data) => ActivitySelector.getDataProps(data))
+@connect()
 export default class ActivitySelector extends React.Component {
 
   state = {
     showSelect: false,
-    filterSelected: 0,
-  }
-
-  static getDataProps(data) {
-    return {
-      filters: Filter.getSelectedActivitiesArray(data.events.filters),
-    };
+    filterSelected: 'basketball',
   }
 
    render() {
+     console.log(this.state.filterSelected);
      return (
        <View>
          <View style={styles.activity}>
@@ -38,7 +35,7 @@ export default class ActivitySelector extends React.Component {
              <View>
                <Image style={styles.circle} source={require('../../assets/images/small_circle.png')}>
                  <Image
-                   source={this.props.filters[this.state.filterSelected].image}
+                   source={Activities[this.state.filterSelected].image}
                    style={styles.activityImage}
                  />
                </Image>
@@ -64,18 +61,19 @@ export default class ActivitySelector extends React.Component {
            </TouchableOpacity>
            <ScrollView contentContainerStyle={styles.form}>
              {
-             this.props.filters.map(icon => {
-              let { id, image } = icon;
+             _.values(Activities).map(icon => {
+              let { id, image, type, name } = icon;
               return (
                 <TouchableOpacity
                   style={styles.icon}
                   key={id}
-                  onPress={() => this._filterClick(id)}
+                  onPress={() => this._filterClick(type)}
                   underlayColor="transparent">
                   <Image
                     style={styles.image}
                     source={image}
                   />
+                  <MyText style={{textAlign: 'center', position: 'absolute', bottom: 0, left: 0, right: 0}}>{name}</MyText>
                 </TouchableOpacity>
               );
             })
@@ -92,9 +90,9 @@ export default class ActivitySelector extends React.Component {
      this.setState({showSelect: !this.state.showSelect});
    }
 
-   _filterClick = (id) => {
-     this.setState({filterSelected: id});
-     this.props.selectActivity(id);
+   _filterClick = (type) => {
+     this.setState({filterSelected: type});
+     this.props.selectActivity(type);
      this.setState({showSelect: !this.state.showSelect});
    }
 

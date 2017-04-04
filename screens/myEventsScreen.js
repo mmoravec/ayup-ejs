@@ -13,7 +13,7 @@ import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
 import Bubble from '../components/common/Bubble';
 import MyText from '../components/common/MyText';
-import Icons from '../constants/figures';
+import Icons from '../constants/activities';
 import Actions from '../state/Actions';
 const dateFormat = require('dateformat');
 const {height, width} = Dimensions.get('window');

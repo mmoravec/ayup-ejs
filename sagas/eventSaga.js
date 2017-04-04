@@ -1,4 +1,4 @@
-import { takeLatest, select, call, put } from 'redux-saga/effects';
+import { takeLatest, select, call, put, fork } from 'redux-saga/effects';
 import {delay} from 'redux-saga';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
@@ -97,7 +97,6 @@ function* acceptEvent(action) {
 }
 
 function* requestEvent(action) {
-  console.log('request event working');
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   const data = yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
@@ -111,7 +110,18 @@ function* requestEvent(action) {
     yield put({ type: ActionTypes.RESET_ALERT });
   } else if (data) {
     yield put({ type: ActionTypes.ALERT_SUCCESS });
+    yield fork(updateSelectedEvent, action.eventID, user);
     yield call(delay, 2000);
     yield put({ type: ActionTypes.RESET_ALERT });
+  }
+}
+
+function* updateSelectedEvent(eventID, user) {
+  const data = yield call(request, GET, URL + "/v1.0/events?id=" + eventID,
+    {Authorization: user.secret, UserID: user.id}
+  );
+  if (data && !data.error) {
+    console.log(data);
+    yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
   }
 }

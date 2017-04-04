@@ -18,7 +18,7 @@ import FriendSelector from './FriendSelector';
 import Capacity from './Capacity';
 import MyText from '../common/MyText';
 import Hoshi from '../common/Hoshi';
-import ActionButton from '../common/ActionButton';
+import SaveButton from './SaveButton';
 import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
@@ -64,7 +64,7 @@ export default class EventForm extends React.Component {
     location: '',
     friends: [],
     scrollY: new Animated.Value(0),
-    activity: 0,
+    activity: 'basketball',
     latlng: [],
     public: false,
     capacity: 0,
@@ -152,7 +152,7 @@ export default class EventForm extends React.Component {
             <View style={styles.btmPadding} />
           </ScrollView>
         </View>
-        <ActionButton {...this._actionProps} event={this.state} />
+        <SaveButton {...this._actionProps} event={this.state} />
       </View>
     );
   }

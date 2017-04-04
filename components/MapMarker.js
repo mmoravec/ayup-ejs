@@ -2,7 +2,7 @@ import React from 'react';
 import { MapView } from 'expo';
 import { connect } from 'react-redux';
 import { LayoutAnimation } from 'react-native';
-import Icons from '../constants/icons';
+import Icons from '../constants/activities';
 import Actions from '../state/Actions';
 
 @connect()

@@ -11,13 +11,14 @@ import {
   Image,
 } from 'react-native';
 import { Font, Asset, Constants, Location, Permissions } from 'expo';
+import _ from 'lodash';
 import ActionTypes from '../state/ActionTypes';
 import LocalStorage from '../utils/LocalStorage';
 import {
     User,
     Filter,
 } from '../state/Records';
-import filters from '../constants/filters';
+import activities from '../constants/activities';
 
 //TODO: Add caching scheme for fonts and images from crash example
 export default function* startup() {
@@ -53,9 +54,7 @@ function* loadFonts() {
 }
 
 function* loadFilters() {
-    let filterList = new List(filters.map(filter => {
-        return filter.id;
-    }));
+    let filterList = new List(_.keys(activities));
     yield put({
         type: ActionTypes.SET_FILTERS,
         filterList,
