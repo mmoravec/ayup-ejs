@@ -20,6 +20,10 @@ class EventsReducer {
     return state.set('filters', action.filterList);
   }
 
+  static [ActionTypes.SET_COMMENTS](state, action) {
+    return state.set('selectedComments', action.comments);
+  }
+
   static [ActionTypes.SET_FILTER](state, action) {
     return state.set('filter', {startTime: action.filterStart, endTime: action.filterEnd});
   }

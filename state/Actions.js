@@ -34,6 +34,22 @@ export default class Actions {
     };
   }
 
+  static loadComments(eventID) {
+    return {
+      type: ActionTypes.LOAD_COMMENTS,
+      eventID,
+    };
+  }
+
+  static saveComment(comment, eventID, parentID) {
+    return {
+      type: ActionTypes.SAVE_COMMENT,
+      comment,
+      eventID,
+      parentID,
+    };
+  }
+
   static joinEvent(eventID) {
     return {
       type: ActionTypes.JOIN_EVENT,

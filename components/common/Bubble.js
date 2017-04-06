@@ -9,17 +9,18 @@ import MyText from './MyText';
 export default class Bubble extends React.Component {
     render() {
       let image = this.props.data.capacity === 0 ? require('../../assets/images/joined.png') : require('../../assets/images/joined_notjoined.png');
+      let event = this.props.data;
       return (
         <View style={[styles.container, this.props.style]}>
           <Image
             source={image}
             style={styles.joinedBubble}
           />
-          <MyText style={styles.joined}>{this.props.data.accepted.length}</MyText>
+          <MyText style={styles.joined}>{event.accepted.length}</MyText>
           {
-            (this.props.data.capacity - this.props.data.accepted.length) > 9  ?
-              <MyText style={[styles.left, {right: 5}]}>{this.props.data.capacity - this.props.data.accepted.length}</MyText> :
-              <MyText style={[styles.left, {right: 7}]}>{this.props.data.capacity - this.props.data.accepted.length}</MyText>
+            (event.capacity - event.accepted.length) > 9 ?
+              event.capacity > 0 && <MyText style={[styles.left, {right: 5}]}>{event.capacity - event.accepted.length}</MyText> :
+              event.capacity > 0 && <MyText style={[styles.left, {right: 7}]}>{event.capacity - event.accepted.length}</MyText>
           }
         </View>
       );

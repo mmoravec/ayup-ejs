@@ -3,12 +3,13 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  TouchableHighlight,
   Dimensions,
-  Text,
+  TextInput,
+  KeyboardAvoidingView,
   Image,
 } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
@@ -18,10 +19,26 @@ import { Comment } from '../state/Records';
 import sampleComments from '../sample/comments';
 import EventGuests from '../components/EventGuests';
 import Filter from '../utils/filters';
+import { duration } from '../utils/date';
+import Actions from '../state/Actions';
 const dateFormat = require('dateformat');
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
-export default class Comments extends React.Component {
+@connect(data => EventContent.getDataProps(data))
+export default class EventContent extends React.Component {
+
+  static getDataProps(data) {
+    return {
+      event: data.events.selectedEvent,
+      comments: new List(data.events.selectedComments),
+    };
+  }
+
+  state = {
+    commenting: false,
+    comment: '',
+    parentID: null,
+  }
 
   constructor(props) {
     super(props);
@@ -35,27 +52,25 @@ export default class Comments extends React.Component {
     this._comments = Filter.sortComments(new List(comments));
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this._commentsRef.measure((fx, fy, width, height, px, py) => {
-        this._commentValueY = py;
-      });
-    }, 200);
+  componentWillMount() {
+    this.props.dispatch(Actions.loadComments(this.props.event.id));
   }
 
   render() {
-    if (this._comments !== null) {
-      return (
-        <ImmutableListView
-          ref={(listView) => { this._listView = listView; }}
-          immutableData={this._comments}
-          renderRow={this._renderRow}
-          renderHeader={this._renderHeader}
-        />
-      );
-    } else {
-      return null;
-    }
+    return (
+      <ImmutableListView
+        ref={(listView) => { this._listView = listView; }}
+        immutableData={this.props.comments}
+        renderRow={this._renderRow}
+        renderHeader={this._renderHeader}
+        onScroll={this._onScroll}
+        keyboardShouldPersistTaps={'always'}
+      />
+    );
+  }
+
+  _onScroll = () => {
+    this.setState({commenting: false});
   }
 
   _renderHeader = () => {
@@ -66,6 +81,8 @@ export default class Comments extends React.Component {
       invited: event.invited,
       requested: event.requested,
     };
+    let start = new Date(event.startDate);
+    let end = new Date(event.endDate);
     return (
       <View style={{backgroundColor: 'rgba(0,0,0,0.0)'}}>
         <View style={{height: 150, backgroundColor: 'rgba(0,0,0,0.0)'}} />
@@ -77,14 +94,12 @@ export default class Comments extends React.Component {
             />
           </View>
           <View style={styles.headerName}>
-            <Text style={{fontFamily: 'LatoRegular', fontSize: 20}}>{event.host.name}</Text>
+            <MyText style={{fontSize: 18, marginBottom: 5}}>{event.host.name}</MyText>
           </View>
           <View style={styles.figure}>
-            <Image
-              source={Figures[event.activity].image}
-              style={{height: 40, width: 40, alignSelf: 'center'}}
-            />
-            <MyText style={{marginTop: 8}}>4am - 4:15am</MyText>
+            <MyText style={{alignSelf: 'center', fontSize: 14}}>{dateFormat(start, "ddd, mmm dd")}</MyText>
+            <MyText style={{alignSelf: 'center', fontSize: 14}}>{dateFormat(start, "shortTime")}</MyText>
+            <MyText style={{alignSelf: 'center', fontSize: 14, color: "#b3b3b3"}}>{duration(start, end)}</MyText>
           </View>
         </View>
         <View style={styles.middleInfo}>
@@ -101,18 +116,27 @@ export default class Comments extends React.Component {
           </View>
           <EventGuests guests={guests} />
         </View>
-        <TouchableHighlight ref={view => { this._commentsRef = view; }} underlayColor={'#f2f2f2'} style={{backgroundColor: '#fff'}} onPress={this._scrollToComments}>
-          <View>
-            <MyText style={styles.seeAll}>See all comments</MyText>
-          </View>
-        </TouchableHighlight>
+        <View style={styles.comments}>
+          <MyText style={styles.seeAll}>Comments({this.props.comments.size})</MyText>
+          <TouchableOpacity style={styles.commentBtn} underlayColor={'#f2f2f2'} onPress={this._onCommentPress}>
+            <MaterialCommunityIcons
+              size={12}
+              name={'message'}
+              color={"#c7c7c7"}
+              style={{marginTop: 3}}
+            />
+            <MyText style={styles.commentTxt}>Comment</MyText>
+          </TouchableOpacity>
+        </View>
+        {this._renderCommentBox()}
       </View>
     );
   }
 
   _renderRow = (rowData) => {
+    let replyPress = this._onReplyPress.bind(this, rowData.id);
     let _imageBox = styles.imageBox;
-    if (rowData.parentid) {
+    if (rowData.parentID) {
       _imageBox = styles.extImageBox;
     }
     return (
@@ -130,14 +154,16 @@ export default class Comments extends React.Component {
               <MyText style={styles.content}>{rowData.content}</MyText>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <MaterialIcons
-                name={'reply'}
-                size={14}
-                color={"#c7c7c7"}
-              />
-              <MyText style={{color:"#5f5f5f"}}> Reply</MyText>
+              <TouchableOpacity style={{flexDirection: 'row'}} onPress={replyPress}>
+                <MaterialIcons
+                  name={'reply'}
+                  size={14}
+                  color={"#c7c7c7"}
+                />
+                <MyText style={{color:"#5f5f5f"}}> Reply</MyText>
+              </TouchableOpacity>
               <MyText style={{color:"#c7c7c7"}}> • </MyText>
-              {this._renderTime(rowData.posted)}
+              {this._renderTime(rowData.modified)}
             </View>
           </View>
         </View>
@@ -145,8 +171,53 @@ export default class Comments extends React.Component {
     );
   }
 
-  _scrollToComments = () => {
-    this._listView.scrollTo({x: 0, y: this._commentValueY, animated: true});
+  _onCommentPress = () => {
+    console.log('button pressed');
+    this.setState({parentID: null});
+    this.setState({commenting: true});
+  }
+
+  _onReplyPress = (parentID) => {
+    this.setState({parentID});
+    this.setState({commenting: true});
+  }
+
+  _renderCommentBox = () => {
+    if (this.state.commenting) {
+      return (
+        <KeyboardAvoidingView behavior={'position'} style={{flex: 1}}>
+          <View style={{height: 50, padding: 5, backgroundColor: "#fff", borderTopWidth: 1, borderTopColor: '#e9e9e9', flexDirection: 'row'}}>
+            <View style={{height: 40, borderRadius: 5, borderWidth: 1, borderColor: "#c8c8cd", width: width * 0.8}}>
+              <TextInput
+                autoFocus={true}
+                style={{margin: 5, height: 30, width: width * 0.8}}
+                value={this.state.comment}
+                onChangeText={this._onCommentText}
+              />
+            </View>
+            <TouchableOpacity style={{alignSelf: 'center'}} onPress={this._saveComment}>
+              <Image
+                source={require('../assets/images/reply.png')}
+                style={{height: 25}}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      );
+    }
+  }
+
+  _onCommentText = (text) => {
+    this.setState({comment: text});
+  }
+
+  _saveComment = () => {
+    this.props.dispatch(
+      Actions.saveComment(this.state.comment,
+        this.props.event.id, this.state.parentID)
+    );
+    this.setState({commenting: false});
   }
 
   _renderTime = (date) => {
@@ -180,11 +251,28 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 5,
   },
+  commentTxt: {
+    marginLeft: 5,
+    fontSize: 14,
+    color: "#5f5f5f",
+  },
+  comments: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   commentPic: {
     height: 50,
     width: 50,
     borderRadius: 25,
     margin: 10,
+  },
+  commentBtn: {
+    alignSelf: 'center',
+    flexDirection: 'row',
+    marginRight: 5,
+    marginTop: 5,
+    paddingRight: 5,
   },
   name: {
     fontSize: 18,

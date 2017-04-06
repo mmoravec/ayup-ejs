@@ -1,6 +1,6 @@
 import {call, put, take, select, takeLatest} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
-import { List } from 'immutable';
+import Immutable, { List } from 'immutable';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
 import { User } from '../state/Records';
@@ -21,10 +21,10 @@ export function* refreshUserFriends() {
       "?fields=name,id,picture.width(120).height(120)&" +
       "access_token=" + action.user.authToken,
     );
-    if (friends && friends.error) {
+    if (friends.error) {
       //TODO: create error logging
     } else if (friends) {
-      yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.data)});
+      yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.body.data)});
     }
     while (true) {
         yield call(delay, 30000);
@@ -37,7 +37,7 @@ export function* refreshUserFriends() {
         } else if (newFriends) {
           if (newFriends.body.data.length !== friends.body.data.length) {
               friends = newFriends;
-              yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.data)});
+              yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.body.data)});
           }
         }
     }
@@ -58,13 +58,15 @@ function* syncProfile() {
   let profile = yield call(getProfile);
   if (!profile.error) {
     profile = profile.body;
+    console.log(profile);
     let user = {
-      hosted: new List(profile.hosted),
-      invited: new List(profile.invited),
-      completed: new List(profile.completed),
-      rejected: new List(profile.rejected),
-      requested: new List(profile.requested),
-      joined: new List(profile.joined),
+      hosted: profile.hosted,
+      invited: profile.invited,
+      completed: profile.completed,
+      rejected: profile.rejected,
+      requested: profile.requested,
+      joined: profile.joined,
+      events: profile.events,
       id: profile.id,
       fbid: p.fbid,
       about: p.about,
@@ -76,11 +78,11 @@ function* syncProfile() {
       gender: p.gender,
       new: p.new,
       expires: p.expires,
-      badges: new List(profile.badges),
-      activities: new List(profile.activities),
+      badges: profile.badges,
+      activities: profile.activities,
       secret: p.secret,
     };
-    user = new User(user);
+    user = new User(Immutable.fromJS(user));
     yield put({ type: ActionTypes.SET_CURRENT_USER, user });
     yield call(updateProfile, user);
   } else {

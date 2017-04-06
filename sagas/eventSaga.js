@@ -22,6 +22,14 @@ export function* watchRequestEvent() {
   yield takeLatest(ActionTypes.REQUEST_EVENT, requestEvent);
 }
 
+export function* watchLoadComments() {
+  yield takeLatest(ActionTypes.LOAD_COMMENTS, loadComments);
+}
+
+export function* watchSaveComment() {
+  yield takeLatest(ActionTypes.SAVE_COMMENT, saveComment);
+}
+
 function* saveEvent(action) {
   const user = yield select(state => state.user);
   action.event.host = {
@@ -100,7 +108,7 @@ function* requestEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   const data = yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-    "?userid=" + user.id + "&action=request",
+    "?userid=" + user.id + "&action=accept",
     {Authorization: user.secret, UserID: user.id}
   );
   if (data && data.error) {
@@ -124,4 +132,34 @@ function* updateSelectedEvent(eventID, user) {
     console.log(data);
     yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
   }
+}
+
+function* loadComments(action) {
+  const user = yield select(state => state.user);
+  console.log('load comments');
+  const data = yield call(request, GET, URL + '/v1.0/comments?id=' + action.eventID,
+  {Authorization: user.secret, UserID: user.id});
+  if(data.error) return;
+  yield put({ type: ActionTypes.SET_COMMENTS, comments: data.body});
+}
+
+function* saveComment(action) {
+  const user = yield select(state => state.user);
+  console.log('saving comments');
+  let comment = {
+    content: action.comment,
+    parentID: action.parentID ? action.parentID : null,
+    author: {
+      fbid: user.fbid,
+      id: user.id,
+      profilePic: user.profilePic,
+      name: user.name,
+    },
+    eventID: action.eventID,
+  };
+  console.log(JSON.stringify(comment));
+  const data = yield call(request, POST, URL + '/v1.0/comments',
+  {Authorization: user.secret, UserID: user.id}, comment);
+  if(data.error) return;
+  yield call(loadComments, action);
 }

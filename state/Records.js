@@ -14,6 +14,7 @@ export const EventState = Record({
     longitudeDelta: null,
   },
   selectedEvent: null,
+  selectedComments: new List(),
 });
 
 export const User = Record({
@@ -33,6 +34,7 @@ export const User = Record({
   hosted: new List(),
   requested: new List(),
   completed: new List(),
+  events: new List(),
   about: null,
   badges: new List(),
   activities: new List(),

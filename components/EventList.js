@@ -43,7 +43,7 @@ export default class EventList extends React.Component {
   _renderSectionHeader = (sectionData, header) => {
     console.log(header);
     return (
-      <MyText>{header}</MyText>
+      <MyText style={styles.header}>{header}</MyText>
     );
   }
 
@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
-    marginTop: 5,
+    marginTop: 2,
+    marginBottom: 2,
     marginLeft: 5,
     height: 80,
     justifyContent: 'space-between',
@@ -148,6 +149,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     height: 80,
+    marginLeft: 5,
+  },
+  header: {
+    color: '#808080',
   },
   info: {
     justifyContent: 'flex-end',

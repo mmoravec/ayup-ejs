@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import EventButton from '../components/EventButton'
 import Icons from '../constants/activities';
-import Comments from '../components/Comments';
+import Content from '../components/EventContent';
 import MapStyle from '../constants/mapstyle';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
@@ -61,7 +61,7 @@ export default class EventScreen extends React.Component {
             style={styles.btnBack}
           />
         </TouchableOpacity>
-        <Comments event={this.props.selectedEvent} />
+        <Content />
         <EventButton />
       </View>
     );
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   btnBack: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
   },
   back: {
     left: 15,

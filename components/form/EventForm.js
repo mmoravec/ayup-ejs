@@ -143,11 +143,6 @@ export default class EventForm extends React.Component {
                 scrollTo={this._scrollTo}
               />
             </View>
-            <Capacity
-              onChange={this._onChange}
-              stateKey={'capacity'}
-              capacity={this.state.capacity}
-            />
             {this._renderOptionalFields()}
             <View style={styles.btmPadding} />
           </ScrollView>
@@ -156,6 +151,12 @@ export default class EventForm extends React.Component {
       </View>
     );
   }
+
+  // <Capacity
+  //   onChange={this._onChange}
+  //   stateKey={'capacity'}
+  //   capacity={this.state.capacity}
+  // />
 
   _selectActivity = (act) => {
     this.setState({activity: act});
@@ -213,7 +214,7 @@ export default class EventForm extends React.Component {
 
 const styles = StyleSheet.create({
   btmPadding: {
-    height,
+    height: height * 0.5,
     backgroundColor: '#fff',
   },
   scrollView: {

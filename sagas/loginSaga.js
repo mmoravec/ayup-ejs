@@ -21,6 +21,7 @@ function* authorize() {
     let fbInfo = yield call(getInfo, fbLogin.token);
     //TODO: log error message after call
     let ayUser = yield call(request, POST,  URL + "/v1.0/auth/facebook?id=" + fbInfo.id, {Token: fbLogin.token});
+    if(ayUser.error) return;
     console.log("this is ayuser");
     console.log(ayUser);
     //TODO: log error message after call

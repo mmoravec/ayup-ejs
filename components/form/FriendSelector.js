@@ -20,6 +20,7 @@ const {height, width} = Dimensions.get('window');
 export default class FriendSelector extends React.Component {
 
   static getDataProps(data) {
+    console.log(data.user.friends);
     return {
       friends: data.user.friends,
     };
@@ -156,6 +157,7 @@ export default class FriendSelector extends React.Component {
           immutableData={this.state.filteredFriends}
           renderRow={this._renderFilterRow}
           keyboardShouldPersistTaps={'always'}
+          style={{marginBottom: 300}}
         />
       );
     }

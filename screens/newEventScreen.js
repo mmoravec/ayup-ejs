@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
   },
   btnBack: {
-    width: 40,
-    height: 40,
-    margin: 25,
+    width: 50,
+    height: 50,
+    margin: 15,
   },
   ctnBack: {
     position: 'absolute',

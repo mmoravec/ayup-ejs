@@ -33,11 +33,11 @@ export default class EventButton extends React.Component {
   }
 
   render() {
-    console.log(this.props.phone.status);
+    let status = this._getStatus();
     if (this.props.phone.status === '') {
       //If invited to event
-      if (this.props.user.id !== this.props.selectedEvent.host.userID) {
-        if (this.props.user.invited.indexOf(this.props.selectedEvent.id) > -1) {
+      if (status !== "host") {
+        if (status === "invited") {
           return (
             <View style={styles.bottom}>
               <TouchableOpacity
@@ -60,10 +60,7 @@ export default class EventButton extends React.Component {
               </TouchableOpacity>
             </View>
           );
-        } else if (this.props.user.requested.indexOf(this.props.selectedEvent.id) < 0 &&
-                    this.props.user.rejected.indexOf(this.props.selectedEvent.id) < 0 &&
-                    this.props.user.joined.indexOf(this.props.selectedEvent.id) < 0 &&
-                    this.props.user.invited.indexOf(this.props.selectedEvent.id) < 0) {
+        } else if (status === "uninvited") {
           return (
             <View style={styles.bottom}>
               <TouchableOpacity
@@ -97,6 +94,35 @@ export default class EventButton extends React.Component {
     } else {
       return <ActivityIndicator />;
     }
+  }
+
+  _getStatus = () => {
+    let user = "uninvited";
+    let event = this.props.selectedEvent;
+    event.invited.map(e => {
+      if (e.fbid === this.props.user.fbid) {
+        user = "invited";
+      }
+    });
+    event.requested.map(e => {
+      if (e.fbid === this.props.user.fbid) {
+        user = "requested";
+      }
+    });
+    event.rejected.map(e => {
+      if (e.fbid === this.props.user.fbid) {
+        user = "rejected";
+      }
+    });
+    event.accepted.map(e => {
+      if (e.fbid === this.props.user.fbid) {
+        user = "accepted";
+      }
+    });
+    if (event.host.userID === this.props.user.id) {
+      user = "host";
+    }
+    return user;
   }
 
 
@@ -140,7 +166,7 @@ const styles = StyleSheet.create({
     height: height * 0.1,
     width,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   btn: {
     height: 50,
