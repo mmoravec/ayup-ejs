@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     width,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    zIndex: 1,
   },
   btn: {
     height: 50,

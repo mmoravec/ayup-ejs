@@ -30,7 +30,7 @@ export default class EventContent extends React.Component {
   static getDataProps(data) {
     return {
       event: data.events.selectedEvent,
-      comments: new List(data.events.selectedComments),
+      comments: data.events.selectedComments,
     };
   }
 
@@ -59,6 +59,7 @@ export default class EventContent extends React.Component {
   render() {
     return (
       <ImmutableListView
+        style={{zIndex: 1}}
         ref={(listView) => { this._listView = listView; }}
         immutableData={this.props.comments}
         renderRow={this._renderRow}

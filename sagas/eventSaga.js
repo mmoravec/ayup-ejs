@@ -10,6 +10,10 @@ export function* watchEventSave() {
   yield takeLatest(ActionTypes.SAVE_EVENT, saveEvent);
 }
 
+export function* watchLoadEvent() {
+  yield takeLatest(ActionTypes.LOAD_EVENT, loadEvent);
+}
+
 export function* watchRegionChange() {
   yield takeLatest(ActionTypes.REGION_CHANGE, updateNearbyEvents);
 }
@@ -62,18 +66,18 @@ function* saveEvent(action) {
 function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const user = yield select(state => state.user);
-  let scope = 500;
-  if (action.latitudeDelta < 0.01) {
-    scope = 100;
-  } else if (action.latitudeDelta < 0.02 && action.latitudeDelta > 0.01) {
-    scope = 1000;
-  } else if (action.latitudeDelta < 0.03 && action.latitudeDelta > 0.02) {
-    scope = 5000;
-  } else if (action.latitudeDelta < 0.06 && action.latitudeDelta > 0.03) {
-    scope = 100000;
-  } else if (action.latitudeDelta > 0.06) {
-    scope = 1000000;
-  }
+  let scope = 1200;
+  // if (action.latitudeDelta < 0.01) {
+  //   scope = 100;
+  // } else if (action.latitudeDelta < 0.02 && action.latitudeDelta > 0.01) {
+  //   scope = 1000;
+  // } else if (action.latitudeDelta < 0.03 && action.latitudeDelta > 0.02) {
+  //   scope = 5000;
+  // } else if (action.latitudeDelta < 0.06 && action.latitudeDelta > 0.03) {
+  //   scope = 100000;
+  // } else if (action.latitudeDelta > 0.06) {
+  //   scope = 1000000;
+  // }
   const data = yield call(request, GET, URL + "/v1.0/events?lat=" +
     action.latitude + "&long=" + action.longitude + "&scope=" + scope,
     {Authorization: user.secret, UserID: user.id}
@@ -108,7 +112,7 @@ function* requestEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   const data = yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-    "?userid=" + user.id + "&action=accept",
+    "?userid=" + user.id + "&action=request",
     {Authorization: user.secret, UserID: user.id}
   );
   if (data && data.error) {
@@ -139,7 +143,7 @@ function* loadComments(action) {
   console.log('load comments');
   const data = yield call(request, GET, URL + '/v1.0/comments?id=' + action.eventID,
   {Authorization: user.secret, UserID: user.id});
-  if(data.error) return;
+  if (data.error) { return; }
   yield put({ type: ActionTypes.SET_COMMENTS, comments: data.body});
 }
 
@@ -160,6 +164,14 @@ function* saveComment(action) {
   console.log(JSON.stringify(comment));
   const data = yield call(request, POST, URL + '/v1.0/comments',
   {Authorization: user.secret, UserID: user.id}, comment);
-  if(data.error) return;
+  if (data.error) { return; }
   yield call(loadComments, action);
+}
+
+function* loadEvent(action) {
+  const user = yield select(state => state.user);
+  const data = yield call(request, GET, URL + '/v1.0/events?id=' + action.eventID,
+  {Authorization: user.secret, UserID: user.id});
+  if (data.error) { return; }
+  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
 }

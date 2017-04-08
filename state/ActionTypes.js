@@ -11,6 +11,7 @@ export default defineActionConstants([
   'IMAGES_LOADED',
   'JOIN_EVENT',
   'LOAD_COMMENTS',
+  'LOAD_EVENT',
   'LOG_OUT',
   'REGION_CHANGE',
   'ROUTE_CHANGE',

@@ -195,9 +195,8 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
   },
   btnBack: {
-    width: 50,
-    height: 50,
-    margin: 15,
+    width: 80,
+    height: 80,
   },
   backPress: {
     zIndex: 2,

@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 import Bubble from '../components/common/Bubble';
 import MyText from '../components/common/MyText';
 import Icons from '../constants/activities';
@@ -29,78 +30,15 @@ export default class MyEventsScreen extends React.Component {
   }
 
   state = {
-    allLeft: new Animated.Value(width * 2 + width * 0.05),
-    myLeft: new Animated.Value(width * 2 + width * 0.1),
-    joinedLeft: new Animated.Value(width * 2 + width * 0.15),
-    allOpac: new Animated.Value(1),
-    myOpac: new Animated.Value(0.4),
-    joinOpac: new Animated.Value(0.4),
-  }
-
-  componentDidMount() {
-    Animated.sequence([
-      Animated.delay(1000),
-      Animated.parallel([
-        Animated.timing(this.state.allLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
-        Animated.timing(this.state.myLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
-        Animated.timing(this.state.joinedLeft, {toValue: width * 4 + width * 0.05, duration: 500}),
-        Animated.timing(this.state.allOpac, {toValue: 1, duration: 500}),
-        Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
-        Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
-      ]),
-    ]).start();
-
   }
 
   render() {
-    let listData = new List(data);
     return (
-      <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <View style={styles.myEventsText}>
-          <MyText style={{alignSelf: 'center', fontSize: 20, marginTop: 25}}>My Events</MyText>
-        </View>
-        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
-          <Image
-            source={require('../assets/images/btn_back.png')}
-            style={styles.btnBack}
-          />
-        </TouchableOpacity>
-        <View style={styles.contextParent}>
-          <Image
-            source={require('../assets/images/event_bar.png')}
-            style={styles.contextBar}>
-            <TouchableOpacity onPress={this._selectAll}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', marginLeft: 5, marginTop: 20, opacity: this.state.allOpac}}>All</Animated.Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this._selectMine}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', marginTop: 20, opacity: this.state.myOpac}}>Created by Me</Animated.Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this._selectJoined}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', marginRight: 5, marginTop: 20, opacity: this.state.joinOpac}}>Joined</Animated.Text>
-            </TouchableOpacity>
-          </Image>
-        </View>
-        <View style={styles.listParent}>
-          <Animated.View style={[styles.eventList, {left: this.state.allLeft}]}>
-            <ImmutableListView
-              immutableData={listData}
-              renderRow={this._renderRow}
-            />
-          </Animated.View>
-          <Animated.View style={[styles.eventList, {left: this.state.myLeft}]}>
-            <ImmutableListView
-              immutableData={listData}
-              renderRow={this._renderRow}
-            />
-          </Animated.View>
-          <Animated.View style={[styles.eventList, {left: this.state.joinedLeft}]}>
-            <ImmutableListView
-              immutableData={listData}
-              renderRow={this._renderRow}
-            />
-          </Animated.View>
-        </View>
-      </Image>
+      <ScrollableTabView>
+        <Text tabLabel="React" />
+        <Text tabLabel="Flow" />
+        <Text tabLabel="Jest" />
+      </ScrollableTabView>
     );
   }
   _renderRow = (rowData) => {
@@ -108,36 +46,7 @@ export default class MyEventsScreen extends React.Component {
       <ListRow data={rowData} closeBtn={this.props.closeBtn} />
     );
   }
-  _selectAll = () => {
-    Animated.parallel([
-      Animated.timing(this.state.allLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.myLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.joinedLeft, {toValue: width * 4 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.allOpac, {toValue: 1, duration: 500}),
-      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
-    ]).start();
-  }
-  _selectMine = () => {
-    Animated.parallel([
-      Animated.timing(this.state.allLeft, {toValue: width * 1 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.myLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.joinedLeft, {toValue: width * 3 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.myOpac, {toValue: 1, duration: 500}),
-      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
-    ]).start();
-  }
-  _selectJoined = () => {
-    Animated.parallel([
-      Animated.timing(this.state.allLeft, {toValue: width * 0.05, duration: 500}),
-      Animated.timing(this.state.myLeft, {toValue: width * 1 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.joinedLeft, {toValue: width * 2 + width * 0.05, duration: 500}),
-      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.joinOpac, {toValue: 1, duration: 500}),
-    ]).start();
-  }
+
   _backBtnPress = () => {
     this.props.dispatch(Actions.routeChange('Back'));
   }
@@ -219,9 +128,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   btnBack: {
-    width: 40,
-    height: 40,
-    margin: 15,
+    width: 80,
+    height: 80,
   },
   ctnBack: {
     position: 'absolute',

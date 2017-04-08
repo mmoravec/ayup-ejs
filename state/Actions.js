@@ -105,8 +105,8 @@ export default class Actions {
 
   static selectEvent(selectedEvent) {
     return {
-      type: ActionTypes.SET_SELECTED_EVENT,
-      selectedEvent,
+      type: ActionTypes.LOAD_EVENT,
+      eventID: selectedEvent,
     };
   }
 

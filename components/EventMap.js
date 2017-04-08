@@ -24,6 +24,7 @@ export default class EventList extends React.Component {
           initialRegion={this.props.region}
           provider={"google"}
           customMapStyle={MapStyle}
+          zoomEnabled={false}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>
@@ -36,7 +37,6 @@ export default class EventList extends React.Component {
   }
 
   _onRegionChange = (region) => {
-    (region);
     this.props.dispatch(Actions.regionChange(
       region.longitude,
       region.latitude,

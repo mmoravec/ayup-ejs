@@ -13,7 +13,7 @@ class EventsReducer {
 
   static [ActionTypes.SET_NEARBY](state, action) {
     let newData = new List(action.data);
-    return state.set('nearbyEvents', state.nearbyEvents.merge(newData));
+    return state.set('nearbyEvents', newData);
   }
 
   static [ActionTypes.SET_FILTERS](state, action) {
@@ -21,7 +21,7 @@ class EventsReducer {
   }
 
   static [ActionTypes.SET_COMMENTS](state, action) {
-    return state.set('selectedComments', action.comments);
+    return state.set('selectedComments', new List(action.comments));
   }
 
   static [ActionTypes.SET_FILTER](state, action) {

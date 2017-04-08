@@ -15,6 +15,7 @@ import {
   MaterialIcons,
 } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import MyText from './common/MyText';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
@@ -48,12 +49,15 @@ export default class EventListModal extends React.Component {
         visible={this.props.menuVisible}>
         <View style={styles.container}>
           <View style={styles.feedback}>
+            <MyText style={{fontSize: 20, margin: 25}}>
+              Ayup - alpha V0.1
+            </MyText>
             <TouchableOpacity onPress={this._onFeedback}>
               <MaterialIcons
                 name={'message'}
                 size={30}
               />
-              <Text>Feedback</Text>
+              <MyText>Feedback</MyText>
             </TouchableOpacity>
           </View>
           <Animated.View style={styles.btnMainContainer}>
@@ -203,6 +207,7 @@ const styles = StyleSheet.create({
   feedback: {
     alignSelf: 'center',
     top: 100,
+    flexDirection: 'row'
   },
   btnMain: {
     width: 150,

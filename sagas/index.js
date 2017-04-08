@@ -10,6 +10,7 @@ import {
   watchRequestEvent,
   watchLoadComments,
   watchSaveComment,
+  watchLoadEvent,
 } from './eventSaga';
 /*
  * The entry point for all the sagas used in this application.
@@ -29,5 +30,6 @@ export default function* root() {
     fork(watchAcceptEvent),
     fork(watchLoadComments),
     fork(watchSaveComment),
+    fork(watchLoadEvent),
   ];
 }
