@@ -49,6 +49,8 @@ export const PhoneState = Record({
   imagesLoaded: false,
   status: '',
   location: false,
+  optly: null,
+  optlyVariation: '',
 });
 
 export const Comment = Record({

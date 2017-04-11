@@ -21,7 +21,7 @@ class EventsReducer {
   }
 
   static [ActionTypes.SET_COMMENTS](state, action) {
-    return state.set('selectedComments', new List(action.comments));
+    return state.set('selectedComments', action.comments);
   }
 
   static [ActionTypes.SET_FILTER](state, action) {

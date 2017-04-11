@@ -20,7 +20,6 @@ const {height, width} = Dimensions.get('window');
 export default class FriendSelector extends React.Component {
 
   static getDataProps(data) {
-    console.log(data.user.friends);
     return {
       friends: data.user.friends,
     };

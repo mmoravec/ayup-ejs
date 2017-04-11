@@ -3,6 +3,7 @@ import startup from './startup';
 import { watchLogin } from './loginSaga';
 import { watchUnauthenticated, watchRouteChange } from './routeSaga';
 import { refreshUserFriends, watchGetProfile, watchSyncProfile } from './userSaga';
+import { watchInitOptimizely } from './analyticsSaga';
 import {
   watchEventSave,
   watchRegionChange,
@@ -31,5 +32,6 @@ export default function* root() {
     fork(watchLoadComments),
     fork(watchSaveComment),
     fork(watchLoadEvent),
+    fork(watchInitOptimizely),
   ];
 }

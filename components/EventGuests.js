@@ -16,6 +16,7 @@ const {height, width} = Dimensions.get('window');
 export default class EventGuests extends React.Component {
 
   render() {
+    console.log(this.props.guests.accepted);
     return (
       <ScrollView
         style={styles.scrollview}

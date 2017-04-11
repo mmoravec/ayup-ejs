@@ -50,6 +50,14 @@ class PhoneStateReducer {
     return state.set('location', action.location);
   }
 
+  static [ActionTypes.OPTLY_LOADED](state, action) {
+    return state.set('optly', action.optly);
+  }
+
+  static [ActionTypes.SET_OPTLY_VARIATION](state, action) {
+    return state.set('optlyVariation', action.variation);
+  }
+
 }
 
 export default PhoneStateReducer.reduce;

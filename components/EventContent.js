@@ -30,7 +30,7 @@ export default class EventContent extends React.Component {
   static getDataProps(data) {
     return {
       event: data.events.selectedEvent,
-      comments: data.events.selectedComments,
+      comments: new List(Filter.sortComments(data.events.selectedComments)),
     };
   }
 
@@ -38,18 +38,6 @@ export default class EventContent extends React.Component {
     commenting: false,
     comment: '',
     parentID: null,
-  }
-
-  constructor(props) {
-    super(props);
-    let comments = [];
-    sampleComments.map(comment => {
-      comment.posted = new Date(comment.posted);
-      comment.modified = new Date(comment.modified);
-      let push = new Comment(comment);
-      comments.push(push);
-    });
-    this._comments = Filter.sortComments(new List(comments));
   }
 
   componentWillMount() {
@@ -173,7 +161,6 @@ export default class EventContent extends React.Component {
   }
 
   _onCommentPress = () => {
-    console.log('button pressed');
     this.setState({parentID: null});
     this.setState({commenting: true});
   }

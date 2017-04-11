@@ -1,6 +1,6 @@
+import Immutable, { List } from 'immutable';
 import {call, put, take, select, takeLatest} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
-import Immutable, { List } from 'immutable';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
 import { User } from '../state/Records';
@@ -56,9 +56,8 @@ function* getProfile() {
 function* syncProfile() {
   const p = yield select(state => state.user);
   let profile = yield call(getProfile);
-  if (!profile.error) {
+  if (!profile instanceof Error) {
     profile = profile.body;
-    console.log(profile);
     let user = {
       hosted: profile.hosted,
       invited: profile.invited,
@@ -87,7 +86,9 @@ function* syncProfile() {
     yield call(updateProfile, user);
   } else {
     console.log('Error fetching profile! Error message:');
-    console.log(profile.error);
+    console.log(profile);
+    yield call(delay, 5000);
+    yield call(syncProfile);
   }
 }
 
@@ -97,7 +98,8 @@ function* updateProfile(user) {
     const data = yield call(request, PUT, URL + "/v1.0/profile?id=" + user.id,
       {Authorization: user.secret, UserID: user.id}, user.toJS()
     );
-    console.log(data);
+    if(data.error) return;
+    yield put({ type: ActionTypes.PROFILE_UPDATED });
     return data;
   }
 }

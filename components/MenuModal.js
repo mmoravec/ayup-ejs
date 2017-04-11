@@ -5,9 +5,7 @@ import {
   View,
   Linking,
   Image,
-  TouchableHighlight,
   TouchableOpacity,
-  Text,
   Animated,
   Dimensions,
 } from 'react-native';
@@ -133,6 +131,7 @@ export default class EventListModal extends React.Component {
               <Image
                 source={require('../assets/images/menu/btn_profile.png')}
                 style={styles.btnAction}
+                opacity={0.4}
               />
             </TouchableOpacity>
           </Animated.View>
@@ -159,11 +158,11 @@ export default class EventListModal extends React.Component {
     this.props.dispatch(Actions.routeChange('Settings'));
   }
 
-  _profileBtnPress = () => {
-    this._resetAnimState();
-    this.props.navAway();
-    this.props.dispatch(Actions.routeChange('Profile'));
-  }
+  // _profileBtnPress = () => {
+  //   this._resetAnimState();
+  //   this.props.navAway();
+  //   this.props.dispatch(Actions.routeChange('Profile'));
+  // }
 
   _myEventBtnPress = () => {
     this._resetAnimState();
@@ -207,7 +206,7 @@ const styles = StyleSheet.create({
   feedback: {
     alignSelf: 'center',
     top: 100,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   btnMain: {
     width: 150,

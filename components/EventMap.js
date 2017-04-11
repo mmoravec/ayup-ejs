@@ -5,9 +5,16 @@ import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
 import MapStyle from '../constants/mapstyle';
+import AltMapStyle from '../constants/mapstylevar';
 
-@connect()
-export default class EventList extends React.Component {
+@connect(data => EventMap.getDataProps(data))
+export default class EventMap extends React.Component {
+
+  static getDataProps(data) {
+    return {
+      phone: data.phone,
+    };
+  }
 
   state = {
     loadDelay: false,
@@ -18,6 +25,38 @@ export default class EventList extends React.Component {
   }
 
   render() {
+    if (this.props.phone.optlyVariation === "apple") {
+      return (
+        <MapView
+          style={{ flex: 1, backgroundColor: '#fff' }}
+          initialRegion={this.props.region}
+          provider={"google"}
+          customMapStyle={AltMapStyle}
+          zoomEnabled={false}
+          onRegionChangeComplete={this._onRegionChange}>
+          {
+            this.props.events.map(event =>
+              <MapMarker key={event.id} event={event} />
+            )
+          }
+        </MapView>
+      );
+    } else if (this.props.phone.optlyVariation === "google") {
+      return (
+        <MapView
+          style={{ flex: 1, backgroundColor: '#fff' }}
+          initialRegion={this.props.region}
+          provider={"google"}
+          zoomEnabled={false}
+          onRegionChangeComplete={this._onRegionChange}>
+          {
+            this.props.events.map(event =>
+              <MapMarker key={event.id} event={event} />
+            )
+          }
+        </MapView>
+      );
+    } else {
       return (
         <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
@@ -31,9 +70,10 @@ export default class EventList extends React.Component {
               <MapMarker key={event.id} event={event} />
             )
           }
-
         </MapView>
       );
+    }
+
   }
 
   _onRegionChange = (region) => {

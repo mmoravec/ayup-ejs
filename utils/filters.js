@@ -5,10 +5,10 @@ export default class Filters {
   static sortComments(comments) {
     let unsorted = [];
     comments = comments.sort(function(a, b) {
-      return b.posted - a.posted;
+      return new Date(b.published) - new Date(a.published);
     });
     comments = comments.filter(comment => {
-      if (comment.get('parentid') === null) {
+      if (comment.parentID === "") {
         return comment;
       } else {
         unsorted.splice(0, 0, comment);
@@ -16,7 +16,7 @@ export default class Filters {
     });
     if (unsorted.length > 0) {
       unsorted.map(unsort => {
-        var result = comments.findIndex(function(obj) { return obj.get('id') === unsort.parentid; });
+        var result = comments.findIndex(function(obj) { return obj.id === unsort.parentID; });
         comments = comments.splice(result + 1, 0, unsort);
       });
     }

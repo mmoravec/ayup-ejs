@@ -27,7 +27,6 @@ export default class ActivitySelector extends React.Component {
   }
 
    render() {
-     console.log(this.state.filterSelected);
      return (
        <View>
          <View style={styles.activity}>

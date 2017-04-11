@@ -1,4 +1,4 @@
-import { call, put, takeEvery, select } from 'redux-saga/effects';
+import { call, put, takeEvery, select, race } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import ActionTypes from '../state/ActionTypes';
 
@@ -13,30 +13,38 @@ export function* request(type, url, headers, body) {
   }
   yield put({ type: ActionTypes.REQUEST_STARTED });
   try {
-    let response = yield call(fetch, url, {
-      method: type,
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-      body: bodyString,
+    const {response, timeout} = yield race({
+      response: call(fetch, url, {
+        method: type,
+        headers: {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        body: bodyString,
+      }),
+      timeout: call(delay, 5000),
     });
-    yield put({ type: ActionTypes.REQUEST_ENDED });
-    console.log("request ended!");
     console.log(response);
-    if (response.status === 200) {
-      yield put({ type: ActionTypes.REQUEST_SUCCESS });
-      let resJSON = yield response.json();
-      return {body: resJSON, headers: response.headers};
-    } else if (response.status === 401) {
-      let error = yield response.json();
-      yield put({ type: ActionTypes.REQUEST_UNAUTHENTICATED, error });
-      return error;
-      //TODO: create unauthorized func
+    console.log(timeout);
+    if (response) {
+      yield put({ type: ActionTypes.REQUEST_ENDED });
+      if (response.status === 200) {
+        yield put({ type: ActionTypes.REQUEST_SUCCESS });
+        let resJSON = yield response.json();
+        return {body: resJSON, headers: response.headers};
+      } else if (response.status === 401) {
+        let error = yield response.json();
+        yield put({ type: ActionTypes.REQUEST_UNAUTHENTICATED, error });
+        return error;
+        //TODO: create unauthorized func
+      } else {
+        let error = yield response.json();
+        yield put({ type: ActionTypes.REQUEST_ERROR });
+        return {error};
+      }
     } else {
-      let error = yield response.json();
       yield put({ type: ActionTypes.REQUEST_ERROR });
-      return {error};
+      return new Error('Request timed out');
     }
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });

@@ -1,5 +1,6 @@
 import { takeLatest, select, call, put, fork } from 'redux-saga/effects';
 import {delay} from 'redux-saga';
+import { List } from 'immutable';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
 import { URL, POST, GET } from '../constants/rest';
@@ -47,6 +48,7 @@ function* saveEvent(action) {
   );
   if (data && data.error) {
     //TODO: do something
+    console.log('error hit');
     yield put({ type: ActionTypes.ALERT_ERROR });
     yield call(delay, 2000);
     yield put({ type: ActionTypes.RESET_ALERT });
@@ -133,23 +135,20 @@ function* updateSelectedEvent(eventID, user) {
     {Authorization: user.secret, UserID: user.id}
   );
   if (data && !data.error) {
-    console.log(data);
     yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
   }
 }
 
 function* loadComments(action) {
   const user = yield select(state => state.user);
-  console.log('load comments');
   const data = yield call(request, GET, URL + '/v1.0/comments?id=' + action.eventID,
   {Authorization: user.secret, UserID: user.id});
   if (data.error) { return; }
-  yield put({ type: ActionTypes.SET_COMMENTS, comments: data.body});
+  yield put({ type: ActionTypes.SET_COMMENTS, comments: new List(data.body)});
 }
 
 function* saveComment(action) {
   const user = yield select(state => state.user);
-  console.log('saving comments');
   let comment = {
     content: action.comment,
     parentID: action.parentID ? action.parentID : null,
@@ -161,7 +160,6 @@ function* saveComment(action) {
     },
     eventID: action.eventID,
   };
-  console.log(JSON.stringify(comment));
   const data = yield call(request, POST, URL + '/v1.0/comments',
   {Authorization: user.secret, UserID: user.id}, comment);
   if (data.error) { return; }

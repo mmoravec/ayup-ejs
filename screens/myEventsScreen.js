@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   TouchableOpacity,
   Dimensions,
   Animated,
@@ -10,13 +9,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
-import ImmutableListView from 'react-native-immutable-list-view';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import Bubble from '../components/common/Bubble';
 import MyText from '../components/common/MyText';
-import Icons from '../constants/activities';
 import Actions from '../state/Actions';
-const dateFormat = require('dateformat');
+import EventList from '../components/MyEventList';
 const {height, width} = Dimensions.get('window');
 const data = require('../sample/sampledata.json');
 
@@ -30,72 +26,96 @@ export default class MyEventsScreen extends React.Component {
   }
 
   state = {
+    allOpac: new Animated.Value(1),
+    myOpac: new Animated.Value(0.4),
+    joinOpac: new Animated.Value(0.4),
+    mine: false,
   }
 
   render() {
+    let hostEvents = this.props.user.events.filter(event => {
+      return event.get('host').get('userID') === this.props.user.id;
+    });
+    let joinedEvents = this.props.user.events.filter(event => {
+      return event.get('host').get('userID') !== this.props.user.id;
+    });
     return (
-      <ScrollableTabView>
-        <Text tabLabel="React" />
-        <Text tabLabel="Flow" />
-        <Text tabLabel="Jest" />
-      </ScrollableTabView>
+      <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
+        <View style={styles.myEventsText}>
+          <MyText style={{alignSelf: 'center', fontSize: 20, marginTop: 25}}>My Events</MyText>
+        </View>
+        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
+          <Image
+            source={require('../assets/images/btn_back.png')}
+            style={styles.btnBack}
+          />
+        </TouchableOpacity>
+        <View style={styles.contextParent}>
+          <Image
+            source={require('../assets/images/event_bar.png')}
+            style={styles.contextBar}>
+            <TouchableOpacity onPress={this._selectAll}>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingLeft: 5, paddingTop: 20, opacity: this.state.allOpac}}>All</Animated.Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._selectMine}>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingTop: 20, opacity: this.state.myOpac}}>Created by Me</Animated.Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._selectJoined}>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, paddingTop: 20, opacity: this.state.joinOpac}}>Joined</Animated.Text>
+            </TouchableOpacity>
+          </Image>
+        </View>
+        <ScrollableTabView
+          ref={(tabView) => { this.tabView = tabView; }}
+          locked={true}
+          renderTabBar={false}>
+          <EventList events={this.props.user.events}  closeBtn={this._backBtnPress} />
+          <EventList events={hostEvents} closeBtn={this._backBtnPress} />
+          <EventList events={joinedEvents} closeBtn={this._backBtnPress} />
+        </ScrollableTabView>
+      </Image>
     );
   }
-  _renderRow = (rowData) => {
-    return (
-      <ListRow data={rowData} closeBtn={this.props.closeBtn} />
-    );
+  _selectAll = () => {
+    Animated.parallel([
+      Animated.timing(this.state.allOpac, {toValue: 1, duration: 500}),
+      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
+    ]).start();
+    this.tabView.goToPage(0);
   }
-
+  _selectMine = () => {
+    Animated.parallel([
+      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.myOpac, {toValue: 1, duration: 500}),
+      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
+    ]).start();
+    this.tabView.goToPage(1);
+  }
+  _selectJoined = () => {
+    Animated.parallel([
+      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
+      Animated.timing(this.state.joinOpac, {toValue: 1, duration: 500}),
+    ]).start();
+    this.tabView.goToPage(2);
+  }
   _backBtnPress = () => {
     this.props.dispatch(Actions.routeChange('Back'));
   }
 }
 
 
-@connect()
-class ListRow extends React.Component {
-  render() {
-    let rowData = this.props.data;
-    let icon = Icons[rowData.activity].icon;
-    return (
-      <TouchableOpacity onPress={this._onItemPress}>
-        <View style={styles.row}>
-          <View style={styles.icon}>
-            <Image
-              source={icon}
-              style={styles.activityImage}
-            />
-            <Text style={styles.time}>{dateFormat(rowData.startTime, 'h:MM tt')} - {dateFormat(rowData.endTime, 'h:MM tt')}</Text>
-          </View>
-          <View style={styles.info}>
-            <Text style={styles.title}>{rowData.title}</Text>
-            <Text style={styles.author}>{rowData.author.name}</Text>
-          </View>
-          <View style={styles.bubble}>
-            <Bubble data={rowData} />
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-  _onItemPress = () => {
-    //TODO: create a saga for this when fetching comments becomes
-    this.props.closeBtn();
-    this.props.dispatch(Actions.selectEvent(this.props.data));
-    this.props.dispatch(Actions.routeChange('Event'));
-  }
-}
-
 const styles = StyleSheet.create({
   eventList: {
     width: width * 0.9,
     position: 'absolute',
     height: height - 110,
+    zIndex: 10,
   },
   listParent: {
     backgroundColor: 'rgba(0,0,0,0)',
-    width: width * 5,
+    width,
     height: height - 110,
     alignSelf: 'center',
     flexDirection: 'row',
@@ -114,6 +134,7 @@ const styles = StyleSheet.create({
   contextParent: {
     backgroundColor: 'rgba(0,0,0,0)',
     width,
+    marginTop: 10,
   },
   container: {
     flex: 1,

@@ -14,6 +14,7 @@ import { Font, Asset, Constants, Location, Permissions } from 'expo';
 import _ from 'lodash';
 import ActionTypes from '../state/ActionTypes';
 import LocalStorage from '../utils/LocalStorage';
+import { request } from '../utils/fetch';
 import {
     User,
     Filter,
@@ -92,6 +93,7 @@ function* getUser() {
       user.rejected = new List(user.rejected);
       user.requested = new List(user.requested);
       user.completed = new List(user.completed);
+      user.events = new List(user.events);
       user.badges = new List(user.badges);
       user.activities = new List(user.activities);
       user.friends = new List(user.friends);
@@ -124,12 +126,11 @@ function* setInitialRegion() {
 }
 
 async function getFonts() {
-  Font.loadAsync({ 'LatoRegular': require('../assets/fonts/Lato-Regular.ttf')});
+  return Font.loadAsync({ 'LatoRegular': require('../assets/fonts/Lato-Regular.ttf')});
 }
 
 async function exLoadImages() {
-  let images = [
-      require('../assets/images/heart.png'),
+  const images = cacheImages([
       require('../assets/images/btn_main.png'),
       require('../assets/images/btn_close.png'),
       require('../assets/images/btn_list.png'),
@@ -139,8 +140,8 @@ async function exLoadImages() {
       require('../assets/images/menu/btn_profile.png'),
       require('../assets/images/menu/btn_settings.png'),
       require('../assets/images/btn_menu_close.png'),
-    ];
-  cacheImages(images);
+    ]);
+  return await Promise.all([...images]);
 }
 
 function cacheImages(images) {

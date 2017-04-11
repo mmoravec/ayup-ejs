@@ -7,13 +7,13 @@
     "description": "Recology_Overflowing",
     "activity": "basketball",
     "id": 0,
-    "author": {
+    "host": {
         "name": "Brett Schultz",
         "userID": "10211709054909093",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.240.240/p240x240/10410338_10204019299070003_2968215975908372392_n.jpg?oh=835a436c651185cfc18eb82509f178dd&oe=59288C88"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017`-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -60,13 +60,13 @@
     "description": "Recology_Overflowing",
     "activity": "baseball",
     "id": 1,
-    "author": {
+    "host": {
         "name": "Shaunak Mali",
         "userID": "10158194230320246",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/12647064_10156431983185246_1002055997475004910_n.jpg?oh=bb0d513304712d1cf08aef61e9cd5297&oe=596C8840"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -113,13 +113,13 @@
     "description": "Police - Homeless Concerns Queue",
     "activity": "soccer",
     "id": 2,
-    "author": {
+    "host": {
         "name": "Duaine Booker",
         "userID": "10153271091861463",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.50.200.200/1920486_10151927425826463_898282421_n.jpg?oh=778956d3a634cbb9eb41a7cd1ce7b47e&oe=593D068C"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -166,13 +166,13 @@
     "description": "PUC - Water - G",
     "activity": "football",
     "id": 3,
-    "author": {
+    "host": {
         "name": "Alex Bulman",
         "userID": "10100237032604427",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15894993_10100417276524167_8757861306961210735_n.jpg?oh=3a06c1b5a6a1d4c4d00673e51cd79a96&oe=592F3E8B"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -219,13 +219,13 @@
     "description": "PUC Sewer Ops",
     "activity": "running",
     "id": 4,
-    "author": {
+    "host": {
         "name": "Matt Foster",
         "userID": "10105741117795848",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15578523_10107378316326868_2099070976879010656_n.jpg?oh=f835890cdd56fd304c9ee3cc1d063b45&oe=5931D8D9"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -272,13 +272,13 @@
     "description": "Clear Channel - Transit Queue",
     "activity": "basketball",
     "id": 5,
-    "author": {
+    "host": {
         "name": "Brett Schultz",
         "userID": "10211709054909093",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.240.240/p240x240/10410338_10204019299070003_2968215975908372392_n.jpg?oh=835a436c651185cfc18eb82509f178dd&oe=59288C88"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10153271091861463",
         "name": "Duaine Booker",
@@ -325,13 +325,13 @@
     "description": "Recology_Abandoned",
     "activity": "hockey",
     "id": 6,
-    "author": {
+    "host": {
         "name": "Brett Schultz",
         "userID": "10211709054909093",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.240.240/p240x240/10410338_10204019299070003_2968215975908372392_n.jpg?oh=835a436c651185cfc18eb82509f178dd&oe=59288C88"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -378,13 +378,13 @@
     "description": "DPW Ops Queue",
     "activity": "basketball",
     "id": 7,
-    "author": {
+    "host": {
         "name": "Uksz Py",
         "userID": "10153530036627802",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/12196266_10154257451797802_7362952771965493511_n.jpg?oh=64d0df7714cb5dcde6137e6ced8c4271&oe=59731FBE"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -431,13 +431,13 @@
     "description": "get it? basketball... bad times!!!",
     "activity": "basketball",
     "id": 8,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -484,13 +484,13 @@
     "description": "We play basketball all day just like Lebron cause we cool.",
     "activity": "basketball",
     "id": 9,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10158194230320246",
         "name": "Shaunak Mali",
@@ -537,13 +537,13 @@
     "description": "It was so much fun I can't even believe it.",
     "activity": "climbing",
     "id": 10,
-    "author": {
+    "host": {
         "name": "Katherine Moravec",
         "userID": "10210276875656147",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15747759_10209736249420829_5485440573859387248_n.jpg?oh=a11ce543c4cabf57f5754c6d6b66cad6&oe=5934E999"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -590,13 +590,13 @@
     "description": "Move out the way. I got a soccer ball.",
     "activity": "soccer",
     "id": 11,
-    "author": {
+    "host": {
         "name": "Uksz Py",
         "userID": "10153530036627802",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/12196266_10154257451797802_7362952771965493511_n.jpg?oh=64d0df7714cb5dcde6137e6ced8c4271&oe=59731FBE"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -643,13 +643,13 @@
     "description": "Lorem ipsum delorrrrrrrrummmmm",
     "activity": "soccer",
     "id": 12,
-    "author": {
+    "host": {
         "name": "Brett Schultz",
         "userID": "10211709054909093",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.240.240/p240x240/10410338_10204019299070003_2968215975908372392_n.jpg?oh=835a436c651185cfc18eb82509f178dd&oe=59288C88"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -696,13 +696,13 @@
     "description": "We gonna play some pingpong. You in foo????",
     "activity": "pingpong",
     "id": 13,
-    "author": {
+    "host": {
         "name": "Duaine Booker",
         "userID": "10153271091861463",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.50.200.200/1920486_10151927425826463_898282421_n.jpg?oh=778956d3a634cbb9eb41a7cd1ce7b47e&oe=593D068C"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -749,13 +749,13 @@
     "description": "I'm a really boring guy that likes soccer. Come at me.",
     "activity": "soccer",
     "id": 14,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -802,13 +802,13 @@
     "description": "Better call Saul",
     "activity": "volleyball",
     "id": 15,
-    "author": {
+    "host": {
         "name": "Alex Bulman",
         "userID": "10100237032604427",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15894993_10100417276524167_8757861306961210735_n.jpg?oh=3a06c1b5a6a1d4c4d00673e51cd79a96&oe=592F3E8B"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -855,13 +855,13 @@
     "description": "Recology_Abandoned",
     "activity": "basketball",
     "id": 16,
-    "author": {
+    "host": {
         "name": "Brett Schultz",
         "userID": "10211709054909093",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.240.240/p240x240/10410338_10204019299070003_2968215975908372392_n.jpg?oh=835a436c651185cfc18eb82509f178dd&oe=59288C88"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10158194230320246",
         "name": "Shaunak Mali",
@@ -908,13 +908,13 @@
     "description": "Better call Saul",
     "activity": "volleyball",
     "id": 17,
-    "author": {
+    "host": {
         "name": "Alex Bulman",
         "userID": "10100237032604427",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15894993_10100417276524167_8757861306961210735_n.jpg?oh=3a06c1b5a6a1d4c4d00673e51cd79a96&oe=592F3E8B"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -961,13 +961,13 @@
     "description": "Recology_Abandoned",
     "activity": "baseball",
     "id": 18,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -1014,13 +1014,13 @@
     "description": "DPW BSM Queue",
     "activity": "baseball",
     "id": 19,
-    "author": {
+    "host": {
         "name": "Matt Foster",
         "userID": "10105741117795848",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15578523_10107378316326868_2099070976879010656_n.jpg?oh=f835890cdd56fd304c9ee3cc1d063b45&oe=5931D8D9"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [],
     "accepted": [{
         "userId": "10210276875656147",
@@ -1067,13 +1067,13 @@
     "description": "Recology_Abandoned",
     "activity": "baseball",
     "id": 20,
-    "author": {
+    "host": {
         "name": "Katherine Moravec",
         "userID": "10210276875656147",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15747759_10209736249420829_5485440573859387248_n.jpg?oh=a11ce543c4cabf57f5754c6d6b66cad6&oe=5934E999"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -1120,13 +1120,13 @@
     "description": "Recology_Abandoned",
     "activity": "softball",
     "id": 21,
-    "author": {
+    "host": {
         "name": "Matt Foster",
         "userID": "10105741117795848",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15578523_10107378316326868_2099070976879010656_n.jpg?oh=f835890cdd56fd304c9ee3cc1d063b45&oe=5931D8D9"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -1173,13 +1173,13 @@
     "description": "Recology_Abandoned",
     "activity": "softball",
     "id": 22,
-    "author": {
+    "host": {
         "name": "Katherine Moravec",
         "userID": "10210276875656147",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15747759_10209736249420829_5485440573859387248_n.jpg?oh=a11ce543c4cabf57f5754c6d6b66cad6&oe=5934E999"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -1226,13 +1226,13 @@
     "description": "Better call Saul",
     "activity": "volleyball",
     "id": 23,
-    "author": {
+    "host": {
         "name": "Matt Foster",
         "userID": "10105741117795848",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15578523_10107378316326868_2099070976879010656_n.jpg?oh=f835890cdd56fd304c9ee3cc1d063b45&oe=5931D8D9"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -1279,13 +1279,13 @@
     "description": "Recology_Abandoned",
     "activity": "softball",
     "id": 24,
-    "author": {
+    "host": {
         "name": "Shaunak Mali",
         "userID": "10158194230320246",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/12647064_10156431983185246_1002055997475004910_n.jpg?oh=bb0d513304712d1cf08aef61e9cd5297&oe=596C8840"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -1332,13 +1332,13 @@
     "description": "Recology_Abandoned",
     "activity": "softball",
     "id": 25,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -1385,13 +1385,13 @@
     "description": "Recology_Abandoned",
     "activity": "softball",
     "id": 26,
-    "author": {
+    "host": {
         "name": "Katherine Moravec",
         "userID": "10210276875656147",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15747759_10209736249420829_5485440573859387248_n.jpg?oh=a11ce543c4cabf57f5754c6d6b66cad6&oe=5934E999"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -1438,13 +1438,13 @@
     "description": "MUNI Work Queue",
     "activity": "basketball",
     "id": 27,
-    "author": {
+    "host": {
         "name": "Alex Bulman",
         "userID": "10100237032604427",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15894993_10100417276524167_8757861306961210735_n.jpg?oh=3a06c1b5a6a1d4c4d00673e51cd79a96&oe=592F3E8B"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -1491,13 +1491,13 @@
     "description": "Better call your mother",
     "activity": "softball",
     "id": 28,
-    "author": {
+    "host": {
         "name": "Duaine Booker",
         "userID": "10153271091861463",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.50.200.200/1920486_10151927425826463_898282421_n.jpg?oh=778956d3a634cbb9eb41a7cd1ce7b47e&oe=593D068C"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10210276875656147",
         "name": "Katherine Moravec",
@@ -1544,13 +1544,13 @@
     "description": "hello i play thx",
     "activity": "basketball",
     "id": 29,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -1597,13 +1597,13 @@
     "description": "Recology_Abandoned",
     "activity": "baseball",
     "id": 30,
-    "author": {
+    "host": {
         "name": "Duaine Booker",
         "userID": "10153271091861463",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.50.200.200/1920486_10151927425826463_898282421_n.jpg?oh=778956d3a634cbb9eb41a7cd1ce7b47e&oe=593D068C"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -1650,13 +1650,13 @@
     "description": "DPW Ops Queue",
     "activity": "basketball",
     "id": 31,
-    "author": {
+    "host": {
         "name": "Matt Foster",
         "userID": "10105741117795848",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15578523_10107378316326868_2099070976879010656_n.jpg?oh=f835890cdd56fd304c9ee3cc1d063b45&oe=5931D8D9"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10153530036627802",
         "name": "Uksz Py",
@@ -1703,13 +1703,13 @@
     "description": "DPW - Bureau of Street Use and Mapping - G",
     "activity": "basketball",
     "id": 32,
-    "author": {
+    "host": {
         "name": "Matt Foster",
         "userID": "10105741117795848",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15578523_10107378316326868_2099070976879010656_n.jpg?oh=f835890cdd56fd304c9ee3cc1d063b45&oe=5931D8D9"
     },
-    "startTime": "2017-03-10T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-10T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [],
     "accepted": [{
         "userId": "10210276875656147",
@@ -1756,13 +1756,13 @@
     "description": "Recology_Abandoned",
     "activity": "baseball",
     "id": 33,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-09T01:00:00.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-09T01:00:00.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [{
         "userId": "10211709054909093",
         "name": "Brett Schultz",
@@ -1809,13 +1809,13 @@
     "description": "Recology_Abandoned",
     "activity": "basketball",
     "id": 34,
-    "author": {
+    "host": {
         "name": "Elena Elfimova",
         "userID": "10155102579674082",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/14907641_10154690104309082_4921466484895149004_n.jpg?oh=3ecfbf600d62704b8c40190caeb15159&oe=596EF350"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-15T22:03:02.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-15T22:03:02.000Z",
     "requested": [{
         "userId": "10153271091861463",
         "name": "Duaine Booker",
@@ -1862,13 +1862,13 @@
     "description": "DPW Ops Queue",
     "activity": "running",
     "id": 35,
-    "author": {
+    "host": {
         "name": "Brett Schultz",
         "userID": "10211709054909093",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/c0.0.240.240/p240x240/10410338_10204019299070003_2968215975908372392_n.jpg?oh=835a436c651185cfc18eb82509f178dd&oe=59288C88"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-16T01:00:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-16T01:00:00.000Z",
     "requested": [],
     "accepted": [{
         "userId": "10211709054909093",
@@ -1915,13 +1915,13 @@
     "description": "MUNI Work Queue",
     "activity": "hockey",
     "id": 36,
-    "author": {
+    "host": {
         "name": "Matt Foster",
         "userID": "10105741117795848",
         "profilePic": "https://scontent.xx.fbcdn.net/v/t1.0-1/p240x240/15578523_10107378316326868_2099070976879010656_n.jpg?oh=f835890cdd56fd304c9ee3cc1d063b45&oe=5931D8D9"
     },
-    "startTime": "2017-03-08T22:03:02.000Z",
-    "endTime": "2017-03-17T01:23:00.000Z",
+    "startDate": "2017-03-08T22:03:02.000Z",
+    "endDate": "2017-03-17T01:23:00.000Z",
     "requested": [{
         "userId": "10153271091861463",
         "name": "Duaine Booker",
