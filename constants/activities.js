@@ -123,7 +123,7 @@ export default {
     "id": 18,
     "type": "videogame",
     "image": require("../assets/images/figures/videogame.png"),
-    "name": "Video Game",
+    "name": "Video Games",
   },
   "yoga": {
     "icon": require("../assets/images/icons/icon_yoga.png"),

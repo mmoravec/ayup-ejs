@@ -169,7 +169,7 @@ export default class FriendSelector extends React.Component {
         <View style={styles.friend}>
           <View style={styles.imageBox}>
             <Image
-              source={{uri: rowData.picture.data.url}}
+              source={{uri: rowData.profilePic}}
               style={styles.friendPic}
             />
           </View>
@@ -187,7 +187,7 @@ export default class FriendSelector extends React.Component {
       <View style={styles.friend}>
         <View style={styles.imageBox}>
           <Image
-            source={{uri: rowData.picture.data.url}}
+            source={{uri: rowData.profilePic}}
             style={styles.friendPic}
           />
         </View>

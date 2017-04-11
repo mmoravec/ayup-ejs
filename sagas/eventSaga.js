@@ -95,7 +95,7 @@ function* acceptEvent(action) {
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
     yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-      "?userid=" + user.id + "&action=accept",
+      "?fbid=" + user.fbid + "&action=accept",
       {Authorization: user.secret, UserID: user.id}
     );
   } catch (error) {
@@ -114,7 +114,7 @@ function* requestEvent(action) {
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
     yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-      "?userid=" + user.id + "&action=request",
+      "?fbid=" + user.fbid + "&action=request",
       {Authorization: user.secret, UserID: user.id}
     );
   } catch (error) {
@@ -169,9 +169,14 @@ function* saveComment(action) {
     },
     eventID: action.eventID,
   };
-  const data = yield call(request, POST, URL + '/v1.0/comments',
-  {Authorization: user.secret, UserID: user.id}, comment);
-  if (data.error) { return; }
+  try {
+    yield call(request, POST, URL + '/v1.0/comments',
+    {Authorization: user.secret, UserID: user.id}, comment);
+  } catch (error) {
+    yield call(delay, 5000);
+    yield fork(saveComment, action);
+    return;
+  }
   yield call(loadComments, action);
 }
 

@@ -15,6 +15,12 @@ export default class Actions {
     };
   }
 
+  static syncProfile() {
+    return {
+      type: ActionTypes.SYNC_PROFILE,
+    };
+  }
+
   static logOut() {
     return {
       type: ActionTypes.LOG_OUT,
@@ -54,6 +60,13 @@ export default class Actions {
   static requestEvent(eventID) {
     return {
       type: ActionTypes.REQUEST_EVENT,
+      eventID,
+    };
+  }
+
+  static acceptEvent(eventID) {
+    return {
+      type: ActionTypes.ACCEPT_EVENT,
       eventID,
     };
   }
@@ -101,6 +114,12 @@ export default class Actions {
     return {
       type: ActionTypes.LOAD_EVENT,
       eventID: selectedEvent,
+    };
+  }
+
+  static zeroSelectedEvent() {
+    return {
+      type: ActionTypes.ZERO_SELECTED_EVENT,
     };
   }
 

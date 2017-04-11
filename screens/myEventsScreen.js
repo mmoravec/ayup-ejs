@@ -25,6 +25,10 @@ export default class MyEventsScreen extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.props.dispatch(Actions.syncProfile());
+  }
+
   state = {
     allOpac: new Animated.Value(1),
     myOpac: new Animated.Value(0.4),
@@ -33,6 +37,7 @@ export default class MyEventsScreen extends React.Component {
   }
 
   render() {
+    console.log(this.props.user);
     let hostEvents = this.props.user.events.filter(event => {
       return event.get('host').get('userID') === this.props.user.id;
     });
@@ -54,14 +59,14 @@ export default class MyEventsScreen extends React.Component {
           <Image
             source={require('../assets/images/event_bar.png')}
             style={styles.contextBar}>
-            <TouchableOpacity onPress={this._selectAll}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', paddingLeft: 5, paddingTop: 20, opacity: this.state.allOpac}}>All</Animated.Text>
+            <TouchableOpacity onPress={this._selectAll} hitSlop={{top: 20, left: 20, bottom: 20, right: 30}}>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingLeft: 5, alignSelf: 'center', opacity: this.state.allOpac}}>All</Animated.Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._selectMine}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', paddingTop: 20, opacity: this.state.myOpac}}>Created by Me</Animated.Text>
+            <TouchableOpacity onPress={this._selectMine} hitSlop={{top: 20, left: 20, bottom: 20, right: 20}}>
+              <Animated.Text style={{fontFamily: 'LatoRegular', opacity: this.state.myOpac}}>Created by Me</Animated.Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._selectJoined}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, paddingTop: 20, opacity: this.state.joinOpac}}>Joined</Animated.Text>
+            <TouchableOpacity onPress={this._selectJoined} hitSlop={{top: 20, left: 30, bottom: 20, right: 20}}>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, opacity: this.state.joinOpac}}>Joined</Animated.Text>
             </TouchableOpacity>
           </Image>
         </View>
@@ -125,11 +130,13 @@ const styles = StyleSheet.create({
     height: 50,
   },
   contextBar: {
-    width: 329,
-    height: 60,
+    width: width * 0.95,
+    height: width * 0.18,
+    resizeMode: 'contain',
     alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
   },
   contextParent: {
     backgroundColor: 'rgba(0,0,0,0)',

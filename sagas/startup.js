@@ -110,7 +110,6 @@ function* getUser() {
     if (!user.new) {
       yield put({ type: ActionTypes.SYNC_PROFILE });
     }
-    // yield put({ type: ActionTypes.GET_PROFILE });
     return user;
 }
 

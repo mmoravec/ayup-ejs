@@ -47,12 +47,11 @@ export default class EventScreen extends React.Component {
         <View style={styles.scrollView}>
           <MapView
             style={styles.map}
-            onRegionChangeComplete={this._onRegionChange}
             zoomEnabled={false}
             customMapStyle={MapStyle}
             scrollEnabled={false}
             provider={"google"}
-            initialRegion={coord}>
+            region={coord}>
             <MapView.Marker
               key={0}
               coordinate={marker}
@@ -74,7 +73,7 @@ export default class EventScreen extends React.Component {
   }
 
   _backBtnPress = () => {
-    this.props.dispatch(Actions.selectEvent(null));
+    this.props.dispatch(Actions.zeroSelectedEvent());
     this.props.dispatch(Actions.routeChange('Back'));
   }
 }

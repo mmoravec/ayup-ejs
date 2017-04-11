@@ -12,23 +12,41 @@ export function* watchSyncProfile() {
 
 export function* refreshUserFriends() {
     const action = yield take(ActionTypes.SET_CURRENT_USER);
-    let friends = yield call(request, GET,
-      "https://graph.facebook.com/v2.8/me/friends/" +
-      "?fields=name,id,picture.width(120).height(120)&" +
-      "access_token=" + action.user.authToken,
-    );
-    yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.body.data)});
+    let friends;
+    try {
+      friends = yield call(request, GET,
+        "https://graph.facebook.com/v2.8/me/friends/" +
+        "?fields=name,id,picture.width(120).height(120)&" +
+        "access_token=" + action.user.authToken,
+      );
+      let f = friends.body.data.map(friend => {
+        return {
+          name: friend.name,
+          fbid: friend.id,
+          profilePic: friend.picture.data.url,
+        };
+      });
+      yield put({type: ActionTypes.SET_FRIENDS, friends: new List(f)});
+    } catch (error) {
+      //log error
+    }
     while (true) {
-        yield call(delay, 30000);
-        let newFriends = yield call(request, GET,
-          "https://graph.facebook.com/v2.8/me/friends/" +
-          "?fields=name,id,picture.width(120).height(120)&access_token=" + action.user.authToken,
-        );
-        console.log(newFriends);
-        if (newFriends && newFriends.error) {
-          //TODO: create error logging
-        } else if (newFriends) {
-            yield put({type: ActionTypes.SET_FRIENDS, friends: new List(friends.body.data)});
+        yield call(delay, 60000);
+        try {
+          friends = yield call(request, GET,
+            "https://graph.facebook.com/v2.8/me/friends/" +
+            "?fields=name,id,picture.width(120).height(120)&access_token=" + action.user.authToken,
+          );
+          let f = friends.body.data.map(friend => {
+            return {
+              name: friend.name,
+              fbid: friend.id,
+              profilePic: friend.picture.data.url,
+            };
+          });
+          yield put({type: ActionTypes.SET_FRIENDS, friends: new List(f)});
+        } catch (error) {
+          //log error
         }
     }
 }
@@ -44,22 +62,20 @@ function* syncProfile() {
     profile = yield call(request, GET, URL + "/v1.0/profile?id=" + p.id,
       {Authorization: p.secret, UserID: p.id}
     );
-    console.log("DIDNT CATCH ERROR");
   } catch (error) {
-    console.log("CAUGHT PROFILE ERROR");
     yield call(delay, 5000);
     yield call(syncProfile);
     return;
   }
   profile = profile.body;
   let user = {
-    hosted: profile.hosted,
-    invited: profile.invited,
-    completed: profile.completed,
-    rejected: profile.rejected,
-    requested: profile.requested,
-    joined: profile.joined,
-    events: profile.events,
+    hosted: Immutable.fromJS(profile.hosted),
+    invited: Immutable.fromJS(profile.invited),
+    completed: Immutable.fromJS(profile.completed),
+    rejected: Immutable.fromJS(profile.rejected),
+    requested: Immutable.fromJS(profile.requested),
+    joined: Immutable.fromJS(profile.joined),
+    events: Immutable.fromJS(profile.events),
     id: profile.id,
     fbid: p.fbid,
     about: p.about,
@@ -71,23 +87,19 @@ function* syncProfile() {
     gender: p.gender,
     new: p.new,
     expires: p.expires,
-    badges: profile.badges,
-    activities: profile.activities,
+    badges: Immutable.fromJS(profile.badges),
+    activities: Immutable.fromJS(profile.activities),
     secret: p.secret,
   };
   user = new User(Immutable.fromJS(user));
   yield put({ type: ActionTypes.SET_CURRENT_USER, user });
-  yield call(updateProfile, user);
-}
-
-function* updateProfile(user) {
-  user = user ? user : yield select(state => state.user);
-  if (user.secret) {
-    const data = yield call(request, PUT, URL + "/v1.0/profile?id=" + user.id,
+  try {
+    yield call(request, PUT, URL + "/v1.0/profile?id=" + user.id,
       {Authorization: user.secret, UserID: user.id}, user.toJS()
     );
-    if (data.error) return;
-    yield put({ type: ActionTypes.PROFILE_UPDATED });
-    return data;
+  } catch (error) {
+    console.log('updaing profile failed');
+    return;
   }
+  yield put({ type: ActionTypes.PROFILE_UPDATED });
 }

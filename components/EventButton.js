@@ -132,7 +132,7 @@ export default class EventButton extends React.Component {
   }
 
   _goingBtnPress = () => {
-    this.props.dispatch(Actions.joinEvent(this.props.selectedEvent.id));
+    this.props.dispatch(Actions.acceptEvent(this.props.selectedEvent.id));
   }
 
   _cantmakeitBtnPress = () => {

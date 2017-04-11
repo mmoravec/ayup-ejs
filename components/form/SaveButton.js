@@ -82,7 +82,7 @@ export default class SaveButton extends React.Component {
     eventState.friends.map(friend => {
       invited.push({
         fbid: friend.id,
-        profilePic: friend.picture.data.url,
+        profilePic: friend.profilePic,
         name: friend.name,
       });
     });

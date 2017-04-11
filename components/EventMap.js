@@ -1,6 +1,9 @@
 import React from 'react';
 import { MapView } from 'expo';
 import { connect } from 'react-redux';
+import {
+  ActivityIndicator,
+} from 'react-native';
 import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
@@ -25,7 +28,6 @@ export default class EventMap extends React.Component {
   }
 
   render() {
-    console.log(this.props.phone.optlyVariation);
     if (this.props.phone.optlyVariation === "apple") {
       return (
         <MapView
@@ -57,7 +59,7 @@ export default class EventMap extends React.Component {
           }
         </MapView>
       );
-    } else {
+    } else if (this.props.phone.optlyVariation === "original") {
       return (
         <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
@@ -73,6 +75,8 @@ export default class EventMap extends React.Component {
           }
         </MapView>
       );
+    } else {
+      return <ActivityIndicator style={{marginTop: 200}} />;
     }
 
   }

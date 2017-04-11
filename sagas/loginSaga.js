@@ -1,39 +1,52 @@
-import { fork, call, put, takeEvery } from 'redux-saga/effects';
 import {
   Platform,
 } from 'react-native';
 import { Facebook } from 'expo';
+import { fork, call, put, takeEvery } from 'redux-saga/effects';
 import LocalStorage from '../utils/LocalStorage';
 import ActionTypes from '../state/ActionTypes';
 import { User } from '../state/Records';
 import { request } from '../utils/fetch';
 // import { ayupGet } from '../utils/fetch';
-import { URL, POST } from '../constants/rest';
+import { URL, POST, GET } from '../constants/rest';
 
 export function* watchLogin() {
   yield takeEvery(ActionTypes.SIGN_IN, authorize);
 }
 
 function* authorize() {
+  let fbInfo, ayUser;
   yield put({ type: ActionTypes.ALERT_SAVING });
   const fbLogin = yield call(facebookLogin);
   if (fbLogin.type === 'success') {
-    let fbInfo = yield call(getInfo, fbLogin.token);
-    //TODO: log error message after call
-    let ayUser = yield call(request, POST,  URL + "/v1.0/auth/facebook?id=" + fbInfo.id, {Token: fbLogin.token});
-    //TODO: log error message and alert user.
-    if(ayUser.error) return;
+    try {
+      fbInfo = yield call(request, GET, `https://graph.facebook.com/me?access_token=${fbLogin.token}&fields=name,id,gender,picture.width(240).height(240),email`);
+    } catch (error) {
+      //Alert Error
+      yield put({ type: ActionTypes.ALERT_ERROR, error });
+      yield put({ type: ActionTypes.RESET_ALERT });
+      return;
+    }
+    try {
+      console.log(fbInfo);
+      ayUser = yield call(request, POST,  URL + "/v1.0/auth/facebook?id=" + fbInfo.body.id, {Token: fbLogin.token});
+    } catch (error) {
+      //Alert Error
+      yield put({ type: ActionTypes.ALERT_ERROR, error });
+      yield put({ type: ActionTypes.RESET_ALERT });
+      return;
+    }
     console.log("this is ayuser");
     console.log(ayUser);
     //TODO: log error message after call
     let saveUser = new User({
       'authToken': ayUser.body.authToken,
-      'profilePic': fbInfo.picture.data.url,
+      'profilePic': fbInfo.body.picture.data.url,
       'expires': new Date(Date.now() + fbLogin.expires),
-      'email': fbInfo.email,
-      'gender': fbInfo.gender,
-      'name': fbInfo.name,
-      'fbid': fbInfo.id,
+      'email': fbInfo.body.email,
+      'gender': fbInfo.body.gender,
+      'name': fbInfo.body.name,
+      'fbid': fbInfo.body.id,
       'id': ayUser.body.id,
       'secret': ayUser.headers.get('authorization'),
       'new': false,
@@ -45,6 +58,9 @@ function* authorize() {
     yield put({ type: ActionTypes.RESET_ALERT });
   } else {
     //TODO: throw error message
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    yield put({ type: ActionTypes.RESET_ALERT });
+    return;
   }
 }
 
@@ -54,13 +70,6 @@ function facebookLogin() {
     behavior: Platform.OS === 'ios' ? 'web' : 'system',
   });
 }
-
-async function getInfo(token) {
-  let response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=name,id,gender,picture.width(240).height(240),email`);
-  let info = await response.json();
-  return info;
-}
-
 
 // async function saveUser(user) {
 //   let userStr = JSON.stringify(user.toJS());

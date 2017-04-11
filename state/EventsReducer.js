@@ -41,6 +41,10 @@ class EventsReducer {
     return state.set('selectedEvent', action.selectedEvent);
   }
 
+  static [ActionTypes.ZERO_SELECTED_EVENT](state, action) {
+    return state.set('selectedEvent', null);
+  }
+
   static [ActionTypes.REGION_CHANGE](state, action) {
     let region = {
       latitude: action.latitude,

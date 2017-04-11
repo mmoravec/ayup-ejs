@@ -20,7 +20,6 @@ const {height, width} = Dimensions.get('window');
 export default class EventList extends React.Component {
 
   render() {
-    console.log(this.props.events);
     return (
       <View style={styles.container}>
         <ImmutableListView
