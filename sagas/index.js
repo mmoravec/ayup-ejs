@@ -2,7 +2,7 @@ import { fork } from 'redux-saga/effects';
 import startup from './startup';
 import { watchLogin } from './loginSaga';
 import { watchUnauthenticated, watchRouteChange } from './routeSaga';
-import { refreshUserFriends, watchGetProfile, watchSyncProfile } from './userSaga';
+import { refreshUserFriends, watchSyncProfile } from './userSaga';
 import { watchInitOptimizely } from './analyticsSaga';
 import {
   watchEventSave,
@@ -25,7 +25,6 @@ export default function* root() {
     fork(refreshUserFriends),
     fork(watchUnauthenticated),
     fork(watchEventSave),
-    fork(watchGetProfile),
     fork(watchSyncProfile),
     fork(watchRequestEvent),
     fork(watchAcceptEvent),

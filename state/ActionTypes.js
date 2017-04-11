@@ -7,7 +7,6 @@ export default defineActionConstants([
   'FILTERS_LOADED',
   'FONT_LOADED',
   'GET_FRIENDS',
-  'GET_PROFILE',
   'IMAGES_LOADED',
   'JOIN_EVENT',
   'LOAD_COMMENTS',

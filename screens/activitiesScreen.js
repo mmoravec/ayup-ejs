@@ -9,6 +9,7 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
@@ -18,6 +19,10 @@ const {height, width} = Dimensions.get('window');
 
 @connect(data => ActivitiesScreen.getDataProps(data))
 export default class ActivitiesScreen extends React.Component {
+
+  state = {
+    all: true,
+  }
 
   static getDataProps(data) {
     return {
@@ -36,6 +41,16 @@ export default class ActivitiesScreen extends React.Component {
           />
         </TouchableOpacity>
         <MyText style={styles.title}>Tap to Filter Activities</MyText>
+        <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 20, zIndex: 2}}>
+          <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
+            <MaterialCommunityIcons
+              size={20}
+              name={'refresh'}
+              style={{backgroundColor: 'transparent'}}
+            />
+          </View>
+          <MyText style={{fontSize: 10, color: "#666666"}}>Reset</MyText>
+        </TouchableOpacity>
         <View style={styles.scrollView}>
           <ScrollView contentContainerStyle={styles.form}>
             {
@@ -61,6 +76,19 @@ export default class ActivitiesScreen extends React.Component {
   _backBtnPress = () => {
     this.props.dispatch(Actions.routeChange('Back'));
   }
+
+  _resetActivities = () => {
+    if (this.state.all) {
+      _.values(Activities).map(activity => {
+        this.props.dispatch(Actions.removeActivity(activity.type));
+      });
+    } else {
+      _.values(Activities).map(activity => {
+        this.props.dispatch(Actions.addActivity(activity.type));
+      });
+    }
+    this.setState({all: !this.state.all});
+  }
 }
 
 @connect()
@@ -74,7 +102,7 @@ class Activity extends React.Component {
     let { image, type, name } = this.props.activity;
     let opacity = 1;
     if (!this.props.selected) {
-      opacity = 0.3;
+      opacity = 0.2;
     }
     return (
       <TouchableHighlight
@@ -200,6 +228,8 @@ const styles = StyleSheet.create({
   },
   backPress: {
     zIndex: 2,
+    width: 80,
+    height: 80,
   },
   title: {
     position: 'absolute',
@@ -264,6 +294,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: width * 0.9,
     flexWrap: 'wrap',
-    paddingTop: 10,
+    paddingBottom: 10,
   },
 });

@@ -43,32 +43,31 @@ function* saveEvent(action) {
     name: user.name,
   };
   yield put({ type: ActionTypes.ALERT_SAVING });
-  const data = yield call(request, POST, URL + "/v1.0/events",
-    {Authorization: user.secret, UserID: user.id}, action.event
-  );
-  if (data && data.error) {
-    //TODO: do something
-    console.log('error hit');
-    yield put({ type: ActionTypes.ALERT_ERROR });
+  try {
+    yield call(request, POST, URL + "/v1.0/events",
+      {Authorization: user.secret, UserID: user.id}, action.event
+    );
+  } catch (error) {
+    yield put({ type: ActionTypes.ALERT_ERROR, error });
     yield call(delay, 2000);
     yield put({ type: ActionTypes.RESET_ALERT });
-  } else if (data) {
-    yield put({ type: ActionTypes.ALERT_SUCCESS });
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
-    yield put({
-      type: ActionTypes.REGION_CHANGE,
-      longitude: action.event.location.coordinates[0],
-      latitude: action.event.location.coordinates[1],
-     });
-    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home'});
+    return;
   }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield call(delay, 2000);
+  yield put({ type: ActionTypes.RESET_ALERT });
+  yield put({
+    type: ActionTypes.REGION_CHANGE,
+    longitude: action.event.location.coordinates[0],
+    latitude: action.event.location.coordinates[1],
+   });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home'});
 }
 
 function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const user = yield select(state => state.user);
-  let scope = 1200;
+  let scope = 1200, events;
   // if (action.latitudeDelta < 0.01) {
   //   scope = 100;
   // } else if (action.latitudeDelta < 0.02 && action.latitudeDelta > 0.01) {
@@ -80,70 +79,80 @@ function* updateNearbyEvents(action) {
   // } else if (action.latitudeDelta > 0.06) {
   //   scope = 1000000;
   // }
-  const data = yield call(request, GET, URL + "/v1.0/events?lat=" +
-    action.latitude + "&long=" + action.longitude + "&scope=" + scope,
-    {Authorization: user.secret, UserID: user.id}
-  );
-  if (data && data.error) {
-    //TODO: do something
-  } else if (data) {
-    yield put({ type: ActionTypes.SET_NEARBY, data: data.body });
+  try {
+    events = yield call(request, GET, URL + "/v1.0/events?lat=" +
+      action.latitude + "&long=" + action.longitude + "&scope=" + scope,
+      {Authorization: user.secret, UserID: user.id}
+    );
+  } catch (error) {
+    return;
   }
+  yield put({ type: ActionTypes.SET_NEARBY, data: events.body });
 }
 
 function* acceptEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
-  const data = yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-    "?userid=" + user.id + "&action=accept",
-    {Authorization: user.secret, UserID: user.id}
-  );
-  if (data && data.error) {
-    //TODO: do something
+  try {
+    yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
+      "?userid=" + user.id + "&action=accept",
+      {Authorization: user.secret, UserID: user.id}
+    );
+  } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     yield call(delay, 2000);
     yield put({ type: ActionTypes.RESET_ALERT });
-  } else if (data) {
-    yield put({ type: ActionTypes.ALERT_SUCCESS });
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
+    return;
   }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield call(delay, 2000);
+  yield put({ type: ActionTypes.RESET_ALERT });
 }
 
 function* requestEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
-  const data = yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-    "?userid=" + user.id + "&action=request",
-    {Authorization: user.secret, UserID: user.id}
-  );
-  if (data && data.error) {
-    //TODO: do something
+  try {
+    yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
+      "?userid=" + user.id + "&action=request",
+      {Authorization: user.secret, UserID: user.id}
+    );
+  } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     yield call(delay, 2000);
     yield put({ type: ActionTypes.RESET_ALERT });
-  } else if (data) {
-    yield put({ type: ActionTypes.ALERT_SUCCESS });
-    yield fork(updateSelectedEvent, action.eventID, user);
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
   }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield call(delay, 2000);
+  yield put({ type: ActionTypes.RESET_ALERT });
+  yield fork(updateSelectedEvent, action.eventID, user);
 }
 
 function* updateSelectedEvent(eventID, user) {
-  const data = yield call(request, GET, URL + "/v1.0/events?id=" + eventID,
-    {Authorization: user.secret, UserID: user.id}
-  );
-  if (data && !data.error) {
-    yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
+  let data;
+  try {
+    data = yield call(request, GET, URL + "/v1.0/events?id=" + eventID,
+      {Authorization: user.secret, UserID: user.id}
+    );
+  } catch (error) {
+    yield call(delay, 5000);
+    yield fork(updateSelectedEvent, eventID, user);
+    return;
   }
+  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
 }
 
 function* loadComments(action) {
   const user = yield select(state => state.user);
-  const data = yield call(request, GET, URL + '/v1.0/comments?id=' + action.eventID,
-  {Authorization: user.secret, UserID: user.id});
-  if (data.error) { return; }
+  let data;
+  try {
+    data = yield call(request, GET, URL + '/v1.0/comments?id=' + action.eventID,
+    {Authorization: user.secret, UserID: user.id});
+  } catch (error) {
+    yield call(delay, 5000);
+    yield fork(loadComments, action);
+    return;
+  }
   yield put({ type: ActionTypes.SET_COMMENTS, comments: new List(data.body)});
 }
 
@@ -168,8 +177,14 @@ function* saveComment(action) {
 
 function* loadEvent(action) {
   const user = yield select(state => state.user);
-  const data = yield call(request, GET, URL + '/v1.0/events?id=' + action.eventID,
-  {Authorization: user.secret, UserID: user.id});
-  if (data.error) { return; }
+  let data;
+  try {
+    data = yield call(request, GET, URL + '/v1.0/events?id=' + action.eventID,
+    {Authorization: user.secret, UserID: user.id});
+  } catch (error) {
+    yield call(delay, 5000);
+    yield fork(loadEvent, action);
+    return;
+  }
   yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
 }

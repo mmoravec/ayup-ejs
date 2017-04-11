@@ -33,9 +33,9 @@ export default class EventListModal extends React.Component {
     if (this.props.menuVisible) {
         Animated.parallel([
           Animated.timing(this.state.opacity, {toValue:1, duration: 500}),
-          Animated.spring(this.state.secRowBottom, {toValue:110, tension: 60, friction: 6, velocity: 300}),
+          Animated.spring(this.state.secRowBottom, {toValue:140, tension: 60, friction: 6, velocity: 300}),
           Animated.spring(this.state.firstRowMarg, {toValue:(width * 0.6), tension: 60, friction: 6, velocity: 300}),
-          Animated.spring(this.state.secRowMarg, {toValue:(width * 0.45), tension: 60, friction: 6, velocity: 300}),
+          Animated.spring(this.state.secRowMarg, {toValue:(width * 0.35), tension: 60, friction: 6, velocity: 300}),
           Animated.spring(this.state.thirdRowBottom, {toValue:165, tension: 60, friction: 6, velocity: 300}),
         ]).start();
     }
@@ -79,6 +79,7 @@ export default class EventListModal extends React.Component {
                 style={styles.btnAction}
               />
             </TouchableOpacity>
+            <MyText style={styles.text}>Settings</MyText>
           </Animated.View>
           <Animated.View
             style={[styles.ctnActivities,
@@ -93,12 +94,14 @@ export default class EventListModal extends React.Component {
                 style={styles.btnAction}
               />
             </TouchableOpacity>
+            <MyText style={styles.text}>Activities</MyText>
           </Animated.View>
           <Animated.View
             style={[styles.ctnProfile,
             {
               opacity: this.state.opacity,
-              bottom: this.state.thirdRowBottom,
+              bottom: this.state.secRowBottom,
+              left: this.state.secRowMarg,
             }]}>
             <TouchableOpacity underlayColor="transparent" onPress={this._newEventBtnPress}>
               <Image
@@ -106,13 +109,13 @@ export default class EventListModal extends React.Component {
                 style={styles.btnAction}
               />
             </TouchableOpacity>
+            <MyText style={styles.text}>New Event</MyText>
           </Animated.View>
           <Animated.View
             style={[styles.ctnEvents,
             {
               opacity: this.state.opacity,
-              left: this.state.secRowMarg,
-              bottom: this.state.secRowBottom,
+              left: this.state.firstRowMarg,
             }]}>
             <TouchableOpacity underlayColor="transparent" onPress={this._myEventBtnPress}>
               <Image
@@ -120,25 +123,27 @@ export default class EventListModal extends React.Component {
                 style={styles.btnAction}
               />
             </TouchableOpacity>
-          </Animated.View>
-          <Animated.View
-            style={[styles.ctnNewEvent,
-            {
-              opacity: this.state.opacity,
-              left: this.state.firstRowMarg,
-            }]}>
-            <TouchableOpacity underlayColor="transparent" onPress={this._profileBtnPress}>
-              <Image
-                source={require('../assets/images/menu/btn_profile.png')}
-                style={styles.btnAction}
-                opacity={0.4}
-              />
-            </TouchableOpacity>
+            <MyText style={styles.text}>My Events</MyText>
           </Animated.View>
         </View>
       </Modal>
     );
   }
+
+  // <Animated.View
+  //   style={[styles.ctnNewEvent,
+  //   {
+  //     opacity: this.state.opacity,
+  //     left: this.state.firstRowMarg,
+  //   }]}>
+  //   <TouchableOpacity underlayColor="transparent" onPress={this._profileBtnPress}>
+  //     <Image
+  //       source={require('../assets/images/menu/btn_profile.png')}
+  //       style={styles.btnAction}
+  //       opacity={0.4}
+  //     />
+  //   </TouchableOpacity>
+  // </Animated.View>
 
   _newEventBtnPress = () => {
     this._resetAnimState();
@@ -215,13 +220,14 @@ const styles = StyleSheet.create({
   ctnSettings: {
     position: 'absolute',
     left: 0,
-    bottom: 20,
+    bottom: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
   btnAction: {
-    width: 85,
-    height: 85,
+    width: 70,
+    height: 70,
+    resizeMode: 'contain',
   },
   ctnActivities: {
     position: 'absolute',
@@ -239,14 +245,18 @@ const styles = StyleSheet.create({
   ctnEvents: {
     position: 'absolute',
     right: 0,
+    bottom: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
   ctnNewEvent: {
     position: 'absolute',
-    right: 0,
-    bottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    left: 0,
   },
+  text: {
+    color: "#666666",
+    fontSize: 16,
+  }
 });

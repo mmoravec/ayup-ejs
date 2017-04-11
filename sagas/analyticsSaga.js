@@ -1,4 +1,5 @@
-import { take, call, put, select, takeEvery } from 'redux-saga/effects';
+import { take, call, put, select, takeEvery, fork } from 'redux-saga/effects';
+import {delay} from 'redux-saga';
 import {  Platform } from 'react-native';
 import Optly from 'optimizely-client-sdk';
 import ActionTypes from '../state/ActionTypes';
@@ -21,8 +22,14 @@ export function* watchInitOptimizely() {
 
 function* initOptimizely() {
   const user = yield select(state => state.user);
-  const data = yield call(request, GET, OPTLY_URL);
-  if (data.error) { return; }
+  let data;
+  try {
+    data = yield call(request, GET, OPTLY_URL);
+  } catch (error) {
+    yield call(delay, 5000);
+    yield fork(initOptimizely);
+    return;
+  }
   let optly  = Optly.createInstance({ datafile: data.body });
   yield put({
       type: ActionTypes.OPTLY_LOADED,

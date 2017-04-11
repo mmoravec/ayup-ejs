@@ -13,7 +13,7 @@ export function* request(type, url, headers, body) {
   }
   yield put({ type: ActionTypes.REQUEST_STARTED });
   try {
-    const {response, timeout} = yield race({
+    const {response} = yield race({
       response: call(fetch, url, {
         method: type,
         headers: {
@@ -24,8 +24,6 @@ export function* request(type, url, headers, body) {
       }),
       timeout: call(delay, 5000),
     });
-    console.log(response);
-    console.log(timeout);
     if (response) {
       yield put({ type: ActionTypes.REQUEST_ENDED });
       if (response.status === 200) {
@@ -35,22 +33,19 @@ export function* request(type, url, headers, body) {
       } else if (response.status === 401) {
         let error = yield response.json();
         yield put({ type: ActionTypes.REQUEST_UNAUTHENTICATED, error });
-        return error;
+        throw new Error(error);
         //TODO: create unauthorized func
       } else {
         let error = yield response.json();
         yield put({ type: ActionTypes.REQUEST_ERROR });
-        return {error};
+        throw new Error(error);
       }
     } else {
       yield put({ type: ActionTypes.REQUEST_ERROR });
-      return new Error('Request timed out');
+      throw new Error('Request timed out');
     }
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });
-    console.log('error', error);
-    return {error};
+    throw new Error(error);
   }
-
-
 }

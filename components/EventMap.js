@@ -25,6 +25,7 @@ export default class EventMap extends React.Component {
   }
 
   render() {
+    console.log(this.props.phone.optlyVariation);
     if (this.props.phone.optlyVariation === "apple") {
       return (
         <MapView
