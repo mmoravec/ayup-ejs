@@ -32,10 +32,11 @@ export function* refreshUserFriends() {
     }
     while (true) {
         yield call(delay, 60000);
+        const user = yield select(state => state.user);
         try {
           friends = yield call(request, GET,
             "https://graph.facebook.com/v2.8/me/friends/" +
-            "?fields=name,id,picture.width(120).height(120)&access_token=" + action.user.authToken,
+            "?fields=name,id,picture.width(120).height(120)&access_token=" + user.authToken,
           );
           let f = friends.body.data.map(friend => {
             return {
@@ -68,6 +69,8 @@ function* syncProfile() {
     return;
   }
   profile = profile.body;
+  console.log('profile here');
+  console.log(profile);
   let user = {
     hosted: Immutable.fromJS(profile.hosted),
     invited: Immutable.fromJS(profile.invited),
@@ -75,7 +78,7 @@ function* syncProfile() {
     rejected: Immutable.fromJS(profile.rejected),
     requested: Immutable.fromJS(profile.requested),
     joined: Immutable.fromJS(profile.joined),
-    events: Immutable.fromJS(profile.events),
+    events: profile.events === null ? p.events : Immutable.fromJS(profile.events),
     id: profile.id,
     fbid: p.fbid,
     about: p.about,
@@ -85,7 +88,7 @@ function* syncProfile() {
     friends: p.friends,
     email: p.email,
     gender: p.gender,
-    new: p.new,
+    new: false,
     expires: p.expires,
     badges: Immutable.fromJS(profile.badges),
     activities: Immutable.fromJS(profile.activities),

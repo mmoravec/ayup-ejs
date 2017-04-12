@@ -20,7 +20,7 @@ class EventsReducer {
   }
   static [ActionTypes.LOG_OUT](state, action) {
     LocalStorage.clearAllAsync();
-    return state.set('secret', null);
+    return new User();
   }
 }
 
