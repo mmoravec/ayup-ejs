@@ -34,12 +34,6 @@ export default class EventContent extends React.Component {
     };
   }
 
-  state = {
-    commenting: false,
-    comment: '',
-    parentID: null,
-  }
-
   componentWillMount() {
     this.props.dispatch(Actions.loadComments(this.props.event.id));
   }
@@ -56,10 +50,6 @@ export default class EventContent extends React.Component {
         keyboardShouldPersistTaps={'always'}
       />
     );
-  }
-
-  _onScroll = () => {
-    this.setState({commenting: false});
   }
 
   _renderHeader = () => {
@@ -117,13 +107,13 @@ export default class EventContent extends React.Component {
             <MyText style={styles.commentTxt}>Comment</MyText>
           </TouchableOpacity>
         </View>
-        {this._renderCommentBox()}
       </View>
     );
   }
 
   _renderRow = (rowData) => {
-    let replyPress = this._onReplyPress.bind(this, rowData.id);
+    console.log(this.props);
+    let replyPress = this.props.onReplyPress.bind(this, rowData.id);
     let _imageBox = styles.imageBox;
     if (rowData.parentID) {
       _imageBox = styles.extImageBox;
@@ -158,54 +148,6 @@ export default class EventContent extends React.Component {
         </View>
       </View>
     );
-  }
-
-  _onCommentPress = () => {
-    this.setState({parentID: null});
-    this.setState({commenting: true});
-  }
-
-  _onReplyPress = (parentID) => {
-    this.setState({parentID});
-    this.setState({commenting: true});
-  }
-
-  _renderCommentBox = () => {
-    if (this.state.commenting) {
-      return (
-        <KeyboardAvoidingView behavior={'position'} style={{flex: 1}}>
-          <View style={{height: 50, padding: 5, backgroundColor: "#fff", borderTopWidth: 1, borderTopColor: '#e9e9e9', flexDirection: 'row'}}>
-            <View style={{height: 40, borderRadius: 5, borderWidth: 1, borderColor: "#c8c8cd", width: width * 0.8}}>
-              <TextInput
-                autoFocus={true}
-                style={{margin: 5, height: 30, width: width * 0.8}}
-                value={this.state.comment}
-                onChangeText={this._onCommentText}
-              />
-            </View>
-            <TouchableOpacity style={{alignSelf: 'center'}} onPress={this._saveComment}>
-              <Image
-                source={require('../assets/images/reply.png')}
-                style={{height: 25}}
-                resizeMode={'contain'}
-              />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      );
-    }
-  }
-
-  _onCommentText = (text) => {
-    this.setState({comment: text});
-  }
-
-  _saveComment = () => {
-    this.props.dispatch(
-      Actions.saveComment(this.state.comment,
-        this.props.event.id, this.state.parentID)
-    );
-    this.setState({commenting: false});
   }
 
   _renderTime = (date) => {

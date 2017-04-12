@@ -5,11 +5,13 @@ import {
   View,
   Dimensions,
   Image,
+  TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
-import EventButton from '../components/EventButton'
+import EventButton from '../components/EventButton';
 import Icons from '../constants/activities';
 import Content from '../components/EventContent';
 import MapStyle from '../constants/mapstyle';
@@ -18,6 +20,12 @@ const {height, width} = Dimensions.get('window');
 
 @connect(data => EventScreen.getDataProps(data))
 export default class EventScreen extends React.Component {
+
+  state = {
+    commenting: false,
+    comment: '',
+    parentID: null,
+  }
 
   static getDataProps(data) {
     return {
@@ -43,6 +51,11 @@ export default class EventScreen extends React.Component {
         longitudeDelta: 0.01609325556559327,
       };
       let icon = Icons[event.activity].icon;
+      let contentProps = {
+        commentPress: this._onCommentPress,
+        onReplyPress: this._onReplyPress,
+        onScroll: this._onScroll,
+      };
       return (
         <View style={styles.scrollView}>
           <MapView
@@ -64,12 +77,69 @@ export default class EventScreen extends React.Component {
               style={styles.btnBack}
             />
           </TouchableOpacity>
-          <Content />
+          <Content {...contentProps} />
           <EventButton />
+          {this._renderCommentBox()}
           <View style={styles.bottom} />
         </View>
       );
     }
+  }
+
+  _renderCommentBox = () => {
+    console.log(this.state.commenting);
+    if (true) {
+      console.log('view should show');
+      return (
+        <KeyboardAvoidingView behavior={'padding'} style={{flex: 1, backgroundColor: "#fa3", bottom: 0, position:'absolute'}}>
+          <View style={{height: 50, padding: 5, backgroundColor: "#fff", borderTopWidth: 1, borderTopColor: '#e9e9e9', flexDirection: 'row'}}>
+            <View style={{height: 40, borderRadius: 5, borderWidth: 1, borderColor: "#c8c8cd", width: width * 0.8}}>
+              <TextInput
+                autoFocus={true}
+                style={{margin: 5, height: 30, width: width * 0.8}}
+                value={this.state.comment}
+                onChangeText={this._onCommentText}
+              />
+            </View>
+            <TouchableOpacity style={{alignSelf: 'center'}} onPress={this._saveComment}>
+              <Image
+                source={require('../assets/images/reply.png')}
+                style={{height: 25}}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      );
+    }
+  }
+
+  _onScroll = () => {
+    this.setState({commenting: false});
+  }
+
+  _onCommentPress = () => {
+    this.setState({parentID: null});
+    this.setState({commenting: true});
+  }
+
+  _onReplyPress = (parentID) => {
+    console.log('pressing!');
+    console.log(parentID);
+    this.setState({parentID});
+    this.setState({commenting: true});
+  }
+
+  _onCommentText = (text) => {
+    this.setState({comment: text});
+  }
+
+  _saveComment = () => {
+    this.props.dispatch(
+      Actions.saveComment(this.state.comment,
+        this.props.event.id, this.state.parentID)
+    );
+    this.setState({commenting: false});
   }
 
   _backBtnPress = () => {
