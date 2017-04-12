@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { List } from 'immutable';
+import _ from 'lodash';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
 import Bubble from './common/Bubble';
@@ -36,8 +37,10 @@ export default class EventContent extends React.Component {
 
   state = {
     commenting: false,
+    ready: false,
     comment: '',
     parentID: null,
+    scrollY: 0,
   }
 
   componentWillMount() {
@@ -59,7 +62,9 @@ export default class EventContent extends React.Component {
   }
 
   _onScroll = () => {
-    this.setState({commenting: false});
+    if (this.state.ready) {
+      this.setState({commenting: false, ready: false});
+    }
   }
 
   _renderHeader = () => {
@@ -161,13 +166,15 @@ export default class EventContent extends React.Component {
   }
 
   _onCommentPress = () => {
-    this.setState({parentID: null});
-    this.setState({commenting: true});
+    this._listView.scrollTo({y: 0, animated: false});
+    this.setState({parentID: null, commenting: true});
+    _.delay(() => this.setState({ready: true}), 1000);
   }
 
   _onReplyPress = (parentID) => {
-    this.setState({parentID});
-    this.setState({commenting: true});
+    this._listView.scrollTo({y: 0, animated: false});
+    this.setState({parentID, commenting: true});
+    _.delay(() => this.setState({ready: true}), 1000);
   }
 
   _renderCommentBox = () => {
@@ -233,6 +240,7 @@ export default class EventContent extends React.Component {
 const styles = StyleSheet.create({
   grandparent: {
     backgroundColor: '#fff',
+    zIndex: 1,
   },
   parent: {
     flexDirection: 'row',
