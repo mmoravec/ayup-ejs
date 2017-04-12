@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { List } from 'immutable';
+import _ from 'lodash';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
 import Bubble from './common/Bubble';
@@ -31,6 +32,14 @@ export default class EventContent extends React.Component {
     };
   }
 
+  state = {
+    commenting: false,
+    ready: false,
+    comment: '',
+    parentID: null,
+    scrollY: 0,
+  }
+
   componentWillMount() {
     this.props.dispatch(Actions.loadComments(this.props.event.id));
   }
@@ -49,9 +58,13 @@ export default class EventContent extends React.Component {
     );
   }
 
-  // _onScroll = () => {
-  //   this.setState({commenting: false});
-  // }
+
+  _onScroll = () => {
+    if (this.state.ready) {
+      this.setState({commenting: false, ready: false});
+    }
+  }
+
 
   _renderHeader = () => {
     let event = this.props.event;
@@ -150,6 +163,56 @@ export default class EventContent extends React.Component {
     );
   }
 
+  _onCommentPress = () => {
+    this._listView.scrollTo({y: 0, animated: false});
+    this.setState({parentID: null, commenting: true});
+    _.delay(() => this.setState({ready: true}), 1000);
+  }
+
+  _onReplyPress = (parentID) => {
+    this._listView.scrollTo({y: 0, animated: false});
+    this.setState({parentID, commenting: true});
+    _.delay(() => this.setState({ready: true}), 1000);
+  }
+
+  _renderCommentBox = () => {
+    if (this.state.commenting) {
+      return (
+        <KeyboardAvoidingView behavior={'position'} style={{flex: 1}}>
+          <View style={{height: 50, padding: 5, backgroundColor: "#fff", borderTopWidth: 1, borderTopColor: '#e9e9e9', flexDirection: 'row'}}>
+            <View style={{height: 40, borderRadius: 5, borderWidth: 1, borderColor: "#c8c8cd", width: width * 0.8}}>
+              <TextInput
+                autoFocus={true}
+                style={{margin: 5, height: 30, width: width * 0.8}}
+                value={this.state.comment}
+                onChangeText={this._onCommentText}
+              />
+            </View>
+            <TouchableOpacity style={{alignSelf: 'center'}} onPress={this._saveComment}>
+              <Image
+                source={require('../assets/images/reply.png')}
+                style={{height: 25}}
+                resizeMode={'contain'}
+              />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      );
+    }
+  }
+
+  _onCommentText = (text) => {
+    this.setState({comment: text});
+  }
+
+  _saveComment = () => {
+    this.props.dispatch(
+      Actions.saveComment(this.state.comment,
+        this.props.event.id, this.state.parentID)
+    );
+    this.setState({commenting: false});
+  }
+
   _renderTime = (date) => {
     let now = new Date();
     let then = new Date(date);
@@ -175,6 +238,7 @@ export default class EventContent extends React.Component {
 const styles = StyleSheet.create({
   grandparent: {
     backgroundColor: '#fff',
+    zIndex: 1,
   },
   parent: {
     flexDirection: 'row',
