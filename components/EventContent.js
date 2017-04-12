@@ -14,9 +14,6 @@ import { List } from 'immutable';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
 import Bubble from './common/Bubble';
-import Figures from '../constants/activities';
-import { Comment } from '../state/Records';
-import sampleComments from '../sample/comments';
 import EventGuests from '../components/EventGuests';
 import Filter from '../utils/filters';
 import { duration } from '../utils/date';
@@ -32,12 +29,6 @@ export default class EventContent extends React.Component {
       event: data.events.selectedEvent,
       comments: new List(Filter.sortComments(data.events.selectedComments)),
     };
-  }
-
-  state = {
-    commenting: false,
-    comment: '',
-    parentID: null,
   }
 
   componentWillMount() {
@@ -58,9 +49,9 @@ export default class EventContent extends React.Component {
     );
   }
 
-  _onScroll = () => {
-    this.setState({commenting: false});
-  }
+  // _onScroll = () => {
+  //   this.setState({commenting: false});
+  // }
 
   _renderHeader = () => {
     let event = this.props.event;
@@ -107,7 +98,7 @@ export default class EventContent extends React.Component {
         </View>
         <View style={styles.comments}>
           <MyText style={styles.seeAll}>Comments({this.props.comments.size})</MyText>
-          <TouchableOpacity style={styles.commentBtn} underlayColor={'#f2f2f2'} onPress={this._onCommentPress}>
+          <TouchableOpacity style={styles.commentBtn} underlayColor={'#f2f2f2'} onPress={this.props.onCommentPress}>
             <MaterialCommunityIcons
               size={12}
               name={'message'}
@@ -117,13 +108,12 @@ export default class EventContent extends React.Component {
             <MyText style={styles.commentTxt}>Comment</MyText>
           </TouchableOpacity>
         </View>
-        {this._renderCommentBox()}
       </View>
     );
   }
 
   _renderRow = (rowData) => {
-    let replyPress = this._onReplyPress.bind(this, rowData.id);
+    let replyPress = this.props.onCommentPress.bind(this, rowData.id);
     let _imageBox = styles.imageBox;
     if (rowData.parentID) {
       _imageBox = styles.extImageBox;
@@ -158,54 +148,6 @@ export default class EventContent extends React.Component {
         </View>
       </View>
     );
-  }
-
-  _onCommentPress = () => {
-    this.setState({parentID: null});
-    this.setState({commenting: true});
-  }
-
-  _onReplyPress = (parentID) => {
-    this.setState({parentID});
-    this.setState({commenting: true});
-  }
-
-  _renderCommentBox = () => {
-    if (this.state.commenting) {
-      return (
-        <KeyboardAvoidingView behavior={'position'} style={{flex: 1}}>
-          <View style={{height: 50, padding: 5, backgroundColor: "#fff", borderTopWidth: 1, borderTopColor: '#e9e9e9', flexDirection: 'row'}}>
-            <View style={{height: 40, borderRadius: 5, borderWidth: 1, borderColor: "#c8c8cd", width: width * 0.8}}>
-              <TextInput
-                autoFocus={true}
-                style={{margin: 5, height: 30, width: width * 0.8}}
-                value={this.state.comment}
-                onChangeText={this._onCommentText}
-              />
-            </View>
-            <TouchableOpacity style={{alignSelf: 'center'}} onPress={this._saveComment}>
-              <Image
-                source={require('../assets/images/reply.png')}
-                style={{height: 25}}
-                resizeMode={'contain'}
-              />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      );
-    }
-  }
-
-  _onCommentText = (text) => {
-    this.setState({comment: text});
-  }
-
-  _saveComment = () => {
-    this.props.dispatch(
-      Actions.saveComment(this.state.comment,
-        this.props.event.id, this.state.parentID)
-    );
-    this.setState({commenting: false});
   }
 
   _renderTime = (date) => {
