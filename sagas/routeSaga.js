@@ -1,5 +1,5 @@
 import { NavigationActions } from 'react-navigation';
-import { takeLatest } from 'redux-saga/effects';
+import { takeLatest, select } from 'redux-saga/effects';
 import ActionTypes from '../state/ActionTypes';
 import Store from '../state/Store';
 
@@ -23,5 +23,8 @@ function* changeRoute(action) {
 }
 
 function* goToLogin() {
-  Store.dispatch(NavigationActions.navigate({ routeName: "Login" }));
+  const nav = yield select(state => state.navigation);
+  if (nav.routes[nav.index].routeName !== 'Login') {
+    Store.dispatch(NavigationActions.navigate({ routeName: "Login" }));
+  }
 }

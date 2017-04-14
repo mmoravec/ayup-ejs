@@ -27,7 +27,7 @@ export default class AuthenticationScreen extends React.Component {
     },
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.user.get('secret') !== null) {
       this.props.dispatch(Actions.routeChange('Home'));
     }
@@ -50,7 +50,7 @@ export default class AuthenticationScreen extends React.Component {
   }
 
   _renderLogin = () => {
-    if(this.props.phone.status === '') {
+    if (this.props.phone.status === '') {
       return (
         <TouchableOpacity onPress={this._signInWithFacebook}>
           <Image

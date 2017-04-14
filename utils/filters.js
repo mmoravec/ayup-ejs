@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import all from '../constants/activities';
 
 export default class Filters {
@@ -41,7 +42,11 @@ export default class Filters {
   }
 
   static filterEvents(events, filters) {
-    return events;
+    return events.filter(event => {
+      if (filters.indexOf(event.activity) > -1 && event.private === false) {
+        return event;
+      }
+    });
   }
 
   static filtersFromIds(ids) {

@@ -71,11 +71,10 @@ export default class Actions {
     };
   }
 
-  static rejectEvent(eventID, userID) {
+  static rejectEvent(eventID) {
     return {
       type: ActionTypes.REJECT_EVENT,
       eventID,
-      userID,
     };
   }
 
@@ -120,6 +119,12 @@ export default class Actions {
   static zeroSelectedEvent() {
     return {
       type: ActionTypes.ZERO_SELECTED_EVENT,
+    };
+  }
+
+  static zeroSelectedComment() {
+    return {
+      type: ActionTypes.ZERO_SELECTED_COMMENT,
     };
   }
 

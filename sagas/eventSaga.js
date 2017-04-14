@@ -27,6 +27,10 @@ export function* watchRequestEvent() {
   yield takeLatest(ActionTypes.REQUEST_EVENT, requestEvent);
 }
 
+export function* watchRejectEvent() {
+  yield takeLatest(ActionTypes.REJECT_EVENT, rejectEvent);
+}
+
 export function* watchLoadComments() {
   yield takeLatest(ActionTypes.LOAD_COMMENTS, loadComments);
 }
@@ -115,6 +119,25 @@ function* requestEvent(action) {
   try {
     yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
       "?fbid=" + user.fbid + "&action=request",
+      {Authorization: user.secret, UserID: user.id}
+    );
+  } catch (error) {
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
+  }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield call(delay, 2000);
+  yield put({ type: ActionTypes.RESET_ALERT });
+  yield fork(updateSelectedEvent, action.eventID, user);
+}
+
+function* rejectEvent(action) {
+  const user = yield select(state => state.user);
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  try {
+    yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
+      "?fbid=" + user.fbid + "&action=reject",
       {Authorization: user.secret, UserID: user.id}
     );
   } catch (error) {

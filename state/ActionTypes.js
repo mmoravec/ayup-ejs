@@ -43,6 +43,7 @@ export default defineActionConstants([
   'SYNC_PROFILE',
   'UPDATE_PROFILE',
   'USER_LOADED',
+  'ZERO_SELECTED_COMMENT',
   'ZERO_SELECTED_EVENT',
 ]);
 

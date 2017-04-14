@@ -1,17 +1,18 @@
+import _ from 'lodash';
 import {
     put,
     call,
     take,
-    select,
+    race,
 } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 import {
     List,
 } from 'immutable';
 import {
   Image,
 } from 'react-native';
-import { Font, Asset, Constants, Location, Permissions } from 'expo';
-import _ from 'lodash';
+import { Font, Asset, Location, Permissions } from 'expo';
 import ActionTypes from '../state/ActionTypes';
 import LocalStorage from '../utils/LocalStorage';
 import { request } from '../utils/fetch';
@@ -67,10 +68,22 @@ function* loadFilters() {
 
 function* getLocation() {
   let permission = yield call(Permissions.askAsync, Permissions.LOCATION);
+  console.log(permission);
   if (permission.status !== 'granted') {
     yield put({ type: ActionTypes.SET_LOCATION, location: 'denied'});
   } else {
-    let location = yield call(Location.getCurrentPositionAsync, {});
+    let {location, timeout } = yield race({
+      location: call(Location.getCurrentPositionAsync, {}),
+      timeout: call(delay, 2000),
+    });
+    if (timeout) {
+      location = {
+        coords: {
+          latitude: 37.785834,
+          longitude: -122.406417,
+        },
+      };
+    }
     yield put({ type: ActionTypes.SET_LOCATION, location});
     yield put({
       type: ActionTypes.REGION_CHANGE,

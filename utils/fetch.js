@@ -3,13 +3,13 @@ import { delay } from 'redux-saga';
 import ActionTypes from '../state/ActionTypes';
 
 export function* request(type, url, headers, body) {
-  console.log('new request!');
-  console.log(type + " : " + url);
-  console.log(headers);
+  // console.log('new request!');
+  // console.log(type + " : " + url);
+  // console.log(headers);
   let bodyString = "";
   if (body) {
     bodyString = JSON.stringify(body);
-    console.log(bodyString);
+    // console.log(bodyString);
   }
   yield put({ type: ActionTypes.REQUEST_STARTED });
   try {
@@ -20,7 +20,7 @@ export function* request(type, url, headers, body) {
           "Content-Type": "application/json",
           ...headers,
         },
-        body: bodyString,
+        body: type === "GET" ? null : bodyString,
       }),
       timeout: call(delay, 5000),
     });
@@ -46,6 +46,6 @@ export function* request(type, url, headers, body) {
     }
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });
-    throw new Error(error);
+    throw new Error(error.error);
   }
 }

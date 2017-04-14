@@ -136,7 +136,7 @@ export default class EventButton extends React.Component {
   }
 
   _cantmakeitBtnPress = () => {
-    this.props.dispatch(Actions.rejectEvent(this.props.selectedEvent.id, this.props.user.id));
+    this.props.dispatch(Actions.rejectEvent(this.props.selectedEvent.id));
   }
 
   _joinBtnPress = () => {

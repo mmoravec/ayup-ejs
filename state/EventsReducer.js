@@ -45,6 +45,10 @@ class EventsReducer {
     return state.set('selectedEvent', null);
   }
 
+  static [ActionTypes.ZERO_SELECTED_COMMENT](state, action) {
+    return state.set('selectedComments', new List());
+  }
+
   static [ActionTypes.REGION_CHANGE](state, action) {
     let region = {
       latitude: action.latitude,

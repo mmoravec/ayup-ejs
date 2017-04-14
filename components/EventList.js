@@ -41,7 +41,6 @@ export default class EventList extends React.Component {
   }
 
   _renderSectionHeader = (sectionData, header) => {
-    console.log(header);
     return (
       <MyText style={styles.header}>{header}</MyText>
     );
@@ -66,7 +65,6 @@ export default class EventList extends React.Component {
         d[mash] = [event];
       }
     });
-    console.log(d);
     return Immutable.fromJS(d);
   }
 }
@@ -78,11 +76,10 @@ class ListRow extends React.Component {
     let image = Icons[rowData.activity].image;
     let start = rowData.startDate
     let end = rowData.endDate;
+    let onItemPress = this._onItemPress.bind(this, rowData.id)
     let duration = Math.abs(end.getTime() - start.getTime());
-    console.log(duration);
     let format = "";
     if (duration < 3500000) {
-      console.log(duration);
       format = dateFormat(duration, 'MM') + "min";
     } else if (duration < 86400000) {
       format = Math.ceil(duration / (1000 * 3600)) + "hrs";
@@ -90,7 +87,7 @@ class ListRow extends React.Component {
       format = Math.ceil(duration / (1000 * 3600 * 24)) + "days";
     }
     return (
-      <TouchableOpacity onPress={this._onItemPress}>
+      <TouchableOpacity onPress={onItemPress}>
         <View style={styles.row}>
           <View style={styles.icon}>
             <Image
@@ -111,9 +108,9 @@ class ListRow extends React.Component {
       </TouchableOpacity>
     );
   }
-  _onItemPress = () => {
+  _onItemPress = (id) => {
     //TODO: create a saga for this when fetching comments becomes
-    this.props.dispatch(Actions.selectEvent(this.props.data.id));
+    this.props.dispatch(Actions.selectEvent(id));
     this.props.dispatch(Actions.routeChange('Event'));
     this.props.closeBtn();
   }

@@ -14,8 +14,8 @@ class EventsReducer {
     return action.user;
   }
   static [ActionTypes.SET_FRIENDS](state, action) {
-    console.log('setting friends');
-    console.log(action.friends);
+    // console.log('setting friends');
+    // console.log(action.friends);
     return state.set('friends', action.friends);
   }
   static [ActionTypes.LOG_OUT](state, action) {

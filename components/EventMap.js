@@ -1,10 +1,6 @@
 import React from 'react';
 import { MapView } from 'expo';
 import { connect } from 'react-redux';
-import {
-  ActivityIndicator,
-} from 'react-native';
-import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
 import MapStyle from '../constants/mapstyle';
@@ -59,7 +55,7 @@ export default class EventMap extends React.Component {
           }
         </MapView>
       );
-    } else if (this.props.phone.optlyVariation === "original") {
+    } else {
       return (
         <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
@@ -75,10 +71,7 @@ export default class EventMap extends React.Component {
           }
         </MapView>
       );
-    } else {
-      return <ActivityIndicator style={{marginTop: 200}} />;
     }
-
   }
 
   _onRegionChange = (region) => {

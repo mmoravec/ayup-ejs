@@ -28,7 +28,7 @@ function* authorize() {
       return;
     }
     try {
-      console.log(fbInfo);
+      // console.log(fbInfo);
       ayUser = yield call(request, POST,  URL + "/v1.0/auth/facebook?id=" + fbInfo.body.id, {Token: fbLogin.token});
     } catch (error) {
       //Alert Error
@@ -36,8 +36,8 @@ function* authorize() {
       yield put({ type: ActionTypes.RESET_ALERT });
       return;
     }
-    console.log("this is ayuser");
-    console.log(ayUser);
+    // console.log("this is ayuser");
+    // console.log(ayUser);
     //TODO: log error message after call
     let saveUser = new User({
       'authToken': ayUser.body.authToken,
@@ -53,9 +53,10 @@ function* authorize() {
     });
     yield fork(LocalStorage.saveUserAsync, saveUser);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
-    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home' });
+    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home'});
     yield put({ type: ActionTypes.SYNC_PROFILE });
     yield put({ type: ActionTypes.RESET_ALERT });
+    return;
   } else {
     //TODO: throw error message
     yield put({ type: ActionTypes.ALERT_ERROR });
@@ -64,11 +65,12 @@ function* authorize() {
   }
 }
 
-function facebookLogin() {
-  return Facebook.logInWithReadPermissionsAsync('1521840934725105', {
+async function facebookLogin() {
+  const login = await Facebook.logInWithReadPermissionsAsync('1521840934725105', {
     permissions: ['public_profile', 'email', 'user_friends'],
     behavior: Platform.OS === 'ios' ? 'web' : 'system',
   });
+  return login;
 }
 
 // async function saveUser(user) {

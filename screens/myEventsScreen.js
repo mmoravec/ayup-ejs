@@ -37,7 +37,7 @@ export default class MyEventsScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.user);
+    // console.log(this.props.user);
     let hostEvents = this.props.user.events.filter(event => {
       return event.get('host').get('userID') === this.props.user.id;
     });

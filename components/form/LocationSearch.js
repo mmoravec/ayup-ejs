@@ -3,13 +3,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  Text,
-  Modal,
-  TouchableOpacity,
 } from 'react-native';
-import {
-  FontAwesome,
-} from '@expo/vector-icons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Hoshi from '../common/Hoshi';
 const {height, width} = Dimensions.get('window');
@@ -25,13 +19,13 @@ export default class LocationSearch extends React.Component {
       this._view.measure((fx, fy, width, height, px, py) => {
         this._scrollY = py;
       });
-    }, 500);
+    }, 200);
   }
 
    render() {
      let isEditable = true;
      return (
-       <View ref={view => { this._view = view; }} style={styles.view} >
+       <View ref={view => { this._view = view; }} collapsable={false} style={styles.view} >
          <GooglePlacesAutocomplete
            ref="gplaces"
            placeholder={'Enter Location'}
@@ -87,8 +81,8 @@ export default class LocationSearch extends React.Component {
    }
 
    _inputFocused = () => {
-     this.props.scrollTo(this._scrollY - 80);
      this.props.onFocus();
+     this.props.scrollTo(this._scrollY - 80);
    }
 
 }

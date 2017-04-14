@@ -5,8 +5,6 @@ import {
   Dimensions,
   ScrollView,
   Animated,
-  TouchableOpacity,
-  Image,
   Switch,
   LayoutAnimation,
 } from 'react-native';
@@ -15,11 +13,9 @@ import LocationSearch from './LocationSearch';
 import ActivitySelector from './ActivitySelector';
 import TimeSelector from './TimeSelector';
 import FriendSelector from './FriendSelector';
-import Capacity from './Capacity';
+import SaveButton from './SaveButton';
 import MyText from '../common/MyText';
 import Hoshi from '../common/Hoshi';
-import SaveButton from './SaveButton';
-import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
 @connect()
@@ -66,7 +62,7 @@ export default class EventForm extends React.Component {
     scrollY: new Animated.Value(0),
     activity: 'basketball',
     latlng: [],
-    public: false,
+    private: false,
     capacity: 0,
     focus: [
       {stateKey: 'title', focus: false},
@@ -95,11 +91,11 @@ export default class EventForm extends React.Component {
               <Hoshi {...this._titleProps} />
             </View>
             <View style={styles.switch}>
-              <MyText style={styles.text}>Public</MyText>
+              <MyText style={styles.text}>Private</MyText>
               <Switch
                 style={styles.swButton}
                 onValueChange={this._privateSwitch}
-                value={this.state.public}
+                value={this.state.private}
               />
             </View>
             <View style={styles.input}>
@@ -207,14 +203,14 @@ export default class EventForm extends React.Component {
   }
 
   _privateSwitch = () => {
-    this.setState({public: !this.state.public});
+    this.setState({private: !this.state.private});
   }
 
 }
 
 const styles = StyleSheet.create({
   btmPadding: {
-    height: height * 0.5,
+    height: height * 0.3,
     backgroundColor: '#fff',
   },
   scrollView: {
