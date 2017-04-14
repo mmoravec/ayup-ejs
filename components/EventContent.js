@@ -58,11 +58,13 @@ export default class EventContent extends React.Component {
     );
   }
 
+
   _onScroll = () => {
     if (this.state.ready) {
       this.setState({commenting: false, ready: false});
     }
   }
+
 
   _renderHeader = () => {
     let event = this.props.event;
@@ -109,7 +111,7 @@ export default class EventContent extends React.Component {
         </View>
         <View style={styles.comments}>
           <MyText style={styles.seeAll}>Comments({this.props.comments.size})</MyText>
-          <TouchableOpacity style={styles.commentBtn} underlayColor={'#f2f2f2'} onPress={this._onCommentPress}>
+          <TouchableOpacity style={styles.commentBtn} underlayColor={'#f2f2f2'} onPress={this.props.onCommentPress}>
             <MaterialCommunityIcons
               size={12}
               name={'message'}
@@ -119,13 +121,12 @@ export default class EventContent extends React.Component {
             <MyText style={styles.commentTxt}>Comment</MyText>
           </TouchableOpacity>
         </View>
-        {this._renderCommentBox()}
       </View>
     );
   }
 
   _renderRow = (rowData) => {
-    let replyPress = this._onReplyPress.bind(this, rowData.id);
+    let replyPress = this.props.onCommentPress.bind(this, rowData.id);
     let _imageBox = styles.imageBox;
     if (rowData.parentID) {
       _imageBox = styles.extImageBox;

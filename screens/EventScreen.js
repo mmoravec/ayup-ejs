@@ -9,7 +9,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
-import EventButton from '../components/EventButton'
+import EventButton from '../components/EventButton';
+import EventComments from '../components/EventComments';
 import Icons from '../constants/activities';
 import Content from '../components/EventContent';
 import MapStyle from '../constants/mapstyle';
@@ -18,6 +19,12 @@ const {height, width} = Dimensions.get('window');
 
 @connect(data => EventScreen.getDataProps(data))
 export default class EventScreen extends React.Component {
+
+  state = {
+    commenting: false,
+    comment: '',
+    parentID: null,
+  }
 
   static getDataProps(data) {
     return {
@@ -43,6 +50,14 @@ export default class EventScreen extends React.Component {
         longitudeDelta: 0.01609325556559327,
       };
       let icon = Icons[event.activity].icon;
+      let commentProps = {
+        commenting: this.state.commenting,
+        comment: this.state.comment,
+        onCommentText: this._onCommentText,
+      };
+      let contentProps = {
+        onCommentPress: this._onCommentPress,
+      };
       return (
         <View style={styles.scrollView}>
           <MapView
@@ -64,9 +79,10 @@ export default class EventScreen extends React.Component {
               style={styles.btnBack}
             />
           </TouchableOpacity>
-          <Content />
+          <Content {...contentProps} />
           <EventButton />
           <View style={styles.bottom} />
+          <EventComments {...commentProps} />
         </View>
       );
     }
@@ -75,6 +91,29 @@ export default class EventScreen extends React.Component {
   _backBtnPress = () => {
     this.props.dispatch(Actions.zeroSelectedEvent());
     this.props.dispatch(Actions.routeChange('Back'));
+  }
+
+  _onCommentPress = (parentID) => {
+    if (parentID) {
+      this.setState({parentID});
+      this.setState({commenting: true});
+    } else {
+      this.setState({parentID: null});
+      this.setState({commenting: true});
+    }
+    console.log(this.state.commenting);
+  }
+
+  _onCommentText = (text) => {
+    this.setState({comment: text});
+  }
+
+  _saveComment = () => {
+    this.props.dispatch(
+      Actions.saveComment(this.state.comment,
+        this.props.event.id, this.state.parentID)
+    );
+    this.setState({commenting: false});
   }
 }
 

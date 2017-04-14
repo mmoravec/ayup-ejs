@@ -5,5 +5,9 @@
   "strict": false,
   "minify": false,
   "urlType": "exp",
+<<<<<<< HEAD
   "urlRandomness": "ch-pec"
+=======
+  "urlRandomness": "2a-e6z"
+>>>>>>> 0dbd09686869100025baae7b745f0269e9a0bc00
 }
