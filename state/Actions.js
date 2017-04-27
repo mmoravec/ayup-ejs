@@ -122,9 +122,23 @@ export default class Actions {
     };
   }
 
+  static resetAddress() {
+    return {
+      type: ActionTypes.RESET_ADDRESS,
+    };
+  }
+
   static zeroSelectedComment() {
     return {
       type: ActionTypes.ZERO_SELECTED_COMMENT,
+    };
+  }
+
+  static geoCode(lat, long) {
+    return {
+      type: ActionTypes.GEOCODE,
+      lat,
+      long,
     };
   }
 

@@ -4,35 +4,19 @@ import { watchLogin } from './loginSaga';
 import { watchUnauthenticated, watchRouteChange } from './routeSaga';
 import { refreshUserFriends, watchSyncProfile } from './userSaga';
 import { watchInitAnalytics } from './analyticsSaga';
-import {
-  watchEventSave,
-  watchRegionChange,
-  watchAcceptEvent,
-  watchRequestEvent,
-  watchRejectEvent,
-  watchLoadComments,
-  watchSaveComment,
-  watchLoadEvent,
-} from './eventSaga';
+import { watchEventAction } from './eventSaga';
 /*
  * The entry point for all the sagas used in this application.
  */
 export default function* root() {
   yield [
     fork(startup),
-    fork(watchRegionChange),
+    fork(watchEventAction),
     fork(watchLogin),
     fork(watchRouteChange),
     fork(refreshUserFriends),
     fork(watchUnauthenticated),
-    fork(watchEventSave),
     fork(watchSyncProfile),
-    fork(watchRequestEvent),
-    fork(watchAcceptEvent),
-    fork(watchLoadComments),
-    fork(watchSaveComment),
-    fork(watchLoadEvent),
     fork(watchInitAnalytics),
-    fork(watchRejectEvent),
   ];
 }

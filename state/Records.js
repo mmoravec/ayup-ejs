@@ -15,6 +15,7 @@ export const EventState = Record({
   },
   selectedEvent: null,
   selectedComments: new List(),
+  geocodeAddress: '',
 });
 
 export const User = Record({
@@ -51,6 +52,9 @@ export const PhoneState = Record({
   location: false,
   optly: null,
   optlyVariation: '',
+  contacts: false,
+  notifications: false,
+  locationStatus: false,
 });
 
 export const Comment = Record({

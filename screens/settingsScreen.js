@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
-import TouchableNativeFeedback from '@expo/react-native-touchable-native-feedback-safe';
 import Actions from '../state/Actions';
 import MyText from '../components/common/MyText';
 import LocalStorage from '../utils/LocalStorage';
@@ -30,7 +29,7 @@ export default class SettingsScreen extends React.Component {
         </TouchableOpacity>
         <ScrollView style={styles.scrollParent}>
           <View style={styles.group}>
-            <TouchableNativeFeedback onPress={this._signOut}>
+            <TouchableOpacity onPress={this._signOut}>
               <View style={styles.signOutButton}>
                 <MyText>
                   Sign Out
@@ -41,9 +40,9 @@ export default class SettingsScreen extends React.Component {
                   name={'keyboard-arrow-right'}
                 />
               </View>
-            </TouchableNativeFeedback>
+            </TouchableOpacity>
             <View style={styles.seperator} />
-            <TouchableNativeFeedback>
+            <TouchableOpacity>
               <View style={styles.signOutButton}>
                 <MyText>
                   Sample
@@ -54,7 +53,7 @@ export default class SettingsScreen extends React.Component {
                   name={'keyboard-arrow-right'}
                 />
               </View>
-            </TouchableNativeFeedback>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </Image>

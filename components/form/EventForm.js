@@ -43,6 +43,9 @@ export default class EventForm extends React.Component {
     this._locProps = {
       scrollTo: this._scrollTo,
       onFocus: this._focusElement.bind(this, 'location'),
+      label: 'Location',
+      stateKey: 'location',
+      ...this._inputProps,
     };
     this._actionProps = {
       action: this._saveBtnPress,

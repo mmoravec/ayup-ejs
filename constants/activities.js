@@ -20,6 +20,13 @@ export default {
     "image": require("../assets/images/figures/bicycle.png"),
     "name": "Biking",
   },
+  "boardgame": {
+    "icon": require("../assets/images/icons/icon_boardgame.png"),
+    "id": 24,
+    "type": "boardgame",
+    "image": require("../assets/images/figures/boardgame.png"),
+    "name": "Board Game",
+  },
   "boxing": {
     "icon": require("../assets/images/icons/icon_boxing.png"),
     "id": 4,
@@ -152,5 +159,12 @@ export default {
     "type": "skiing",
     "image": require("../assets/images/figures/skiing.png"),
     "name": "Skiing",
+  },
+  "weights": {
+    "icon": require("../assets/images/icons/icon_boardgame.png"),
+    "id": 23,
+    "type": "weights",
+    "image": require("../assets/images/figures/weightlifting.png"),
+    "name": "Lifting",
   },
 };

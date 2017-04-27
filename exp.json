@@ -2,7 +2,7 @@
   "name": "Ayup",
   "description": "play more, be happier",
   "slug": "ayup-ejs",
-  "sdkVersion": "15.0.0",
+  "sdkVersion": "16.0.0",
   "privacy": "unlisted",
   "version": "0.0.4",
   "orientation": "portrait",

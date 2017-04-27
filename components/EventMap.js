@@ -31,7 +31,7 @@ export default class EventMap extends React.Component {
           initialRegion={this.props.region}
           provider={"google"}
           customMapStyle={AltMapStyle}
-          zoomEnabled={false}
+          zoomEnabled={true}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>
@@ -46,7 +46,7 @@ export default class EventMap extends React.Component {
           style={{ flex: 1, backgroundColor: '#fff' }}
           initialRegion={this.props.region}
           provider={"google"}
-          zoomEnabled={false}
+          zoomEnabled={true}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>
@@ -62,7 +62,7 @@ export default class EventMap extends React.Component {
           initialRegion={this.props.region}
           provider={"google"}
           customMapStyle={MapStyle}
-          zoomEnabled={false}
+          zoomEnabled={true}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>

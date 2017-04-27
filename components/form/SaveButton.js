@@ -19,6 +19,7 @@ export default class SaveButton extends React.Component {
   static getDataProps(data) {
     return {
       phone: data.phone,
+      address: data.events.geocodeAddress,
     };
   }
 
@@ -40,6 +41,7 @@ export default class SaveButton extends React.Component {
   }
 
   _renderCreate = () => {
+    console.log(this.props.address);
     if (this.props.phone.status === '') {
       return (
         <TouchableOpacity
@@ -93,8 +95,8 @@ export default class SaveButton extends React.Component {
       private: eventState.private,
       desc: eventState.desc,
       location: {
-        coordinates: eventState.latlng,
-        text: eventState.location,
+        coordinates: [this.props.address.long, this.props.address.lat],
+        text: this.props.address.name,
       },
       invited,
       activity: eventState.activity,

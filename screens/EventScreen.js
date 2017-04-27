@@ -53,7 +53,8 @@ export default class EventScreen extends React.Component {
       let commentProps = {
         commenting: this.state.commenting,
         comment: this.state.comment,
-        onCommentText: this._onCommentText,
+        onChangeText: this._onCommentText,
+        saveComment: this._saveComment,
       };
       let contentProps = {
         onCommentPress: this._onCommentPress,
@@ -90,18 +91,16 @@ export default class EventScreen extends React.Component {
 
   _backBtnPress = () => {
     this.props.dispatch(Actions.zeroSelectedEvent());
+    this.props.dispatch(Actions.zeroSelectedComment());
     this.props.dispatch(Actions.routeChange('Back'));
   }
 
   _onCommentPress = (parentID) => {
-    if (parentID) {
-      this.setState({parentID});
-      this.setState({commenting: true});
+    if (typeof parentID === 'string') {
+      this.setState({commenting: true, parentID});
     } else {
-      this.setState({parentID: null});
-      this.setState({commenting: true});
+      this.setState({parentID: null, commenting: true});
     }
-    console.log(this.state.commenting);
   }
 
   _onCommentText = (text) => {
@@ -111,9 +110,9 @@ export default class EventScreen extends React.Component {
   _saveComment = () => {
     this.props.dispatch(
       Actions.saveComment(this.state.comment,
-        this.props.event.id, this.state.parentID)
+        this.props.selectedEvent.id, this.state.parentID)
     );
-    this.setState({commenting: false});
+    this.setState({commenting: false, comment: ''});
   }
 }
 
@@ -143,6 +142,7 @@ const styles = StyleSheet.create({
   back: {
     position: 'absolute',
     zIndex: 100,
+    top: 10,
   },
   bottom: {
     position: 'absolute',

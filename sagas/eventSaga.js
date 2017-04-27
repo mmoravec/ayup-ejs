@@ -1,42 +1,24 @@
-import { takeLatest, select, call, put, fork } from 'redux-saga/effects';
-import {delay} from 'redux-saga';
 import { List } from 'immutable';
+import {delay} from 'redux-saga';
+import { takeLatest, select, call, put, fork } from 'redux-saga/effects';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
 import { URL, POST, GET } from '../constants/rest';
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
 
-export function* watchEventSave() {
-  yield takeLatest(ActionTypes.SAVE_EVENT, saveEvent);
-}
-
-export function* watchLoadEvent() {
-  yield takeLatest(ActionTypes.LOAD_EVENT, loadEvent);
-}
-
-export function* watchRegionChange() {
-  yield takeLatest(ActionTypes.REGION_CHANGE, updateNearbyEvents);
-}
-
-export function* watchAcceptEvent() {
-  yield takeLatest(ActionTypes.ACCEPT_EVENT, acceptEvent);
-}
-
-export function* watchRequestEvent() {
-  yield takeLatest(ActionTypes.REQUEST_EVENT, requestEvent);
-}
-
-export function* watchRejectEvent() {
-  yield takeLatest(ActionTypes.REJECT_EVENT, rejectEvent);
-}
-
-export function* watchLoadComments() {
-  yield takeLatest(ActionTypes.LOAD_COMMENTS, loadComments);
-}
-
-export function* watchSaveComment() {
-  yield takeLatest(ActionTypes.SAVE_COMMENT, saveComment);
+export function* watchEventAction() {
+  yield [
+    takeLatest(ActionTypes.SAVE_EVENT, saveEvent),
+    takeLatest(ActionTypes.LOAD_EVENT, loadEvent),
+    takeLatest(ActionTypes.REGION_CHANGE, updateNearbyEvents),
+    takeLatest(ActionTypes.ACCEPT_EVENT, acceptEvent),
+    takeLatest(ActionTypes.REQUEST_EVENT, requestEvent),
+    takeLatest(ActionTypes.REJECT_EVENT, rejectEvent),
+    takeLatest(ActionTypes.LOAD_COMMENTS, loadComments),
+    takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
+    takeLatest(ActionTypes.GEOCODE, reverseGeocode),
+  ];
 }
 
 function* saveEvent(action) {
@@ -71,18 +53,7 @@ function* saveEvent(action) {
 function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const user = yield select(state => state.user);
-  let scope = 1200, events;
-  // if (action.latitudeDelta < 0.01) {
-  //   scope = 100;
-  // } else if (action.latitudeDelta < 0.02 && action.latitudeDelta > 0.01) {
-  //   scope = 1000;
-  // } else if (action.latitudeDelta < 0.03 && action.latitudeDelta > 0.02) {
-  //   scope = 5000;
-  // } else if (action.latitudeDelta < 0.06 && action.latitudeDelta > 0.03) {
-  //   scope = 100000;
-  // } else if (action.latitudeDelta > 0.06) {
-  //   scope = 1000000;
-  // }
+  let scope = Math.floor(action.latitudeDelta * 53000), events;
   try {
     events = yield call(request, GET, URL + "/v1.0/events?lat=" +
       action.latitude + "&long=" + action.longitude + "&scope=" + scope,
@@ -181,6 +152,7 @@ function* loadComments(action) {
 
 function* saveComment(action) {
   const user = yield select(state => state.user);
+  console.log(action);
   let comment = {
     content: action.comment,
     parentID: action.parentID ? action.parentID : null,
@@ -215,4 +187,23 @@ function* loadEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
+}
+
+function* reverseGeocode(action) {
+  console.log(action);
+  let data;
+  try {
+    data = yield call(request, GET, 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + action.lat + ',' + action.long + '&key=AIzaSyAU9hsZ7WU1DkT8na9GHBwuldoBWccctjI');
+  } catch (error) {
+    return;
+  }
+  if (data.body.results[0]) {
+    data = {
+      lat: action.lat,
+      long: action.long,
+      name: data.body.results[0].formatted_address,
+    };
+    yield put({ type: ActionTypes.SET_GEOCODE_ADDRESS, data });
+  }
+  return;
 }

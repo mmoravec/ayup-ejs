@@ -33,18 +33,12 @@ export default class AuthenticationScreen extends React.Component {
     }
   }
 
-  // <FadeIn placeholderStyle={{backgroundColor: 'transparent'}}>
-  //   <Image
-  //     style={{width: 150, height: 244, marginBottom: 30,}}
-  //     source={require('../assets/images/logo.png')}
-  //   />
-  // </FadeIn>
   render() {
     return (
       <Image
         source={require('../assets/images/ayup_background.png')}
         style={styles.container}>
-        {this._renderLogin()}
+        { this._renderLogin() }
       </Image>
     );
   }

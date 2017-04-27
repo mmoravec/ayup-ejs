@@ -6,6 +6,7 @@ import {
   Dimensions,
   TextInput,
   KeyboardAvoidingView,
+  LayoutAnimation,
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -42,6 +43,10 @@ export default class EventContent extends React.Component {
 
   componentWillMount() {
     this.props.dispatch(Actions.loadComments(this.props.event.id));
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
   }
 
   render() {

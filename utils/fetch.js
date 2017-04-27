@@ -9,7 +9,7 @@ export function* request(type, url, headers, body) {
   let bodyString = "";
   if (body) {
     bodyString = JSON.stringify(body);
-    // console.log(bodyString);
+    console.log(bodyString);
   }
   yield put({ type: ActionTypes.REQUEST_STARTED });
   try {

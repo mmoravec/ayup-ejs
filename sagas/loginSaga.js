@@ -20,7 +20,7 @@ function* authorize() {
   const fbLogin = yield call(facebookLogin);
   if (fbLogin.type === 'success') {
     try {
-      fbInfo = yield call(request, GET, `https://graph.facebook.com/me?access_token=${fbLogin.token}&fields=name,id,gender,picture.width(240).height(240),email`);
+      fbInfo = yield call(request, GET, `https://graph.facebook.com/me?access_token=${fbLogin.token}&fields=name,id,gender,picture.width(240).height(240),email,age_range,verified`);
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
@@ -48,9 +48,11 @@ function* authorize() {
       'name': fbInfo.body.name,
       'fbid': fbInfo.body.id,
       'id': ayUser.body.id,
+      'age_range': fbInfo.body.age_range.min,
       'secret': ayUser.headers.get('authorization'),
       'new': false,
     });
+    console.log(fbInfo.body.age_range);
     yield fork(LocalStorage.saveUserAsync, saveUser);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home'});
