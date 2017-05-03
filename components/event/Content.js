@@ -14,13 +14,13 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { List } from 'immutable';
 import _ from 'lodash';
 import ImmutableListView from 'react-native-immutable-list-view';
-import MyText from './common/MyText';
-import Bubble from './common/Bubble';
-import EventActions from './event/Actions';
-import EventGuests from '../components/EventGuests';
-import Filter from '../utils/filters';
-import { duration } from '../utils/date';
-import Actions from '../state/Actions';
+import MyText from '../common/MyText';
+import Bubble from '../common/Bubble';
+import EventActions from './Actions';
+import EventGuests from './Guests';
+import Filter from '../../utils/filters';
+import { duration } from '../../utils/date';
+import Actions from '../../state/Actions';
 const dateFormat = require('dateformat');
 const {width} = Dimensions.get('window');
 
@@ -198,7 +198,7 @@ export default class EventContent extends React.Component {
             </View>
             <TouchableOpacity style={{alignSelf: 'center'}} onPress={this._saveComment}>
               <Image
-                source={require('../assets/images/reply.png')}
+                source={require('../../assets/images/reply.png')}
                 style={{height: 25}}
                 resizeMode={'contain'}
               />

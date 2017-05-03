@@ -3,9 +3,9 @@ import { delay } from 'redux-saga';
 import ActionTypes from '../state/ActionTypes';
 
 export function* request(type, url, headers, body) {
-  console.log('new request!');
-  console.log(type + " : " + url);
-  console.log(headers);
+  // console.log('new request!');
+  // console.log(type + " : " + url);
+  // console.log(headers);
   let bodyString = "";
   if (body) {
     bodyString = JSON.stringify(body);

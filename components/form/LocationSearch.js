@@ -97,7 +97,7 @@ export default class LocationSearch extends React.Component {
         <View>
           <GooglePlacesAutocomplete
             ref={view => { this._gplaces = view; }}
-            placeholder={'Enter Location'}
+            placeholder={'Location Search'}
             placeholderTextColor={'#6a7989'}
             minLength={2}
             keyboardShouldPersistTaps={'always'}
@@ -113,10 +113,6 @@ export default class LocationSearch extends React.Component {
               onFocus: this._inputFocused,
             }}
             styles={{
-              container: {
-                borderBottomWidth: 2,
-                borderBottomColor: '#b9c1ca',
-              },
               textInputContainer: {
                 backgroundColor: '#fff',
                 borderTopWidth: 0,

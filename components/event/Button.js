@@ -9,8 +9,8 @@ import {
   LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux';
-import MyText from './common/MyText';
-import Actions from '../state/Actions';
+import MyText from '../common/MyText';
+import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
 @connect((data) => EventButton.getDataProps(data))
@@ -46,7 +46,7 @@ export default class EventButton extends React.Component {
                 onPress={this._goingBtnPress}>
                 <Image
                   style={styles.btn}
-                  source={require('../assets/images/btn_going.png')}
+                  source={require('../../assets/images/btn_going.png')}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -55,7 +55,7 @@ export default class EventButton extends React.Component {
                 onPress={this._cantmakeitBtnPress}>
                 <Image
                   style={styles.btn}
-                  source={require('../assets/images/btn_cantmakeit.png')}
+                  source={require('../../assets/images/btn_cantmakeit.png')}
                 />
               </TouchableOpacity>
             </View>
@@ -69,7 +69,7 @@ export default class EventButton extends React.Component {
                 onPress={this._joinBtnPress}>
                 <Image
                   style={styles.btnJoin}
-                  source={require('../assets/images/btn_join.png')}
+                  source={require('../../assets/images/btn_join.png')}
                 />
               </TouchableOpacity>
             </View>

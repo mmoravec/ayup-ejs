@@ -41,7 +41,6 @@ export default defineActionConstants([
   'SET_LOCATION',
   'SET_NEARBY',
   'SET_OPTLY_VARIATION',
-  'SET_PHONE_STATE',
   'SET_REGION',
   'SET_SELECTED_EVENT',
   'SIGN_IN',

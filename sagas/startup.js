@@ -26,20 +26,16 @@ import activities from '../constants/activities';
 export default function* startup() {
   let result = yield [
     call(getUser),
-    call(getPhoneState),
   ];
   yield [
-      call(setInitialRegion),
       call(loadFilters),
       call(loadFonts),
       call(loadImages),
   ];
   let user = result[0];
-  if (user.new) {
-      yield take(ActionTypes.ROUTE_CHANGE);
+  console.log('called getlocation');
+  if (!user.new) {
       yield call(getLocation);
-  } else {
-    yield call(getLocation);
   }
 }
 
@@ -72,30 +68,38 @@ function* loadFilters() {
 function* getLocation() {
   let permission = yield call(Permissions.askAsync, Permissions.LOCATION);
   if (permission.status !== 'granted') {
+    console.log('permission denied');
     yield put({ type: ActionTypes.SET_LOCATION, location: 'denied'});
+    yield put({
+        type: ActionTypes.REGION_LOADED,
+    });
   } else {
-    // let {location, timeout } = yield race({
-    //   location: call(Location.getCurrentPositionAsync, {}),
-    //   timeout: call(delay, 2000),
-    // });
+    let {location, timeout } = yield race({
+      location: call(Location.getCurrentPositionAsync, {}),
+      timeout: call(delay, 2000),
+    });
     // console.log('getting  location');
     // let location = yield call(Location.getCurrentPositionAsync, {});
     // console.log('location success');
     // console.log('not working');
-    // if (timeout) {
-    let  location = {
+    if (timeout) {
+      console.log('setting default location');
+      location = {
         coords: {
           latitude: 37.785834,
           longitude: -122.406417,
         },
       };
-    // }
+    }
 
     yield put({ type: ActionTypes.SET_LOCATION, location});
     yield put({
       type: ActionTypes.REGION_CHANGE,
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
+    });
+    yield put({
+        type: ActionTypes.REGION_LOADED,
     });
   }
 }
@@ -131,32 +135,6 @@ function* getUser() {
       yield put({ type: ActionTypes.SYNC_PROFILE });
     }
     return user;
-}
-
-function* getPhoneState() {
-  let phone = yield call(LocalStorage.getPhoneStateAsync);
-  let state = {};
-  if (phone !== null) {
-    state.locationStatus = phone.locationStatus;
-    state.contacts = phone.contacts;
-    state.notifications = phone.notifications;
-    yield put({
-        type: ActionTypes.SET_PHONE_STATE,
-        state,
-    });
-  }
-  return state;
-}
-
-function* setInitialRegion() {
-    yield put({
-        type: ActionTypes.REGION_CHANGE,
-        latitude: 37.78825,
-        longitude: -122.4324,
-    });
-    yield put({
-        type: ActionTypes.REGION_LOADED,
-    });
 }
 
 async function getFonts() {
