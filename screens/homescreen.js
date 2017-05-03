@@ -53,7 +53,7 @@ export default class HomeScreen extends React.Component {
     let mapProps = {
       events: this.props.events,
       region: this.props.region,
-    }
+    };
     if (this.props.phone.location !== false) {
       return (
         <View style={{flex: 1}}>
@@ -103,7 +103,7 @@ export default class HomeScreen extends React.Component {
   }
 
   _locationWarningClose = () => {
-    console.log("won't close");
+    // console.log("won't close");
   }
 
   _onListBtnPress = () => {

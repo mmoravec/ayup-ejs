@@ -20,19 +20,51 @@ const {height, width} = Dimensions.get('window');
 export default class EventList extends React.Component {
 
   render() {
+    let data = this._getHeaders(this.props.events);
     return (
       <View style={styles.container}>
         <ImmutableListView
-          immutableData={this.props.events}
+          immutableData={data}
           renderRow={this._renderRow}
+          renderSectionHeader={this._renderSectionHeader}
         />
       </View>
     );
   }
 
+  _getHeaders = (events) => {
+    let d = {};
+    events = events.toJS();
+    events = events.map(event => {
+      event.startDate = new Date(event.startDate);
+      event.endDate = new Date(event.endDate);
+      return event;
+    });
+    events = events.sort((a, b) => {
+      return a.startDate - b.startDate;
+    });
+    events.map(event => {
+      let date = new Date(event.startDate);
+      let mash = dateFormat(date, 'fullDate');
+      if (d[mash]) {
+        d[mash].push(event);
+      } else {
+        d[mash] = [event];
+      }
+      console.log(d);
+    });
+    return Immutable.fromJS(d);
+  }
+
   _renderRow = (rowData) => {
     return (
       <ListRow data={rowData} closeBtn={this.props.closeBtn} />
+    );
+  }
+
+  _renderSectionHeader = (sectionData, header) => {
+    return (
+      <MyText style={styles.header}>{header}</MyText>
     );
   }
 }
@@ -88,14 +120,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginLeft: 10,
     marginRight: 10,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   row: {
     flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginTop: 2,
+    marginBottom: 2,
     height: 80,
     justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor:'#e2eceb',
   },
   time: {
     fontSize: 8,
@@ -119,6 +154,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#808080',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   info: {
     justifyContent: 'flex-end',

@@ -1,10 +1,6 @@
 import React from 'react';
 import { MapView } from 'expo';
 import { connect } from 'react-redux';
-import {
-  ActivityIndicator,
-} from 'react-native';
-import Immutable from 'immutable';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
 import MapStyle from '../constants/mapstyle';
@@ -35,7 +31,7 @@ export default class EventMap extends React.Component {
           initialRegion={this.props.region}
           provider={"google"}
           customMapStyle={AltMapStyle}
-          zoomEnabled={false}
+          zoomEnabled={true}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>
@@ -50,23 +46,7 @@ export default class EventMap extends React.Component {
           style={{ flex: 1, backgroundColor: '#fff' }}
           initialRegion={this.props.region}
           provider={"google"}
-          zoomEnabled={false}
-          onRegionChangeComplete={this._onRegionChange}>
-          {
-            this.props.events.map(event =>
-              <MapMarker key={event.id} event={event} />
-            )
-          }
-        </MapView>
-      );
-    } else if (this.props.phone.optlyVariation === "original") {
-      return (
-        <MapView
-          style={{ flex: 1, backgroundColor: '#fff' }}
-          initialRegion={this.props.region}
-          provider={"google"}
-          customMapStyle={MapStyle}
-          zoomEnabled={false}
+          zoomEnabled={true}
           onRegionChangeComplete={this._onRegionChange}>
           {
             this.props.events.map(event =>
@@ -76,9 +56,22 @@ export default class EventMap extends React.Component {
         </MapView>
       );
     } else {
-      return <ActivityIndicator style={{marginTop: 200}} />;
+      return (
+        <MapView
+          style={{ flex: 1, backgroundColor: '#fff' }}
+          initialRegion={this.props.region}
+          provider={"google"}
+          customMapStyle={MapStyle}
+          zoomEnabled={true}
+          onRegionChangeComplete={this._onRegionChange}>
+          {
+            this.props.events.map(event =>
+              <MapMarker key={event.id} event={event} />
+            )
+          }
+        </MapView>
+      );
     }
-
   }
 
   _onRegionChange = (region) => {

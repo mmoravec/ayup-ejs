@@ -1,15 +1,12 @@
 import React from 'react';
 import {
   StyleSheet,
-  View,
   Image,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
 import Form from '../components/form/EventForm';
-const {height, width} = Dimensions.get('window');
 
 
 @connect()

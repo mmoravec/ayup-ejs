@@ -27,30 +27,24 @@ export default class AuthenticationScreen extends React.Component {
     },
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.user.get('secret') !== null) {
       this.props.dispatch(Actions.routeChange('Home'));
     }
   }
 
-  // <FadeIn placeholderStyle={{backgroundColor: 'transparent'}}>
-  //   <Image
-  //     style={{width: 150, height: 244, marginBottom: 30,}}
-  //     source={require('../assets/images/logo.png')}
-  //   />
-  // </FadeIn>
   render() {
     return (
       <Image
         source={require('../assets/images/ayup_background.png')}
         style={styles.container}>
-        {this._renderLogin()}
+        { this._renderLogin() }
       </Image>
     );
   }
 
   _renderLogin = () => {
-    if(this.props.phone.status === '') {
+    if (this.props.phone.status === '') {
       return (
         <TouchableOpacity onPress={this._signInWithFacebook}>
           <Image

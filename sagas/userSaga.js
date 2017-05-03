@@ -11,13 +11,15 @@ export function* watchSyncProfile() {
 }
 
 export function* refreshUserFriends() {
-    const action = yield take(ActionTypes.SET_CURRENT_USER);
+  while (true) {
+    yield take(ActionTypes.ROUTE_CHANGE);
+    const user = yield select(state => state.user);
     let friends;
     try {
       friends = yield call(request, GET,
         "https://graph.facebook.com/v2.8/me/friends/" +
         "?fields=name,id,picture.width(120).height(120)&" +
-        "access_token=" + action.user.authToken,
+        "access_token=" + user.authToken,
       );
       let f = friends.body.data.map(friend => {
         return {
@@ -30,28 +32,9 @@ export function* refreshUserFriends() {
     } catch (error) {
       //log error
     }
-    while (true) {
-        yield call(delay, 60000);
-        const user = yield select(state => state.user);
-        try {
-          friends = yield call(request, GET,
-            "https://graph.facebook.com/v2.8/me/friends/" +
-            "?fields=name,id,picture.width(120).height(120)&access_token=" + user.authToken,
-          );
-          let f = friends.body.data.map(friend => {
-            return {
-              name: friend.name,
-              fbid: friend.id,
-              profilePic: friend.picture.data.url,
-            };
-          });
-          yield put({type: ActionTypes.SET_FRIENDS, friends: new List(f)});
-        } catch (error) {
-          //log error
-        }
-    }
+    yield call(delay, 60000);
+  }
 }
-
 
 function* syncProfile() {
   let profile = null;
@@ -69,8 +52,8 @@ function* syncProfile() {
     return;
   }
   profile = profile.body;
-  console.log('profile here');
-  console.log(profile);
+  // console.log('profile here');
+  // console.log(profile);
   let user = {
     hosted: Immutable.fromJS(profile.hosted),
     invited: Immutable.fromJS(profile.invited),
@@ -101,7 +84,7 @@ function* syncProfile() {
       {Authorization: user.secret, UserID: user.id}, user.toJS()
     );
   } catch (error) {
-    console.log('updaing profile failed');
+    // console.log('updaing profile failed');
     return;
   }
   yield put({ type: ActionTypes.PROFILE_UPDATED });

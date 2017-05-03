@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import ActionTypes from './ActionTypes';
 import { PhoneState } from './Records';
 
@@ -56,6 +57,13 @@ class PhoneStateReducer {
 
   static [ActionTypes.SET_OPTLY_VARIATION](state, action) {
     return state.set('optlyVariation', action.variation);
+  }
+
+  static [ActionTypes.SET_PHONE_STATE](state, action) {
+    console.log(state);
+    let newState = _.extend(state, action);
+    console.log(newState);
+    return newState;
   }
 
 }

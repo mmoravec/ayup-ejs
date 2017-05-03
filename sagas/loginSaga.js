@@ -20,7 +20,7 @@ function* authorize() {
   const fbLogin = yield call(facebookLogin);
   if (fbLogin.type === 'success') {
     try {
-      fbInfo = yield call(request, GET, `https://graph.facebook.com/me?access_token=${fbLogin.token}&fields=name,id,gender,picture.width(240).height(240),email`);
+      fbInfo = yield call(request, GET, `https://graph.facebook.com/me?access_token=${fbLogin.token}&fields=name,id,gender,picture.width(240).height(240),email,age_range,verified`);
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
@@ -28,7 +28,7 @@ function* authorize() {
       return;
     }
     try {
-      console.log(fbInfo);
+      // console.log(fbInfo);
       ayUser = yield call(request, POST,  URL + "/v1.0/auth/facebook?id=" + fbInfo.body.id, {Token: fbLogin.token});
     } catch (error) {
       //Alert Error
@@ -36,8 +36,8 @@ function* authorize() {
       yield put({ type: ActionTypes.RESET_ALERT });
       return;
     }
-    console.log("this is ayuser");
-    console.log(ayUser);
+    // console.log("this is ayuser");
+    // console.log(ayUser);
     //TODO: log error message after call
     let saveUser = new User({
       'authToken': ayUser.body.authToken,
@@ -48,14 +48,17 @@ function* authorize() {
       'name': fbInfo.body.name,
       'fbid': fbInfo.body.id,
       'id': ayUser.body.id,
+      'age_range': fbInfo.body.age_range.min,
       'secret': ayUser.headers.get('authorization'),
       'new': false,
     });
+    console.log(fbInfo.body.age_range);
     yield fork(LocalStorage.saveUserAsync, saveUser);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
-    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home' });
+    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home'});
     yield put({ type: ActionTypes.SYNC_PROFILE });
     yield put({ type: ActionTypes.RESET_ALERT });
+    return;
   } else {
     //TODO: throw error message
     yield put({ type: ActionTypes.ALERT_ERROR });
@@ -64,11 +67,12 @@ function* authorize() {
   }
 }
 
-function facebookLogin() {
-  return Facebook.logInWithReadPermissionsAsync('1521840934725105', {
+async function facebookLogin() {
+  const login = await Facebook.logInWithReadPermissionsAsync('1521840934725105', {
     permissions: ['public_profile', 'email', 'user_friends'],
     behavior: Platform.OS === 'ios' ? 'web' : 'system',
   });
+  return login;
 }
 
 // async function saveUser(user) {
