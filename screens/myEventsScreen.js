@@ -8,8 +8,9 @@ import {
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
+import Immutable, { List } from 'immutable';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import dateFormat from 'dateformat';
 import MyText from '../components/common/MyText';
 import Actions from '../state/Actions';
 import EventList from '../components/MyEventList';
@@ -72,7 +73,8 @@ export default class MyEventsScreen extends React.Component {
         </View>
         <ScrollableTabView
           ref={(tabView) => { this.tabView = tabView; }}
-          locked={true}
+          locked={false}
+          onChangeTab={this._onChangeTab}
           renderTabBar={false}>
           <EventList events={this.props.user.events}  closeBtn={this._backBtnPress} />
           <EventList events={hostEvents} closeBtn={this._backBtnPress} />
@@ -81,28 +83,40 @@ export default class MyEventsScreen extends React.Component {
       </Image>
     );
   }
+
+  _onChangeTab = (tab) => {
+    switch (tab.i) {
+      case 0:
+        Animated.parallel([
+          Animated.timing(this.state.allOpac, {toValue: 1, duration: 500}),
+          Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
+          Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
+        ]).start();
+        break;
+      case 1:
+        Animated.parallel([
+          Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
+          Animated.timing(this.state.myOpac, {toValue: 1, duration: 500}),
+          Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
+        ]).start();
+        break;
+      case 2:
+        Animated.parallel([
+          Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
+          Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
+          Animated.timing(this.state.joinOpac, {toValue: 1, duration: 500}),
+        ]).start();
+        break;
+    }
+  }
+
   _selectAll = () => {
-    Animated.parallel([
-      Animated.timing(this.state.allOpac, {toValue: 1, duration: 500}),
-      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
-    ]).start();
     this.tabView.goToPage(0);
   }
   _selectMine = () => {
-    Animated.parallel([
-      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.myOpac, {toValue: 1, duration: 500}),
-      Animated.timing(this.state.joinOpac, {toValue: 0.4, duration: 500}),
-    ]).start();
     this.tabView.goToPage(1);
   }
   _selectJoined = () => {
-    Animated.parallel([
-      Animated.timing(this.state.allOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.myOpac, {toValue: 0.4, duration: 500}),
-      Animated.timing(this.state.joinOpac, {toValue: 1, duration: 500}),
-    ]).start();
     this.tabView.goToPage(2);
   }
   _backBtnPress = () => {

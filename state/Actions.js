@@ -15,6 +15,13 @@ export default class Actions {
     };
   }
 
+  static deleteEvent(eventID) {
+    return {
+      type: ActionTypes.DELETE_EVENT,
+      eventID,
+    };
+  }
+
   static syncProfile() {
     return {
       type: ActionTypes.SYNC_PROFILE,

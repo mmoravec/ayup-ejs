@@ -6,13 +6,17 @@ import {
   ScrollView,
   Animated,
   Switch,
+  Image,
   LayoutAnimation,
+  TouchableOpacity,
 } from 'react-native';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import LocationSearch from './LocationSearch';
 import ActivitySelector from './ActivitySelector';
 import TimeSelector from './TimeSelector';
 import FriendSelector from './FriendSelector';
+import Capacity from './Capacity';
 import SaveButton from './SaveButton';
 import MyText from '../common/MyText';
 import Hoshi from '../common/Hoshi';
@@ -43,8 +47,15 @@ export default class EventForm extends React.Component {
     this._locProps = {
       scrollTo: this._scrollTo,
       onFocus: this._focusElement.bind(this, 'location'),
-      label: 'Location',
+      label: 'Meeting Location',
       stateKey: 'location',
+      ...this._inputProps,
+    };
+    this._destProps = {
+      scrollTo: this._scrollTo,
+      onFocus: this._focusElement.bind(this, 'destination'),
+      label: 'Destination',
+      stateKey: 'destination',
       ...this._inputProps,
     };
     this._actionProps = {
@@ -67,14 +78,48 @@ export default class EventForm extends React.Component {
     latlng: [],
     private: false,
     capacity: 0,
-    focus: [
-      {stateKey: 'title', focus: false},
-      {stateKey: 'desc', focus: false},
-      {stateKey: 'location', focus: false},
-      {stateKey: 'startDate', focus: false},
-      {stateKey: 'endDate', focus: false},
-      {stateKey: 'friends', focus: false},
-    ],
+    fields: {
+      title: {
+        focus: false,
+        shown: true,
+        stateKey: 'title',
+      },
+      desc: {
+        focus: false,
+        shown: false,
+        stateKey: 'desc',
+      },
+      capacity: {
+        focus: false,
+        shown: false,
+        stateKey: 'capacity',
+      },
+      location: {
+        focus: false,
+        shown: true,
+        stateKey: 'location',
+      },
+      destination: {
+        focus: false,
+        shown: false,
+        stateKey: 'destination',
+      },
+      startDate: {
+        focus: false,
+        shown: true,
+        stateKey: 'startDate',
+      },
+      endDate: {
+        focus: false,
+        shown: true,
+        stateKey: 'endDate',
+      },
+      friends: {
+        focus: false,
+        shown: true,
+        stateKey: 'friends',
+      },
+    },
   }
 
   componentWillUpdate() {
@@ -82,6 +127,7 @@ export default class EventForm extends React.Component {
   }
 
   render() {
+    console.log(this.state.fields.startDate);
     return (
       <View>
         <View style={styles.scrollView}>
@@ -93,6 +139,12 @@ export default class EventForm extends React.Component {
             <View style={[styles.input, styles.topInput]}>
               <Hoshi {...this._titleProps} />
             </View>
+            {
+              this.state.fields.desc.shown &&
+              <View style={styles.input}>
+                <Hoshi {...this._descProps} />
+              </View>
+            }
             <View style={styles.switch}>
               <MyText style={styles.text}>Private</MyText>
               <Switch
@@ -101,49 +153,150 @@ export default class EventForm extends React.Component {
                 value={this.state.private}
               />
             </View>
-            <View style={styles.input}>
-              <LocationSearch
-                {...this._locProps}
-                location={this.state.location}
-                focus={this.state.focus}
-                onChange={this._changeLocation}
-              />
-            </View>
-            <View style={styles.input}>
-              <TimeSelector
-                focus={this.state.focus}
-                onFocus={this._focusElement}
-                date={this.state.startDate}
-                label={'Start Date'}
-                onChange={this._onDateChange}
-                stateKey={'startDate'}
-                scrollTo={this._scrollTo}
-              />
-            </View>
-            <View style={styles.input}>
-              <TimeSelector
-                ref="endDate"
-                focus={this.state.focus}
-                onFocus={this._focusElement}
-                date={this.state.endDate}
-                label={'End Date'}
-                onChange={this._onDateChange}
-                stateKey={'endDate'}
-                scrollTo={this._scrollTo}
-              />
-            </View>
+            {
+              this.state.fields.location.shown &&
+              <View style={styles.input}>
+                <LocationSearch
+                  {...this._locProps}
+                  location={this.state.location}
+                  focus={this.state.fields.location.focus}
+                  onChange={this._changeLocation}
+                />
+              </View>
+            }
+            {
+              this.state.fields.destination.shown &&
+              <View style={styles.input}>
+                <LocationSearch
+                  {...this._destProps}
+                  location={this.state.destination}
+                  focus={this.state.fields.destination.focus}
+                  onChange={this._changeDestination}
+                />
+              </View>
+            }
+            {
+              this.state.fields.startDate.shown &&
+              <View style={styles.input}>
+                <TimeSelector
+                  focus={this.state.fields.startDate.focus}
+                  onFocus={this._focusElement}
+                  date={this.state.startDate}
+                  label={'Start Date'}
+                  onChange={this._onDateChange}
+                  stateKey={'startDate'}
+                  scrollTo={this._scrollTo}
+                />
+              </View>
+            }
+            {
+              this.state.fields.endDate.shown &&
+              <View style={styles.input}>
+                <TimeSelector
+                  ref="endDate"
+                  focus={this.state.fields.endDate.focus}
+                  onFocus={this._focusElement}
+                  date={this.state.endDate}
+                  label={'End Date'}
+                  onChange={this._onDateChange}
+                  stateKey={'endDate'}
+                  scrollTo={this._scrollTo}
+                />
+              </View>
+            }
             <View style={styles.input}>
               <FriendSelector
                 ref="friends"
-                focus={this.state.focus}
+                focus={this.state.fields.friends.focus}
                 onFocus={this._focusElement}
                 onChange={this._onChange}
                 stateKey={'friends'}
                 scrollTo={this._scrollTo}
               />
             </View>
-            {this._renderOptionalFields()}
-            <View style={styles.btmPadding} />
+            {
+              this.state.fields.capacity.shown &&
+              <View style={styles.input}>
+                <Capacity
+                  onChange={this._onChange}
+                  stateKey={'capacity'}
+                  capacity={this.state.capacity}
+                />
+              </View>
+            }
+            <View style={styles.optionalFields}>
+              <MyText style={styles.optText}>
+                Add Field
+              </MyText>
+              <View style={styles.fieldContainer}>
+                {
+                  !this.state.fields.capacity.shown &&
+                  <TouchableOpacity onPress={this._showCapacity} style={{margin: 5}}>
+                    <Image
+                      source={require('../../assets/images/capacity_btn.png')}
+                      style={{height: 40, width: 114}}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                }
+                {
+                  !this.state.fields.desc.shown &&
+                  <TouchableOpacity onPress={this._showDescription} style={{margin: 5}}>
+                    <Image
+                      source={require('../../assets/images/description_btn.png')}
+                      style={{height: 40, width: 131}}
+                    />
+                  </TouchableOpacity>
+                }
+                {
+                  !this.state.fields.destination.shown &&
+                  <TouchableOpacity onPress={this._showDestination} style={{margin: 5}}>
+                    <Image
+                      source={require('../../assets/images/destination_btn.png')}
+                      style={{height: 40, width: 122}}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                }
+              </View>
+            </View>
+            <View style={styles.optionalFields}>
+              <MyText style={styles.optText}>
+                Remove Field
+              </MyText>
+              <View style={styles.fieldContainer}>
+                {
+                  this.state.fields.capacity.shown &&
+                  <TouchableOpacity onPress={this._showCapacity} style={{margin: 5}}>
+                    <Image
+                      source={require('../../assets/images/capacity_btn.png')}
+                      style={{height: 40, width: 114}}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                }
+                {
+                  this.state.fields.desc.shown &&
+                  <TouchableOpacity onPress={this._showDescription} style={{margin: 5}}>
+                    <Image
+                      source={require('../../assets/images/description_btn.png')}
+                      style={{height: 40, width: 131}}
+                    />
+                  </TouchableOpacity>
+                }
+                {
+                  this.state.fields.destination.shown &&
+                  <TouchableOpacity onPress={this._showDestination} style={{margin: 5}}>
+                    <Image
+                      source={require('../../assets/images/destination_btn.png')}
+                      style={{height: 40, width: 122}}
+                      resizeMode={'contain'}
+                    />
+                  </TouchableOpacity>
+                }
+              </View>
+            </View>
+            <View style={{height: height * 0.1}} />
           </ScrollView>
         </View>
         <SaveButton {...this._actionProps} event={this.state} />
@@ -151,36 +304,27 @@ export default class EventForm extends React.Component {
     );
   }
 
-  // <Capacity
-  //   onChange={this._onChange}
-  //   stateKey={'capacity'}
-  //   capacity={this.state.capacity}
-  // />
-
   _selectActivity = (act) => {
     this.setState({activity: act});
   }
 
-  _renderOptionalFields = () => {
-    let opt = {
-      desc: (<View style={styles.input}><Hoshi {...this._descProps} /></View>),
-    };
-    //return opt.desc;
-  }
-
   _focusElement = (el) => {
-    let focus = this.state.focus.map(input => {
-      if (input.stateKey === el && !input.focus) {
-        return {stateKey: input.stateKey, focus: true};
+    let fields = _.mapValues(this.state.fields, (value) => {
+      if (value.stateKey === el && !value.focus) {
+        return {stateKey: value.stateKey, focus: true, shown: value.shown};
       } else {
-        return {stateKey: input.stateKey, focus: false};
+        return { stateKey: value.stateKey, focus: false, shown: value.shown};
       }
     });
-    this.setState({focus});
+    this.setState({fields});
   }
 
   _changeLocation = (name, ltlng) => {
     this.setState({location: name, latlng: ltlng});
+  }
+
+  _changeDestination = (name, ltlng) => {
+    this.setState({destination: name, dest_latlng: ltlng});
   }
 
   _onChange = (key, value) => {
@@ -209,12 +353,31 @@ export default class EventForm extends React.Component {
     this.setState({private: !this.state.private});
   }
 
+  _showCapacity = () => {
+    let fields = this.state.fields;
+    fields.capacity.shown = !fields.capacity.shown;
+    this.setState({fields});
+  }
+
+  _showDescription = () => {
+    let fields = this.state.fields;
+    fields.desc.shown = !fields.desc.shown;
+    this.setState({fields});
+  }
+
+  _showDestination = () => {
+    let fields = this.state.fields;
+    fields.destination.shown = !fields.destination.shown;
+    this.setState({fields});
+  }
+
 }
 
 const styles = StyleSheet.create({
-  btmPadding: {
-    height: height * 0.3,
+  optionalFields: {
     backgroundColor: '#fff',
+    borderBottomWidth: 2,
+    borderBottomColor: '#b9c1ca',
   },
   scrollView: {
     backgroundColor: 'rgba(0,0,0,0)',
@@ -255,5 +418,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     bottom: 10,
+  },
+  optText: {
+    fontSize: 16,
+    color: '#6a7989',
+    marginTop: 15,
+    marginLeft: 15,
+  },
+  fieldContainer: {
+    marginTop: 15,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    marginBottom: 15,
   },
 });

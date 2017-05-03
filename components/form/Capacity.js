@@ -17,17 +17,21 @@ export default class Capacity extends React.Component {
         <MyText style={styles.label}>Capacity</MyText>
         <View style={styles.buttons}>
           <TouchableOpacity onPress={this._decrement}>
-            <Ionicons
-              size={30}
-              name={'ios-remove'}
-            />
+            <View style={styles.icon}>
+              <Ionicons
+                size={30}
+                name={'ios-remove'}
+              />
+            </View>
           </TouchableOpacity>
           <MyText style={styles.text}>{this.props.capacity}</MyText>
           <TouchableOpacity onPress={this._increment}>
-            <Ionicons
-              size={30}
-              name={'ios-add'}
-            />
+            <View style={styles.icon}>
+              <Ionicons
+                size={30}
+                name={'ios-add'}
+              />
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -41,7 +45,7 @@ export default class Capacity extends React.Component {
   }
   _decrement = () => {
     let dec = this.props.capacity;
-    dec = (dec > 0) ? dec-- : dec;
+    if(dec > 0) dec--;
     this.props.onChange(this.props.stateKey, dec);
   }
 }
@@ -56,14 +60,14 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
-    marginTop: 25,
+    alignItems: 'center',
   },
   text: {
     fontSize: 16,
     color: '#6a7989',
-    marginLeft: 20,
-    marginRight: 20,
     marginTop: 5,
+    width: 25,
+    textAlign: 'center',
   },
   label: {
     fontSize: 16,
@@ -77,5 +81,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     bottom: 10,
+  },
+  icon: {
+    height: 50,
+    width: 50,
+    marginTop: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

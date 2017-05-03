@@ -16,6 +16,7 @@ import _ from 'lodash';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from './common/MyText';
 import Bubble from './common/Bubble';
+import EventActions from './event/Actions';
 import EventGuests from '../components/EventGuests';
 import Filter from '../utils/filters';
 import { duration } from '../utils/date';
@@ -83,7 +84,9 @@ export default class EventContent extends React.Component {
     let end = new Date(event.endDate);
     return (
       <View style={{backgroundColor: 'rgba(0,0,0,0.0)'}}>
-        <View style={{height: 150, backgroundColor: 'rgba(0,0,0,0.0)'}} />
+        <View style={{height: 150, backgroundColor: 'rgba(0,0,0,0.0)'}}>
+          <EventActions event={this.props.event} />
+        </View>
         <View style={styles.topInfo}>
           <View>
             <Image

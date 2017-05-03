@@ -3,7 +3,7 @@ import {delay} from 'redux-saga';
 import { takeLatest, select, call, put, fork } from 'redux-saga/effects';
 import ActionTypes from '../state/ActionTypes';
 import { request } from '../utils/fetch';
-import { URL, POST, GET } from '../constants/rest';
+import { URL, POST, GET, DELETE } from '../constants/rest';
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
 
@@ -14,6 +14,7 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.REGION_CHANGE, updateNearbyEvents),
     takeLatest(ActionTypes.ACCEPT_EVENT, acceptEvent),
     takeLatest(ActionTypes.REQUEST_EVENT, requestEvent),
+    takeLatest(ActionTypes.DELETE_EVENT, deleteEvent),
     takeLatest(ActionTypes.REJECT_EVENT, rejectEvent),
     takeLatest(ActionTypes.LOAD_COMMENTS, loadComments),
     takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
@@ -93,6 +94,26 @@ function* requestEvent(action) {
       {Authorization: user.secret, UserID: user.id}
     );
   } catch (error) {
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    yield call(delay, 2000);
+    yield put({ type: ActionTypes.RESET_ALERT });
+  }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield call(delay, 2000);
+  yield put({ type: ActionTypes.RESET_ALERT });
+  yield fork(updateSelectedEvent, action.eventID, user);
+}
+
+function* deleteEvent(action) {
+  console.log(action);
+  const user = yield select(state => state.user);
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  try {
+    yield call(request, DELETE, URL + "/v1.0/events/?id=" + action.eventID,
+      {Authorization: user.secret, UserID: user.id}
+    );
+  } catch (error) {
+    console.log(error);
     yield put({ type: ActionTypes.ALERT_ERROR });
     yield call(delay, 2000);
     yield put({ type: ActionTypes.RESET_ALERT });

@@ -45,9 +45,7 @@ export default class LocationSearch extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.focus.find(el =>
-      el.stateKey === this.props.stateKey
-    ).focus) {
+    if (nextProps.focus) {
       this.setState({focusLocation: true});
       this.setState({hasFocused: true});
       dismissKeyboard();
@@ -181,10 +179,6 @@ export default class LocationSearch extends React.Component {
     }
     this.setState({region, regionChangeCount: 0});
     this.props.onChange(details.formatted_address, coord);
-  }
-
-  _onChange = (date) => {
-    this.props.onChange(this.props.stateKey, date);
   }
 
   _onLocationPress = () => {

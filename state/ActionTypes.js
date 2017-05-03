@@ -4,6 +4,7 @@ export default defineActionConstants([
   'ALERT_SUCCESS',
   'ALERT_ERROR',
   'ADD_ACTIVITY',
+  'DELETE_EVENT',
   'FILTERS_LOADED',
   'FONT_LOADED',
   'GEOCODE',

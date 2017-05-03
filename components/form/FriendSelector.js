@@ -67,7 +67,7 @@ export default class FriendSelector extends React.Component {
   render() {
     return (
       <View ref={view => { this._view = view; }} style={styles.container}>
-        <MyText style={styles.label}>Add Friends:</MyText>
+        <MyText style={styles.label}>Add Friends</MyText>
         {this._renderInvitedFriends()}
         {this._renderAddButton()}
         {this._renderFilteredFriends()}
@@ -80,7 +80,7 @@ export default class FriendSelector extends React.Component {
       inputRange: [0, 1],
       outputRange: ['0deg', '45deg'],
     });
-    if (this.state.addingFriend) {
+    if (this.props.focus) {
       Animated.timing(this.state.addBtnLeft, {toValue: width * 0.75, duration: 500}).start();
       Animated.timing(this.state.addBtnRotate, {toValue: 1, duration: 500}).start();
     } else {
@@ -108,16 +108,15 @@ export default class FriendSelector extends React.Component {
     );
   }
   _addFriend = () => {
-    if (!this.state.addingFriend) {
+    if (!this.props.focus) {
       this.setState({inputText: ''});
-      this.props.onFocus(this.props.stateKey);
       setTimeout(() => { this.props.scrollTo(this._scrollY + this.state.invitedFriends.size * 60 - 80)}, 200);
     }
-    this.setState({addingFriend: !this.state.addingFriend});
+    this.props.onFocus(this.props.stateKey);
   }
 
   _renderInput = () => {
-    if (this.state.addingFriend) {
+    if (this.props.focus) {
       return (
         <View style={styles.friendFilter}>
           <TextInput
@@ -150,7 +149,7 @@ export default class FriendSelector extends React.Component {
   }
 
   _renderFilteredFriends = () => {
-    if (this.state.addingFriend && this.props.friends.size > 0) {
+    if (this.props.focus && this.props.friends.size > 0) {
       return (
         <ImmutableListView
           immutableData={this.state.filteredFriends}

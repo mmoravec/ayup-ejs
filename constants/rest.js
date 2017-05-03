@@ -1,6 +1,7 @@
 export const GET = "GET";
 export const POST = "POST";
 export const PUT = "PUT";
+export const DELETE = "DELETE";
 // export const URL = "https://api.ayupapp.com";
 export const URL = "https://api.ayupapp.com";
 export const FBURL = "https://graph.facebook.com/v2.8/me/";

@@ -30,9 +30,7 @@ export default class TimeSelector extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.focus.find(el =>
-      el.stateKey === this.props.stateKey
-    ).focus) {
+    if (nextProps.focus) {
       this.setState({focusDate: true});
       this.setState({hasFocused: true});
       dismissKeyboard();

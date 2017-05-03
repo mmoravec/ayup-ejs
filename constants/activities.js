@@ -161,7 +161,7 @@ export default {
     "name": "Skiing",
   },
   "weights": {
-    "icon": require("../assets/images/icons/icon_boardgame.png"),
+    "icon": require("../assets/images/icons/icon_weightlifting.png"),
     "id": 23,
     "type": "weights",
     "image": require("../assets/images/figures/weightlifting.png"),
