@@ -34,6 +34,7 @@ export default function* startup() {
   ];
   let user = result[0];
   console.log('called getlocation');
+  console.log(user);
   if (!user.new) {
       yield call(getLocation);
   }
@@ -68,7 +69,6 @@ function* loadFilters() {
 function* getLocation() {
   let permission = yield call(Permissions.askAsync, Permissions.LOCATION);
   if (permission.status !== 'granted') {
-    console.log('permission denied');
     yield put({ type: ActionTypes.SET_LOCATION, location: 'denied'});
     yield put({
         type: ActionTypes.REGION_LOADED,
@@ -83,7 +83,6 @@ function* getLocation() {
     // console.log('location success');
     // console.log('not working');
     if (timeout) {
-      console.log('setting default location');
       location = {
         coords: {
           latitude: 37.785834,
@@ -91,16 +90,12 @@ function* getLocation() {
         },
       };
     }
-
-    yield put({ type: ActionTypes.SET_LOCATION, location});
     yield put({
       type: ActionTypes.REGION_CHANGE,
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     });
-    yield put({
-        type: ActionTypes.REGION_LOADED,
-    });
+    yield put({ type: ActionTypes.SET_LOCATION, location: true});
   }
 }
 

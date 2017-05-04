@@ -19,7 +19,6 @@ export default defineActionConstants([
   'PROFILE_UPDATED',
   'REGION_CHANGE',
   'ROUTE_CHANGE',
-  'REGION_LOADED',
   'REJECT_EVENT',
   'REMOVE_ACTIVITY',
   'REQUEST_ENDED',

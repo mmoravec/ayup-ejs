@@ -5,14 +5,8 @@ import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
 import MapStyle from '../constants/mapstyle';
 
-@connect(data => EventMap.getDataProps(data))
+@connect()
 export default class EventMap extends React.Component {
-
-  static getDataProps(data) {
-    return {
-      phone: data.phone,
-    };
-  }
 
   state = {
     loadDelay: false,

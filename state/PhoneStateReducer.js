@@ -15,10 +15,6 @@ class PhoneStateReducer {
     return state.set('filtersLoaded', true);
   }
 
-  static [ActionTypes.REGION_LOADED](state, action) {
-    return state.set('regionLoaded', true);
-  }
-
   static [ActionTypes.USER_LOADED](state, action) {
     return state.set('userLoaded', true);
   }
@@ -57,13 +53,6 @@ class PhoneStateReducer {
 
   static [ActionTypes.SET_OPTLY_VARIATION](state, action) {
     return state.set('optlyVariation', action.variation);
-  }
-
-  static [ActionTypes.SET_PHONE_STATE](state, action) {
-    console.log(state);
-    let newState = _.extend(state, action);
-    console.log(newState);
-    return newState;
   }
 
 }

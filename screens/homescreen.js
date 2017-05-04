@@ -54,7 +54,8 @@ export default class HomeScreen extends React.Component {
       events: this.props.events,
       region: this.props.region,
     };
-    if (this.props.phone.location !== 'denied') {
+    console.log(this.props.phone.location);
+    if (this.props.phone.location !== 'denied' && this.props.phone.location !== false) {
       return (
         <View style={{flex: 1}}>
           <MapView {...mapProps} />
