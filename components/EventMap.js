@@ -4,16 +4,9 @@ import { connect } from 'react-redux';
 import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
 import MapStyle from '../constants/mapstyle';
-import AltMapStyle from '../constants/mapstylevar';
 
-@connect(data => EventMap.getDataProps(data))
+@connect()
 export default class EventMap extends React.Component {
-
-  static getDataProps(data) {
-    return {
-      phone: data.phone,
-    };
-  }
 
   state = {
     loadDelay: false,
@@ -24,38 +17,6 @@ export default class EventMap extends React.Component {
   }
 
   render() {
-    if (this.props.phone.optlyVariation === "apple") {
-      return (
-        <MapView
-          style={{ flex: 1, backgroundColor: '#fff' }}
-          initialRegion={this.props.region}
-          provider={"google"}
-          customMapStyle={AltMapStyle}
-          zoomEnabled={true}
-          onRegionChangeComplete={this._onRegionChange}>
-          {
-            this.props.events.map(event =>
-              <MapMarker key={event.id} event={event} />
-            )
-          }
-        </MapView>
-      );
-    } else if (this.props.phone.optlyVariation === "google") {
-      return (
-        <MapView
-          style={{ flex: 1, backgroundColor: '#fff' }}
-          initialRegion={this.props.region}
-          provider={"google"}
-          zoomEnabled={true}
-          onRegionChangeComplete={this._onRegionChange}>
-          {
-            this.props.events.map(event =>
-              <MapMarker key={event.id} event={event} />
-            )
-          }
-        </MapView>
-      );
-    } else {
       return (
         <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
@@ -71,7 +32,6 @@ export default class EventMap extends React.Component {
           }
         </MapView>
       );
-    }
   }
 
   _onRegionChange = (region) => {

@@ -8,8 +8,8 @@ import {
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
-import Icons from '../constants/activities';
-import Actions from '../state/Actions';
+import Icons from '../../constants/activities';
+import Actions from '../../state/Actions';
 const dateFormat = require('dateformat');
 const {height, width} = Dimensions.get('window');
 

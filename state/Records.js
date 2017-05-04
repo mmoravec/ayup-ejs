@@ -46,15 +46,11 @@ export const PhoneState = Record({
   userLoaded: false,
   fontLoaded: false,
   filtersLoaded: false,
-  regionLoaded: false,
   imagesLoaded: false,
   status: '',
   location: false,
   optly: null,
   optlyVariation: '',
-  contacts: false,
-  notifications: false,
-  locationStatus: false,
 });
 
 export const Comment = Record({

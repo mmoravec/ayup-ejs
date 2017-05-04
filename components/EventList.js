@@ -17,14 +17,12 @@ import Icons from '../constants/activities';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
-@connect()
 export default class EventList extends React.Component {
-
 
   render() {
     let data = this._getHeaders(this.props.events);
     return (
-      <View>
+      <View style={this.props.styles.container}>
         <ImmutableListView
           immutableData={data}
           renderRow={this._renderRow}
@@ -34,20 +32,9 @@ export default class EventList extends React.Component {
     );
   }
 
-  _renderRow = (rowData) => {
-    return (
-      <ListRow data={rowData} closeBtn={this.props.closeBtn} />
-    );
-  }
-
-  _renderSectionHeader = (sectionData, header) => {
-    return (
-      <MyText style={styles.header}>{header}</MyText>
-    );
-  }
-
   _getHeaders = (events) => {
     let d = {};
+    events = events.toJS();
     events = events.map(event => {
       event.startDate = new Date(event.startDate);
       event.endDate = new Date(event.endDate);
@@ -67,16 +54,30 @@ export default class EventList extends React.Component {
     });
     return Immutable.fromJS(d);
   }
+
+  _renderRow = (rowData) => {
+    return (
+      <ListRow data={rowData} closeBtn={this.props.closeBtn} styles={this.props.styles} />
+    );
+  }
+
+  _renderSectionHeader = (sectionData, header) => {
+    return (
+      <MyText style={this.props.styles.header}>{header}</MyText>
+    );
+  }
 }
 
 @connect()
 class ListRow extends React.Component {
   render() {
+    console.log(this.props);
+    let styles = this.props.styles;
     let rowData = this.props.data.toJS();
+    let selectEvent = this._onItemPress.bind(this, rowData.id);
     let image = Icons[rowData.activity].image;
-    let start = rowData.startDate
-    let end = rowData.endDate;
-    let onItemPress = this._onItemPress.bind(this, rowData.id)
+    let start = new Date(rowData.startDate);
+    let end = new Date(rowData.endDate);
     let duration = Math.abs(end.getTime() - start.getTime());
     let format = "";
     if (duration < 3500000) {
@@ -87,7 +88,7 @@ class ListRow extends React.Component {
       format = Math.ceil(duration / (1000 * 3600 * 24)) + "days";
     }
     return (
-      <TouchableOpacity onPress={onItemPress}>
+      <TouchableOpacity onPress={selectEvent}>
         <View style={styles.row}>
           <View style={styles.icon}>
             <Image
@@ -110,65 +111,11 @@ class ListRow extends React.Component {
   }
   _onItemPress = (id) => {
     //TODO: create a saga for this when fetching comments becomes
+    console.log(id);
     this.props.dispatch(Actions.selectEvent(id));
     this.props.dispatch(Actions.routeChange('Event'));
-    this.props.closeBtn();
+    if (this.props.closeBtn) {
+      this.props.closeBtn();
+    }
   }
 }
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-    marginTop: 2,
-    marginBottom: 2,
-    marginLeft: 5,
-    height: 80,
-    justifyContent: 'space-between',
-  },
-  time: {
-    fontSize: 8,
-    marginTop: 5,
-    alignSelf: 'center',
-  },
-  duration: {
-    fontSize: 8,
-    alignSelf: 'center',
-    color: '#c4c4c4',
-  },
-  activityImage: {
-    height: 30,
-    width: 30,
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  icon: {
-    height: 80,
-    marginLeft: 5,
-  },
-  header: {
-    color: '#808080',
-  },
-  info: {
-    justifyContent: 'flex-end',
-    flexGrow: 1,
-    maxWidth: width * 0.5,
-  },
-  title: {
-    fontSize: 16,
-    marginBottom: 4,
-  },
-  author: {
-    fontSize: 10,
-    color: '#808080',
-    marginBottom: 16,
-  },
-  bubble: {
-    justifyContent: 'center',
-    alignSelf: 'center',
-    height: 80,
-    width: 50,
-  },
-});

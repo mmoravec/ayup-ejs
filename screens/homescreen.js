@@ -54,7 +54,8 @@ export default class HomeScreen extends React.Component {
       events: this.props.events,
       region: this.props.region,
     };
-    if (this.props.phone.location !== false) {
+    console.log(this.props.phone.location);
+    if (this.props.phone.location !== 'denied' && this.props.phone.location !== false) {
       return (
         <View style={{flex: 1}}>
           <MapView {...mapProps} />
@@ -82,12 +83,18 @@ export default class HomeScreen extends React.Component {
         </View>
       );
     } else {
-      return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} />;
+      return (
+        <View>
+          <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} />
+          {this._renderLocationWarning()}
+        </View>
+      );
     }
   }
 
   _renderLocationWarning = () => {
     if (this.props.phone.location === "denied") {
+      console.log('render location warning');
       return (
         <Modal
           animationType={"none"}

@@ -13,7 +13,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import dateFormat from 'dateformat';
 import MyText from '../components/common/MyText';
 import Actions from '../state/Actions';
-import EventList from '../components/MyEventList';
+import EventList from '../components/EventList';
 const {height, width} = Dimensions.get('window');
 const data = require('../sample/sampledata.json');
 
@@ -76,9 +76,9 @@ export default class MyEventsScreen extends React.Component {
           locked={false}
           onChangeTab={this._onChangeTab}
           renderTabBar={false}>
-          <EventList events={this.props.user.events}  closeBtn={this._backBtnPress} />
-          <EventList events={hostEvents} closeBtn={this._backBtnPress} />
-          <EventList events={joinedEvents} closeBtn={this._backBtnPress} />
+          <EventList events={this.props.user.events} styles={listStyle} />
+          <EventList events={hostEvents} styles={listStyle} />
+          <EventList events={joinedEvents} styles={listStyle} />
         </ScrollableTabView>
       </Image>
     );
@@ -205,6 +205,71 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#808080',
     fontFamily: 'LatoRegular',
+    marginBottom: 16,
+  },
+  bubble: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    height: 80,
+    width: 50,
+  },
+});
+
+const listStyle = StyleSheet.create({
+  container: {
+    borderRadius: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  row: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    marginTop: 2,
+    marginBottom: 2,
+    height: 80,
+    justifyContent: 'space-between',
+  },
+  time: {
+    fontSize: 8,
+    marginTop: 5,
+    alignSelf: 'center',
+  },
+  duration: {
+    fontSize: 8,
+    alignSelf: 'center',
+    color: '#c4c4c4',
+  },
+  activityImage: {
+    height: 30,
+    width: 30,
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  icon: {
+    height: 80,
+    marginLeft: 5,
+  },
+  header: {
+    color: '#808080',
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+  info: {
+    justifyContent: 'flex-end',
+    flexGrow: 1,
+    maxWidth: width * 0.5,
+  },
+  title: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  author: {
+    fontSize: 10,
+    color: '#808080',
     marginBottom: 16,
   },
   bubble: {

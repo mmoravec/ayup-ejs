@@ -9,10 +9,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
-import EventButton from '../components/EventButton';
-import EventComments from '../components/EventComments';
+import EventButton from '../components/event/Button';
+import EventComments from '../components/event/Comments';
 import Icons from '../constants/activities';
-import Content from '../components/EventContent';
+import Content from '../components/event/Content';
 import MapStyle from '../constants/mapstyle';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');

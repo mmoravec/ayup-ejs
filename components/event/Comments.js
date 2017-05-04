@@ -55,7 +55,7 @@ export default class EventComments extends React.Component {
              </View>
              <TouchableOpacity style={{alignSelf: 'center'}} onPress={this.props.saveComment}>
                <Image
-                 source={require('../assets/images/reply.png')}
+                 source={require('../../assets/images/reply.png')}
                  style={{height: 25}}
                  resizeMode={'contain'}
                />
