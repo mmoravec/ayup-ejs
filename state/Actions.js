@@ -41,6 +41,29 @@ export default class Actions {
     };
   }
 
+  static showhideField(field) {
+    return {
+      type: ActionTypes.SHOWHIDE_FIELD,
+      field,
+    };
+  }
+
+  static focusField(field) {
+    console.log(field);
+    return {
+      type: ActionTypes.FOCUS_FIELD,
+      el: field,
+    };
+  }
+
+  static setFormValue(key, value) {
+    return {
+      type: ActionTypes.SET_FORMVALUE,
+      key,
+      value,
+    };
+  }
+
   static loadComments(eventID) {
     return {
       type: ActionTypes.LOAD_COMMENTS,

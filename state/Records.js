@@ -64,3 +64,75 @@ export const Comment = Record({
   author: null,
   content: '',
 });
+
+export const FormState = Record({
+  startDate: {
+    focus: false,
+    shown: true,
+    value: '',
+    label: 'Start Date',
+    stateKey: 'startDate',
+  },
+  endDate: {
+    focus: false,
+    shown: true,
+    value: '',
+    label: 'End Date',
+    stateKey: 'endDate',
+  },
+  title: {
+    label: 'Title',
+    focus: false,
+    shown: true,
+    value: '',
+    stateKey: 'title',
+  },
+  desc: {
+    label: 'Description',
+    focus: false,
+    shown: false,
+    value: '',
+    stateKey: 'desc',
+  },
+  location: {
+    focus: false,
+    label: 'Meeting Location',
+    shown: true,
+    value: '',
+    lnglat: [],
+    stateKey: 'location',
+  },
+  dest: {
+    focus: false,
+    shown: false,
+    label: 'Destination',
+    value: '',
+    lnglat: [],
+    stateKey: 'dest',
+  },
+  friends: {
+    focus: false,
+    shown: true,
+    value: '',
+    stateKey: 'friends',
+    label: 'Friends',
+  },
+  activity: {
+    focus: false,
+    shown: true,
+    value: 'basketball',
+    stateKey: 'activity',
+  },
+  private: {
+    focus: false,
+    shown: true,
+    value: false,
+    stateKey: 'private',
+  },
+  capacity: {
+    focus: false,
+    shown: false,
+    value: 0,
+    stateKey: 'capacity',
+  },
+});

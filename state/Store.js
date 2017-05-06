@@ -2,6 +2,7 @@ import { combineReducers, applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import EventsReducer from './EventsReducer';
 import UserReducer from './UserReducer';
+import FormReducer from './FormReducer';
 import PhoneStateReducer from './PhoneStateReducer';
 import sagas from '../sagas';
 import routeTracker from '../navigation/routeTracker';
@@ -21,6 +22,7 @@ import Navigator from '../navigation/Navigator';
       events: EventsReducer,
       user: UserReducer,
       phone: PhoneStateReducer,
+      form: FormReducer,
     }),
     applyMiddleware(sagaMiddleware, routeTracker)
   );

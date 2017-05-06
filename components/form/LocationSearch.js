@@ -4,9 +4,6 @@ import {
   View,
   Dimensions,
   TouchableHighlight,
-  Platform,
-  Image,
-  DatePickerIOS,
 } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import { MapView } from 'expo';
@@ -56,7 +53,7 @@ export default class LocationSearch extends React.Component {
 
   render() {
     let location = "";
-    if (this.state.hasFocused && this.props.date !== '') {
+    if (this.state.hasFocused && this.props.value !== '') {
       location = this.props.address.name;
     }
     return (
@@ -91,8 +88,8 @@ export default class LocationSearch extends React.Component {
   }
 
   _renderLocation = () => {
-    if (this.state.focusLocation) {
-      let location = this.props.address.lat ? { latitude: this.props.address.lat, longitude: this.props.address.long, latitudeDelta: 0.0249666, longitudeDelta: 0.017766} : this.props.region;
+    if (this.props.focus) {
+      let location = this.props.lnglat[0] ? { latitude: this.props.lnglat[1], longitude: this.props.lnglat[0], latitudeDelta: 0.0249666, longitudeDelta: 0.017766} : this.props.region;
       return (
         <View>
           <GooglePlacesAutocomplete
@@ -178,7 +175,7 @@ export default class LocationSearch extends React.Component {
   }
 
   _onLocationPress = () => {
-    this.props.onFocus(this.props.stateKey);
+    this.props.dispatch(Actions.focusField(this.props.stateKey));
     this.props.scrollTo(this._scrollY - 80);
   }
 
