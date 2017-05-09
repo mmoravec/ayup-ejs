@@ -47,9 +47,11 @@ export const PhoneState = Record({
   filtersLoaded: false,
   imagesLoaded: false,
   status: '',
-  location: false,
   optly: null,
   optlyVariation: '',
+  locationGranted: false,
+  contactsGranted: false,
+  notificationGranted: false,
 });
 
 export const Comment = Record({
@@ -112,7 +114,7 @@ export const FormState = Record({
   friends: {
     focus: false,
     shown: true,
-    value: '',
+    value: [],
     stateKey: 'friends',
     label: 'Friends',
   },

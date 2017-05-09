@@ -54,8 +54,7 @@ export default class HomeScreen extends React.Component {
       events: this.props.events,
       region: this.props.region,
     };
-    console.log(this.props.phone.location);
-    if (this.props.phone.location !== 'denied' && this.props.phone.location !== false) {
+    if (this.props.phone.locationGranted) {
       return (
         <View style={{flex: 1}}>
           <MapView {...mapProps} />
@@ -79,7 +78,6 @@ export default class HomeScreen extends React.Component {
           </View>
           <EventListModal {...listProps} />
           <MenuModal {...menuProps} />
-          {this._renderLocationWarning()}
         </View>
       );
     } else {
@@ -93,7 +91,7 @@ export default class HomeScreen extends React.Component {
   }
 
   _renderLocationWarning = () => {
-    if (this.props.phone.location === "denied") {
+    if (this.props.phone.locationGranted === "denied") {
       console.log('render location warning');
       return (
         <Modal
@@ -103,6 +101,30 @@ export default class HomeScreen extends React.Component {
           visible={this.props.menuVisible}>
           <View style={{marginTop: 100}}>
             <Text>You must enable location in settings!</Text>
+          </View>
+        </Modal>
+      );
+    }
+  }
+
+  _renderLocationGreeting = () => {
+    if (this.props.phone.locationGranted === false) {
+      console.log('render location greeting');
+      return (
+        <Modal
+          animationType={"none"}
+          transparent={true}
+          onRequestClose={this._locationWarningClose}
+          visible={this.props.menuVisible}>
+          <View style={{marginTop: 100, backgroundColor: '#fff'}}>
+            <Text>Welcome to Ayup! Let's get started. We'll first need your location to surface events near you.</Text>
+            <TouchableOpacity onPress={this._grantLocation}>
+              <View style={{height: 100, width: 100}}>
+                <Text>
+                  Grant Location
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </Modal>
       );

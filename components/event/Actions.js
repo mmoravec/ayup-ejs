@@ -59,7 +59,6 @@ export default class EventActions extends React.Component {
   }
 
   _deleteEvent = () => {
-    console.log('deleting event');
     this.props.dispatch(Actions.deleteEvent(this.props.event.id));
   }
 

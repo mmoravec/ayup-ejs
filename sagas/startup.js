@@ -26,17 +26,18 @@ import activities from '../constants/activities';
 export default function* startup() {
   let result = yield [
     call(getUser),
+    call(getPhoneState),
   ];
   yield [
       call(loadFilters),
       call(loadFonts),
       call(loadImages),
   ];
-  let user = result[0];
-  console.log('called getlocation');
+  let phone = result[1];
   //change this to user.locationGranted when implemented
-  if (!user.new) {
-      yield call(getLocation);
+  if (phone.locationGranted) {
+    console.log('called getlocation');
+    yield call(getLocation);
   }
 }
 
@@ -69,7 +70,7 @@ function* loadFilters() {
 function* getLocation() {
   let permission = yield call(Permissions.askAsync, Permissions.LOCATION);
   if (permission.status !== 'granted') {
-    yield put({ type: ActionTypes.SET_LOCATION, location: 'denied'});
+    yield put({ type: ActionTypes.LOCATION_DENIED, location: 'denied'});
     yield put({
         type: ActionTypes.REGION_LOADED,
     });
@@ -95,8 +96,21 @@ function* getLocation() {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     });
-    yield put({ type: ActionTypes.SET_LOCATION, location: true});
   }
+}
+
+function* getPhoneState() {
+  let phone = yield call(LocalStorage.getPhoneStateAsync);
+  let merge = {};
+  if (phone !== null) {
+    merge.locationGranted = phone.locationGranted;
+    merge.contactsGranted = phone.contactsGranted;
+    merge.notificationGranted = phone.notificationGranted;
+  }
+  yield put({
+      type: ActionTypes.MERGE_PHONESTATE, phone: merge,
+  });
+  return merge;
 }
 
 function* getUser() {

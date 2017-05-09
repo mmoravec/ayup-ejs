@@ -49,6 +49,11 @@ export default class EventForm extends React.Component {
       onChangeText: ((text) => this.props.dispatch(Actions.setFormValue('title', text))),
       ...this._inputProps,
     };
+    this._descProps = {
+      onFocus: this._focusElement.bind(this, 'desc'),
+      onChangeText: ((text) => this.props.dispatch(Actions.setFormValue('desc', text))),
+      ...this._inputProps,
+    };
     this._actionProps = {
       action: this._saveBtnPress,
       image: require('../../assets/images/btn_save.png'),
@@ -57,8 +62,6 @@ export default class EventForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('form props');
-    console.log(nextProps);
   }
 
   componentWillUpdate() {
@@ -83,7 +86,10 @@ export default class EventForm extends React.Component {
             {
               this.props.form.desc.shown &&
               <View style={styles.input}>
-                <Hoshi {...this._inputProps} stateKey={'desc'} />
+                <Hoshi
+                  {...this._descProps}
+                  {...this.props.form.desc}
+                />
               </View>
             }
             <View style={styles.switch}>
@@ -232,12 +238,11 @@ export default class EventForm extends React.Component {
   }
 
   _show = (field) => {
-    console.log('showing field');
     this.props.dispatch(Actions.showhideField(field));
   }
 
   _privateSwitch = () => {
-   this.setState({private: !this.state.private});
+   this.props.dispatch(Actions.setFormValue('private', !this.props.form.private.value));
  }
 
   _scrollTo = (num) => {
@@ -245,12 +250,10 @@ export default class EventForm extends React.Component {
   }
 
   _focusElement = (el) => {
-    console.log('focusing field');
     this.props.dispatch(Actions.focusField(el));
   }
 
   _onDateChange = (key, value) => {
-    console.log(this.props.form.endDate.value < value);
     if (key === 'startDate' && this.props.form.endDate.value < value) {
       this.props.dispatch(Actions.setFormValue('endDate', value));
     }

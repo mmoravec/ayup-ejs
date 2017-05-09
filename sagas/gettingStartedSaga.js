@@ -6,6 +6,14 @@ import { request } from '../utils/fetch';
 import { User } from '../state/Records';
 import { URL, PUT, GET } from '../constants/rest';
 
-// export function* watchGettingStarted() {
-//   yield takeLatest(ActionTypes.SYNC_PROFILE, syncProfile);
-// }
+export function* watchGettingStarted() {
+  yield take(ActionTypes.MERGE_PHONESTATE);
+  yield call(getStarted);
+}
+
+function* getStarted() {
+  const phone = yield select(state => state.phone);
+  if(!phone.locationGranted) {
+    console.log('get location flow');
+  }
+}

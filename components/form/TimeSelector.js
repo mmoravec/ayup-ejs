@@ -70,7 +70,6 @@ export default class TimeSelector extends React.Component {
     let time = date.getTime();
     let mint = date.getMinutes();
     let nDate = new Date(time + (Math.ceil((mint / 15)) * 15 - mint) * 60000);
-    console.log('getting next time');
     return nDate;
   }
 
@@ -91,16 +90,12 @@ export default class TimeSelector extends React.Component {
   }
 
   _onChange = (date) => {
-    console.log('calling onchange');
     this.props.onChange(this.props.stateKey, date);
   }
 
   _onDatePress = async () => {
-    console.log(this.props.stateKey);
-    console.log(this.props);
     this._onChange(this.props.value instanceof Date ? this.props.value : this._getNextTime());
     this.props.onFocus(this.props.stateKey);
-    console.log('date focused');
     if (Platform.OS === 'android') {
       let date, time;
       let now = new Date();

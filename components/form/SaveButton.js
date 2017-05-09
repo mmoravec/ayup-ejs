@@ -19,7 +19,7 @@ export default class SaveButton extends React.Component {
   static getDataProps(data) {
     return {
       phone: data.phone,
-      address: data.events.geocodeAddress,
+      form: data.form,
     };
   }
 
@@ -78,9 +78,14 @@ export default class SaveButton extends React.Component {
   }
 
   _saveBtnPress = () => {
-    let eventState = this.props.event;
+    let eventState = this.props.form;
+    if (eventState.startDate.value === "" || eventState.endDate.value === "" || eventState.title.value === "" || eventState.location.value === "") {
+      this._warnUser();
+    } else {
     let invited = [];
-    eventState.friends.map(friend => {
+    console.log(eventState.friends);
+    eventState.friends.value.map(friend => {
+      //TODO: update this to be id instead fbid
       invited.push({
         fbid: friend.fbid,
         profilePic: friend.profilePic,
@@ -88,22 +93,24 @@ export default class SaveButton extends React.Component {
       });
     });
     let event = {
-      startDate: eventState.startDate.toISOString(),
-      endDate: eventState.endDate.toISOString(),
-      title: eventState.title,
-      private: eventState.private,
-      desc: eventState.desc,
+      startDate: eventState.startDate.value.toISOString(),
+      endDate: eventState.endDate.value.toISOString(),
+      title: eventState.title.value,
+      private: eventState.private.value,
+      desc: eventState.desc.value,
       location: {
-        coordinates: [this.props.address.long, this.props.address.lat],
-        text: this.props.address.name,
+        coordinates: eventState.location.lnglat,
+        text: eventState.location.value,
+      },
+      destination: {
+        coordinates: eventState.dest.lnglat,
+        text: eventState.dest.value,
       },
       invited,
-      activity: eventState.activity,
-      capacity: eventState.capacity,
+      activity: eventState.activity.value,
+      capacity: eventState.capacity.value,
     };
-    if (event.startDate === "" || event.endDate === "" || event.title === "" || event.location === "") {
-      this._warnUser();
-    } else {
+
       this.props.dispatch(Actions.saveEvent(event));
     }
   }

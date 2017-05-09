@@ -6,7 +6,6 @@ import { FormState } from './Records';
 class FormReducer {
   static reduce(state = new FormState(), action) {
     if (FormReducer[action.type]) {
-      console.log('modifying state');
       return FormReducer[action.type](state, action);
     } else {
       return state;
@@ -45,8 +44,6 @@ class FormReducer {
     // this.setState(obj);
     let val = {...state[action.key]};
     val.value = action.value;
-    console.log('setting form value');
-    console.log(val);
     return state.set(action.key, val);
   }
 
