@@ -41,8 +41,8 @@ export default class TimeSelector extends React.Component {
 
   render() {
     let time = "";
-    if (this.state.hasFocused && this.props.date !== '') {
-      time = dateFormat(this.props.date, 'ddd h:MM TT, mmm dd');
+    if (this.state.hasFocused && this.props.value !== '') {
+      time = dateFormat(this.props.value, 'ddd h:MM TT, mmm dd');
     }
     return (
       <TouchableHighlight
@@ -70,12 +70,13 @@ export default class TimeSelector extends React.Component {
     let time = date.getTime();
     let mint = date.getMinutes();
     let nDate = new Date(time + (Math.ceil((mint / 15)) * 15 - mint) * 60000);
+    console.log('getting next time');
     return nDate;
   }
 
   _renderDate = () => {
     if (this.state.focusDate && Platform.OS === 'ios') {
-      let date = this.props.date;
+      let date = this.props.value;
       return (
         <DatePickerIOS
           date={date}
@@ -90,12 +91,16 @@ export default class TimeSelector extends React.Component {
   }
 
   _onChange = (date) => {
+    console.log('calling onchange');
     this.props.onChange(this.props.stateKey, date);
   }
 
   _onDatePress = async () => {
-    this._onChange(this.props.date instanceof Date ? this.props.date : this._getNextTime());
+    console.log(this.props.stateKey);
+    console.log(this.props);
+    this._onChange(this.props.value instanceof Date ? this.props.value : this._getNextTime());
     this.props.onFocus(this.props.stateKey);
+    console.log('date focused');
     if (Platform.OS === 'android') {
       let date, time;
       let now = new Date();

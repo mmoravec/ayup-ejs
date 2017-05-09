@@ -8,10 +8,13 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import { connect } from 'react-redux';
 import BaseInput from './BaseInput';
+import Actions from '../../state/Actions';
 
 const PADDING = 24;
 
+@connect()
 export default class Hoshi extends BaseInput {
 
   static propTypes = {

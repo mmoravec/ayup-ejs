@@ -5,6 +5,7 @@ import { watchUnauthenticated, watchRouteChange } from './routeSaga';
 import { refreshUserFriends, watchSyncProfile } from './userSaga';
 import { watchInitAnalytics } from './analyticsSaga';
 import { watchEventAction } from './eventSaga';
+import { watchFormActions } from './formSaga';
 /*
  * The entry point for all the sagas used in this application.
  */
@@ -18,5 +19,6 @@ export default function* root() {
     fork(watchUnauthenticated),
     fork(watchSyncProfile),
     fork(watchInitAnalytics),
+    fork(watchFormActions),
   ];
 }

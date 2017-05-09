@@ -26,8 +26,6 @@ const {height, width} = Dimensions.get('window');
 export default class EventForm extends React.Component {
 
   static getDataProps(data) {
-    console.log('getDataProps)');
-    console.log(data.form);
     return {
       form: data.form,
     };
@@ -46,6 +44,11 @@ export default class EventForm extends React.Component {
       borderColor: '#8bd1c6',
       scrollTo: this._scrollTo,
     };
+    this._titleProps = {
+      onFocus: this._focusElement.bind(this, 'title'),
+      onChangeText: ((text) => this.props.dispatch(Actions.setFormValue('title', text))),
+      ...this._inputProps,
+    };
     this._actionProps = {
       action: this._saveBtnPress,
       image: require('../../assets/images/btn_save.png'),
@@ -53,10 +56,9 @@ export default class EventForm extends React.Component {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('nextprops');
+  componentWillReceiveProps(nextProps) {
+    console.log('form props');
     console.log(nextProps);
-    return true;
   }
 
   componentWillUpdate() {
@@ -64,8 +66,6 @@ export default class EventForm extends React.Component {
   }
 
   render() {
-    console.log('eventform render');
-    console.log(this.props.form);
     return (
       <View>
         <View style={styles.scrollView}>
@@ -73,9 +73,12 @@ export default class EventForm extends React.Component {
             ref="scrollView"
             keyboardShouldPersistTaps={'always'}
             contentContainerStyle={styles.form}>
-            <ActivitySelector />
+            <ActivitySelector {...this.props.form.activity} onChange={this._onChange} />
             <View style={[styles.input, styles.topInput]}>
-              <Hoshi {...this._inputProps} {...this.props.form.title} />
+              <Hoshi
+                {...this._titleProps}
+                {...this.props.form.title}
+              />
             </View>
             {
               this.props.form.desc.shown &&
@@ -113,8 +116,10 @@ export default class EventForm extends React.Component {
               this.props.form.startDate.shown &&
               <View style={styles.input}>
                 <TimeSelector
-                  {...this._inputProps}
                   {...this.props.form.startDate}
+                  onFocus={this._focusElement}
+                  onChange={this._onDateChange}
+                  scrollTo={this._scrollTo}
                 />
               </View>
             }
@@ -122,23 +127,27 @@ export default class EventForm extends React.Component {
               this.props.form.endDate.shown &&
               <View style={styles.input}>
                 <TimeSelector
-                  {...this._inputProps}
                   {...this.props.form.endDate}
+                  onFocus={this._focusElement}
+                  onChange={this._onDateChange}
+                  scrollTo={this._scrollTo}
                 />
               </View>
             }
             <View style={styles.input}>
               <FriendSelector
-                {...this._inputProps}
                 {...this.props.form.friends}
+                onFocus={this._focusElement}
+                scrollTo={this._scrollTo}
+                onChange={this._onChange}
               />
             </View>
             {
               this.props.form.capacity.shown &&
               <View style={styles.input}>
                 <Capacity
+                  {...this.props.form.capacity}
                   onChange={this._onChange}
-                  stateKey={'capacity'}
                 />
               </View>
             }
@@ -149,7 +158,7 @@ export default class EventForm extends React.Component {
               <View style={styles.fieldContainer}>
                 {
                   !this.props.form.capacity.shown &&
-                  <TouchableOpacity onPress={this._showCapacity} style={{margin: 5}}>
+                  <TouchableOpacity onPress={this._show.bind(null, 'capacity')} style={{margin: 5}}>
                     <Image
                       source={require('../../assets/images/capacity_btn.png')}
                       style={{height: 40, width: 114}}
@@ -159,7 +168,7 @@ export default class EventForm extends React.Component {
                 }
                 {
                   !this.props.form.desc.shown &&
-                  <TouchableOpacity onPress={this._showDescription} style={{margin: 5}}>
+                  <TouchableOpacity onPress={this._show.bind(null, 'desc')} style={{margin: 5}}>
                     <Image
                       source={require('../../assets/images/description_btn.png')}
                       style={{height: 40, width: 131}}
@@ -168,7 +177,7 @@ export default class EventForm extends React.Component {
                 }
                 {
                   !this.props.form.dest.shown &&
-                  <TouchableOpacity onPress={this._showDestination} style={{margin: 5}}>
+                  <TouchableOpacity onPress={this._show.bind(null, 'dest')} style={{margin: 5}}>
                     <Image
                       source={require('../../assets/images/destination_btn.png')}
                       style={{height: 40, width: 122}}
@@ -185,7 +194,7 @@ export default class EventForm extends React.Component {
               <View style={styles.fieldContainer}>
                 {
                   this.props.form.capacity.shown &&
-                  <TouchableOpacity onPress={this._showCapacity} style={{margin: 5}}>
+                  <TouchableOpacity onPress={this._show.bind(null, 'capacity')} style={{margin: 5}}>
                     <Image
                       source={require('../../assets/images/capacity_btn.png')}
                       style={{height: 40, width: 114}}
@@ -195,7 +204,7 @@ export default class EventForm extends React.Component {
                 }
                 {
                   this.props.form.desc.shown &&
-                  <TouchableOpacity onPress={this._showDescription} style={{margin: 5}}>
+                  <TouchableOpacity onPress={this._show.bind(null, 'desc')} style={{margin: 5}}>
                     <Image
                       source={require('../../assets/images/description_btn.png')}
                       style={{height: 40, width: 131}}
@@ -204,7 +213,7 @@ export default class EventForm extends React.Component {
                 }
                 {
                   this.props.form.dest.shown &&
-                  <TouchableOpacity onPress={this._showDestination} style={{margin: 5}}>
+                  <TouchableOpacity onPress={this._show.bind(null, 'dest')} style={{margin: 5}}>
                     <Image
                       source={require('../../assets/images/destination_btn.png')}
                       style={{height: 40, width: 122}}
@@ -222,17 +231,37 @@ export default class EventForm extends React.Component {
     );
   }
 
-  _showDestination = () => {
-    this.props.dispatch(Actions.showhideField('dest'));
+  _show = (field) => {
+    console.log('showing field');
+    this.props.dispatch(Actions.showhideField(field));
   }
 
   _privateSwitch = () => {
    this.setState({private: !this.state.private});
  }
 
-
   _scrollTo = (num) => {
     this.refs.scrollView.scrollTo({y: num, animated: true});
+  }
+
+  _focusElement = (el) => {
+    console.log('focusing field');
+    this.props.dispatch(Actions.focusField(el));
+  }
+
+  _onDateChange = (key, value) => {
+    console.log(this.props.form.endDate.value < value);
+    if (key === 'startDate' && this.props.form.endDate.value < value) {
+      this.props.dispatch(Actions.setFormValue('endDate', value));
+    }
+    if (key === 'endDate' && value < this.props.form.startDate.value) {
+      value = this.props.form.startDate.value;
+    }
+    this.props.dispatch(Actions.setFormValue(key, value));
+  }
+
+  _onChange = (stateKey, value) => {
+    this.props.dispatch(Actions.setFormValue(stateKey, value));
   }
 
 }

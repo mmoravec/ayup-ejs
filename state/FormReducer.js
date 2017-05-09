@@ -14,7 +14,6 @@ class FormReducer {
   }
 
   static [ActionTypes.SHOWHIDE_FIELD](state, action) {
-    console.log(action);
     let newState = {...state[action.field]};
     newState.shown = !newState.shown;
     return state.set(action.field, newState);
@@ -23,7 +22,6 @@ class FormReducer {
   static [ActionTypes.FOCUS_FIELD](state, action) {
     let n = {};
     state.map((val, key) => {
-      console.log(val);
       if (val.stateKey === action.el && !val.focus) {
         val.focus = !val.focus;
         n[key] = val;
@@ -45,7 +43,19 @@ class FormReducer {
     // let obj = {};
     // obj[key] = value;
     // this.setState(obj);
-    return state.set(action.key, action.value);
+    let val = {...state[action.key]};
+    val.value = action.value;
+    console.log('setting form value');
+    console.log(val);
+    return state.set(action.key, val);
+  }
+
+  static [ActionTypes.SET_GEOCODE_ADDRESS](state, action) {
+    console.log(state);
+    let location = {...state[action.stateKey]};
+    location.value = action.data.name;
+    location.lnglat = [action.data.long, action.data.lat];
+    return state.set(action.stateKey, location);
   }
 
 }

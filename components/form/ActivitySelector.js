@@ -91,7 +91,7 @@ export default class ActivitySelector extends React.Component {
 
    _filterClick = (type) => {
      this.setState({filterSelected: type});
-     this.props.selectActivity(type);
+     this.props.onChange(this.props.stateKey, type);
      this.setState({showSelect: !this.state.showSelect});
    }
 

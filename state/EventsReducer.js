@@ -41,14 +41,6 @@ class EventsReducer {
     return state.set('selectedEvent', action.selectedEvent);
   }
 
-  static [ActionTypes.SET_GEOCODE_ADDRESS](state, action) {
-    return state.set('geocodeAddress', action.data);
-  }
-
-  static [ActionTypes.RESET_ADDRESS](state, action) {
-    return state.set('geocodeAddress', '');
-  }
-
   static [ActionTypes.ZERO_SELECTED_EVENT](state, action) {
     return state.set('selectedEvent', null);
   }

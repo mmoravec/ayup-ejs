@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -19,7 +19,6 @@ export default class LocationSearch extends React.Component {
 
   static getDataProps(data) {
     return {
-      address: data.events.geocodeAddress,
       region: data.events.region,
     };
   }
@@ -52,10 +51,6 @@ export default class LocationSearch extends React.Component {
   }
 
   render() {
-    let location = "";
-    if (this.state.hasFocused && this.props.value !== '') {
-      location = this.props.address.name;
-    }
     return (
       <View>
         <TouchableHighlight
@@ -65,7 +60,7 @@ export default class LocationSearch extends React.Component {
           <View>
             <View pointerEvents={'none'}>
               <Hoshi
-                value={location}
+                value={this.props.value}
                 editable={false}
                 label={this.props.label}
                 borderColor={'#8bd1c6'}
@@ -163,15 +158,19 @@ export default class LocationSearch extends React.Component {
   }
 
   _getLocation = (data, details) => {
-    let coord = [details.geometry.location.lng, details.geometry.location.lat];
     let region = {
       longitude: details.geometry.location.lng,
       latitude: details.geometry.location.lat,
       longitudeDelta: this.state.region ? this.state.region.longitudeDelta : 0.0399327278137207,
       latitudeDelta: this.state.region ? this.state.region.latitudeDelta : 0.02496758212897987,
-    }
+    };
     this.setState({region, regionChangeCount: 0});
-    this.props.onChange(details.formatted_address, coord);
+    this.props.dispatch(Actions.setFormLocation(
+      this.props.stateKey,
+      details.formatted_address,
+      details.geometry.location.lng,
+      details.geometry.location.lat,
+    ));
   }
 
   _onLocationPress = () => {
@@ -181,13 +180,13 @@ export default class LocationSearch extends React.Component {
 
   _onRegionChange = (region) => {
     this.setState({regionChangeCount: this.state.regionChangeCount + 1});
-    console.log(this.state.regionChangeCount);
     if (this.state.regionChangeCount > 0) {
       this._gplaces.setAddressText('');
     }
     this.props.dispatch(Actions.geoCode(
       region.latitude,
       region.longitude,
+      this.props.stateKey
     ));
   }
 }
@@ -197,5 +196,5 @@ const styles = StyleSheet.create({
   image: {
     backgroundColor: 'transparent',
     marginBottom: 25,
-  }
+  },
 });

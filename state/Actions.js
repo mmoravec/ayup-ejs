@@ -49,7 +49,6 @@ export default class Actions {
   }
 
   static focusField(field) {
-    console.log(field);
     return {
       type: ActionTypes.FOCUS_FIELD,
       el: field,
@@ -57,9 +56,18 @@ export default class Actions {
   }
 
   static setFormValue(key, value) {
+    console.log('setFormValue called');
     return {
       type: ActionTypes.SET_FORMVALUE,
       key,
+      value,
+    };
+  }
+
+  static setFormTitle(value) {
+    return {
+      type: ActionTypes.SET_FORMVALUE,
+      key: 'title',
       value,
     };
   }
@@ -164,11 +172,24 @@ export default class Actions {
     };
   }
 
-  static geoCode(lat, long) {
+  static geoCode(lat, long, stateKey) {
     return {
       type: ActionTypes.GEOCODE,
       lat,
       long,
+      stateKey,
+    };
+  }
+
+  static setFormLocation(key, name, long, lat) {
+    return {
+      type: ActionTypes.SET_GEOCODE_ADDRESS,
+      stateKey: key,
+      data: {
+        name,
+        long,
+        lat,
+      },
     };
   }
 

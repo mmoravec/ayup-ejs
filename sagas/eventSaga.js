@@ -18,7 +18,6 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.REJECT_EVENT, rejectEvent),
     takeLatest(ActionTypes.LOAD_COMMENTS, loadComments),
     takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
-    takeLatest(ActionTypes.GEOCODE, reverseGeocode),
   ];
 }
 
@@ -105,15 +104,13 @@ function* requestEvent(action) {
 }
 
 function* deleteEvent(action) {
-  console.log(action);
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, DELETE, URL + "/v1.0/events/?id=" + action.eventID,
+    yield call(request, DELETE, URL + "/v1.0/events?id=" + action.eventID,
       {Authorization: user.secret, UserID: user.id}
     );
   } catch (error) {
-    console.log(error);
     yield put({ type: ActionTypes.ALERT_ERROR });
     yield call(delay, 2000);
     yield put({ type: ActionTypes.RESET_ALERT });
@@ -173,7 +170,6 @@ function* loadComments(action) {
 
 function* saveComment(action) {
   const user = yield select(state => state.user);
-  console.log(action);
   let comment = {
     content: action.comment,
     parentID: action.parentID ? action.parentID : null,
@@ -208,23 +204,4 @@ function* loadEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
-}
-
-function* reverseGeocode(action) {
-  console.log(action);
-  let data;
-  try {
-    data = yield call(request, GET, 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + action.lat + ',' + action.long + '&key=AIzaSyAU9hsZ7WU1DkT8na9GHBwuldoBWccctjI');
-  } catch (error) {
-    return;
-  }
-  if (data.body.results[0]) {
-    data = {
-      lat: action.lat,
-      long: action.long,
-      name: data.body.results[0].formatted_address,
-    };
-    yield put({ type: ActionTypes.SET_GEOCODE_ADDRESS, data });
-  }
-  return;
 }

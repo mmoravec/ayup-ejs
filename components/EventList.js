@@ -71,7 +71,6 @@ export default class EventList extends React.Component {
 @connect()
 class ListRow extends React.Component {
   render() {
-    console.log(this.props);
     let styles = this.props.styles;
     let rowData = this.props.data.toJS();
     let selectEvent = this._onItemPress.bind(this, rowData.id);
@@ -111,7 +110,6 @@ class ListRow extends React.Component {
   }
   _onItemPress = (id) => {
     //TODO: create a saga for this when fetching comments becomes
-    console.log(id);
     this.props.dispatch(Actions.selectEvent(id));
     this.props.dispatch(Actions.routeChange('Event'));
     if (this.props.closeBtn) {

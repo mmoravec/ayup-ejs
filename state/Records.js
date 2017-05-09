@@ -15,7 +15,6 @@ export const EventState = Record({
   },
   selectedEvent: null,
   selectedComments: new List(),
-  geocodeAddress: '',
 });
 
 export const User = Record({

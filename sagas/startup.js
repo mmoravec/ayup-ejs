@@ -34,7 +34,7 @@ export default function* startup() {
   ];
   let user = result[0];
   console.log('called getlocation');
-  console.log(user);
+  //change this to user.locationGranted when implemented
   if (!user.new) {
       yield call(getLocation);
   }

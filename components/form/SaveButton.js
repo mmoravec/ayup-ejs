@@ -41,7 +41,6 @@ export default class SaveButton extends React.Component {
   }
 
   _renderCreate = () => {
-    console.log(this.props.address);
     if (this.props.phone.status === '') {
       return (
         <TouchableOpacity

@@ -4,7 +4,7 @@ import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import Navigation from './navigation/Navigator';
 import Store from './state/Store';
-import Actions from './state/Actions';
+// import Actions from './state/Actions';
 
 class AppContainer extends React.Component {
   render() {
