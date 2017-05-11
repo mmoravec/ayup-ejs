@@ -14,6 +14,7 @@ import { List } from 'immutable';
 import Fuse from 'fuse.js';
 import ImmutableListView from 'react-native-immutable-list-view';
 import MyText from '../common/MyText';
+import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
 @connect((data) => FriendSelector.getDataProps(data))
@@ -113,6 +114,7 @@ export default class FriendSelector extends React.Component {
       setTimeout(() => { this.props.scrollTo(this._scrollY + this.state.invitedFriends.size * 60 - 80); }, 200);
     }
     this.props.onFocus(this.props.stateKey);
+    this.props.dispatch(Actions.inviteFriends());
   }
 
   _renderInput = () => {

@@ -12,7 +12,7 @@ import {
 import {
   Image,
 } from 'react-native';
-import { Font, Asset, Location, Permissions } from 'expo';
+import { Font, Asset, Location, Permissions, Contacts } from 'expo';
 import ActionTypes from '../state/ActionTypes';
 import LocalStorage from '../utils/LocalStorage';
 import { request } from '../utils/fetch';
@@ -38,6 +38,9 @@ export default function* startup() {
   if (phone.locationGranted) {
     console.log('called getlocation');
     yield call(getLocation);
+  }
+  if(phone.contactsGranted) {
+    yield call(getContacts);
   }
 }
 
@@ -67,13 +70,14 @@ function* loadFilters() {
     });
 }
 
-function* getLocation() {
+export function* getLocation() {
   let permission = yield call(Permissions.askAsync, Permissions.LOCATION);
   if (permission.status !== 'granted') {
     yield put({ type: ActionTypes.LOCATION_DENIED, location: 'denied'});
     yield put({
         type: ActionTypes.REGION_LOADED,
     });
+    return false;
   } else {
     let {location, timeout } = yield race({
       location: call(Location.getCurrentPositionAsync, {}),
@@ -96,7 +100,19 @@ function* getLocation() {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     });
+    return true;
   }
+}
+
+export function* getContacts() {
+  const p = yield call(Permissions.askAsync, Permissions.CONTACTS);
+  if (p.status !== 'granted') {
+    //alert user to give us contacts
+    return;
+  }
+  let contacts = yield call(Contacts.getContactsAsync, { fields: [Contacts.PHONE_NUMBERS], pageSize: 2000 });
+  yield put({type: ActionTypes.SET_CONTACTS, contacts });
+  return true;
 }
 
 function* getPhoneState() {

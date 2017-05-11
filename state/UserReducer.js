@@ -18,6 +18,9 @@ class EventsReducer {
     // console.log(action.friends);
     return state.set('friends', action.friends);
   }
+  static [ActionTypes.SET_CONTACTS](state, action) {
+    return state.set('contacts', action.contacts);
+  }
   static [ActionTypes.LOG_OUT](state, action) {
     LocalStorage.clearAllAsync();
     return new User();

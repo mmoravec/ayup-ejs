@@ -15,6 +15,7 @@ import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import MapView from '../components/EventMap';
 import Filters from '../utils/filters';
+import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
 @connect((data) => HomeScreen.getDataProps(data))
@@ -54,7 +55,7 @@ export default class HomeScreen extends React.Component {
       events: this.props.events,
       region: this.props.region,
     };
-    if (this.props.phone.locationGranted) {
+    if (this.props.phone.locationGranted && this.props.region.latitude) {
       return (
         <View style={{flex: 1}}>
           <MapView {...mapProps} />
@@ -85,6 +86,7 @@ export default class HomeScreen extends React.Component {
         <View>
           <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} />
           {this._renderLocationWarning()}
+          {this._renderLocationGreeting()}
         </View>
       );
     }
@@ -114,15 +116,19 @@ export default class HomeScreen extends React.Component {
         <Modal
           animationType={"none"}
           transparent={true}
+          style={{flex: 1}}
           onRequestClose={this._locationWarningClose}
           visible={this.props.menuVisible}>
-          <View style={{marginTop: 100, backgroundColor: '#fff'}}>
-            <Text>Welcome to Ayup! Let's get started. We'll first need your location to surface events near you.</Text>
+          <View style={{margin: 50, backgroundColor: '#fff', height: height * 0.6, marginTop: height * 0.2, justifyContent: 'space-between'}}>
+            <View>
+              <Text>Welcome to Ayup! Let's get started. We'll first need your location to surface events near you.</Text>
+            </View>
             <TouchableOpacity onPress={this._grantLocation}>
-              <View style={{height: 100, width: 100}}>
-                <Text>
-                  Grant Location
-                </Text>
+              <View style={{width: 'auto', alignItems: 'center', marginBottom: 10}}>
+                <Image
+                  style={styles.btnLocation}
+                  source={require('../assets/images/btn_ready.png')}
+                />
               </View>
             </TouchableOpacity>
           </View>
@@ -133,6 +139,10 @@ export default class HomeScreen extends React.Component {
 
   _locationWarningClose = () => {
     // console.log("won't close");
+  }
+
+  _grantLocation = () => {
+    this.props.dispatch(Actions.grantLocation());
   }
 
   _onListBtnPress = () => {
@@ -174,6 +184,10 @@ const styles = StyleSheet.create({
   btnMain: {
     width: 150,
     height: 150,
+  },
+  btnLocation: {
+    height: 38,
+    width: 140,
   },
   btnList: {
     width: 100,

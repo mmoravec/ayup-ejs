@@ -39,6 +39,7 @@ export const User = Record({
   badges: new List(),
   activities: new List(),
   secret: null,
+  contacts: new List(),
 });
 
 export const PhoneState = Record({

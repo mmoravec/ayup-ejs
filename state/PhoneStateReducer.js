@@ -30,6 +30,14 @@ class PhoneStateReducer {
     return state.set('fontLoaded', true);
   }
 
+  static [ActionTypes.LOCATION_GRANTED](state, action) {
+    return state.set('locationGranted', true);
+  }
+
+  static [ActionTypes.CONTACTS_GRANTED](state, action) {
+    return state.set('contactsGranted', true);
+  }
+
   static [ActionTypes.IMAGES_LOADED](state, action) {
     return state.set('imagesLoaded', true);
   }

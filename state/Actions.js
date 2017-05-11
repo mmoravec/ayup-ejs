@@ -56,11 +56,22 @@ export default class Actions {
   }
 
   static setFormValue(key, value) {
-    console.log('setFormValue called');
     return {
       type: ActionTypes.SET_FORMVALUE,
       key,
       value,
+    };
+  }
+
+  static grantLocation() {
+    return {
+      type: ActionTypes.GRANT_LOCATION,
+    };
+  }
+
+  static inviteFriends() {
+    return {
+      type: ActionTypes.INVITE_FRIENDS,
     };
   }
 
