@@ -38,6 +38,10 @@ class PhoneStateReducer {
     return state.set('contactsGranted', true);
   }
 
+  static [ActionTypes.NOTIFICATIONS_GRANTED](state, action) {
+    return state.set('notificationsGranted', true);
+  }
+
   static [ActionTypes.IMAGES_LOADED](state, action) {
     return state.set('imagesLoaded', true);
   }

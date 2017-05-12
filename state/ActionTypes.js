@@ -22,6 +22,7 @@ export default defineActionConstants([
   'LOCATION_GRANTED',
   'LOG_OUT',
   'MERGE_PHONESTATE',
+  'NOTIFICATIONS_GRANTED',
   'OPTLY_LOADED',
   'PROFILE_UPDATED',
   'REGION_CHANGE',
