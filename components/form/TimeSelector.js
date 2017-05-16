@@ -41,7 +41,7 @@ export default class TimeSelector extends React.Component {
 
   render() {
     let time = "";
-    if (this.state.hasFocused && this.props.value !== '') {
+    if (this.props.value !== '') {
       time = dateFormat(this.props.value, 'ddd h:MM TT, mmm dd');
     }
     return (

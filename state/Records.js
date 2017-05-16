@@ -115,7 +115,7 @@ export const FormState = Record({
   friends: {
     focus: false,
     shown: true,
-    value: [],
+    value: new List(),
     stateKey: 'friends',
     label: 'Friends',
   },

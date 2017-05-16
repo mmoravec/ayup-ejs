@@ -9,6 +9,7 @@ import {
   Image,
   LayoutAnimation,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LocationSearch from './LocationSearch';
@@ -34,6 +35,7 @@ export default class EventForm extends React.Component {
   state = {
     scrollY: new Animated.Value(0),
     warn: false,
+    scrollTo: false,
   }
 
   constructor(props) {
@@ -75,6 +77,8 @@ export default class EventForm extends React.Component {
           <ScrollView
             ref="scrollView"
             keyboardShouldPersistTaps={'always'}
+            scrollEventThrottle={300}
+            onScroll={this._onScroll}
             contentContainerStyle={styles.form}>
             <ActivitySelector {...this.props.form.activity} onChange={this._onChange} />
             <View style={[styles.input, styles.topInput]}>
@@ -237,6 +241,13 @@ export default class EventForm extends React.Component {
     );
   }
 
+  _onScroll = () => {
+    if (!this.state.scrollTo && !this.props.form.friends.focus) {
+      this.props.dispatch(Actions.blurFields());
+      Keyboard.dismiss();
+    }
+  }
+
   _show = (field) => {
     this.props.dispatch(Actions.showhideField(field));
   }
@@ -247,6 +258,8 @@ export default class EventForm extends React.Component {
 
   _scrollTo = (num) => {
     this.refs.scrollView.scrollTo({y: num, animated: true});
+    this.setState({scrollTo: true});
+    setTimeout(() => { this.setState({scrollTo: false}); }, 1000);
   }
 
   _focusElement = (el) => {

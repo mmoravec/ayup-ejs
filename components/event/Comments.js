@@ -40,7 +40,7 @@ export default class EventComments extends React.Component {
 
 
  render() {
-     if (this.props.commenting) {
+     if (this.props.noScroll) {
        return (
          <Animated.View style={{ backgroundColor: '#f34', flex: 1, zIndex: 2, position:'absolute', bottom: this.state.keyboardOffset}}>
            <View style={{height: 50, padding: 5, backgroundColor: "#fff", borderTopWidth: 1, borderTopColor: '#e9e9e9', flexDirection: 'row'}}>

@@ -39,9 +39,7 @@ const Navigator = StackNavigator({
   headerMode: 'none',
   initialRouteName: 'Login',
   navigationOptions: {
-    cardStack: {
-      gesturesEnabled: false,
-    },
+    gesturesEnabled: false,
   },
 });
 

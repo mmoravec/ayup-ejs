@@ -15,7 +15,7 @@ export function* watchInitAnalytics() {
     yield take(ActionTypes.SET_CURRENT_USER);
     const user = yield select(state => state.user);
     if (user.id !== null) {
-      yield call(initOptimizely, user);
+  //    yield call(initOptimizely, user);
       init = false;
     }
   }

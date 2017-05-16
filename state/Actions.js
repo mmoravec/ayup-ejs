@@ -1,6 +1,13 @@
 import ActionTypes from './ActionTypes';
 
 export default class Actions {
+
+  static blurFields() {
+    return {
+      type: ActionTypes.BLUR_FIELDS,
+    };
+  }
+
   static setCurrentUser(user) {
     return {
       type: ActionTypes.SET_CURRENT_USER,

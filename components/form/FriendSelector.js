@@ -111,7 +111,7 @@ export default class FriendSelector extends React.Component {
   _addFriend = () => {
     if (!this.props.focus) {
       this.setState({inputText: ''});
-      setTimeout(() => { this.props.scrollTo(this._scrollY + this.state.invitedFriends.size * 60 - 80); }, 200);
+      setTimeout(() => { this.props.scrollTo(this._scrollY + this.props.value.size * 60 - 80); }, 200);
     }
     this.props.onFocus(this.props.stateKey);
     this.props.dispatch(Actions.inviteFriends());
@@ -139,10 +139,10 @@ export default class FriendSelector extends React.Component {
   }
 
   _renderInvitedFriends = () => {
-    if (this.state.invitedFriends.size > 0) {
+    if (this.props.value.size > 0) {
       return (
         <ImmutableListView
-          immutableData={this.state.invitedFriends}
+          immutableData={this.props.value}
           renderRow={this._renderInvitedRow}
           keyboardShouldPersistTaps={'always'}
         />
@@ -206,19 +206,17 @@ export default class FriendSelector extends React.Component {
   }
 
   _pushFriend = (friend) => {
-    let friends = this.state.invitedFriends;
+    let friends = this.props.value;
     var result = friends.find(obj => obj.name === friend.name);
     if (!result) {
       friends = friends.push(friend);
-      this.setState({invitedFriends: friends});
       this.props.onChange(this.props.stateKey, friends);
     }
   }
 
   _removeFriend = (friend) => {
-    let friends = this.state.invitedFriends;
+    let friends = this.props.value;
     let newFriends = friends.filter(obj => obj.fbid !== friend.fbid);
-    this.setState({invitedFriends: newFriends});
     this.props.onChange(this.props.stateKey, newFriends);
   }
 }

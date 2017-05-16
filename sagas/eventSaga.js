@@ -47,7 +47,7 @@ function* saveEvent(action) {
     longitude: action.event.location.coordinates[0],
     latitude: action.event.location.coordinates[1],
    });
-  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Home'});
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Back'});
 }
 
 function* updateNearbyEvents(action) {

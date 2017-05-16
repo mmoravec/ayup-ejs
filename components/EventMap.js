@@ -20,7 +20,7 @@ export default class EventMap extends React.Component {
       return (
         <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
-          initialRegion={this.props.region}
+          region={this.props.region}
           provider={"google"}
           customMapStyle={MapStyle}
           zoomEnabled={true}

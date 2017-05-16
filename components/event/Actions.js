@@ -1,13 +1,10 @@
 import React from 'react';
 import {
   View,
-  Image,
   StyleSheet,
   TouchableOpacity,
   Animated,
   Dimensions,
-  ActivityIndicator,
-  LayoutAnimation,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -15,47 +12,58 @@ import MyText from '../common/MyText';
 import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
 
-@connect()
+@connect(data => EventActions.getDataProps(data))
 export default class EventActions extends React.Component {
+
+  static getDataProps(data) {
+    return {
+      event: data.events.selectedEvent,
+      user: data.user,
+    };
+  }
 
   state = {
     active: false,
-    bottom: new Animated.Value(height),
+    bottom: new Animated.Value(height * 1.5),
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity style={{zIndex: 5}} onPress={this._settingsPress}>
-          {
-            !this.state.active && <MaterialCommunityIcons
-              style={{right: 15, top: 25, position: 'absolute'}}
-              size={42}
-              name={'dots-vertical'}
-              color={"#222"}
-                                  /> ||
-              this.state.active && <MaterialCommunityIcons
+    if (this.props.user.id === this.props.event.host.userID) {
+      return (
+        <View style={styles.container}>
+          <TouchableOpacity style={{zIndex: 5}} onPress={this._settingsPress}>
+            {
+              !this.state.active && <MaterialCommunityIcons
                 style={{right: 15, top: 25, position: 'absolute'}}
                 size={42}
-                name={'window-close'}
+                name={'dots-vertical'}
                 color={"#222"}
-                                   />
-          }
-        </TouchableOpacity>
-        <Animated.View style={[styles.settings, {bottom: this.state.bottom}]}>
-          <TouchableOpacity onPress={this._modifyEvent}>
-            <MyText style={styles.modify}>
-              Modify
-            </MyText>
+                                    /> ||
+                this.state.active && <MaterialCommunityIcons
+                  style={{right: 15, top: 25, position: 'absolute'}}
+                  size={42}
+                  name={'window-close'}
+                  color={"#222"}
+                                     />
+            }
           </TouchableOpacity>
-          <TouchableOpacity onPress={this._deleteEvent}>
-            <MyText style={styles.delete}>
-              Delete
-            </MyText>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
-    );
+          <Animated.View style={[styles.settings, {bottom: this.state.bottom}]}>
+            <TouchableOpacity onPress={this._modifyEvent}>
+              <MyText style={styles.modify}>
+                Modify
+              </MyText>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._deleteEvent}>
+              <MyText style={styles.delete}>
+                Delete
+              </MyText>
+            </TouchableOpacity>
+          </Animated.View>
+        </View>
+      );
+    } else {
+      return null;
+    }
   }
 
   _deleteEvent = () => {
@@ -65,7 +73,7 @@ export default class EventActions extends React.Component {
   _settingsPress = () => {
     this.setState({active: !this.state.active});
     if (this.state.active) {
-      Animated.spring(this.state.bottom, {toValue: height, tension: 20, friction: 4, velocity: 300}).start();
+      Animated.spring(this.state.bottom, {toValue: height * 1.5, tension: 20, friction: 4, velocity: 300}).start();
     } else {
       Animated.spring(this.state.bottom, {toValue: height * 0.8, tension: 20, friction: 4, velocity: 300}).start();
     }

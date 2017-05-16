@@ -39,7 +39,7 @@ export default function* startup() {
     console.log('called getlocation');
     yield call(getLocation);
   }
-  if(phone.contactsGranted) {
+  if (phone.contactsGranted) {
     yield call(getContacts);
   }
 }

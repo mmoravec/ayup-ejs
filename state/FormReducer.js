@@ -32,6 +32,15 @@ class FormReducer {
     return state.merge(Map(n));
   }
 
+  static [ActionTypes.BLUR_FIELDS](state, action) {
+    let n = {};
+    state.map((val, key) => {
+        val.focus = false;
+        n[key] = val;
+    });
+    return state.merge(Map(n));
+  }
+
   static [ActionTypes.SET_FORMVALUE](state, action) {
     // if (key === 'startDate' && this.state.endDate < value) {
     //   this.setState({endDate: value});

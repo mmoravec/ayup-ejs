@@ -23,7 +23,6 @@ export default class ActivitySelector extends React.Component {
 
   state = {
     showSelect: false,
-    filterSelected: 'basketball',
   }
 
    render() {
@@ -34,7 +33,7 @@ export default class ActivitySelector extends React.Component {
              <View>
                <Image style={styles.circle} source={require('../../assets/images/small_circle.png')}>
                  <Image
-                   source={Activities[this.state.filterSelected].image}
+                   source={Activities[this.props.value].image}
                    style={styles.activityImage}
                  />
                </Image>
@@ -90,7 +89,6 @@ export default class ActivitySelector extends React.Component {
    }
 
    _filterClick = (type) => {
-     this.setState({filterSelected: type});
      this.props.onChange(this.props.stateKey, type);
      this.setState({showSelect: !this.state.showSelect});
    }

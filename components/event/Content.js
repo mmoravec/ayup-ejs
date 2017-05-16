@@ -35,10 +35,7 @@ export default class EventContent extends React.Component {
   }
 
   state = {
-    commenting: false,
     ready: false,
-    comment: '',
-    parentID: null,
     scrollY: 0,
   }
 
@@ -58,17 +55,10 @@ export default class EventContent extends React.Component {
         immutableData={this.props.comments}
         renderRow={this._renderRow}
         renderHeader={this._renderHeader}
-        onScroll={this._onScroll}
+        onScroll={this.props.onScroll}
         keyboardShouldPersistTaps={'always'}
       />
     );
-  }
-
-
-  _onScroll = () => {
-    if (this.state.ready) {
-      this.setState({commenting: false, ready: false});
-    }
   }
 
 

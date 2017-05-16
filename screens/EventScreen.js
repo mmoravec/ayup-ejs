@@ -21,7 +21,7 @@ const {height, width} = Dimensions.get('window');
 export default class EventScreen extends React.Component {
 
   state = {
-    commenting: false,
+    noScroll: false,
     comment: '',
     parentID: null,
   }
@@ -51,13 +51,14 @@ export default class EventScreen extends React.Component {
       };
       let icon = Icons[event.activity].icon;
       let commentProps = {
-        commenting: this.state.commenting,
+        noScroll: this.state.noScroll,
         comment: this.state.comment,
         onChangeText: this._onCommentText,
         saveComment: this._saveComment,
       };
       let contentProps = {
         onCommentPress: this._onCommentPress,
+        onScroll: this._onScroll,
       };
       return (
         <View style={styles.scrollView}>
@@ -97,10 +98,14 @@ export default class EventScreen extends React.Component {
 
   _onCommentPress = (parentID) => {
     if (typeof parentID === 'string') {
-      this.setState({commenting: true, parentID});
+      this.setState({noScroll: true, parentID});
     } else {
-      this.setState({parentID: null, commenting: true});
+      this.setState({parentID: null, noScroll: true});
     }
+  }
+
+  _onScroll = () => {
+    this.setState({noScroll: false});
   }
 
   _onCommentText = (text) => {
@@ -112,7 +117,7 @@ export default class EventScreen extends React.Component {
       Actions.saveComment(this.state.comment,
         this.props.selectedEvent.id, this.state.parentID)
     );
-    this.setState({commenting: false, comment: ''});
+    this.setState({noScroll: false, comment: ''});
   }
 }
 
