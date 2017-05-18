@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
   Animated,
   Dimensions,
 } from 'react-native';
@@ -31,22 +32,7 @@ export default class EventActions extends React.Component {
     if (this.props.user.id === this.props.event.host.userID) {
       return (
         <View style={styles.container}>
-          <TouchableOpacity style={{zIndex: 5}} onPress={this._settingsPress}>
-            {
-              !this.state.active && <MaterialCommunityIcons
-                style={{right: 15, top: 25, position: 'absolute'}}
-                size={42}
-                name={'dots-vertical'}
-                color={"#222"}
-                                    /> ||
-                this.state.active && <MaterialCommunityIcons
-                  style={{right: 15, top: 25, position: 'absolute'}}
-                  size={42}
-                  name={'window-close'}
-                  color={"#222"}
-                                     />
-            }
-          </TouchableOpacity>
+          {this._renderMenu()}
           <Animated.View style={[styles.settings, {bottom: this.state.bottom}]}>
             <TouchableOpacity onPress={this._modifyEvent}>
               <MyText style={styles.modify}>
@@ -66,6 +52,30 @@ export default class EventActions extends React.Component {
     }
   }
 
+  _renderMenu = () => {
+    if (!this.state.active) {
+      return (
+        <TouchableOpacity style={{right: 15, top: 25, position: 'absolute', zIndex: 2}} onPress={this._settingsPress}>
+          <MaterialCommunityIcons
+            size={42}
+            name={'dots-vertical'}
+            color={"#222"}
+          />
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity style={{right: 15, top: 25, position: 'absolute', zIndex: 2}} onPress={this._settingsPress}>
+          <MaterialCommunityIcons
+            size={42}
+            name={'window-close'}
+            color={"#222"}
+          />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   _deleteEvent = () => {
     this.props.dispatch(Actions.deleteEvent(this.props.event.id));
   }
@@ -73,9 +83,9 @@ export default class EventActions extends React.Component {
   _settingsPress = () => {
     this.setState({active: !this.state.active});
     if (this.state.active) {
-      Animated.spring(this.state.bottom, {toValue: height * 1.5, tension: 20, friction: 4, velocity: 300}).start();
+      Animated.spring(this.state.bottom, {toValue: height * 0.5, tension: 20, friction: 4, velocity: 300}).start();
     } else {
-      Animated.spring(this.state.bottom, {toValue: height * 0.8, tension: 20, friction: 4, velocity: 300}).start();
+      Animated.spring(this.state.bottom, {toValue: 0, tension: 20, friction: 4, velocity: 300}).start();
     }
 
   }
@@ -84,11 +94,12 @@ export default class EventActions extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    width,
+    height: height * 0.2,
+    zIndex: 1,
+    backgroundColor: 'rgba(0,0,0,0)',
     position: 'absolute',
     top: 0,
-    width,
-    height,
-    zIndex: 1,
   },
   settings: {
     height: height * 0.4,

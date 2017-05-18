@@ -128,15 +128,17 @@ export default class LocationSearch extends React.Component {
             }}
             currentLocation={false}
           />
-          <MapView.Animated
-            style={{ flex: 1, backgroundColor: '#fff', height: height * 0.4, width: width * 0.9, justifyContent: 'center'}}
-            initialRegion={location}
-            region={this.state.region}
-            provider={"google"}
-            zoomEnabled={true}
-            onRegionChange={this._moveMarker}
-            onRegionChangeComplete={this._onRegionChange}>
-            <View style={{backgroundColor: 'transparent', width: 20, height: 45, alignSelf: 'center'}}>
+          <View style={{flex: 1, height: height * 0.4, width: width * 0.9}}>
+            <MapView.Animated
+              style={{backgroundColor: '#fff', height: height * 0.4, width: width * 0.9, zIndex: 1}}
+              initialRegion={location}
+              region={this.state.region}
+              provider={"google"}
+              zoomEnabled={true}
+              onRegionChange={this._moveMarker}
+              onRegionChangeComplete={this._onRegionChange}
+            />
+            <View style={{backgroundColor: 'transparent', width: 18, height: 30, top: height * 0.2 - 15, left: width * 0.45 - 9, position: 'absolute', zIndex: 2}}>
               <Ionicons
                 size={32}
                 name={'ios-pin'}
@@ -145,7 +147,7 @@ export default class LocationSearch extends React.Component {
                 color={'#ee366f'}
               />
             </View>
-          </MapView.Animated>
+          </View>
         </View>
       );
     } else {
@@ -194,7 +196,6 @@ export default class LocationSearch extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    backgroundColor: 'transparent',
     marginBottom: 25,
   },
 });

@@ -102,6 +102,7 @@ export default class TimeSelector extends React.Component {
       try {
         date = await DatePickerAndroid.open({date: now});
         if (date.action === DatePickerAndroid.dismissedAction) {
+          return;
         }
       } catch ({code, message}) {
         console.warn(`Error in Android DatePicker`, message);
@@ -109,6 +110,7 @@ export default class TimeSelector extends React.Component {
       try {
         time = await TimePickerAndroid.open({hour: now.getHours(), minute: now.getMinutes()});
         if (time.action === TimePickerAndroid.dismissedAction) {
+          return;
         }
       } catch ({code, message}) {
         console.warn(`Error in Android TimePicker`, message);

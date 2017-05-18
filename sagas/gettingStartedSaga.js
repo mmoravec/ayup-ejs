@@ -16,7 +16,6 @@ export function* watchGettingStarted() {
 
 function* getStarted() {
   const phone = yield select(state => state.phone);
-  console.log(phone);
   if (!phone.locationGranted) {
     yield fork(grantLocation);
   }

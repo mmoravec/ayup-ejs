@@ -21,8 +21,6 @@ class PhoneStateReducer {
   }
 
   static [ActionTypes.MERGE_PHONESTATE](state, action) {
-    console.log('merging state');
-    console.log(action.phone);
     return state.merge(Map(action.phone));
   }
 

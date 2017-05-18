@@ -1,7 +1,9 @@
 export function duration(start, end) {
   let diff = end - start;
   let minutes = Math.floor(diff / 60000);
-  if (minutes < 60) {
+  if (minutes === 0) {
+    return "";
+  } else if (minutes < 60) {
     return minutes + "mins";
   } else if (minutes < 2880) {
     let hours = Math.floor(minutes / 60);

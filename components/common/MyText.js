@@ -1,12 +1,8 @@
-import React from 'react';
-import {
-  Text,
-} from 'react-native';
+import React from "react";
+import { Text } from "react-native";
 
 export default class MyText extends React.Component {
-    render() {
-      return (
-        <Text style={{fontFamily: 'LatoRegular'}} {...this.props} ></Text>
-      );
-    }
+  render() {
+    return <Text style={{ fontFamily: "LatoRegular" }} {...this.props} />;
+  }
 }

@@ -3548,6 +3548,10 @@ react-native-segment-io-analytics@0.0.6:
     color "^0.11.1"
     lodash "^4.0.0"
 
+react-native-swiper@mmoravec/react-native-swiper:
+  version "1.5.4"
+  resolved "https://codeload.github.com/mmoravec/react-native-swiper/tar.gz/ef747e4c015d935e179b56a61caf7cc718aec3b8"
+
 react-native-tab-view@^0.0.61:
   version "0.0.61"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.61.tgz#9f5446c9ad33158b87f0bccf5004fbff79ca1f92"

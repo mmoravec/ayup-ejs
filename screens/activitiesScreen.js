@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
+  Platform,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import _ from 'lodash';
@@ -34,12 +35,15 @@ export default class ActivitiesScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <TouchableOpacity style={styles.backPress} underlayColor="transparent" onPress={this._backBtnPress}>
+      {
+        (Platform.OS === 'ios') &&
+        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
           <Image
             source={require('../assets/images/btn_back.png')}
             style={styles.btnBack}
           />
         </TouchableOpacity>
+      }
         <MyText style={styles.title}>Tap to Filter Activities</MyText>
         <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 20, zIndex: 2}}>
           <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>

@@ -22,7 +22,7 @@ import Filter from '../../utils/filters';
 import { duration } from '../../utils/date';
 import Actions from '../../state/Actions';
 const dateFormat = require('dateformat');
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 @connect(data => EventContent.getDataProps(data))
 export default class EventContent extends React.Component {
@@ -73,10 +73,9 @@ export default class EventContent extends React.Component {
     let start = new Date(event.startDate);
     let end = new Date(event.endDate);
     return (
-      <View style={{backgroundColor: 'rgba(0,0,0,0.0)'}}>
-        <View style={{height: 150, backgroundColor: 'rgba(0,0,0,0.0)'}}>
-          <EventActions event={this.props.event} />
-        </View>
+      <View style={{backgroundColor: 'rgba(0,0,0,0.0)', zIndex: 1}}>
+        <EventActions event={this.props.event} />
+        <View style={{height: height * 0.2, width, backgroundColor: 'transparent'}} />
         <View style={styles.topInfo}>
           <View>
             <Image
@@ -105,7 +104,7 @@ export default class EventContent extends React.Component {
             <MyText style={{color: '#ee366f', fontSize: 16, marginTop: 14}}>/ Unconfirmed</MyText>
             <Bubble data={event} style={{alignSelf: 'center', position:'absolute', right: 10}} />
           </View>
-          <EventGuests guests={guests} />
+          <EventGuests guests={guests} guestClick={this.props.guestClick} />
         </View>
         <View style={styles.comments}>
           <MyText style={styles.seeAll}>Comments({this.props.comments.size})</MyText>
@@ -159,56 +158,6 @@ export default class EventContent extends React.Component {
         </View>
       </View>
     );
-  }
-
-  _onCommentPress = () => {
-    this._listView.scrollTo({y: 0, animated: false});
-    this.setState({parentID: null, commenting: true});
-    _.delay(() => this.setState({ready: true}), 1000);
-  }
-
-  _onReplyPress = (parentID) => {
-    this._listView.scrollTo({y: 0, animated: false});
-    this.setState({parentID, commenting: true});
-    _.delay(() => this.setState({ready: true}), 1000);
-  }
-
-  _renderCommentBox = () => {
-    if (this.state.commenting) {
-      return (
-        <KeyboardAvoidingView behavior={'position'} style={{flex: 1}}>
-          <View style={{height: 50, padding: 5, backgroundColor: "#fff", borderTopWidth: 1, borderTopColor: '#e9e9e9', flexDirection: 'row'}}>
-            <View style={{height: 40, borderRadius: 5, borderWidth: 1, borderColor: "#c8c8cd", width: width * 0.8}}>
-              <TextInput
-                autoFocus={true}
-                style={{margin: 5, height: 30, width: width * 0.8}}
-                value={this.state.comment}
-                onChangeText={this._onCommentText}
-              />
-            </View>
-            <TouchableOpacity style={{alignSelf: 'center'}} onPress={this._saveComment}>
-              <Image
-                source={require('../../assets/images/reply.png')}
-                style={{height: 25}}
-                resizeMode={'contain'}
-              />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      );
-    }
-  }
-
-  _onCommentText = (text) => {
-    this.setState({comment: text});
-  }
-
-  _saveComment = () => {
-    this.props.dispatch(
-      Actions.saveComment(this.state.comment,
-        this.props.event.id, this.state.parentID)
-    );
-    this.setState({commenting: false});
   }
 
   _renderTime = (date) => {

@@ -22,72 +22,57 @@ export default class EventGuests extends React.Component {
   }
 
   render() {
+    let i = -1;
     return (
       <View>
-        {this._renderUser()}
         <ScrollView
           style={styles.scrollview}
-          horizontal={true}>
+          horizontal>
           {
-            this.props.guests.accepted.map(g =>
-              <GuestPic
-                key={g.name}
-                profilePic={g.profilePic}
-                opacity={1}
-                user={g}
-                selectPic={this._selectPic.bind(this, g)}
-              />
-            )
+            this.props.guests.accepted.map(g => {
+              i++;
+              return (
+                <GuestPic
+                  key={g.name}
+                  profilePic={g.profilePic}
+                  opacity={1}
+                  user={g}
+                  selectPic={this.props.guestClick.bind(this, i)}
+                />
+              );
+            })
           }
           {
-            this.props.guests.invited.map(g =>
-              <GuestPic
-                key={g.name}
-                profilePic={g.profilePic}
-                opacity={0.4}
-                user={g}
-                selectPic={this._selectPic.bind(this, g)}
-              />
-            )
+            this.props.guests.invited.map(g => {
+              i++;
+              return (
+                <GuestPic
+                  key={g.name}
+                  profilePic={g.profilePic}
+                  opacity={0.4}
+                  user={g}
+                  selectPic={this.props.guestClick.bind(this, i)}
+                />
+              );
+            })
           }
           {
-            this.props.guests.requested.map(g =>
-              <GuestPic
-                key={g.name}
-                profilePic={g.profilePic}
-                opacity={0.4}
-                user={g}
-                selectPic={this._selectPic.bind(this, g)}
-              />
-            )
+            this.props.guests.requested.map(g => {
+              i++;
+              return (
+                <GuestPic
+                  key={g.name}
+                  profilePic={g.profilePic}
+                  opacity={0.4}
+                  user={g}
+                  selectPic={this.props.guestClick.bind(this, i)}
+                />
+              );
+            })
           }
         </ScrollView>
       </View>
     );
-  }
-
-  _renderUser = () => {
-    if (this.state.selectedUser && this.props.noScroll) {
-      return (
-        <View style={{zIndex: 5, height:80, width, position: 'absolute', top: -80}}>
-          <View style={{borderWidth: 1, backgroundColor: '#fff', height:70, width: 150}}>
-            <MyText>{this.state.selectedUser.name}</MyText>
-          </View>
-          <MaterialIcons
-            style={{backgroundColor: 'transparent'}}
-            size={24}
-            name={'arrow-drop-down'}
-            color={"#222"}
-          />
-        </View>
-      );
-    } else {
-      return null;
-    }
-  }
-
-  _selectPic = (user) => {
-    this.setState({selectedUser: user});
   }
 }
 

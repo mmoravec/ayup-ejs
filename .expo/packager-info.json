@@ -1,8 +1,8 @@
 {
   "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 55819,
+  "packagerPort": 19001,
+  "packagerPid": 6573,
   "expoServerNgrokUrl": "https://db-edj.mmoravec.ayup-ejs.exp.direct",
   "packagerNgrokUrl": "https://packager.db-edj.mmoravec.ayup-ejs.exp.direct",
-  "ngrokPid": 55833
+  "ngrokPid": 6600
 }

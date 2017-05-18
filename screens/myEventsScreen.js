@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
+  Platform,
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -50,12 +51,15 @@ export default class MyEventsScreen extends React.Component {
         <View style={styles.myEventsText}>
           <MyText style={{alignSelf: 'center', fontSize: 20, marginTop: 25}}>My Events</MyText>
         </View>
-        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
-          <Image
-            source={require('../assets/images/btn_back.png')}
-            style={styles.btnBack}
-          />
-        </TouchableOpacity>
+        {
+          (Platform.OS === 'ios') &&
+          <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
+            <Image
+              source={require('../assets/images/btn_back.png')}
+              style={styles.btnBack}
+            />
+          </TouchableOpacity>
+        }
         <View style={styles.contextParent}>
           <Image
             source={require('../assets/images/event_bar.png')}

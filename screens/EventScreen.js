@@ -7,10 +7,12 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import EventButton from '../components/event/Button';
 import EventComments from '../components/event/Comments';
+import GuestInfo from '../components/event/GuestInfo';
 import Icons from '../constants/activities';
 import Content from '../components/event/Content';
 import MapStyle from '../constants/mapstyle';
@@ -21,9 +23,11 @@ const {height, width} = Dimensions.get('window');
 export default class EventScreen extends React.Component {
 
   state = {
-    noScroll: false,
+    showCommentBox: false,
+    showGuestInfo: false,
     comment: '',
     parentID: null,
+    guestIndex: 0,
   }
 
   static getDataProps(data) {
@@ -51,7 +55,7 @@ export default class EventScreen extends React.Component {
       };
       let icon = Icons[event.activity].icon;
       let commentProps = {
-        noScroll: this.state.noScroll,
+        showCommentBox: this.state.showCommentBox,
         comment: this.state.comment,
         onChangeText: this._onCommentText,
         saveComment: this._saveComment,
@@ -59,9 +63,12 @@ export default class EventScreen extends React.Component {
       let contentProps = {
         onCommentPress: this._onCommentPress,
         onScroll: this._onScroll,
+        guestClick: this._onGuestClick,
       };
       return (
         <View style={styles.scrollView}>
+          <GuestInfo showGuestInfo={this.state.showGuestInfo} close={this._closeGuestInfo} index={this.state.guestIndex} />
+          <EventButton />
           <MapView
             style={styles.map}
             zoomEnabled={false}
@@ -75,19 +82,32 @@ export default class EventScreen extends React.Component {
               image={icon}
             />
           </MapView>
-          <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
-            <Image
-              source={require('../assets/images/btn_back.png')}
-              style={styles.btnBack}
-            />
-          </TouchableOpacity>
+          {this._renderBackBtn()}
           <Content {...contentProps} />
-          <EventButton />
           <View style={styles.bottom} />
           <EventComments {...commentProps} />
         </View>
       );
     }
+  }
+
+  _renderBackBtn = () => {
+    if (Platform.OS === 'ios') {
+      return (
+        <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
+          <Image
+            source={require('../assets/images/btn_back.png')}
+            style={styles.btnBack}
+          />
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  _closeGuestInfo = () => {
+    this.setState({showGuestInfo: false});
   }
 
   _backBtnPress = () => {
@@ -98,14 +118,20 @@ export default class EventScreen extends React.Component {
 
   _onCommentPress = (parentID) => {
     if (typeof parentID === 'string') {
-      this.setState({noScroll: true, parentID});
+      this.setState({showCommentBox: true, parentID});
     } else {
-      this.setState({parentID: null, noScroll: true});
+      this.setState({parentID: null, showCommentBox: true});
     }
   }
 
+  _onGuestClick = (i) => {
+    this.setState({showGuestInfo: true});
+    console.log(i);
+    this.setState({guestIndex: i});
+  }
+
   _onScroll = () => {
-    this.setState({noScroll: false});
+    this.setState({showCommentBox: false, showGuestInfo: false});
   }
 
   _onCommentText = (text) => {
@@ -117,7 +143,7 @@ export default class EventScreen extends React.Component {
       Actions.saveComment(this.state.comment,
         this.props.selectedEvent.id, this.state.parentID)
     );
-    this.setState({noScroll: false, comment: ''});
+    this.setState({showCommentBox: false, comment: ''});
   }
 }
 

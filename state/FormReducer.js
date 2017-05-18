@@ -57,7 +57,6 @@ class FormReducer {
   }
 
   static [ActionTypes.SET_GEOCODE_ADDRESS](state, action) {
-    console.log(state);
     let location = {...state[action.stateKey]};
     location.value = action.data.name;
     location.lnglat = [action.data.long, action.data.lat];
