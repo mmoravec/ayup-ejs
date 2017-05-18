@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -115,8 +115,8 @@ export default class TimeSelector extends React.Component {
       } catch ({code, message}) {
         console.warn(`Error in Android TimePicker`, message);
       }
-
-      let d = new Date(date.year, date.month, date.day, time.hour, time.minute);
+      let minute = Math.round(time.minute / 15) * 15;
+      let d = new Date(date.year, date.month, date.day, time.hour, minute);
       this._onChange(d);
     } else {
       this.props.scrollTo(this._scrollY - 80);

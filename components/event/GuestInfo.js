@@ -29,6 +29,9 @@ export default class GuestInfo extends React.Component {
   state = {
     selectedUser: null,
     hostInfo: true,
+    index: 0,
+    requested: this.props.event.accepted,
+    //TODO: updated to requested when backend switches over
   }
   componentDidUpdate(prevProps) {
     if (this._swiper && prevProps.index !== this.props.index) {
@@ -39,7 +42,7 @@ export default class GuestInfo extends React.Component {
   render() {
     //TODO: change this to requested once nick pushes new backend
     if (this.props.user.id === this.props.event.host.userID &&
-      this.props.event.accepted.length > 0 && this.state.hostInfo) {
+      this.state.requested.length > 0 && this.state.hostInfo) {
       return (
         <Modal
           animationType={"slide"}
@@ -54,14 +57,17 @@ export default class GuestInfo extends React.Component {
             </TouchableOpacity>
             <Swiper
               style={styles.swiper}
+              onMomentumScrollEnd={this._onMomentumScrollEnd}
               ref={(swiper) => { this._swiper = swiper; }}>
               {
-                this.props.event.accepted.map(g =>
+                this.state.requested.map(g =>
                   <Card
                     key={g.name}
                     profilePic={g.profilePic}
                     opacity={0.4}
                     user={g}
+                    host
+                    nextSlide={this._nextSlide}
                   />
                 )
               }
@@ -86,6 +92,7 @@ export default class GuestInfo extends React.Component {
               renderPagination={this._renderPagination}
               paginationStyle={{ bottom: -23, left: null, right: 10}}
               ref={(swiper) => { this._swiper = swiper; }}
+              onMomentumScrollEnd={this._onMomentumScrollEnd}
               style={styles.swiper}>
               {this._renderGuests()}
             </Swiper>
@@ -128,15 +135,32 @@ export default class GuestInfo extends React.Component {
         <Card
           key={g.name}
           profilePic={g.profilePic}
-          opacity={0.4}
+          nextSlide={this._nextSlide}
           user={g}
+          host={false}
         />
       );
     });
   }
+
+  _onMomentumScrollEnd = (e, state, context) => {
+    this.setState({index: state.index});
+  }
+
+  _nextSlide = () => {
+    if (this.state.requested.length <= this.state.index + 1) {
+      this.setState({hostInfo: false});
+    }
+    this._swiper.scrollBy(this.state.index + 1, true);
+  }
+
 }
 
 class Card extends React.Component {
+
+  state = {
+    clicked: '',
+  }
 
   render() {
     return (
@@ -153,25 +177,61 @@ class Card extends React.Component {
             <MyText style={styles.name}>{this.props.user.name}</MyText>
           </View>
         </Image>
-        <View style={styles.buttons}>
-          <Image
-            resizeMode={'contain'}
-            source={require('../../assets/images/reject.png')}
-            style={{height: 40}}
-          />
-          <Image
-            resizeMode={'contain'}
-            source={require('../../assets/images/accept.png')}
-            style={{height: 40}}
-          />
-        </View>
+        {this._renderButtons()}
       </View>
     );
   }
   //TODO: Put badges here
+
+  _acceptUser = () => {
+    //accept user action
+    this.props.nextSlide();
+    this.setState({clicked: 'Accepted'});
+  }
+
+  _rejectUser = () => {
+    this.props.nextSlide();
+    this.setState({clicked: 'Rejected'});
+  }
+
+  _renderButtons = () => {
+    if (this.state.clicked === '' && this.props.host) {
+      return (
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={this._rejectUser}>
+            <Image
+              resizeMode={'contain'}
+              source={require('../../assets/images/reject.png')}
+              style={{height: 40}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._acceptUser}>
+            <Image
+              resizeMode={'contain'}
+              source={require('../../assets/images/accept.png')}
+              style={{height: 40}}
+            />
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (this.props.host) {
+      let color = this.state.clicked === 'Accepted' ? '#8bd1c6' : '#ee366f';
+      return (
+        <View style={styles.buttons}>
+          <MyText style={[styles.status, {color}]}>{this.state.clicked}</MyText>
+        </View>
+      );
+    } else {
+      return <View style={styles.buttons} />;
+    }
+  }
 }
 
 const styles = StyleSheet.create({
+  status: {
+    fontSize: 18,
+    color: '#8bd1c6',
+  },
   swiper: {
     zIndex: 1,
   },
@@ -217,5 +277,6 @@ const styles = StyleSheet.create({
     width: 260,
     justifyContent: 'space-around',
     flexDirection: 'row',
+    height: 40,
   },
 });

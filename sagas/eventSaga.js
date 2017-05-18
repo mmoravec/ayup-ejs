@@ -98,9 +98,8 @@ function* requestEvent(action) {
     yield put({ type: ActionTypes.RESET_ALERT });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(delay, 2000);
+  yield call(updateSelectedEvent, action.eventID, user);
   yield put({ type: ActionTypes.RESET_ALERT });
-  yield fork(updateSelectedEvent, action.eventID, user);
 }
 
 function* deleteEvent(action) {
