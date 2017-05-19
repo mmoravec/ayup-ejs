@@ -35,7 +35,7 @@ export default class EventForm extends React.Component {
   state = {
     scrollY: new Animated.Value(0),
     warn: false,
-    scrollTo: false,
+    scrollTo: true,
   }
 
   constructor(props) {
@@ -242,6 +242,7 @@ export default class EventForm extends React.Component {
   }
 
   _onScroll = () => {
+    console.log(this.state.scrollTo);
     if (!this.state.scrollTo && !this.props.form.friends.focus) {
       this.props.dispatch(Actions.blurFields());
       Keyboard.dismiss();
@@ -257,9 +258,9 @@ export default class EventForm extends React.Component {
  }
 
   _scrollTo = (num) => {
-    this.refs.scrollView.scrollTo({y: num, animated: true});
     this.setState({scrollTo: true});
-    setTimeout(() => { this.setState({scrollTo: false}); }, 1000);
+    this.refs.scrollView.scrollTo({y: num, animated: true});
+    setTimeout(() => { this.setState({scrollTo: false}); }, 2000);
   }
 
   _focusElement = (el) => {

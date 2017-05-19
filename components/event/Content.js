@@ -72,6 +72,7 @@ export default class EventContent extends React.Component {
     };
     let start = new Date(event.startDate);
     let end = new Date(event.endDate);
+    console.log(event);
     return (
       <View style={{backgroundColor: 'rgba(0,0,0,0.0)', zIndex: 1}}>
         <EventActions event={this.props.event} />
@@ -94,9 +95,9 @@ export default class EventContent extends React.Component {
         </View>
         <View style={styles.middleInfo}>
           <MyText style={{fontSize: 24, margin: 14, marginBottom: 6}}>{event.title}</MyText>
-          <MyText style={{fontSize: 14, marginLeft: 14, marginBottom: 14}}>{event.location.text}</MyText>
+          {this._renderLocation()}
           {event.description !== "" &&
-            <MyText style={{fontSize: 16, margin: 14, color: '#808080'}}>{event.description}</MyText>}
+            <MyText style={{fontSize: 16, margin: 14, color: '#808080', marginTop: 0}}>{event.description}</MyText>}
         </View>
         <View style={styles.bottomInfo}>
           <View style={{flexDirection: 'row'}}>
@@ -120,6 +121,29 @@ export default class EventContent extends React.Component {
         </View>
       </View>
     );
+  }
+
+  _renderLocation = () => {
+    let event = this.props.event;
+    if (event.destination) {
+      return null;
+    } else {
+      return (
+        <View style={styles.location}>
+          <Image
+            source={require('../../assets/images/location_dot.png')}
+            resizeMode={'contain'}
+            style={{height: 12}}
+          />
+          <MyText style={{fontSize: 14, width: width * 0.8}}>{event.location.text}</MyText>
+          <MaterialIcons
+            size={22}
+            name={'chevron-right'}
+            color={'#e5e5e5'}
+          />
+        </View>
+      );
+    }
   }
 
   _renderRow = (rowData) => {
@@ -191,6 +215,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     margin: 5,
+  },
+  location: {
+    borderColor: '#e5e5e5',
+    borderWidth: 1,
+    borderRadius: 2,
+    height: 40,
+    margin: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   commentTxt: {
     marginLeft: 5,

@@ -97,7 +97,7 @@ export default class SaveButton extends React.Component {
       endDate: eventState.endDate.value.toISOString(),
       title: eventState.title.value,
       private: eventState.private.value,
-      desc: eventState.desc.value,
+      description: eventState.desc.value,
       location: {
         coordinates: eventState.location.lnglat,
         text: eventState.location.value,

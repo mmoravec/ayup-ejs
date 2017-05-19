@@ -33,29 +33,26 @@ export default class EventList extends React.Component {
   }
 
   _getHeaders = (events) => {
-    let d = {};
-    events = events.toJS();
-    events = events.map(event => {
-      event.startDate = new Date(event.startDate);
-      event.endDate = new Date(event.endDate);
-      return event;
-    });
-    events = events.sort((a, b) => {
-      return a.startDate - b.startDate;
-    });
-    events.map(event => {
-      let date = new Date(event.startDate);
-      let mash = dateFormat(date, 'fullDate');
-      if (d[mash]) {
-        d[mash].push(event);
+    events = events.groupBy(x => {
+      let date = new Date(x.startDate);
+      return dateFormat(date, 'fullDate');
+    }).sort((a, b) => {
+      let n = new Date(a.get(0).startDate);
+      let f = new Date(b.get(0).startDate);
+      if (n > f) {
+        return 1;
+      } else if (f < n) {
+        return -1;
       } else {
-        d[mash] = [event];
+        return 0;
       }
     });
-    return Immutable.fromJS(d);
+    return events;
   }
 
   _renderRow = (rowData) => {
+    console.log('row data');
+    console.log(rowData);
     return (
       <ListRow data={rowData} closeBtn={this.props.closeBtn} styles={this.props.styles} />
     );
@@ -72,7 +69,7 @@ export default class EventList extends React.Component {
 class ListRow extends React.Component {
   render() {
     let styles = this.props.styles;
-    let rowData = this.props.data.toJS();
+    let rowData = this.props.data;
     let selectEvent = this._onItemPress.bind(this, rowData.id);
     let image = Icons[rowData.activity].image;
     let start = new Date(rowData.startDate);
