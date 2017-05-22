@@ -16,6 +16,7 @@ export function* watchGettingStarted() {
 
 function* getStarted() {
   const phone = yield select(state => state.phone);
+  console.log(phone);
   if (!phone.locationGranted) {
     yield fork(grantLocation);
   }
@@ -64,8 +65,9 @@ function* grantNotifications() {
     return;
   }
   let token = yield call(Notifications.getExponentPushTokenAsync);
+  console.log(token);
   //save the token to our backend
-  if(false) {
-    yield put({type: ActionTypes.NOTIFICATIONS_GRANTED});
-  }
+  yield put({type: ActionTypes.NOTIFICATIONS_GRANTED});
+  let phone = yield select(state => state.phone);
+  yield call(LocalStorage.savePhoneStateAsync, phone);
 }

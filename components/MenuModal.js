@@ -42,13 +42,13 @@ export default class EventListModal extends React.Component {
     return (
       <Modal
         animationType={"none"}
-        transparent={true}
+        transparent
         onRequestClose={this.props.menuBtnPress}
         visible={this.props.menuVisible}>
         <View style={styles.container}>
           <View style={styles.feedback}>
             <MyText style={{fontSize: 20, margin: 25}}>
-              Ayup - alpha V0.1
+              Ayup - beta
             </MyText>
             <TouchableOpacity onPress={this._onFeedback}>
               <MaterialIcons
@@ -258,5 +258,5 @@ const styles = StyleSheet.create({
   text: {
     color: "#666666",
     fontSize: 16,
-  }
+  },
 });

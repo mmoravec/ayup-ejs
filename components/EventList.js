@@ -33,10 +33,12 @@ export default class EventList extends React.Component {
   }
 
   _getHeaders = (events) => {
+    console.log(events);
     events = events.groupBy(x => {
       let date = new Date(x.startDate);
       return dateFormat(date, 'fullDate');
     }).sort((a, b) => {
+      console.log(a);
       let n = new Date(a.get(0).startDate);
       let f = new Date(b.get(0).startDate);
       if (n > f) {
@@ -47,6 +49,7 @@ export default class EventList extends React.Component {
         return 0;
       }
     });
+    console.log('get headers worked');
     return events;
   }
 

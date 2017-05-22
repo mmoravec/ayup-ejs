@@ -12,12 +12,11 @@ import {
 import { connect } from 'react-redux';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { List } from 'immutable';
-import _ from 'lodash';
 import ImmutableListView from 'react-native-immutable-list-view';
-import MyText from '../common/MyText';
-import Bubble from '../common/Bubble';
 import EventActions from './Actions';
 import EventGuests from './Guests';
+import MyText from '../common/MyText';
+import Bubble from '../common/Bubble';
 import Filter from '../../utils/filters';
 import { duration } from '../../utils/date';
 import Actions from '../../state/Actions';
@@ -105,7 +104,11 @@ export default class EventContent extends React.Component {
             <MyText style={{color: '#ee366f', fontSize: 16, marginTop: 14}}>/ Unconfirmed</MyText>
             <Bubble data={event} style={{alignSelf: 'center', position:'absolute', right: 10}} />
           </View>
-          <EventGuests guests={guests} guestClick={this.props.guestClick} />
+          <EventGuests
+            guests={guests}
+            guestClick={this.props.guestClick}
+            showAddFriend={this.props.showAddFriend}
+          />
         </View>
         <View style={styles.comments}>
           <MyText style={styles.seeAll}>Comments({this.props.comments.size})</MyText>

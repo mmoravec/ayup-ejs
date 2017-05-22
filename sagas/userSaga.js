@@ -61,7 +61,7 @@ function* syncProfile() {
     rejected: Immutable.fromJS(profile.rejected),
     requested: Immutable.fromJS(profile.requested),
     joined: Immutable.fromJS(profile.joined),
-    events: profile.events === null ? p.events : Immutable.fromJS(profile.events),
+    events: profile.events === null ? p.events : new List(profile.events),
     id: profile.id,
     fbid: p.fbid,
     about: p.about,

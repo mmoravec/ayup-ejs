@@ -41,10 +41,10 @@ export default class MyEventsScreen extends React.Component {
   render() {
     // console.log(this.props.user);
     let hostEvents = this.props.user.events.filter(event => {
-      return event.get('host').get('userID') === this.props.user.id;
+      return event.host.userID === this.props.user.id;
     });
     let joinedEvents = this.props.user.events.filter(event => {
-      return event.get('host').get('userID') !== this.props.user.id;
+      return event.host.userID !== this.props.user.id;
     });
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>

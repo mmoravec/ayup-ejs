@@ -1,8 +1,9 @@
 import { AsyncStorage } from 'react-native';
 
 const Keys = {
-  User: 'AyupUser',
-  Phone: 'AyupPhone',
+  User: 'LayupUser',
+  Phone: 'LayupPhone',
+  Filters: 'LayupFilters',
 };
 
 async function getUserAsync() {
@@ -25,8 +26,23 @@ async function getPhoneStateAsync() {
   }
 }
 
+async function getFiltersAsync() {
+  let results = await AsyncStorage.getItem(Keys.Filters);
+
+  try {
+    return JSON.parse(results);
+  } catch (e) {
+    return null;
+  }
+}
+
 function savePhoneStateAsync(phone) {
   return AsyncStorage.setItem(Keys.Phone, JSON.stringify(phone));
+}
+
+function saveFiltersAsync(filters) {
+  console.log('save filters async');
+  return AsyncStorage.setItem(Keys.Filters, JSON.stringify(filters));
 }
 
 
@@ -49,4 +65,6 @@ export default {
   savePhoneStateAsync,
   removeUserAsync,
   clearAllAsync,
+  saveFiltersAsync,
+  getFiltersAsync,
 };

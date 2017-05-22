@@ -260,7 +260,7 @@ export default class EventForm extends React.Component {
   _scrollTo = (num) => {
     this.setState({scrollTo: true});
     this.refs.scrollView.scrollTo({y: num, animated: true});
-    setTimeout(() => { this.setState({scrollTo: false}); }, 2000);
+    setTimeout(() => { this.setState({scrollTo: false}); }, 1200);
   }
 
   _focusElement = (el) => {

@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import EventButton from '../components/event/Button';
 import EventComments from '../components/event/Comments';
 import GuestInfo from '../components/event/GuestInfo';
+import AddFriend from '../components/event/AddFriend';
 import Icons from '../constants/activities';
 import Content from '../components/event/Content';
 import MapStyle from '../constants/mapstyle';
@@ -25,6 +26,7 @@ export default class EventScreen extends React.Component {
   state = {
     showCommentBox: false,
     showGuestInfo: false,
+    showAddFriend: false,
     comment: '',
     parentID: null,
     guestIndex: 0,
@@ -64,10 +66,12 @@ export default class EventScreen extends React.Component {
         onCommentPress: this._onCommentPress,
         onScroll: this._onScroll,
         guestClick: this._onGuestClick,
+        showAddFriend: this.showAddFriend,
       };
       return (
         <View style={styles.scrollView}>
           <GuestInfo showGuestInfo={this.state.showGuestInfo} close={this._closeGuestInfo} index={this.state.guestIndex} />
+          <AddFriend show={this.state.showAddFriend} hide={this.showAddFriend} />
           <EventButton />
           <MapView
             style={styles.map}
@@ -89,6 +93,10 @@ export default class EventScreen extends React.Component {
         </View>
       );
     }
+  }
+
+  showAddFriend = () => {
+    this.setState({showAddFriend: !this.state.showAddFriend});
   }
 
   _renderBackBtn = () => {

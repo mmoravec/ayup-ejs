@@ -28,6 +28,12 @@ export default class EventGuests extends React.Component {
         <ScrollView
           style={styles.scrollview}
           horizontal>
+          <TouchableOpacity onPress={this.props.showAddFriend}>
+            <Image
+              source={require('../../assets/images/add_friend.png')}
+              style={{height: 50, width: 50, margin: 5}}
+            />
+          </TouchableOpacity>
           {
             this.props.guests.accepted.map(g => {
               i++;
@@ -73,6 +79,10 @@ export default class EventGuests extends React.Component {
         </ScrollView>
       </View>
     );
+  }
+
+  _addFriend = () => {
+
   }
 }
 

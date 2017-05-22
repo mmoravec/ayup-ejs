@@ -24,6 +24,10 @@ class EventsReducer {
     return state.set('selectedComments', action.comments);
   }
 
+  static [ActionTypes.NOTIFICATION_RECEIVED](state, action) {
+    return state.set('notification', action.notification);
+  }
+
   static [ActionTypes.SET_FILTER](state, action) {
     return state.set('filter', {startTime: action.filterStart, endTime: action.filterEnd});
   }

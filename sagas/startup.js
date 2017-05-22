@@ -12,7 +12,7 @@ import {
 import {
   Image,
 } from 'react-native';
-import { Font, Asset, Location, Permissions, Contacts } from 'expo';
+import { Font, Asset, Location, Permissions, Contacts, Notifications } from 'expo';
 import ActionTypes from '../state/ActionTypes';
 import LocalStorage from '../utils/LocalStorage';
 import { request } from '../utils/fetch';
@@ -42,6 +42,10 @@ export default function* startup() {
   if (phone.contactsGranted) {
     yield call(getContacts);
   }
+  console.log(phone);
+  if (phone.notificationsGranted) {
+    yield call(subscribeNotifications);
+  }
 }
 
 function* loadImages() {
@@ -60,11 +64,16 @@ function* loadFonts() {
 }
 
 function* loadFilters() {
-    let filterList = new List(_.keys(activities));
-    yield put({
-        type: ActionTypes.SET_FILTERS,
-        filterList,
-    });
+    let filters = yield call(LocalStorage.getFiltersAsync);
+    if (!filters) {
+      let filterList = new List(_.keys(activities));
+      yield put({
+          type: ActionTypes.SET_FILTERS,
+          filterList,
+      });
+    } else {
+      yield put({type: ActionTypes.SET_FILTERS, filterList: new List(filters)});
+    }
     yield put({
         type: ActionTypes.FILTERS_LOADED,
     });
@@ -121,12 +130,22 @@ function* getPhoneState() {
   if (phone !== null) {
     merge.locationGranted = phone.locationGranted;
     merge.contactsGranted = phone.contactsGranted;
-    merge.notificationGranted = phone.notificationGranted;
+    merge.notificationsGranted = phone.notificationsGranted;
   }
   yield put({
       type: ActionTypes.MERGE_PHONESTATE, phone: merge,
   });
   return merge;
+}
+
+function* subscribeNotifications() {
+  console.log('subscribe note called');
+  yield call(Notifications.addListener, _handleNotification);
+}
+
+function* _handleNotification(notification) {
+  console.log('handle notification');
+  yield put({ type: ActionTypes.NOTIFICATION_RECEIVED, notification });
 }
 
 function* getUser() {

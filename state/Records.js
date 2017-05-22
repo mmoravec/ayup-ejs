@@ -52,7 +52,8 @@ export const PhoneState = Record({
   optlyVariation: '',
   locationGranted: false,
   contactsGranted: false,
-  notificationGranted: false,
+  notificationsGranted: false,
+  notification: {},
 });
 
 export const Comment = Record({
