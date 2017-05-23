@@ -4,8 +4,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  TextInput,
-  KeyboardAvoidingView,
+  Platform,
+  Linking,
   LayoutAnimation,
   Image,
 } from 'react-native';
@@ -132,7 +132,7 @@ export default class EventContent extends React.Component {
       return null;
     } else {
       return (
-        <View style={styles.location}>
+        <TouchableOpacity style={styles.location} onPress={this._openMaps}>
           <Image
             source={require('../../assets/images/location_dot.png')}
             resizeMode={'contain'}
@@ -144,9 +144,14 @@ export default class EventContent extends React.Component {
             name={'chevron-right'}
             color={'#e5e5e5'}
           />
-        </View>
+        </TouchableOpacity>
       );
     }
+  }
+
+  _openMaps = () => {
+    let daddr = this.props.event.location.text;
+    Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
   }
 
   _renderRow = (rowData) => {

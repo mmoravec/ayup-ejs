@@ -33,7 +33,6 @@ export default class EventList extends React.Component {
   }
 
   _getHeaders = (events) => {
-    console.log(events);
     events = events.groupBy(x => {
       let date = new Date(x.startDate);
       return dateFormat(date, 'fullDate');
@@ -49,13 +48,10 @@ export default class EventList extends React.Component {
         return 0;
       }
     });
-    console.log('get headers worked');
     return events;
   }
 
   _renderRow = (rowData) => {
-    console.log('row data');
-    console.log(rowData);
     return (
       <ListRow data={rowData} closeBtn={this.props.closeBtn} styles={this.props.styles} />
     );
@@ -77,7 +73,7 @@ class ListRow extends React.Component {
     let image = Icons[rowData.activity].image;
     let start = new Date(rowData.startDate);
     let end = new Date(rowData.endDate);
-    let duration = Math.abs(end.getTime() - start.getTime());
+    let duration = Math.round(Math.abs(end.getTime() - start.getTime()) / 15) * 15;
     let format = "";
     if (duration < 3500000) {
       format = dateFormat(duration, 'MM') + "min";
