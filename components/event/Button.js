@@ -34,9 +34,9 @@ export default class EventButton extends React.Component {
 
   render() {
     let status = this._getStatus();
+    console.log(this.props.phone.status);
     if (this.props.phone.status === '') {
       //If invited to event
-      if (status !== "host") {
         if (status === "invited") {
           return (
             <View style={styles.bottom}>
@@ -74,9 +74,9 @@ export default class EventButton extends React.Component {
               </TouchableOpacity>
             </View>
           );
+        } else {
+          return null;
         }
-      }
-      return null;
     } else if (this.props.phone.status === 'success') {
       return (
         <View style={styles.woohoo}>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     width,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    zIndex: 2,
+    zIndex: 3,
   },
   btn: {
     height: 50,
@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ee366f',
     justifyContent: 'center',
     bottom: 0,
+    zIndex: 3,
   },
   woohoo: {
     position: 'absolute',
@@ -192,6 +193,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: '#8bd1c6',
     justifyContent: 'center',
+    zIndex: 3,
   },
   hlightSave: {
     alignSelf: 'center',

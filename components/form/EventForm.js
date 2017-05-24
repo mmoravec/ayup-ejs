@@ -85,6 +85,7 @@ export default class EventForm extends React.Component {
               <Hoshi
                 {...this._titleProps}
                 {...this.props.form.title}
+                returnKeyType={'next'}
               />
             </View>
             {

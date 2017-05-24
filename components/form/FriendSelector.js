@@ -122,10 +122,12 @@ export default class FriendSelector extends React.Component {
       return (
         <View style={styles.friendFilter}>
           <TextInput
-            autoFocus={true}
+            autoFocus
             style={styles.input}
             value={this.state.inputText}
             onChangeText={this._onChangeText}
+            returnKeyType={'done'}
+            onSubmitEditing={this._addFriend}
           />
         </View>
       );
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 15,
     fontSize: 16,
-    color: "#6a7989"
+    color: "#6a7989",
   },
   add: {
     height: 40,

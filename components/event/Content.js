@@ -49,7 +49,7 @@ export default class EventContent extends React.Component {
   render() {
     return (
       <ImmutableListView
-        style={{zIndex: 1}}
+        style={{zIndex: 2}}
         ref={(listView) => { this._listView = listView; }}
         immutableData={this.props.comments}
         renderRow={this._renderRow}
@@ -71,9 +71,8 @@ export default class EventContent extends React.Component {
     };
     let start = new Date(event.startDate);
     let end = new Date(event.endDate);
-    console.log(event);
     return (
-      <View style={{backgroundColor: 'rgba(0,0,0,0.0)', zIndex: 1}}>
+      <View style={{backgroundColor: 'rgba(0,0,0,0.0)'}}>
         <EventActions event={this.props.event} />
         <View style={{height: height * 0.2, width, backgroundColor: 'transparent'}} />
         <View style={styles.topInfo}>

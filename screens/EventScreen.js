@@ -134,7 +134,6 @@ export default class EventScreen extends React.Component {
 
   _onGuestClick = (i) => {
     this.setState({showGuestInfo: true});
-    console.log(i);
     this.setState({guestIndex: i});
   }
 
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-    zIndex: 0,
+    zIndex: 1,
     position: 'absolute',
     height,
     width,
@@ -189,5 +188,6 @@ const styles = StyleSheet.create({
     width,
     height: height * 0.5,
     backgroundColor: "#fff",
+    zIndex: 1,
   },
 });
