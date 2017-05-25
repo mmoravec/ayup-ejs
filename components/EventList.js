@@ -37,7 +37,6 @@ export default class EventList extends React.Component {
       let date = new Date(x.startDate);
       return dateFormat(date, 'fullDate');
     }).sort((a, b) => {
-      console.log(a);
       let n = new Date(a.get(0).startDate);
       let f = new Date(b.get(0).startDate);
       if (n > f) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MapView } from 'expo';
 import {
   View,
   StyleSheet,
@@ -19,6 +20,8 @@ import MyText from '../common/MyText';
 import Bubble from '../common/Bubble';
 import Filter from '../../utils/filters';
 import { duration } from '../../utils/date';
+import Icons from '../../constants/activities';
+import MapStyle from '../../constants/mapstyle';
 import Actions from '../../state/Actions';
 const dateFormat = require('dateformat');
 const {width, height} = Dimensions.get('window');
@@ -49,7 +52,6 @@ export default class EventContent extends React.Component {
   render() {
     return (
       <ImmutableListView
-        style={{zIndex: 2}}
         ref={(listView) => { this._listView = listView; }}
         immutableData={this.props.comments}
         renderRow={this._renderRow}
@@ -71,10 +73,37 @@ export default class EventContent extends React.Component {
     };
     let start = new Date(event.startDate);
     let end = new Date(event.endDate);
+    let coord = {
+      longitude: event.location.coordinates[0],
+      latitude: event.location.coordinates[1],
+      latitudeDelta: 0.003850375166415176,
+      longitudeDelta: 0.01609325556559327,
+    };
+    let marker = {
+      longitude: event.location.coordinates[0],
+      latitude: event.location.coordinates[1],
+      latitudeDelta: 0.003850375166415176,
+      longitudeDelta: 0.01609325556559327,
+    };
+    let icon = Icons[event.activity].icon;
     return (
-      <View style={{backgroundColor: 'rgba(0,0,0,0.0)'}}>
+      <View style={{backgroundColor: '#fff', flex: 1}}>
         <EventActions event={this.props.event} />
-        <View style={{height: height * 0.2, width, backgroundColor: 'transparent'}} />
+        <View style={{height: height * 0.2, width}}>
+          <MapView
+            style={styles.map}
+            zoomEnabled={false}
+            customMapStyle={MapStyle}
+            scrollEnabled={false}
+            provider={"google"}
+            region={coord}>
+            <MapView.Marker
+              key={0}
+              coordinate={marker}
+              image={icon}
+            />
+          </MapView>
+        </View>
         <View style={styles.topInfo}>
           <View>
             <Image
@@ -216,12 +245,15 @@ export default class EventContent extends React.Component {
 const styles = StyleSheet.create({
   grandparent: {
     backgroundColor: '#fff',
-    zIndex: 1,
   },
   parent: {
     flexDirection: 'row',
     flex: 1,
     margin: 5,
+  },
+  map: {
+    height: height * 0.3,
+    width,
   },
   location: {
     borderColor: '#e5e5e5',
@@ -279,8 +311,8 @@ const styles = StyleSheet.create({
   },
   middleInfo: {
     flexDirection: 'column',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e6e6e6',
+    borderTopWidth: 1,
+    borderTopColor: '#e6e6e6',
     backgroundColor: '#fff',
   },
   bottomInfo: {
@@ -289,8 +321,6 @@ const styles = StyleSheet.create({
   },
   topInfo: {
     height: 100,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e6e6e6',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flexDirection: 'row',

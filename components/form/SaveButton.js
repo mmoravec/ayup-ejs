@@ -83,7 +83,6 @@ export default class SaveButton extends React.Component {
       this._warnUser();
     } else {
     let invited = [];
-    console.log(eventState.friends);
     eventState.friends.value.map(friend => {
       //TODO: update this to be id instead fbid
       invited.push({

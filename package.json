@@ -11,6 +11,8 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-stage-2": "^6.24.1",
     "eslint-plugin-babel": "^4.0.1",
+    "eslint-plugin-flowtype": "^2.33.0",
+    "eslint-plugin-import": "^2.3.0",
     "expo": "^16.0.0",
     "fuse.js": "^2.7.3",
     "lodash": "^4.17.4",

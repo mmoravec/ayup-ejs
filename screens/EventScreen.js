@@ -1,5 +1,4 @@
 import React from 'react';
-import { MapView } from 'expo';
 import {
   StyleSheet,
   View,
@@ -14,9 +13,7 @@ import EventButton from '../components/event/Button';
 import EventComments from '../components/event/Comments';
 import GuestInfo from '../components/event/GuestInfo';
 import AddFriend from '../components/event/AddFriend';
-import Icons from '../constants/activities';
 import Content from '../components/event/Content';
-import MapStyle from '../constants/mapstyle';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
@@ -39,23 +36,10 @@ export default class EventScreen extends React.Component {
   }
 
   render() {
+    console.log(this.props.selectedEvent);
     if (this.props.selectedEvent === null) {
       return <ActivityIndicator style={{marginTop: 200}} />;
     } else {
-      let event = this.props.selectedEvent;
-      let coord = {
-        longitude: event.location.coordinates[0],
-        latitude: event.location.coordinates[1] - 0.008,
-        latitudeDelta: 0.003850375166415176,
-        longitudeDelta: 0.01609325556559327,
-      };
-      let marker = {
-        longitude: event.location.coordinates[0],
-        latitude: event.location.coordinates[1],
-        latitudeDelta: 0.003850375166415176,
-        longitudeDelta: 0.01609325556559327,
-      };
-      let icon = Icons[event.activity].icon;
       let commentProps = {
         showCommentBox: this.state.showCommentBox,
         comment: this.state.comment,
@@ -70,25 +54,11 @@ export default class EventScreen extends React.Component {
       };
       return (
         <View style={styles.scrollView}>
+          <Content {...contentProps} />
           <GuestInfo showGuestInfo={this.state.showGuestInfo} close={this._closeGuestInfo} index={this.state.guestIndex} />
           <AddFriend show={this.state.showAddFriend} hide={this.showAddFriend} />
           <EventButton />
-          <MapView
-            style={styles.map}
-            zoomEnabled={false}
-            customMapStyle={MapStyle}
-            scrollEnabled={false}
-            provider={"google"}
-            region={coord}>
-            <MapView.Marker
-              key={0}
-              coordinate={marker}
-              image={icon}
-            />
-          </MapView>
           {this._renderBackBtn()}
-          <Content {...contentProps} />
-          <View style={styles.bottom} />
           <EventComments {...commentProps} />
         </View>
       );
@@ -157,21 +127,7 @@ export default class EventScreen extends React.Component {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-  },
-  form: {
-    flexDirection: 'column',
-    backgroundColor: 'rgba(0,0,0,0)',
-  },
-  map: {
-    flex: 1,
-    zIndex: 1,
-    position: 'absolute',
-    height,
-    width,
-  },
-  figure: {
-    justifyContent: 'center',
-    marginLeft: 20,
+    backgroundColor: "#fff",
   },
   btnBack: {
     width: 80,
@@ -179,15 +135,7 @@ const styles = StyleSheet.create({
   },
   back: {
     position: 'absolute',
-    zIndex: 100,
+    zIndex: 3,
     top: 10,
-  },
-  bottom: {
-    position: 'absolute',
-    bottom: 0,
-    width,
-    height: height * 0.5,
-    backgroundColor: "#fff",
-    zIndex: 1,
   },
 });

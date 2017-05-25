@@ -34,7 +34,6 @@ export default class EventButton extends React.Component {
 
   render() {
     let status = this._getStatus();
-    console.log(this.props.phone.status);
     if (this.props.phone.status === '') {
       //If invited to event
         if (status === "invited") {
@@ -92,7 +91,11 @@ export default class EventButton extends React.Component {
         </View>
       );
     } else {
-      return <ActivityIndicator />;
+      return (
+        <View style={styles.bottom}>
+          <ActivityIndicator />
+        </View>
+      );
     }
   }
 
