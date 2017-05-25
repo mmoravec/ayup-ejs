@@ -1,10 +1,10 @@
-import Immutable, { List } from 'immutable';
-import {call, put, take, select, takeLatest} from 'redux-saga/effects';
-import {delay} from 'redux-saga';
-import ActionTypes from '../state/ActionTypes';
-import { request } from '../utils/fetch';
-import { User } from '../state/Records';
-import { URL, PUT, GET } from '../constants/rest';
+import Immutable, { List } from "immutable";
+import { call, put, take, select, takeLatest } from "redux-saga/effects";
+import { delay } from "redux-saga";
+import ActionTypes from "../state/ActionTypes";
+import { request } from "../utils/fetch";
+import { User } from "../state/Records";
+import { URL, PUT, GET } from "../constants/rest";
 
 export function* watchSyncProfile() {
   yield takeLatest(ActionTypes.SYNC_PROFILE, syncProfile);
@@ -16,19 +16,22 @@ export function* refreshUserFriends() {
     const user = yield select(state => state.user);
     let friends;
     try {
-      friends = yield call(request, GET,
+      friends = yield call(
+        request,
+        GET,
         "https://graph.facebook.com/v2.8/me/friends/" +
-        "?fields=name,id,picture.width(120).height(120)&" +
-        "access_token=" + user.authToken,
+          "?fields=name,id,picture.width(120).height(120)&" +
+          "access_token=" +
+          user.authToken
       );
       let f = friends.body.data.map(friend => {
         return {
           name: friend.name,
           fbid: friend.id,
-          profilePic: friend.picture.data.url,
+          profile_pic: friend.picture.data.url,
         };
       });
-      yield put({type: ActionTypes.SET_FRIENDS, friends: new List(f)});
+      yield put({ type: ActionTypes.SET_FRIENDS, friends: new List(f) });
     } catch (error) {
       //log error
     }
@@ -40,12 +43,16 @@ function* syncProfile() {
   let profile = null;
   const p = yield select(state => state.user);
   if (!p.secret) {
-    yield put({ type: ActionTypes.REQUEST_UNAUTHENTICATED, error: "no user secret" });
+    yield put({
+      type: ActionTypes.REQUEST_UNAUTHENTICATED,
+      error: "no user secret",
+    });
   }
   try {
-    profile = yield call(request, GET, URL + "/v1.0/profile?id=" + p.id,
-      {Authorization: p.secret, UserID: p.id}
-    );
+    profile = yield call(request, GET, URL + "/v1.0/profile?id=" + p.id, {
+      Authorization: p.secret,
+      UserID: p.id,
+    });
   } catch (error) {
     yield call(delay, 5000);
     yield call(syncProfile);
@@ -67,7 +74,7 @@ function* syncProfile() {
     about: p.about,
     authToken: p.authToken,
     name: p.name,
-    profilePic: p.profilePic,
+    profile_pic: p.profilePic,
     friends: p.friends,
     email: p.email,
     gender: p.gender,
@@ -80,8 +87,12 @@ function* syncProfile() {
   user = new User(Immutable.fromJS(user));
   yield put({ type: ActionTypes.SET_CURRENT_USER, user });
   try {
-    yield call(request, PUT, URL + "/v1.0/profile?id=" + user.id,
-      {Authorization: user.secret, UserID: user.id}, user.toJS()
+    yield call(
+      request,
+      PUT,
+      URL + "/v1.0/profile?id=" + user.id,
+      { Authorization: user.secret, UserID: user.id },
+      user.toJS()
     );
   } catch (error) {
     // console.log('updaing profile failed');

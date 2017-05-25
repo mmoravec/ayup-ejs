@@ -36,7 +36,6 @@ export default class EventScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.selectedEvent);
     if (this.props.selectedEvent === null) {
       return <ActivityIndicator style={{marginTop: 200}} />;
     } else {

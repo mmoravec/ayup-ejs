@@ -20,7 +20,7 @@ export default class FilterModal extends React.Component {
 
   static getDataProps(data) {
     return {
-      filter: data.events.filter
+      filter: data.events.filter,
     };
   }
 
@@ -75,7 +75,10 @@ export default class FilterModal extends React.Component {
     } else {
       return (
         <View style={styles.filter}>
-          <TouchableOpacity activeOpacity={0.5} underlayColor="transparent" onPress={this._onFilterBtnPress}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            underlayColor="transparent"
+            onPress={this._onFilterBtnPress}>
             <Image
               style={styles.filterBtn}
               source={require('../assets/images/filter2.png')}>

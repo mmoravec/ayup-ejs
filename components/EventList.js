@@ -34,11 +34,12 @@ export default class EventList extends React.Component {
 
   _getHeaders = (events) => {
     events = events.groupBy(x => {
-      let date = new Date(x.startDate);
+      console.log(x);
+      let date = new Date(x.start_time);
       return dateFormat(date, 'fullDate');
     }).sort((a, b) => {
-      let n = new Date(a.get(0).startDate);
-      let f = new Date(b.get(0).startDate);
+      let n = new Date(a.get(0).start_time);
+      let f = new Date(b.get(0).start_time);
       if (n > f) {
         return 1;
       } else if (f < n) {
@@ -70,8 +71,8 @@ class ListRow extends React.Component {
     let rowData = this.props.data;
     let selectEvent = this._onItemPress.bind(this, rowData.id);
     let image = Icons[rowData.activity].image;
-    let start = new Date(rowData.startDate);
-    let end = new Date(rowData.endDate);
+    let start = new Date(rowData.start_time);
+    let end = new Date(rowData.end_time);
     let duration = Math.round(Math.abs(end.getTime() - start.getTime()) / 15) * 15;
     let format = "";
     if (duration < 3500000) {
@@ -89,7 +90,7 @@ class ListRow extends React.Component {
               source={image}
               style={styles.activityImage}
             />
-            <MyText style={styles.time}>{dateFormat(rowData.startDate, 'h:MM tt')}</MyText>
+            <MyText style={styles.time}>{dateFormat(rowData.start_time, 'h:MM tt')}</MyText>
             <MyText style={styles.duration}>{format}</MyText>
           </View>
           <View style={styles.info}>

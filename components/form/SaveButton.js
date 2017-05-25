@@ -87,7 +87,7 @@ export default class SaveButton extends React.Component {
       //TODO: update this to be id instead fbid
       invited.push({
         fbid: friend.fbid,
-        profilePic: friend.profilePic,
+        profile_pic: friend.profile_pic,
         name: friend.name,
       });
     });

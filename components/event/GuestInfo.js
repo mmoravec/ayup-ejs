@@ -63,7 +63,7 @@ export default class GuestInfo extends React.Component {
                 this.state.requested.map(g =>
                   <Card
                     key={g.name}
-                    profilePic={g.profilePic}
+                    profilePic={g.profile_pic}
                     opacity={0.4}
                     user={g}
                     host
@@ -134,7 +134,7 @@ export default class GuestInfo extends React.Component {
       return (
         <Card
           key={g.name}
-          profilePic={g.profilePic}
+          profilePic={g.profile_pic}
           nextSlide={this._nextSlide}
           user={g}
           host={false}

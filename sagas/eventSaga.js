@@ -1,10 +1,10 @@
-import { List } from 'immutable';
-import {delay} from 'redux-saga';
-import { takeLatest, select, call, put, fork } from 'redux-saga/effects';
-import ActionTypes from '../state/ActionTypes';
-import { request } from '../utils/fetch';
-import { URL, POST, GET, DELETE } from '../constants/rest';
-import LocalStorage from '../utils/LocalStorage';
+import { List } from "immutable";
+import { delay } from "redux-saga";
+import { takeLatest, select, call, put, fork } from "redux-saga/effects";
+import ActionTypes from "../state/ActionTypes";
+import { request } from "../utils/fetch";
+import { URL, POST, GET, DELETE } from "../constants/rest";
+import LocalStorage from "../utils/LocalStorage";
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
 
@@ -19,7 +19,10 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.REJECT_EVENT, rejectEvent),
     takeLatest(ActionTypes.LOAD_COMMENTS, loadComments),
     takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
-    takeLatest([ActionTypes.REMOVE_ACTIVITY, ActionTypes.ADD_ACTIVITY], saveFiltersAsyncSaga),
+    takeLatest(
+      [ActionTypes.REMOVE_ACTIVITY, ActionTypes.ADD_ACTIVITY],
+      saveFiltersAsyncSaga
+    ),
   ];
 }
 
@@ -32,8 +35,12 @@ function* saveEvent(action) {
   };
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, POST, URL + "/v1.0/events",
-      {Authorization: user.secret, UserID: user.id}, action.event
+    yield call(
+      request,
+      POST,
+      URL + "/v1.0/events",
+      { Authorization: user.secret, UserID: user.id },
+      action.event
     );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR, error });
@@ -48,8 +55,8 @@ function* saveEvent(action) {
     type: ActionTypes.REGION_CHANGE,
     longitude: action.event.location.coordinates[0],
     latitude: action.event.location.coordinates[1],
-   });
-  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: 'Back'});
+  });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Back" });
 }
 
 function* updateNearbyEvents(action) {
@@ -57,9 +64,17 @@ function* updateNearbyEvents(action) {
   const user = yield select(state => state.user);
   let scope = Math.floor(action.latitudeDelta * 53000), events;
   try {
-    events = yield call(request, GET, URL + "/v1.0/events?lat=" +
-      action.latitude + "&long=" + action.longitude + "&scope=" + scope,
-      {Authorization: user.secret, UserID: user.id}
+    events = yield call(
+      request,
+      GET,
+      URL +
+        "/v1.0/events?lat=" +
+        action.latitude +
+        "&long=" +
+        action.longitude +
+        "&scope=" +
+        scope,
+      { Authorization: user.secret, UserID: user.id }
     );
   } catch (error) {
     return;
@@ -71,9 +86,16 @@ function* acceptEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-      "?fbid=" + user.fbid + "&action=accept",
-      {Authorization: user.secret, UserID: user.id}
+    yield call(
+      request,
+      POST,
+      URL +
+        "/v1.0/events/" +
+        action.eventID +
+        "?fbid=" +
+        user.fbid +
+        "&action=accept",
+      { Authorization: user.secret, UserID: user.id }
     );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
@@ -90,9 +112,16 @@ function* requestEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-      "?fbid=" + user.fbid + "&action=request",
-      {Authorization: user.secret, UserID: user.id}
+    yield call(
+      request,
+      POST,
+      URL +
+        "/v1.0/events/" +
+        action.eventID +
+        "?fbid=" +
+        user.fbid +
+        "&action=request",
+      { Authorization: user.secret, UserID: user.id }
     );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
@@ -108,9 +137,10 @@ function* deleteEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, DELETE, URL + "/v1.0/events?id=" + action.eventID,
-      {Authorization: user.secret, UserID: user.id}
-    );
+    yield call(request, DELETE, URL + "/v1.0/events?id=" + action.eventID, {
+      Authorization: user.secret,
+      UserID: user.id,
+    });
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     yield call(delay, 2000);
@@ -126,9 +156,16 @@ function* rejectEvent(action) {
   const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, POST, URL + "/v1.0/events/" + action.eventID +
-      "?fbid=" + user.fbid + "&action=reject",
-      {Authorization: user.secret, UserID: user.id}
+    yield call(
+      request,
+      POST,
+      URL +
+        "/v1.0/events/" +
+        action.eventID +
+        "?fbid=" +
+        user.fbid +
+        "&action=reject",
+      { Authorization: user.secret, UserID: user.id }
     );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
@@ -144,29 +181,34 @@ function* rejectEvent(action) {
 function* updateSelectedEvent(eventID, user) {
   let data;
   try {
-    data = yield call(request, GET, URL + "/v1.0/events?id=" + eventID,
-      {Authorization: user.secret, UserID: user.id}
-    );
+    data = yield call(request, GET, URL + "/v1.0/events?id=" + eventID, {
+      Authorization: user.secret,
+      UserID: user.id,
+    });
   } catch (error) {
     yield call(delay, 5000);
     yield fork(updateSelectedEvent, eventID, user);
     return;
   }
-  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
+  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
 }
 
 function* loadComments(action) {
   const user = yield select(state => state.user);
   let data;
   try {
-    data = yield call(request, GET, URL + '/v1.0/comments?id=' + action.eventID,
-    {Authorization: user.secret, UserID: user.id});
+    data = yield call(
+      request,
+      GET,
+      URL + "/v1.0/comments?id=" + action.eventID,
+      { Authorization: user.secret, UserID: user.id }
+    );
   } catch (error) {
     yield call(delay, 5000);
     yield fork(loadComments, action);
     return;
   }
-  yield put({ type: ActionTypes.SET_COMMENTS, comments: new List(data.body)});
+  yield put({ type: ActionTypes.SET_COMMENTS, comments: new List(data.body) });
 }
 
 function* saveComment(action) {
@@ -183,8 +225,13 @@ function* saveComment(action) {
     eventID: action.eventID,
   };
   try {
-    yield call(request, POST, URL + '/v1.0/comments',
-    {Authorization: user.secret, UserID: user.id}, comment);
+    yield call(
+      request,
+      POST,
+      URL + "/v1.0/comments",
+      { Authorization: user.secret, UserID: user.id },
+      comment
+    );
   } catch (error) {
     yield call(delay, 5000);
     yield fork(saveComment, action);
@@ -197,14 +244,16 @@ function* loadEvent(action) {
   const user = yield select(state => state.user);
   let data;
   try {
-    data = yield call(request, GET, URL + '/v1.0/events?id=' + action.eventID,
-    {Authorization: user.secret, UserID: user.id});
+    data = yield call(request, GET, URL + "/v1.0/events?id=" + action.eventID, {
+      Authorization: user.secret,
+      UserID: user.id,
+    });
   } catch (error) {
     yield call(delay, 5000);
     yield fork(loadEvent, action);
     return;
   }
-  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body});
+  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
 }
 
 function* saveFiltersAsyncSaga(action) {

@@ -40,7 +40,7 @@ export default class ProfileScreen extends React.Component {
             contentContainerStyle={styles.form}>
             <View style={styles.topInfo}>
               <Image
-                source={{uri: user.profilePic}}
+                source={{uri: user.profile_pic}}
                 style={styles.profilePic}
               />
               <MyText style={{fontSize: 20, marginTop: 60}}>{user.name}</MyText>
