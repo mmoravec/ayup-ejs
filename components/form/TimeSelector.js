@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -41,8 +41,8 @@ export default class TimeSelector extends React.Component {
 
   render() {
     let time = "";
-    if (this.state.hasFocused && this.props.date !== '') {
-      time = dateFormat(this.props.date, 'ddd h:MM TT, mmm dd');
+    if (this.props.value !== '') {
+      time = dateFormat(this.props.value, 'ddd h:MM TT, mmm dd');
     }
     return (
       <TouchableHighlight
@@ -75,7 +75,7 @@ export default class TimeSelector extends React.Component {
 
   _renderDate = () => {
     if (this.state.focusDate && Platform.OS === 'ios') {
-      let date = this.props.date;
+      let date = this.props.value;
       return (
         <DatePickerIOS
           date={date}
@@ -94,7 +94,7 @@ export default class TimeSelector extends React.Component {
   }
 
   _onDatePress = async () => {
-    this._onChange(this.props.date instanceof Date ? this.props.date : this._getNextTime());
+    this._onChange(this.props.value instanceof Date ? this.props.value : this._getNextTime());
     this.props.onFocus(this.props.stateKey);
     if (Platform.OS === 'android') {
       let date, time;
@@ -102,6 +102,7 @@ export default class TimeSelector extends React.Component {
       try {
         date = await DatePickerAndroid.open({date: now});
         if (date.action === DatePickerAndroid.dismissedAction) {
+          return;
         }
       } catch ({code, message}) {
         console.warn(`Error in Android DatePicker`, message);
@@ -109,12 +110,13 @@ export default class TimeSelector extends React.Component {
       try {
         time = await TimePickerAndroid.open({hour: now.getHours(), minute: now.getMinutes()});
         if (time.action === TimePickerAndroid.dismissedAction) {
+          return;
         }
       } catch ({code, message}) {
         console.warn(`Error in Android TimePicker`, message);
       }
-
-      let d = new Date(date.year, date.month, date.day, time.hour, time.minute);
+      let minute = Math.round(time.minute / 15) * 15;
+      let d = new Date(date.year, date.month, date.day, time.hour, minute);
       this._onChange(d);
     } else {
       this.props.scrollTo(this._scrollY - 80);

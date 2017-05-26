@@ -15,6 +15,7 @@ import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import MapView from '../components/EventMap';
 import Filters from '../utils/filters';
+import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
 @connect((data) => HomeScreen.getDataProps(data))
@@ -54,8 +55,7 @@ export default class HomeScreen extends React.Component {
       events: this.props.events,
       region: this.props.region,
     };
-    console.log(this.props.phone.location);
-    if (this.props.phone.location !== 'denied' && this.props.phone.location !== false) {
+    if (this.props.phone.locationGranted && this.props.region.latitude) {
       return (
         <View style={{flex: 1}}>
           <MapView {...mapProps} />
@@ -79,7 +79,6 @@ export default class HomeScreen extends React.Component {
           </View>
           <EventListModal {...listProps} />
           <MenuModal {...menuProps} />
-          {this._renderLocationWarning()}
         </View>
       );
     } else {
@@ -87,13 +86,14 @@ export default class HomeScreen extends React.Component {
         <View>
           <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} />
           {this._renderLocationWarning()}
+          {this._renderLocationGreeting()}
         </View>
       );
     }
   }
 
   _renderLocationWarning = () => {
-    if (this.props.phone.location === "denied") {
+    if (this.props.phone.locationGranted === "denied") {
       console.log('render location warning');
       return (
         <Modal
@@ -109,8 +109,40 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  _renderLocationGreeting = () => {
+    if (this.props.phone.locationGranted === false) {
+      console.log('render location greeting');
+      return (
+        <Modal
+          animationType={"none"}
+          transparent={true}
+          style={{flex: 1}}
+          onRequestClose={this._locationWarningClose}
+          visible={this.props.menuVisible}>
+          <View style={{margin: 50, backgroundColor: '#fff', height: height * 0.6, marginTop: height * 0.2, justifyContent: 'space-between'}}>
+            <View>
+              <Text>Welcome to Ayup! Let's get started. We'll first need your location to surface events near you.</Text>
+            </View>
+            <TouchableOpacity onPress={this._grantLocation}>
+              <View style={{width: 'auto', alignItems: 'center', marginBottom: 10}}>
+                <Image
+                  style={styles.btnLocation}
+                  source={require('../assets/images/btn_ready.png')}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      );
+    }
+  }
+
   _locationWarningClose = () => {
     // console.log("won't close");
+  }
+
+  _grantLocation = () => {
+    this.props.dispatch(Actions.grantLocation());
   }
 
   _onListBtnPress = () => {
@@ -152,6 +184,10 @@ const styles = StyleSheet.create({
   btnMain: {
     width: 150,
     height: 150,
+  },
+  btnLocation: {
+    height: 38,
+    width: 140,
   },
   btnList: {
     width: 100,

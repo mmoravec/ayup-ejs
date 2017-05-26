@@ -1,6 +1,5 @@
-import ActionTypes from './ActionTypes';
-import { User } from './Records';
-import LocalStorage from '../utils/LocalStorage';
+import ActionTypes from "./ActionTypes";
+import { User } from "./Records";
 
 class EventsReducer {
   static reduce(state = new User(), action) {
@@ -16,10 +15,12 @@ class EventsReducer {
   static [ActionTypes.SET_FRIENDS](state, action) {
     // console.log('setting friends');
     // console.log(action.friends);
-    return state.set('friends', action.friends);
+    return state.set("friends", action.friends);
+  }
+  static [ActionTypes.SET_CONTACTS](state, action) {
+    return state.set("contacts", action.contacts);
   }
   static [ActionTypes.LOG_OUT](state, action) {
-    LocalStorage.clearAllAsync();
     return new User();
   }
 }

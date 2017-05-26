@@ -24,6 +24,10 @@ class EventsReducer {
     return state.set('selectedComments', action.comments);
   }
 
+  static [ActionTypes.NOTIFICATION_RECEIVED](state, action) {
+    return state.set('notification', action.notification);
+  }
+
   static [ActionTypes.SET_FILTER](state, action) {
     return state.set('filter', {startTime: action.filterStart, endTime: action.filterEnd});
   }
@@ -41,14 +45,6 @@ class EventsReducer {
     return state.set('selectedEvent', action.selectedEvent);
   }
 
-  static [ActionTypes.SET_GEOCODE_ADDRESS](state, action) {
-    return state.set('geocodeAddress', action.data);
-  }
-
-  static [ActionTypes.RESET_ADDRESS](state, action) {
-    return state.set('geocodeAddress', '');
-  }
-
   static [ActionTypes.ZERO_SELECTED_EVENT](state, action) {
     return state.set('selectedEvent', null);
   }
@@ -61,8 +57,8 @@ class EventsReducer {
     let region = {
       latitude: action.latitude,
       longitude: action.longitude,
-      latitudeDelta: 0.0249666,
-      longitudeDelta: 0.017766,
+      latitudeDelta: action.latitudeDelta ? action.latitudeDelta : 0.0249666,
+      longitudeDelta: action.longitudeDelta ? action.longitudeDelta : 0.017766,
     };
     return state.set('region', region);
   }

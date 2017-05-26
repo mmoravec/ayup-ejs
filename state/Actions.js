@@ -1,6 +1,12 @@
-import ActionTypes from './ActionTypes';
+import ActionTypes from "./ActionTypes";
 
 export default class Actions {
+  static blurFields() {
+    return {
+      type: ActionTypes.BLUR_FIELDS,
+    };
+  }
+
   static setCurrentUser(user) {
     return {
       type: ActionTypes.SET_CURRENT_USER,
@@ -30,7 +36,7 @@ export default class Actions {
 
   static logOut() {
     return {
-      type: ActionTypes.LOG_OUT,
+      type: ActionTypes.REQUEST_UNAUTHENTICATED,
     };
   }
 
@@ -38,6 +44,48 @@ export default class Actions {
     return {
       type: ActionTypes.SIGN_IN,
       user,
+    };
+  }
+
+  static showhideField(field) {
+    return {
+      type: ActionTypes.SHOWHIDE_FIELD,
+      field,
+    };
+  }
+
+  static focusField(field) {
+    return {
+      type: ActionTypes.FOCUS_FIELD,
+      el: field,
+    };
+  }
+
+  static setFormValue(key, value) {
+    return {
+      type: ActionTypes.SET_FORMVALUE,
+      key,
+      value,
+    };
+  }
+
+  static grantLocation() {
+    return {
+      type: ActionTypes.GRANT_LOCATION,
+    };
+  }
+
+  static inviteFriends() {
+    return {
+      type: ActionTypes.INVITE_FRIENDS,
+    };
+  }
+
+  static setFormTitle(value) {
+    return {
+      type: ActionTypes.SET_FORMVALUE,
+      key: "title",
+      value,
     };
   }
 
@@ -141,25 +189,38 @@ export default class Actions {
     };
   }
 
-  static geoCode(lat, long) {
+  static geoCode(lat, long, stateKey) {
     return {
       type: ActionTypes.GEOCODE,
       lat,
       long,
+      stateKey,
+    };
+  }
+
+  static setFormLocation(key, name, long, lat) {
+    return {
+      type: ActionTypes.SET_GEOCODE_ADDRESS,
+      stateKey: key,
+      data: {
+        name,
+        long,
+        lat,
+      },
     };
   }
 
   static setFilter(filterStart, filterEnd) {
-    return   {
-        type: ActionTypes.SET_FILTER,
-        filterStart,
-        filterEnd,
-      };
+    return {
+      type: ActionTypes.SET_FILTER,
+      filterStart,
+      filterEnd,
+    };
   }
   static saveEvent(event) {
-    return   {
-        type: ActionTypes.SAVE_EVENT,
-        event,
-      };
+    return {
+      type: ActionTypes.SAVE_EVENT,
+      event,
+    };
   }
 }

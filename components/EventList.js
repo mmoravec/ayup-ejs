@@ -33,26 +33,22 @@ export default class EventList extends React.Component {
   }
 
   _getHeaders = (events) => {
-    let d = {};
-    events = events.toJS();
-    events = events.map(event => {
-      event.startDate = new Date(event.startDate);
-      event.endDate = new Date(event.endDate);
-      return event;
-    });
-    events = events.sort((a, b) => {
-      return a.startDate - b.startDate;
-    });
-    events.map(event => {
-      let date = new Date(event.startDate);
-      let mash = dateFormat(date, 'fullDate');
-      if (d[mash]) {
-        d[mash].push(event);
+    events = events.groupBy(x => {
+      console.log(x);
+      let date = new Date(x.start_time);
+      return dateFormat(date, 'fullDate');
+    }).sort((a, b) => {
+      let n = new Date(a.get(0).start_time);
+      let f = new Date(b.get(0).start_time);
+      if (n > f) {
+        return 1;
+      } else if (f < n) {
+        return -1;
       } else {
-        d[mash] = [event];
+        return 0;
       }
     });
-    return Immutable.fromJS(d);
+    return events;
   }
 
   _renderRow = (rowData) => {
@@ -71,14 +67,13 @@ export default class EventList extends React.Component {
 @connect()
 class ListRow extends React.Component {
   render() {
-    console.log(this.props);
     let styles = this.props.styles;
-    let rowData = this.props.data.toJS();
+    let rowData = this.props.data;
     let selectEvent = this._onItemPress.bind(this, rowData.id);
     let image = Icons[rowData.activity].image;
-    let start = new Date(rowData.startDate);
-    let end = new Date(rowData.endDate);
-    let duration = Math.abs(end.getTime() - start.getTime());
+    let start = new Date(rowData.start_time);
+    let end = new Date(rowData.end_time);
+    let duration = Math.round(Math.abs(end.getTime() - start.getTime()) / 15) * 15;
     let format = "";
     if (duration < 3500000) {
       format = dateFormat(duration, 'MM') + "min";
@@ -95,7 +90,7 @@ class ListRow extends React.Component {
               source={image}
               style={styles.activityImage}
             />
-            <MyText style={styles.time}>{dateFormat(rowData.startDate, 'h:MM tt')}</MyText>
+            <MyText style={styles.time}>{dateFormat(rowData.start_time, 'h:MM tt')}</MyText>
             <MyText style={styles.duration}>{format}</MyText>
           </View>
           <View style={styles.info}>
@@ -111,7 +106,6 @@ class ListRow extends React.Component {
   }
   _onItemPress = (id) => {
     //TODO: create a saga for this when fetching comments becomes
-    console.log(id);
     this.props.dispatch(Actions.selectEvent(id));
     this.props.dispatch(Actions.routeChange('Event'));
     if (this.props.closeBtn) {

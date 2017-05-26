@@ -24,7 +24,7 @@ export default class Capacity extends React.Component {
               />
             </View>
           </TouchableOpacity>
-          <MyText style={styles.text}>{this.props.capacity}</MyText>
+          <MyText style={styles.text}>{this.props.value}</MyText>
           <TouchableOpacity onPress={this._increment}>
             <View style={styles.icon}>
               <Ionicons
@@ -39,12 +39,12 @@ export default class Capacity extends React.Component {
   }
 
   _increment = () => {
-    let inc = this.props.capacity;
+    let inc = this.props.value;
     inc++;
     this.props.onChange(this.props.stateKey, inc);
   }
   _decrement = () => {
-    let dec = this.props.capacity;
+    let dec = this.props.value;
     if(dec > 0) dec--;
     this.props.onChange(this.props.stateKey, dec);
   }

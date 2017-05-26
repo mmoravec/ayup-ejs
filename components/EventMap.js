@@ -8,19 +8,11 @@ import MapStyle from '../constants/mapstyle';
 @connect()
 export default class EventMap extends React.Component {
 
-  state = {
-    loadDelay: false,
-  }
-
-  componentDidMount() {
-    setTimeout(() => this.setState({loadDelay: true}), 1000);
-  }
-
   render() {
       return (
         <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
-          initialRegion={this.props.region}
+          region={this.props.region}
           provider={"google"}
           customMapStyle={MapStyle}
           zoomEnabled={true}
@@ -35,12 +27,16 @@ export default class EventMap extends React.Component {
   }
 
   _onRegionChange = (region) => {
-    this.props.dispatch(Actions.regionChange(
-      region.longitude,
-      region.latitude,
-      region.longitudeDelta,
-      region.latitudeDelta,
-    ));
+    //sometimes map resets, make sure its not
+    if (region.latitude !== 0) {
+      this.props.dispatch(Actions.regionChange(
+        region.longitude,
+        region.latitude,
+        region.longitudeDelta,
+        region.latitudeDelta,
+      ));
+    }
+
   }
 
 }

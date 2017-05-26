@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   Image,
+  Platform,
   TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -19,12 +20,15 @@ export default class NewEventScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
-          <Image
-            source={require('../assets/images/btn_back.png')}
-            style={styles.btnBack}
-          />
-        </TouchableOpacity>
+        {
+          (Platform.OS === 'ios') &&
+          <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
+            <Image
+              source={require('../assets/images/btn_back.png')}
+              style={styles.btnBack}
+            />
+          </TouchableOpacity>
+        }
         <Form />
       </Image>
     );

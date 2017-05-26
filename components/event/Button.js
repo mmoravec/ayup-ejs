@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Image,
@@ -7,15 +7,14 @@ import {
   Dimensions,
   ActivityIndicator,
   LayoutAnimation,
-} from 'react-native';
-import { connect } from 'react-redux';
-import MyText from '../common/MyText';
-import Actions from '../../state/Actions';
-const {height, width} = Dimensions.get('window');
+} from "react-native";
+import { connect } from "react-redux";
+import MyText from "../common/MyText";
+import Actions from "../../state/Actions";
+const { height, width } = Dimensions.get("window");
 
-@connect((data) => EventButton.getDataProps(data))
+@connect(data => EventButton.getDataProps(data))
 export default class EventButton extends React.Component {
-
   static getDataProps(data) {
     return {
       phone: data.phone,
@@ -26,7 +25,7 @@ export default class EventButton extends React.Component {
 
   state = {
     warn: false,
-  }
+  };
 
   componentWillUpdate() {
     LayoutAnimation.easeInEaseOut();
@@ -34,65 +33,68 @@ export default class EventButton extends React.Component {
 
   render() {
     let status = this._getStatus();
-    if (this.props.phone.status === '') {
+    if (this.props.phone.status === "") {
       //If invited to event
-      if (status !== "host") {
-        if (status === "invited") {
-          return (
-            <View style={styles.bottom}>
-              <TouchableOpacity
-                underlayColor="transparent"
-                style={styles.hlightSave}
-                onPress={this._goingBtnPress}>
-                <Image
-                  style={styles.btn}
-                  source={require('../../assets/images/btn_going.png')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                underlayColor="transparent"
-                style={styles.hlightSave}
-                onPress={this._cantmakeitBtnPress}>
-                <Image
-                  style={styles.btn}
-                  source={require('../../assets/images/btn_cantmakeit.png')}
-                />
-              </TouchableOpacity>
-            </View>
-          );
-        } else if (status === "uninvited") {
-          return (
-            <View style={styles.bottom}>
-              <TouchableOpacity
-                underlayColor="transparent"
-                style={styles.hlightSave}
-                onPress={this._joinBtnPress}>
-                <Image
-                  style={styles.btnJoin}
-                  source={require('../../assets/images/btn_join.png')}
-                />
-              </TouchableOpacity>
-            </View>
-          );
-        }
+      if (status === "invited") {
+        return (
+          <View style={styles.bottom}>
+            <TouchableOpacity
+              underlayColor="transparent"
+              style={styles.hlightSave}
+              onPress={this._goingBtnPress}>
+              <Image
+                style={styles.btn}
+                source={require("../../assets/images/btn_going.png")}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              underlayColor="transparent"
+              style={styles.hlightSave}
+              onPress={this._cantmakeitBtnPress}>
+              <Image
+                style={styles.btn}
+                source={require("../../assets/images/btn_cantmakeit.png")}
+              />
+            </TouchableOpacity>
+          </View>
+        );
+      } else if (status === "uninvited") {
+        return (
+          <View style={styles.bottom}>
+            <TouchableOpacity
+              underlayColor="transparent"
+              style={styles.hlightSave}
+              onPress={this._joinBtnPress}>
+              <Image
+                style={styles.btnJoin}
+                source={require("../../assets/images/btn_join.png")}
+              />
+            </TouchableOpacity>
+          </View>
+        );
+      } else {
+        return null;
       }
-      return null;
-    } else if (this.props.phone.status === 'success') {
+    } else if (this.props.phone.status === "success") {
       return (
         <View style={styles.woohoo}>
           <MyText style={styles.success}> Success! </MyText>
         </View>
       );
-    } else if (this.props.phone.status === 'error') {
+    } else if (this.props.phone.status === "error") {
       return (
         <View style={styles.warn}>
-          <MyText style={{fontSize: 16, color: '#fff', textAlign: 'center'}}>
+          <MyText style={{ fontSize: 16, color: "#fff", textAlign: "center" }}>
             Something went wrong :(
           </MyText>
         </View>
       );
     } else {
-      return <ActivityIndicator />;
+      return (
+        <View style={styles.bottom}>
+          <ActivityIndicator />
+        </View>
+      );
     }
   }
 
@@ -123,31 +125,30 @@ export default class EventButton extends React.Component {
       user = "host";
     }
     return user;
-  }
-
+  };
 
   _warnUser = () => {
-    this.setState({warn: true});
-    setTimeout(() => this.setState({warn: false}), 2000);
-  }
+    this.setState({ warn: true });
+    setTimeout(() => this.setState({ warn: false }), 2000);
+  };
 
   _goingBtnPress = () => {
     this.props.dispatch(Actions.acceptEvent(this.props.selectedEvent.id));
-  }
+  };
 
   _cantmakeitBtnPress = () => {
     this.props.dispatch(Actions.rejectEvent(this.props.selectedEvent.id));
-  }
+  };
 
   _joinBtnPress = () => {
     this.props.dispatch(Actions.requestEvent(this.props.selectedEvent.id));
-  }
+  };
 
   _renderWarning = () => {
     if (this.state.warn) {
       return (
         <View style={styles.warn}>
-          <MyText style={{fontSize: 16, color: '#fff', textAlign: 'center'}}>
+          <MyText style={{ fontSize: 16, color: "#fff", textAlign: "center" }}>
             Request Failed
           </MyText>
         </View>
@@ -155,19 +156,19 @@ export default class EventButton extends React.Component {
     } else {
       return null;
     }
-  }
+  };
 }
 
 const styles = StyleSheet.create({
   bottom: {
-    position: 'absolute',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    position: "absolute",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     bottom: 0,
     height: height * 0.1,
     width,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    zIndex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    zIndex: 3,
   },
   btn: {
     height: 50,
@@ -178,27 +179,29 @@ const styles = StyleSheet.create({
     width: 115,
   },
   warn: {
-    position: 'absolute',
+    position: "absolute",
     height: height * 0.1,
     width,
-    backgroundColor: '#ee366f',
-    justifyContent: 'center',
+    backgroundColor: "#ee366f",
+    justifyContent: "center",
     bottom: 0,
+    zIndex: 3,
   },
   woohoo: {
-    position: 'absolute',
+    position: "absolute",
     height: height * 0.1,
     width,
     bottom: 0,
-    backgroundColor: '#8bd1c6',
-    justifyContent: 'center',
+    backgroundColor: "#8bd1c6",
+    justifyContent: "center",
+    zIndex: 3,
   },
   hlightSave: {
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   success: {
     fontSize: 18,
-    alignSelf: 'center',
-    color: '#fff',
+    alignSelf: "center",
+    color: "#fff",
   },
 });

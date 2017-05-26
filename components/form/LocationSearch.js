@@ -1,12 +1,9 @@
-import React from 'react'
+import React from 'react';
 import {
   StyleSheet,
   View,
   Dimensions,
   TouchableHighlight,
-  Platform,
-  Image,
-  DatePickerIOS,
 } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import { MapView } from 'expo';
@@ -22,7 +19,6 @@ export default class LocationSearch extends React.Component {
 
   static getDataProps(data) {
     return {
-      address: data.events.geocodeAddress,
       region: data.events.region,
     };
   }
@@ -55,10 +51,6 @@ export default class LocationSearch extends React.Component {
   }
 
   render() {
-    let location = "";
-    if (this.state.hasFocused && this.props.date !== '') {
-      location = this.props.address.name;
-    }
     return (
       <View>
         <TouchableHighlight
@@ -68,7 +60,7 @@ export default class LocationSearch extends React.Component {
           <View>
             <View pointerEvents={'none'}>
               <Hoshi
-                value={location}
+                value={this.props.value}
                 editable={false}
                 label={this.props.label}
                 borderColor={'#8bd1c6'}
@@ -91,8 +83,8 @@ export default class LocationSearch extends React.Component {
   }
 
   _renderLocation = () => {
-    if (this.state.focusLocation) {
-      let location = this.props.address.lat ? { latitude: this.props.address.lat, longitude: this.props.address.long, latitudeDelta: 0.0249666, longitudeDelta: 0.017766} : this.props.region;
+    if (this.props.focus) {
+      let location = this.props.lnglat[0] ? { latitude: this.props.lnglat[1], longitude: this.props.lnglat[0], latitudeDelta: 0.0249666, longitudeDelta: 0.017766} : this.props.region;
       return (
         <View>
           <GooglePlacesAutocomplete
@@ -136,15 +128,17 @@ export default class LocationSearch extends React.Component {
             }}
             currentLocation={false}
           />
-          <MapView.Animated
-            style={{ flex: 1, backgroundColor: '#fff', height: height * 0.4, width: width * 0.9, justifyContent: 'center'}}
-            initialRegion={location}
-            region={this.state.region}
-            provider={"google"}
-            zoomEnabled={true}
-            onRegionChange={this._moveMarker}
-            onRegionChangeComplete={this._onRegionChange}>
-            <View style={{backgroundColor: 'transparent', width: 20, height: 45, alignSelf: 'center'}}>
+          <View style={{flex: 1, height: height * 0.4, width: width * 0.9}}>
+            <MapView.Animated
+              style={{backgroundColor: '#fff', height: height * 0.4, width: width * 0.9, zIndex: 1}}
+              initialRegion={location}
+              region={this.state.region}
+              provider={"google"}
+              zoomEnabled={true}
+              onRegionChange={this._moveMarker}
+              onRegionChangeComplete={this._onRegionChange}
+            />
+            <View style={{backgroundColor: 'transparent', width: 18, height: 30, top: height * 0.2 - 15, left: width * 0.45 - 9, position: 'absolute', zIndex: 2}}>
               <Ionicons
                 size={32}
                 name={'ios-pin'}
@@ -153,7 +147,7 @@ export default class LocationSearch extends React.Component {
                 color={'#ee366f'}
               />
             </View>
-          </MapView.Animated>
+          </View>
         </View>
       );
     } else {
@@ -166,31 +160,35 @@ export default class LocationSearch extends React.Component {
   }
 
   _getLocation = (data, details) => {
-    let coord = [details.geometry.location.lng, details.geometry.location.lat];
     let region = {
       longitude: details.geometry.location.lng,
       latitude: details.geometry.location.lat,
       longitudeDelta: this.state.region ? this.state.region.longitudeDelta : 0.0399327278137207,
       latitudeDelta: this.state.region ? this.state.region.latitudeDelta : 0.02496758212897987,
-    }
+    };
     this.setState({region, regionChangeCount: 0});
-    this.props.onChange(details.formatted_address, coord);
+    this.props.dispatch(Actions.setFormLocation(
+      this.props.stateKey,
+      details.formatted_address,
+      details.geometry.location.lng,
+      details.geometry.location.lat,
+    ));
   }
 
   _onLocationPress = () => {
-    this.props.onFocus(this.props.stateKey);
+    this.props.dispatch(Actions.focusField(this.props.stateKey));
     this.props.scrollTo(this._scrollY - 80);
   }
 
   _onRegionChange = (region) => {
     this.setState({regionChangeCount: this.state.regionChangeCount + 1});
-    console.log(this.state.regionChangeCount);
     if (this.state.regionChangeCount > 0) {
       this._gplaces.setAddressText('');
     }
     this.props.dispatch(Actions.geoCode(
       region.latitude,
       region.longitude,
+      this.props.stateKey
     ));
   }
 }
@@ -198,7 +196,6 @@ export default class LocationSearch extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    backgroundColor: 'transparent',
     marginBottom: 25,
-  }
+  },
 });

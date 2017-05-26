@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
+  Platform,
   Image,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -40,22 +41,25 @@ export default class MyEventsScreen extends React.Component {
   render() {
     // console.log(this.props.user);
     let hostEvents = this.props.user.events.filter(event => {
-      return event.get('host').get('userID') === this.props.user.id;
+      return event.host.userID === this.props.user.id;
     });
     let joinedEvents = this.props.user.events.filter(event => {
-      return event.get('host').get('userID') !== this.props.user.id;
+      return event.host.userID !== this.props.user.id;
     });
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
         <View style={styles.myEventsText}>
           <MyText style={{alignSelf: 'center', fontSize: 20, marginTop: 25}}>My Events</MyText>
         </View>
-        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
-          <Image
-            source={require('../assets/images/btn_back.png')}
-            style={styles.btnBack}
-          />
-        </TouchableOpacity>
+        {
+          (Platform.OS === 'ios') &&
+          <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
+            <Image
+              source={require('../assets/images/btn_back.png')}
+              style={styles.btnBack}
+            />
+          </TouchableOpacity>
+        }
         <View style={styles.contextParent}>
           <Image
             source={require('../assets/images/event_bar.png')}

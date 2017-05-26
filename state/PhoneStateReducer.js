@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { Map } from 'immutable';
 import ActionTypes from './ActionTypes';
 import { PhoneState } from './Records';
 
@@ -19,8 +20,24 @@ class PhoneStateReducer {
     return state.set('userLoaded', true);
   }
 
+  static [ActionTypes.MERGE_PHONESTATE](state, action) {
+    return state.merge(Map(action.phone));
+  }
+
   static [ActionTypes.FONT_LOADED](state, action) {
     return state.set('fontLoaded', true);
+  }
+
+  static [ActionTypes.LOCATION_GRANTED](state, action) {
+    return state.set('locationGranted', true);
+  }
+
+  static [ActionTypes.CONTACTS_GRANTED](state, action) {
+    return state.set('contactsGranted', true);
+  }
+
+  static [ActionTypes.NOTIFICATIONS_GRANTED](state, action) {
+    return state.set('notificationsGranted', true);
   }
 
   static [ActionTypes.IMAGES_LOADED](state, action) {
@@ -41,10 +58,6 @@ class PhoneStateReducer {
 
   static [ActionTypes.RESET_ALERT](state, action) {
     return state.set('status', '');
-  }
-
-  static [ActionTypes.SET_LOCATION](state, action) {
-    return state.set('location', action.location);
   }
 
   static [ActionTypes.OPTLY_LOADED](state, action) {

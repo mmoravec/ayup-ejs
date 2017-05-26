@@ -1,4 +1,4 @@
-import { List, Record, Map } from 'immutable';
+import { List, Record, Map } from "immutable";
 
 export const EventState = Record({
   nearbyEvents: new List(),
@@ -15,7 +15,6 @@ export const EventState = Record({
   },
   selectedEvent: null,
   selectedComments: new List(),
-  geocodeAddress: '',
 });
 
 export const User = Record({
@@ -23,7 +22,7 @@ export const User = Record({
   id: null,
   authToken: null,
   name: null,
-  profilePic: null,
+  profile_pic: null,
   friends: new List(),
   email: null,
   gender: null,
@@ -40,6 +39,7 @@ export const User = Record({
   badges: new List(),
   activities: new List(),
   secret: null,
+  contacts: new List(),
 });
 
 export const PhoneState = Record({
@@ -47,10 +47,13 @@ export const PhoneState = Record({
   fontLoaded: false,
   filtersLoaded: false,
   imagesLoaded: false,
-  status: '',
-  location: false,
+  status: "",
   optly: null,
-  optlyVariation: '',
+  optlyVariation: "",
+  locationGranted: false,
+  contactsGranted: false,
+  notificationsGranted: false,
+  notification: {},
 });
 
 export const Comment = Record({
@@ -62,5 +65,77 @@ export const Comment = Record({
   posted: null,
   modified: null,
   author: null,
-  content: '',
+  content: "",
+});
+
+export const FormState = Record({
+  startDate: {
+    focus: false,
+    shown: true,
+    value: "",
+    label: "Start Date",
+    stateKey: "startDate",
+  },
+  endDate: {
+    focus: false,
+    shown: true,
+    value: "",
+    label: "End Date",
+    stateKey: "endDate",
+  },
+  title: {
+    label: "Title",
+    focus: false,
+    shown: true,
+    value: "",
+    stateKey: "title",
+  },
+  desc: {
+    label: "Description",
+    focus: false,
+    shown: false,
+    value: "",
+    stateKey: "desc",
+  },
+  location: {
+    focus: false,
+    label: "Meeting Location",
+    shown: true,
+    value: "",
+    lnglat: [],
+    stateKey: "location",
+  },
+  dest: {
+    focus: false,
+    shown: false,
+    label: "Destination",
+    value: "",
+    lnglat: [],
+    stateKey: "dest",
+  },
+  friends: {
+    focus: false,
+    shown: true,
+    value: new List(),
+    stateKey: "friends",
+    label: "Friends",
+  },
+  activity: {
+    focus: false,
+    shown: true,
+    value: "basketball",
+    stateKey: "activity",
+  },
+  private: {
+    focus: false,
+    shown: true,
+    value: false,
+    stateKey: "private",
+  },
+  capacity: {
+    focus: false,
+    shown: false,
+    value: 0,
+    stateKey: "capacity",
+  },
 });
