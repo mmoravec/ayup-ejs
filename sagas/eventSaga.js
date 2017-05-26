@@ -29,11 +29,12 @@ export function* watchEventAction() {
 function* saveEvent(action) {
   const user = yield select(state => state.user);
   action.event.host = {
-    userId: user.id,
-    profilePic: user.profilePic,
+    id: user.id,
+    profile_pic: user.profile_pic,
     name: user.name,
   };
   yield put({ type: ActionTypes.ALERT_SAVING });
+  console.log(action.event);
   try {
     yield call(
       request,
@@ -62,16 +63,24 @@ function* saveEvent(action) {
 function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const user = yield select(state => state.user);
-  let scope = Math.floor(action.latitudeDelta * 53000), events;
+  let region = {
+    latitude: action.latitude,
+    longitude: action.longitude,
+    latitudeDelta: action.latitudeDelta ? action.latitudeDelta : 0.0249666,
+    longitudeDelta: action.longitudeDelta ? action.longitudeDelta : 0.017766,
+  };
+  let scope = Math.floor(region.latitudeDelta * 53000), events;
+  console.log("udpatenearbyevents");
+  console.log(region);
   try {
     events = yield call(
       request,
       GET,
       URL +
         "/v1.0/events?lat=" +
-        action.latitude +
+        region.latitude +
         "&long=" +
-        action.longitude +
+        region.longitude +
         "&scope=" +
         scope,
       { Authorization: user.secret, UserID: user.id }
@@ -219,7 +228,7 @@ function* saveComment(action) {
     author: {
       fbid: user.fbid,
       id: user.id,
-      profilePic: user.profilePic,
+      profile_pic: user.profile_pic,
       name: user.name,
     },
     eventID: action.eventID,

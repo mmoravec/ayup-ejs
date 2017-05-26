@@ -1,7 +1,8 @@
 import { NavigationActions } from "react-navigation";
-import { takeLatest, select } from "redux-saga/effects";
+import { takeLatest, select, put } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
 import Store from "../state/Store";
+import LocalStorage from "../utils/LocalStorage";
 
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
@@ -24,6 +25,8 @@ function* changeRoute(action) {
 
 function* goToLogin() {
   const nav = yield select(state => state.navigation);
+  yield put({ type: ActionTypes.LOG_OUT });
+  LocalStorage.clearAllAsync();
   if (nav.routes[nav.index].routeName !== "Login") {
     Store.dispatch(NavigationActions.navigate({ routeName: "Login" }));
   }

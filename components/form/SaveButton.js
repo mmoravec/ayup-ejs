@@ -92,8 +92,8 @@ export default class SaveButton extends React.Component {
       });
     });
     let event = {
-      startDate: eventState.startDate.value.toISOString(),
-      endDate: eventState.endDate.value.toISOString(),
+      start_time: eventState.startDate.value.toISOString(),
+      end_time: eventState.endDate.value.toISOString(),
       title: eventState.title.value,
       private: eventState.private.value,
       description: eventState.desc.value,

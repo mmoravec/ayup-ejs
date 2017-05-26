@@ -169,6 +169,9 @@ function* getUser() {
   if (!user.new) {
     yield put({ type: ActionTypes.SYNC_PROFILE });
   }
+  if (user.secret) {
+    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
+  }
   return user;
 }
 

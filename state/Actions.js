@@ -1,7 +1,6 @@
-import ActionTypes from './ActionTypes';
+import ActionTypes from "./ActionTypes";
 
 export default class Actions {
-
   static blurFields() {
     return {
       type: ActionTypes.BLUR_FIELDS,
@@ -37,7 +36,7 @@ export default class Actions {
 
   static logOut() {
     return {
-      type: ActionTypes.LOG_OUT,
+      type: ActionTypes.REQUEST_UNAUTHENTICATED,
     };
   }
 
@@ -85,7 +84,7 @@ export default class Actions {
   static setFormTitle(value) {
     return {
       type: ActionTypes.SET_FORMVALUE,
-      key: 'title',
+      key: "title",
       value,
     };
   }
@@ -212,16 +211,16 @@ export default class Actions {
   }
 
   static setFilter(filterStart, filterEnd) {
-    return   {
-        type: ActionTypes.SET_FILTER,
-        filterStart,
-        filterEnd,
-      };
+    return {
+      type: ActionTypes.SET_FILTER,
+      filterStart,
+      filterEnd,
+    };
   }
   static saveEvent(event) {
-    return   {
-        type: ActionTypes.SAVE_EVENT,
-        event,
-      };
+    return {
+      type: ActionTypes.SAVE_EVENT,
+      event,
+    };
   }
 }

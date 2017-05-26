@@ -29,13 +29,12 @@ function* authorize() {
       yield put({ type: ActionTypes.RESET_ALERT });
       return;
     }
-    console.log(fbInfo);
     try {
       // console.log(fbInfo);
       ayUser = yield call(
         request,
         POST,
-        URL + "/v1.0/auth/facebook?id=" + fbInfo.body.id,
+        URL + "/v1.0/auth/facebook?fbid=" + fbInfo.body.id,
         { Token: fbLogin.token }
       );
     } catch (error) {
@@ -45,7 +44,6 @@ function* authorize() {
       console.log(error);
       return;
     }
-    console.log(ayUser);
     // console.log("this is ayuser");
     // console.log(ayUser);
     //TODO: log error message after call
@@ -62,7 +60,7 @@ function* authorize() {
       secret: ayUser.headers.get("authorization"),
       new: false,
     });
-    console.log(fbInfo.body.age_range);
+    console.log(saveUser);
     yield fork(LocalStorage.saveUserAsync, saveUser);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });

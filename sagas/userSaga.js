@@ -59,8 +59,6 @@ function* syncProfile() {
     return;
   }
   profile = profile.body;
-  // console.log('profile here');
-  // console.log(profile);
   let user = {
     hosted: Immutable.fromJS(profile.hosted),
     invited: Immutable.fromJS(profile.invited),
@@ -74,7 +72,7 @@ function* syncProfile() {
     about: p.about,
     authToken: p.authToken,
     name: p.name,
-    profile_pic: p.profilePic,
+    profile_pic: p.profile_pic,
     friends: p.friends,
     email: p.email,
     gender: p.gender,

@@ -21,12 +21,6 @@ class AppContainer extends React.Component {
 
 @connect(data => App.getDataProps(data))
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    if (this.props.user.get('secret') !== null) {
-      this.props.dispatch(Actions.routeChange('Home'));
-    }
-  }
   static getDataProps(data) {
     return {
       startup: data.phone,

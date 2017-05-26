@@ -19,18 +19,13 @@ export default class AuthenticationScreen extends React.Component {
     return {
       user: data.user,
       phone: data.phone,
+      nav: data.navigation,
     };
   }
   static route = {
     navigationBar: {
       visible: false,
     },
-  }
-
-  componentDidMount() {
-    if (this.props.user.get('secret') !== null) {
-      this.props.dispatch(Actions.routeChange('Home'));
-    }
   }
 
   render() {
