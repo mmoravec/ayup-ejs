@@ -277,7 +277,7 @@ export default class EventForm extends React.Component {
 const styles = StyleSheet.create({
   optionalFields: {
     backgroundColor: "#fff",
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: "#b9c1ca",
   },
   scrollView: {
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
   },
   switch: {
     backgroundColor: "#fff",
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: "#b9c1ca",
     height: 72,
   },

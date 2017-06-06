@@ -30,7 +30,7 @@ export default class EventGuests extends React.Component {
               style={{ height: 50, width: 50, margin: 5 }}
             />
           </TouchableOpacity>
-          {this.props.guests.accepted.map(g => {
+          {this.props.guests.going.map(g => {
             i++;
             return (
               <GuestPic

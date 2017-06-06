@@ -34,7 +34,7 @@ function* authorize() {
       ayUser = yield call(
         request,
         POST,
-        URL + "/v1.0/auth/facebook?fbid=" + fbInfo.body.id,
+        URL + "/v1.0/account/login/facebook?fbid=" + fbInfo.body.id,
         { Token: fbLogin.token }
       );
     } catch (error) {
@@ -44,20 +44,20 @@ function* authorize() {
       console.log(error);
       return;
     }
-    // console.log("this is ayuser");
-    // console.log(ayUser);
+    console.log("this is ayuser");
+    console.log(ayUser);
     //TODO: log error message after call
     let saveUser = new User({
-      authToken: ayUser.body.authToken,
+      authToken: ayUser.body.access_token,
       profile_pic: fbInfo.body.picture.data.url,
-      expires: new Date(Date.now() + fbLogin.expires),
+      expires: new Date(Date.now() + ayUser.body.expires_in),
       email: fbInfo.body.email,
       gender: fbInfo.body.gender,
       name: fbInfo.body.name,
       fbid: fbInfo.body.id,
-      id: ayUser.body.id,
+      id: ayUser.body.user_id,
       age_range: fbInfo.body.age_range.min,
-      secret: ayUser.headers.get("authorization"),
+      secret: ayUser.body.secret,
       new: false,
     });
     console.log(saveUser);

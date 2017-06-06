@@ -49,7 +49,7 @@ function* syncProfile() {
     });
   }
   try {
-    profile = yield call(request, GET, URL + "/v1.0/profile?id=" + p.id, {
+    profile = yield call(request, GET, URL + "/v1.0/profile", {
       Authorization: p.secret,
       UserID: p.id,
     });
@@ -63,8 +63,10 @@ function* syncProfile() {
     hosted: Immutable.fromJS(profile.hosted),
     invited: Immutable.fromJS(profile.invited),
     completed: Immutable.fromJS(profile.completed),
+    deleted: Immutable.fromJS(profile.deleted),
     rejected: Immutable.fromJS(profile.rejected),
     requested: Immutable.fromJS(profile.requested),
+    not_going: Immutable.fromJS(profile.not_going),
     joined: Immutable.fromJS(profile.joined),
     events: profile.events === null ? p.events : new List(profile.events),
     id: profile.id,
@@ -73,7 +75,7 @@ function* syncProfile() {
     authToken: p.authToken,
     name: p.name,
     profile_pic: p.profile_pic,
-    friends: p.friends,
+    friends: Immutable.fromJS(profile.friends),
     email: p.email,
     gender: p.gender,
     new: false,
@@ -88,7 +90,7 @@ function* syncProfile() {
     yield call(
       request,
       PUT,
-      URL + "/v1.0/profile?id=" + user.id,
+      URL + "/v1.0/profile",
       { Authorization: user.secret, UserID: user.id },
       user.toJS()
     );

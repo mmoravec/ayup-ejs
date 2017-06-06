@@ -190,7 +190,7 @@ function* rejectEvent(action) {
 function* updateSelectedEvent(eventID, user) {
   let data;
   try {
-    data = yield call(request, GET, URL + "/v1.0/events?id=" + eventID, {
+    data = yield call(request, GET, URL + "/v1.0/events/" + eventID, {
       Authorization: user.secret,
       UserID: user.id,
     });
@@ -206,12 +206,10 @@ function* loadComments(action) {
   const user = yield select(state => state.user);
   let data;
   try {
-    data = yield call(
-      request,
-      GET,
-      URL + "/v1.0/comments?id=" + action.eventID,
-      { Authorization: user.secret, UserID: user.id }
-    );
+    data = yield call(request, GET, URL + "/v1.0/comments/" + action.eventID, {
+      Authorization: user.secret,
+      UserID: user.id,
+    });
   } catch (error) {
     yield call(delay, 5000);
     yield fork(loadComments, action);
@@ -253,7 +251,7 @@ function* loadEvent(action) {
   const user = yield select(state => state.user);
   let data;
   try {
-    data = yield call(request, GET, URL + "/v1.0/events?id=" + action.eventID, {
+    data = yield call(request, GET, URL + "/v1.0/events/" + action.eventID, {
       Authorization: user.secret,
       UserID: user.id,
     });
