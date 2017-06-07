@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
 import Actions from '../state/Actions';
 import MyText from '../components/common/MyText';
-import LocalStorage from '../utils/LocalStorage';
 const {height, width} = Dimensions.get('window');
 
 @connect()

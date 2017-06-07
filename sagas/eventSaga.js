@@ -4,7 +4,6 @@ import { takeLatest, select, call, put, fork } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
 import { request } from "../utils/fetch";
 import { URL, POST, GET, DELETE } from "../constants/rest";
-import LocalStorage from "../utils/LocalStorage";
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
 
@@ -19,10 +18,6 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.REJECT_EVENT, rejectEvent),
     takeLatest(ActionTypes.LOAD_COMMENTS, loadComments),
     takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
-    takeLatest(
-      [ActionTypes.REMOVE_ACTIVITY, ActionTypes.ADD_ACTIVITY],
-      saveFiltersAsyncSaga
-    ),
   ];
 }
 
@@ -261,10 +256,4 @@ function* loadEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
-}
-
-function* saveFiltersAsyncSaga(action) {
-  yield call(delay, 2000);
-  const filters = yield select(state => state.events.filters);
-  yield call(LocalStorage.saveFiltersAsync, filters);
 }

@@ -4,7 +4,7 @@ import { delay } from "redux-saga";
 import ActionTypes from "../state/ActionTypes";
 import { request } from "../utils/fetch";
 import { User } from "../state/Records";
-import { URL, PUT, GET } from "../constants/rest";
+import { URL, PUT, GET, POST } from "../constants/rest";
 
 export function* watchSyncProfile() {
   yield takeLatest(ActionTypes.SYNC_PROFILE, syncProfile);
@@ -14,6 +14,7 @@ export function* refreshUserFriends() {
   while (true) {
     yield take(ActionTypes.ROUTE_CHANGE);
     const user = yield select(state => state.user);
+    const phone = yield select(state => state.phone);
     let friends;
     try {
       friends = yield call(
@@ -31,7 +32,22 @@ export function* refreshUserFriends() {
           profile_pic: friend.picture.data.url,
         };
       });
-      yield put({ type: ActionTypes.SET_FRIENDS, friends: new List(f) });
+      //TODO: Only call synccontacts if fb list has changed or phone numbers have changed
+      if (phone.fbFriends !== f) {
+        yield put({ type: ActionTypes.SET_FBFRIENDS, friends: f });
+        try {
+          yield call(
+            request,
+            POST,
+            URL + "/v1.0/account/synccontacts",
+            { Authorization: user.secret, UserID: user.id },
+            f
+          );
+        } catch (error) {
+          //log error
+          console.log("sync contacts error");
+        }
+      }
     } catch (error) {
       //log error
     }
@@ -59,6 +75,8 @@ function* syncProfile() {
     return;
   }
   profile = profile.body;
+  console.log("profile here");
+  console.log(profile);
   let user = {
     hosted: Immutable.fromJS(profile.hosted),
     invited: Immutable.fromJS(profile.invited),

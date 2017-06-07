@@ -110,7 +110,7 @@ export function* getContacts() {
     fields: [Contacts.PHONE_NUMBERS],
     pageSize: 2000,
   });
-  yield put({ type: ActionTypes.SET_CONTACTS, contacts });
+  yield put({ type: ActionTypes.SET_CONTACTS, contacts: contacts.data });
   return true;
 }
 
@@ -166,9 +166,11 @@ function* getUser() {
   yield put({
     type: ActionTypes.USER_LOADED,
   });
+  //If the user isn't new, do a profile sync as we don't have to login
   if (!user.new) {
     yield put({ type: ActionTypes.SYNC_PROFILE });
   }
+  //If the user has a secret, use that unless we get an unauth call
   if (user.secret) {
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
   }

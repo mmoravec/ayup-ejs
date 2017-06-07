@@ -1,7 +1,6 @@
 import { Platform } from "react-native";
 import { Facebook } from "expo";
 import { fork, call, put, takeEvery } from "redux-saga/effects";
-import LocalStorage from "../utils/LocalStorage";
 import ActionTypes from "../state/ActionTypes";
 import { User } from "../state/Records";
 import { request } from "../utils/fetch";
@@ -60,8 +59,6 @@ function* authorize() {
       secret: ayUser.body.secret,
       new: false,
     });
-    console.log(saveUser);
-    yield fork(LocalStorage.saveUserAsync, saveUser);
     yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
     yield put({ type: ActionTypes.SYNC_PROFILE });

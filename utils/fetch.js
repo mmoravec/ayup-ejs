@@ -3,13 +3,15 @@ import { delay } from "redux-saga";
 import ActionTypes from "../state/ActionTypes";
 
 export function* request(type, url, headers, body) {
-  console.log("new request!");
-  console.log(type + " : " + url);
-  console.log(headers);
+  // console.log("new request!");
+  // console.log(type + " : " + url);
+  // console.log(headers);
   let bodyString = "";
   if (body) {
+    // console.log("stringifying data");
+    // console.log(body);
     bodyString = JSON.stringify(body);
-    console.log(bodyString);
+    // console.log(bodyString);
   }
   yield put({ type: ActionTypes.REQUEST_STARTED });
   try {
@@ -28,22 +30,25 @@ export function* request(type, url, headers, body) {
       yield put({ type: ActionTypes.REQUEST_ENDED });
       if (response.status === 200) {
         yield put({ type: ActionTypes.REQUEST_SUCCESS });
-        let resJSON = yield response.json();
-        console.log("request success");
-        console.log(resJSON);
+        // console.log(response);
+        let resJSON = "success";
+        if (response._bodyBlob.size > 0) {
+          resJSON = yield response.json();
+        }
+        // console.log("request success : " + url);
         return { body: resJSON, headers: response.headers };
       } else if (response.status === 401) {
         let error = yield response.json();
-        console.log("request 401");
-        console.log(error);
+        // console.log("request 401");
+        // console.log(error);
         yield put({ type: ActionTypes.REQUEST_UNAUTHENTICATED, error });
         throw new Error(error);
         //TODO: create unauthorized func
       } else {
         let error = yield response.json();
-        console.log("request error");
-        console.log(error);
-        console.log(response.status);
+        // console.log("request error but has reponse");
+        // console.log(error);
+        // console.log(response.status);
         yield put({ type: ActionTypes.REQUEST_ERROR });
         throw new Error(error);
       }
@@ -53,8 +58,8 @@ export function* request(type, url, headers, body) {
     }
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });
-    console.log("request error");
-    console.log(error);
+    // console.log("request error no response");
+    // console.log(error);
     throw new Error(error);
   }
 }
