@@ -16,10 +16,6 @@ class PhoneStateReducer {
     return state.set("filtersLoaded", true);
   }
 
-  static [ActionTypes.USER_LOADED](state, action) {
-    return state.set("userLoaded", true);
-  }
-
   static [ActionTypes.MERGE_PHONESTATE](state, action) {
     return state.merge(Map(action.phone));
   }
@@ -42,6 +38,10 @@ class PhoneStateReducer {
 
   static [ActionTypes.IMAGES_LOADED](state, action) {
     return state.set("imagesLoaded", true);
+  }
+
+  static [ActionTypes.CREDENTIAL_LOADED](state, action) {
+    return state.set("credLoaded", true);
   }
 
   static [ActionTypes.SET_FBFRIENDS](state, action) {

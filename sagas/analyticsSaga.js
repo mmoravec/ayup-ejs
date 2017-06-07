@@ -12,12 +12,12 @@ import { GET, OPTLY_URL } from "../constants/rest";
 export function* watchInitAnalytics() {
   let init = true;
   while (init) {
-    yield take(ActionTypes.SET_CURRENT_USER);
-    const user = yield select(state => state.user);
-    if (user.id !== null) {
-      //    yield call(initOptimizely, user);
-      init = false;
-    }
+    yield take(ActionTypes.SET_CREDENTIAL);
+    const cred = yield select(state => state.cred);
+    // if (cred.id !== null) {
+    //   //    yield call(initOptimizely, user);
+    //   init = false;
+    // }
   }
 }
 

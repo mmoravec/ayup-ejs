@@ -2,8 +2,8 @@ import { Platform } from "react-native";
 import { Facebook } from "expo";
 import { fork, call, put, takeEvery } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
-import { User } from "../state/Records";
-import { request } from "../utils/fetch";
+import { Credential } from "../state/Records";
+import { request, fb } from "../utils/fetch";
 // import { ayupGet } from '../utils/fetch';
 import { URL, POST, GET } from "../constants/rest";
 
@@ -12,28 +12,25 @@ export function* watchLogin() {
 }
 
 function* authorize() {
-  let fbInfo, ayUser;
+  let fbInfo, credential;
   yield put({ type: ActionTypes.ALERT_SAVING });
   const fbLogin = yield call(facebookLogin);
   if (fbLogin.type === "success") {
     try {
-      fbInfo = yield call(
-        request,
-        GET,
-        `https://graph.facebook.com/me?access_token=${fbLogin.token}&fields=name,id,gender,picture.width(240).height(240),email,age_range,verified`
-      );
+      fbInfo = yield call(fb, fbLogin);
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
       yield put({ type: ActionTypes.RESET_ALERT });
       return;
     }
+    console.log(fbInfo);
     try {
       // console.log(fbInfo);
-      ayUser = yield call(
+      credential = yield call(
         request,
         POST,
-        URL + "/v1.0/account/login/facebook?fbid=" + fbInfo.body.id,
+        URL + "/v1.0/account/login/facebook?fbid=" + fbInfo.id,
         { Token: fbLogin.token }
       );
     } catch (error) {
@@ -43,25 +40,12 @@ function* authorize() {
       console.log(error);
       return;
     }
-    console.log("this is ayuser");
-    console.log(ayUser);
     //TODO: log error message after call
-    let saveUser = new User({
-      authToken: ayUser.body.access_token,
-      profile_pic: fbInfo.body.picture.data.url,
-      expires: new Date(Date.now() + ayUser.body.expires_in),
-      email: fbInfo.body.email,
-      gender: fbInfo.body.gender,
-      name: fbInfo.body.name,
-      fbid: fbInfo.body.id,
-      id: ayUser.body.user_id,
-      age_range: fbInfo.body.age_range.min,
-      secret: ayUser.body.secret,
-      new: false,
+    yield put({
+      type: ActionTypes.SET_CREDENTIAL,
+      credential: credential.body,
     });
-    yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
-    yield put({ type: ActionTypes.SYNC_PROFILE });
     yield put({ type: ActionTypes.RESET_ALERT });
     return;
   } else {

@@ -17,33 +17,49 @@ export const EventState = Record({
   selectedComments: new List(),
 });
 
-export const User = Record({
-  fbid: null,
+export const Profile = Record({
   id: null,
-  authToken: null,
   name: null,
   profile_pic: null,
+  phone: null,
   friends: new List(),
-  email: null,
-  gender: null,
-  new: null,
-  expires: null,
   invited: new List(),
   rejected: new List(),
-  joined: new List(),
+  going: new List(),
   hosted: new List(),
-  requested: new List(),
   completed: new List(),
-  events: new List(),
+  requested: new List(),
+  deleted: new List(),
+  not_going: new List(),
   about: null,
   badges: new List(),
   activities: new List(),
+  email: null,
+  gender: null,
+  exponent_token: null,
+});
+
+export const Credential = Record({
+  access_token: null,
+  expires_in: null,
   secret: null,
-  contacts: new List(),
+  user_id: null,
+});
+
+export const Account = Record({
+  id: null,
+  ayup_id: null,
+  email: null,
+  gender: null,
+  phone: null,
+  fbid: null,
+  address: null,
+  last_location: null,
+  last_login: null,
 });
 
 export const PhoneState = Record({
-  userLoaded: false,
+  credLoaded: false,
   fontLoaded: false,
   filtersLoaded: false,
   imagesLoaded: false,

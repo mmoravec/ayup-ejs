@@ -20,13 +20,12 @@ export function* watchStorageActions() {
       [ActionTypes.REMOVE_ACTIVITY, ActionTypes.ADD_ACTIVITY],
       saveFiltersAsyncSaga
     ),
+    takeLatest([ActionTypes.SET_CREDENTIAL], saveCredentialAsyncSaga),
   ];
 }
 
 function* saveState(action) {
-  let user = yield select(state => state.user);
   let phone = yield select(state => state.phone);
-  yield call(LocalStorage.saveUserAsync, user);
   yield call(LocalStorage.savePhoneStateAsync, phone);
 }
 
@@ -34,4 +33,10 @@ function* saveFiltersAsyncSaga(action) {
   yield call(delay, 2000);
   const filters = yield select(state => state.events.filters);
   yield call(LocalStorage.saveFiltersAsync, filters);
+}
+
+function* saveCredentialAsyncSaga(action) {
+  console.log("saving credential to local storage");
+  const credential = yield select(state => state.credential);
+  yield call(LocalStorage.saveCredentialAsync, credential);
 }

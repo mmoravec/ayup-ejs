@@ -63,3 +63,32 @@ export function* request(type, url, headers, body) {
     throw new Error(error);
   }
 }
+
+export function* fb(login) {
+  try {
+    console.log("login");
+    console.log(login);
+    const { response } = yield race({
+      response: call(
+        fetch,
+        `https://graph.facebook.com/me?access_token=${login.token}&fields=name,id,gender,picture.width(240).height(240),email,age_range,verified`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ),
+      timeout: call(delay, 5000),
+    });
+    let res = yield response.json();
+    console.log("response");
+    console.log(res);
+    return res;
+  } catch (error) {
+    yield put({ type: ActionTypes.REQUEST_ERROR });
+    // console.log("request error no response");
+    // console.log(error);
+    throw new Error(error);
+  }
+}

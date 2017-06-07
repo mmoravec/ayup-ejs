@@ -16,7 +16,6 @@ export function* watchGettingStarted() {
 
 function* getStarted() {
   const phone = yield select(state => state.phone);
-  console.log(phone);
   if (!phone.locationGranted) {
     yield fork(grantLocation);
   }
@@ -34,8 +33,6 @@ function* grantLocation() {
   let grant = yield call(getLocation);
   if (grant) {
     yield put({ type: ActionTypes.LOCATION_GRANTED });
-    let phone = yield select(state => state.phone);
-    yield call(LocalStorage.savePhoneStateAsync, phone);
   }
 }
 
@@ -45,10 +42,6 @@ function* grantContacts() {
   let grant = yield call(getContacts);
   if (grant) {
     yield put({ type: ActionTypes.CONTACTS_GRANTED });
-    let user = yield select(state => state.user);
-    let phone = yield select(state => state.phone);
-    yield call(LocalStorage.saveUserAsync, user);
-    yield call(LocalStorage.savePhoneStateAsync, phone);
   }
 }
 
@@ -68,6 +61,4 @@ function* grantNotifications() {
   console.log(token);
   //save the token to our backend
   yield put({ type: ActionTypes.NOTIFICATIONS_GRANTED });
-  let phone = yield select(state => state.phone);
-  yield call(LocalStorage.savePhoneStateAsync, phone);
 }

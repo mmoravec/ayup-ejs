@@ -24,7 +24,6 @@ class App extends React.Component {
   static getDataProps(data) {
     return {
       startup: data.phone,
-      user: data.user,
       nav: data.navigation,
     };
   }
@@ -44,8 +43,9 @@ class App extends React.Component {
     BackAndroid.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
   render() {
-    let {fontLoaded, userLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
-    if (fontLoaded && userLoaded && filtersLoaded && imagesLoaded) {
+    console.log(this.props.startup);
+    let {fontLoaded, credLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
+    if (fontLoaded && credLoaded && filtersLoaded && imagesLoaded) {
       return (
         <View style={{flex: 1}}>
           <Notifications />
