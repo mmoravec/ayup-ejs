@@ -1,8 +1,8 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 9112,
-  "expoServerNgrokUrl": "https://s9-t5g.mmoravec.ayup-ejs.exp.direct",
-  "packagerNgrokUrl": "https://packager.s9-t5g.mmoravec.ayup-ejs.exp.direct",
-  "ngrokPid": 9127
+  "packagerPid": 38030,
+  "expoServerNgrokUrl": "https://uk-826.mmoravec.ayup-ejs.exp.direct",
+  "packagerNgrokUrl": "https://packager.uk-826.mmoravec.ayup-ejs.exp.direct",
+  "ngrokPid": 38045
 }

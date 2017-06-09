@@ -4,7 +4,6 @@ import { takeLatest, select, call, put, fork } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
 import { request } from "../utils/fetch";
 import { URL, POST, GET, DELETE } from "../constants/rest";
-import LocalStorage from "../utils/LocalStorage";
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
 
@@ -19,39 +18,19 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.REJECT_EVENT, rejectEvent),
     takeLatest(ActionTypes.LOAD_COMMENTS, loadComments),
     takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
-    takeLatest(
-      [ActionTypes.REMOVE_ACTIVITY, ActionTypes.ADD_ACTIVITY],
-      saveFiltersAsyncSaga
-    ),
   ];
 }
 
 function* saveEvent(action) {
-  const user = yield select(state => state.user);
-  action.event.host = {
-    id: user.id,
-    profile_pic: user.profile_pic,
-    name: user.name,
-  };
   yield put({ type: ActionTypes.ALERT_SAVING });
   console.log(action.event);
   try {
-    yield call(
-      request,
-      POST,
-      URL + "/v1.0/events",
-      { Authorization: user.secret, UserID: user.id },
-      action.event
-    );
+    yield call(request, POST, URL + "/v1.0/events", action.event);
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR, error });
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(delay, 2000);
-  yield put({ type: ActionTypes.RESET_ALERT });
   yield put({
     type: ActionTypes.REGION_CHANGE,
     longitude: action.event.location.coordinates[0],
@@ -62,7 +41,6 @@ function* saveEvent(action) {
 
 function* updateNearbyEvents(action) {
   //TODO: call to rest api here
-  const user = yield select(state => state.user);
   let region = {
     latitude: action.latitude,
     longitude: action.longitude,
@@ -82,8 +60,7 @@ function* updateNearbyEvents(action) {
         "&long=" +
         region.longitude +
         "&scope=" +
-        scope,
-      { Authorization: user.secret, UserID: user.id }
+        scope
     );
   } catch (error) {
     return;
@@ -92,126 +69,69 @@ function* updateNearbyEvents(action) {
 }
 
 function* acceptEvent(action) {
-  const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(
-      request,
-      POST,
-      URL +
-        "/v1.0/events/" +
-        action.eventID +
-        "?fbid=" +
-        user.fbid +
-        "&action=accept",
-      { Authorization: user.secret, UserID: user.id }
-    );
+    yield call(request, POST, URL + "/v1.0/events/" + action.eventID);
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(delay, 2000);
-  yield put({ type: ActionTypes.RESET_ALERT });
 }
 
 function* requestEvent(action) {
-  const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(
-      request,
-      POST,
-      URL +
-        "/v1.0/events/" +
-        action.eventID +
-        "?fbid=" +
-        user.fbid +
-        "&action=request",
-      { Authorization: user.secret, UserID: user.id }
-    );
+    yield call(request, POST, URL + "/v1.0/events/" + action.eventID);
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(updateSelectedEvent, action.eventID, user);
-  yield put({ type: ActionTypes.RESET_ALERT });
+  yield call(updateSelectedEvent, action.eventID);
 }
 
 function* deleteEvent(action) {
-  const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, DELETE, URL + "/v1.0/events?id=" + action.eventID, {
-      Authorization: user.secret,
-      UserID: user.id,
-    });
+    yield call(request, DELETE, URL + "/v1.0/events?id=" + action.eventID);
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(delay, 2000);
-  yield put({ type: ActionTypes.RESET_ALERT });
-  yield fork(updateSelectedEvent, action.eventID, user);
+  yield fork(updateSelectedEvent, action.eventID);
 }
 
 function* rejectEvent(action) {
-  const user = yield select(state => state.user);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
     yield call(
       request,
       POST,
-      URL +
-        "/v1.0/events/" +
-        action.eventID +
-        "?fbid=" +
-        user.fbid +
-        "&action=reject",
-      { Authorization: user.secret, UserID: user.id }
+      URL + "/v1.0/events/" + action.eventID + "?fbid="
     );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
-    yield call(delay, 2000);
-    yield put({ type: ActionTypes.RESET_ALERT });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(delay, 2000);
-  yield put({ type: ActionTypes.RESET_ALERT });
-  yield fork(updateSelectedEvent, action.eventID, user);
+  yield fork(updateSelectedEvent, action.eventID);
 }
 
-function* updateSelectedEvent(eventID, user) {
+function* updateSelectedEvent(eventID) {
   let data;
   try {
-    data = yield call(request, GET, URL + "/v1.0/events?id=" + eventID, {
-      Authorization: user.secret,
-      UserID: user.id,
-    });
+    data = yield call(request, GET, URL + "/v1.0/events/" + eventID);
   } catch (error) {
     yield call(delay, 5000);
-    yield fork(updateSelectedEvent, eventID, user);
+    yield fork(updateSelectedEvent, eventID);
     return;
   }
   yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
 }
 
 function* loadComments(action) {
-  const user = yield select(state => state.user);
   let data;
   try {
-    data = yield call(
-      request,
-      GET,
-      URL + "/v1.0/comments?id=" + action.eventID,
-      { Authorization: user.secret, UserID: user.id }
-    );
+    data = yield call(request, GET, URL + "/v1.0/comments/" + action.eventID);
   } catch (error) {
     yield call(delay, 5000);
     yield fork(loadComments, action);
@@ -234,13 +154,7 @@ function* saveComment(action) {
     eventID: action.eventID,
   };
   try {
-    yield call(
-      request,
-      POST,
-      URL + "/v1.0/comments",
-      { Authorization: user.secret, UserID: user.id },
-      comment
-    );
+    yield call(request, POST, URL + "/v1.0/comments", comment);
   } catch (error) {
     yield call(delay, 5000);
     yield fork(saveComment, action);
@@ -250,23 +164,13 @@ function* saveComment(action) {
 }
 
 function* loadEvent(action) {
-  const user = yield select(state => state.user);
   let data;
   try {
-    data = yield call(request, GET, URL + "/v1.0/events?id=" + action.eventID, {
-      Authorization: user.secret,
-      UserID: user.id,
-    });
+    data = yield call(request, GET, URL + "/v1.0/events/" + action.eventID);
   } catch (error) {
     yield call(delay, 5000);
     yield fork(loadEvent, action);
     return;
   }
   yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
-}
-
-function* saveFiltersAsyncSaga(action) {
-  yield call(delay, 2000);
-  const filters = yield select(state => state.events.filters);
-  yield call(LocalStorage.saveFiltersAsync, filters);
 }

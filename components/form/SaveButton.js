@@ -11,6 +11,7 @@ import {
 import { connect } from 'react-redux';
 import MyText from '../common/MyText';
 import Actions from '../../state/Actions';
+import ActionTypes from "../../state/ActionTypes";
 const {height, width} = Dimensions.get('window');
 
 @connect((data) => SaveButton.getDataProps(data))
@@ -41,7 +42,7 @@ export default class SaveButton extends React.Component {
   }
 
   _renderCreate = () => {
-    if (this.props.phone.status === '') {
+    if (this.props.phone.status === ActionTypes.INACTIVE) {
       return (
         <TouchableOpacity
           underlayColor="transparent"
@@ -53,13 +54,13 @@ export default class SaveButton extends React.Component {
           />
         </TouchableOpacity>
       );
-    } else if (this.props.phone.status === 'success') {
+    } else if (this.props.phone.status === ActionTypes.SUCCESS) {
       return (
         <View style={styles.woohoo}>
           <MyText style={styles.success}> Success! </MyText>
         </View>
       );
-    } else if (this.props.phone.status === 'error') {
+    } else if (this.props.phone.status === ActionTypes.ERROR) {
       return (
         <View style={styles.warn}>
           <MyText style={{fontSize: 16, color: '#fff', textAlign: 'center'}}>

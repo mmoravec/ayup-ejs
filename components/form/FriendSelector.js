@@ -22,7 +22,7 @@ export default class FriendSelector extends React.Component {
 
   static getDataProps(data) {
     return {
-      friends: data.user.friends,
+      friends: data.profile.friends,
     };
   }
 
@@ -225,7 +225,7 @@ export default class FriendSelector extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderBottomColor: '#b9c1ca',
     paddingBottom: 10,
   },

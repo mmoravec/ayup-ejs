@@ -39,7 +39,7 @@ export default class AuthenticationScreen extends React.Component {
   }
 
   _renderLogin = () => {
-    if (this.props.phone.status === '') {
+    if (this.props.phone.status === ActionTypes.INACTIVE) {
       return (
         <TouchableOpacity onPress={this._signInWithFacebook}>
           <Image

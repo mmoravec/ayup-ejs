@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { put, call, take, race } from "redux-saga/effects";
+import { put, call, take, race, select } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import { List } from "immutable";
 import { Image } from "react-native";
@@ -14,23 +14,25 @@ import {
 import ActionTypes from "../state/ActionTypes";
 import LocalStorage from "../utils/LocalStorage";
 import { request } from "../utils/fetch";
-import { User, Filter } from "../state/Records";
+import { PhoneState, Filter } from "../state/Records";
 import activities from "../constants/activities";
 
 //TODO: Add caching scheme for fonts and images from crash example
 export default function* startup() {
-  let result = yield [call(getUser), call(getPhoneState)];
+  let result = yield [call(getPhoneState), call(getCredential)];
   yield [call(loadFilters), call(loadFonts), call(loadImages)];
-  let phone = result[1];
+  let phone = result[0], cred = result[1];
+  yield put({ type: ActionTypes.PHONESTATE_LOADED });
   //change this to user.locationGranted when implemented
+  if (cred !== null) {
+    yield call(checkCredential, cred);
+  }
   if (phone.locationGranted) {
-    console.log("called getlocation");
     yield call(getLocation);
   }
   if (phone.contactsGranted) {
     yield call(getContacts);
   }
-  console.log(phone);
   if (phone.notificationsGranted) {
     yield call(subscribeNotifications);
   }
@@ -52,7 +54,7 @@ function* loadFonts() {
 
 function* loadFilters() {
   let filters = yield call(LocalStorage.getFiltersAsync);
-  if (!filters) {
+  if (!filters || !filters.basketball) {
     let filterList = new List(_.keys(activities));
     yield put({
       type: ActionTypes.SET_FILTERS,
@@ -110,23 +112,40 @@ export function* getContacts() {
     fields: [Contacts.PHONE_NUMBERS],
     pageSize: 2000,
   });
-  yield put({ type: ActionTypes.SET_CONTACTS, contacts });
+  yield put({ type: ActionTypes.SET_CONTACTS, contacts: contacts.data });
   return true;
 }
 
 function* getPhoneState() {
   let phone = yield call(LocalStorage.getPhoneStateAsync);
-  let merge = {};
   if (phone !== null) {
-    merge.locationGranted = phone.locationGranted;
-    merge.contactsGranted = phone.contactsGranted;
-    merge.notificationsGranted = phone.notificationsGranted;
+    phone.status = ActionTypes.INACTIVE;
+    yield put({
+      type: ActionTypes.SET_PHONESTATE,
+      phone,
+    });
+  } else {
+    phone = yield select(state => state.phone);
   }
-  yield put({
-    type: ActionTypes.MERGE_PHONESTATE,
-    phone: merge,
-  });
-  return merge;
+  return phone;
+}
+
+function* getCredential() {
+  let cred = yield call(LocalStorage.getCredentialAsync);
+  if (cred != null) {
+    yield put({ type: ActionTypes.SET_CREDENTIAL, credential: cred });
+  } else {
+    cred = yield select(state => state.credential);
+  }
+  yield put({ type: ActionTypes.CREDENTIAL_LOADED });
+  return cred;
+}
+
+function* checkCredential(cred) {
+  //TODO: check credential expiration and set to expire if it is dead
+  if (cred.secret) {
+    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
+  }
 }
 
 function* subscribeNotifications() {
@@ -137,42 +156,6 @@ function* subscribeNotifications() {
 function* _handleNotification(notification) {
   console.log("handle notification");
   yield put({ type: ActionTypes.NOTIFICATION_RECEIVED, notification });
-}
-
-function* getUser() {
-  let user = yield call(LocalStorage.getUserAsync);
-  if (user === null || !user.fbid || !user.id) {
-    user = {
-      new: true,
-    };
-  } else {
-    user.hosted = new List(user.hosted);
-    user.invited = new List(user.invited);
-    user.joined = new List(user.joined);
-    user.rejected = new List(user.rejected);
-    user.requested = new List(user.requested);
-    user.completed = new List(user.completed);
-    user.events = new List(user.events);
-    user.badges = new List(user.badges);
-    user.activities = new List(user.activities);
-    user.friends = new List(user.friends);
-    user.new = false;
-  }
-  user = new User(user);
-  yield put({
-    type: ActionTypes.SET_CURRENT_USER,
-    user,
-  });
-  yield put({
-    type: ActionTypes.USER_LOADED,
-  });
-  if (!user.new) {
-    yield put({ type: ActionTypes.SYNC_PROFILE });
-  }
-  if (user.secret) {
-    yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
-  }
-  return user;
 }
 
 async function getFonts() {

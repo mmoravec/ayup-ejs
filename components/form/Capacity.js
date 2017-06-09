@@ -1,16 +1,10 @@
-import React from 'react'
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import MyText from '../common/MyText';
-const {height, width} = Dimensions.get('window');
+import React from "react";
+import { StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import MyText from "../common/MyText";
+const { height, width } = Dimensions.get("window");
 
 export default class Capacity extends React.Component {
-
   render() {
     return (
       <View style={styles.container}>
@@ -18,19 +12,13 @@ export default class Capacity extends React.Component {
         <View style={styles.buttons}>
           <TouchableOpacity onPress={this._decrement}>
             <View style={styles.icon}>
-              <Ionicons
-                size={30}
-                name={'ios-remove'}
-              />
+              <Ionicons size={30} name={"ios-remove"} />
             </View>
           </TouchableOpacity>
           <MyText style={styles.text}>{this.props.value}</MyText>
           <TouchableOpacity onPress={this._increment}>
             <View style={styles.icon}>
-              <Ionicons
-                size={30}
-                name={'ios-add'}
-              />
+              <Ionicons size={30} name={"ios-add"} />
             </View>
           </TouchableOpacity>
         </View>
@@ -42,43 +30,43 @@ export default class Capacity extends React.Component {
     let inc = this.props.value;
     inc++;
     this.props.onChange(this.props.stateKey, inc);
-  }
+  };
   _decrement = () => {
     let dec = this.props.value;
-    if(dec > 0) dec--;
+    if (dec > 0) { dec--; }
     this.props.onChange(this.props.stateKey, dec);
-  }
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    borderBottomWidth: 2,
-    borderBottomColor: '#b9c1ca',
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#b9c1ca",
     height: 72,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   buttons: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   text: {
     fontSize: 16,
-    color: '#6a7989',
+    color: "#6a7989",
     marginTop: 5,
     width: 25,
-    textAlign: 'center',
+    textAlign: "center",
   },
   label: {
     fontSize: 16,
-    color: '#6a7989',
+    color: "#6a7989",
     marginTop: 30,
     marginLeft: 20,
     marginRight: width * 0.3,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
   },
   swButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 16,
     bottom: 10,
   },
@@ -86,7 +74,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     marginTop: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

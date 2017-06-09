@@ -1,10 +1,9 @@
 import { Platform } from "react-native";
 import { Facebook } from "expo";
 import { fork, call, put, takeEvery } from "redux-saga/effects";
-import LocalStorage from "../utils/LocalStorage";
 import ActionTypes from "../state/ActionTypes";
-import { User } from "../state/Records";
-import { request } from "../utils/fetch";
+import { Credential } from "../state/Records";
+import { request, fb } from "../utils/fetch";
 // import { ayupGet } from '../utils/fetch';
 import { URL, POST, GET } from "../constants/rest";
 
@@ -13,64 +12,49 @@ export function* watchLogin() {
 }
 
 function* authorize() {
-  let fbInfo, ayUser;
+  let fbInfo, credential;
   yield put({ type: ActionTypes.ALERT_SAVING });
   const fbLogin = yield call(facebookLogin);
   if (fbLogin.type === "success") {
     try {
-      fbInfo = yield call(
-        request,
-        GET,
-        `https://graph.facebook.com/me?access_token=${fbLogin.token}&fields=name,id,gender,picture.width(240).height(240),email,age_range,verified`
-      );
+      fbInfo = yield call(fb, fbLogin);
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
-      yield put({ type: ActionTypes.RESET_ALERT });
       return;
     }
     try {
       // console.log(fbInfo);
-      ayUser = yield call(
+      credential = yield call(
         request,
         POST,
-        URL + "/v1.0/auth/facebook?fbid=" + fbInfo.body.id,
+        URL + "/v1.0/account/login/facebook?fbid=" + fbInfo.id,
+        null,
         { Token: fbLogin.token }
       );
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
-      yield put({ type: ActionTypes.RESET_ALERT });
       console.log(error);
       return;
     }
-    // console.log("this is ayuser");
-    // console.log(ayUser);
     //TODO: log error message after call
-    let saveUser = new User({
-      authToken: ayUser.body.authToken,
-      profile_pic: fbInfo.body.picture.data.url,
-      expires: new Date(Date.now() + fbLogin.expires),
-      email: fbInfo.body.email,
-      gender: fbInfo.body.gender,
-      name: fbInfo.body.name,
-      fbid: fbInfo.body.id,
-      id: ayUser.body.id,
-      age_range: fbInfo.body.age_range.min,
-      secret: ayUser.headers.get("authorization"),
-      new: false,
+    yield put({
+      type: ActionTypes.SET_CREDENTIAL,
+      credential: credential.body,
     });
-    console.log(saveUser);
-    yield fork(LocalStorage.saveUserAsync, saveUser);
-    yield put({ type: ActionTypes.SET_CURRENT_USER, user: saveUser });
+    let profile = {
+      profile_pic: fbInfo.picture.data.url,
+      name: fbInfo.name,
+      email: fbInfo.email,
+      gender: fbInfo.gender,
+    };
+    yield put({ type: ActionTypes.UPDATE_PROFILE, profile });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
-    yield put({ type: ActionTypes.SYNC_PROFILE });
-    yield put({ type: ActionTypes.RESET_ALERT });
     return;
   } else {
     //TODO: throw error message
     yield put({ type: ActionTypes.ALERT_ERROR });
-    yield put({ type: ActionTypes.RESET_ALERT });
     return;
   }
 }

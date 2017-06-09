@@ -8,6 +8,7 @@
   "dependencies": {
     "@expo/react-native-fade-in-image": "^1.1.1",
     "@expo/vector-icons": "~4.0.0",
+    "axios": "^0.16.2",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-stage-2": "^6.24.1",
     "eslint-plugin-babel": "^4.0.1",

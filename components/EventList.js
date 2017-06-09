@@ -34,7 +34,6 @@ export default class EventList extends React.Component {
 
   _getHeaders = (events) => {
     events = events.groupBy(x => {
-      console.log(x);
       let date = new Date(x.start_time);
       return dateFormat(date, 'fullDate');
     }).sort((a, b) => {

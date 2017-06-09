@@ -116,7 +116,7 @@ export default class EventButton extends React.Component {
         user = "rejected";
       }
     });
-    event.accepted.map(e => {
+    event.going.map(e => {
       if (e.fbid === this.props.user.fbid) {
         user = "accepted";
       }

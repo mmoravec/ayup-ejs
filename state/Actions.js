@@ -28,9 +28,9 @@ export default class Actions {
     };
   }
 
-  static syncProfile() {
+  static getProfile() {
     return {
-      type: ActionTypes.SYNC_PROFILE,
+      type: ActionTypes.GET_PROFILE,
     };
   }
 
@@ -70,6 +70,7 @@ export default class Actions {
   }
 
   static grantLocation() {
+    console.log("grant location yo");
     return {
       type: ActionTypes.GRANT_LOCATION,
     };

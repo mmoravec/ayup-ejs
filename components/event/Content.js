@@ -66,7 +66,7 @@ export default class EventContent extends React.Component {
   _renderHeader = () => {
     let event = this.props.event;
     let guests = {
-      accepted: event.accepted,
+      going: event.going,
       rejected: event.rejected,
       invited: event.invited,
       requested: event.requested,
