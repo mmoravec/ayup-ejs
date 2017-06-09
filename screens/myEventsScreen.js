@@ -28,7 +28,7 @@ export default class MyEventsScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(Actions.syncProfile());
+    this.props.dispatch(Actions.getProfile());
   }
 
   state = {

@@ -1,11 +1,15 @@
 import { call, put, takeEvery, select, race } from "redux-saga/effects";
 import { delay } from "redux-saga";
+import axios from "axios";
 import ActionTypes from "../state/ActionTypes";
 
-export function* request(type, url, headers, body) {
+export function* request(type, url, body, headers) {
   // console.log("new request!");
   // console.log(type + " : " + url);
   // console.log(headers);
+  const cred = yield select(state => state.credential);
+  // console.log("current credentials");
+  // console.log(cred);
   let bodyString = "";
   if (body) {
     // console.log("stringifying data");
@@ -14,35 +18,37 @@ export function* request(type, url, headers, body) {
     // console.log(bodyString);
   }
   yield put({ type: ActionTypes.REQUEST_STARTED });
+  // console.log(cred);
   try {
     const { response } = yield race({
-      response: call(fetch, url, {
+      response: call(axios, {
         method: type,
+        url,
         headers: {
           "Content-Type": "application/json",
+          Authorization: cred.secret,
+          UserID: cred.user_id,
           ...headers,
         },
-        body: type === "GET" ? null : bodyString,
+        data: type === "GET" ? null : bodyString,
       }),
       timeout: call(delay, 5000),
     });
+    // console.log(response);
     if (response) {
+      // console.log(response);
       yield put({ type: ActionTypes.REQUEST_ENDED });
       if (response.status === 200) {
         yield put({ type: ActionTypes.REQUEST_SUCCESS });
-        // console.log(response);
-        let resJSON = "success";
-        if (response._bodyBlob.size > 0) {
-          resJSON = yield response.json();
-        }
         // console.log("request success : " + url);
-        return { body: resJSON, headers: response.headers };
+        return { body: response.data, headers: response.headers };
       } else if (response.status === 401) {
-        let error = yield response.json();
         // console.log("request 401");
         // console.log(error);
-        yield put({ type: ActionTypes.REQUEST_UNAUTHENTICATED, error });
-        throw new Error(error);
+        yield put({
+          type: ActionTypes.REQUEST_UNAUTHENTICATED,
+          response: response.statusText,
+        });
         //TODO: create unauthorized func
       } else {
         let error = yield response.json();
@@ -50,7 +56,7 @@ export function* request(type, url, headers, body) {
         // console.log(error);
         // console.log(response.status);
         yield put({ type: ActionTypes.REQUEST_ERROR });
-        throw new Error(error);
+        throw error;
       }
     } else {
       yield put({ type: ActionTypes.REQUEST_ERROR });
@@ -58,9 +64,7 @@ export function* request(type, url, headers, body) {
     }
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });
-    // console.log("request error no response");
-    // console.log(error);
-    throw new Error(error);
+    throw error;
   }
 }
 

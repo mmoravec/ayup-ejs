@@ -25,8 +25,7 @@ function* changeRoute(action) {
 
 function* goToLogin() {
   const nav = yield select(state => state.navigation);
-  yield put({ type: ActionTypes.LOG_OUT });
-  LocalStorage.clearAllAsync();
+  LocalStorage.clearCredentials();
   if (nav.routes[nav.index].routeName !== "Login") {
     Store.dispatch(NavigationActions.navigate({ routeName: "Login" }));
   }

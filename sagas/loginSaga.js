@@ -21,22 +21,20 @@ function* authorize() {
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
-      yield put({ type: ActionTypes.RESET_ALERT });
       return;
     }
-    console.log(fbInfo);
     try {
       // console.log(fbInfo);
       credential = yield call(
         request,
         POST,
         URL + "/v1.0/account/login/facebook?fbid=" + fbInfo.id,
+        null,
         { Token: fbLogin.token }
       );
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
-      yield put({ type: ActionTypes.RESET_ALERT });
       console.log(error);
       return;
     }
@@ -45,13 +43,18 @@ function* authorize() {
       type: ActionTypes.SET_CREDENTIAL,
       credential: credential.body,
     });
+    let profile = {
+      profile_pic: fbInfo.picture.data.url,
+      name: fbInfo.name,
+      email: fbInfo.email,
+      gender: fbInfo.gender,
+    };
+    yield put({ type: ActionTypes.UPDATE_PROFILE, profile });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
-    yield put({ type: ActionTypes.RESET_ALERT });
     return;
   } else {
     //TODO: throw error message
     yield put({ type: ActionTypes.ALERT_ERROR });
-    yield put({ type: ActionTypes.RESET_ALERT });
     return;
   }
 }

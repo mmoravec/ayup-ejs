@@ -6,37 +6,14 @@ import LocalStorage from "../utils/LocalStorage";
 import { request } from "../utils/fetch";
 import { URL, POST, GET, DELETE } from "../constants/rest";
 
-export function* watchStorageActions() {
-  yield [
-    takeLatest(
-      [
-        ActionTypes.LOCATION_GRANTED,
-        ActionTypes.CONTACTS_GRANTED,
-        ActionTypes.NOTIFICATIONS_GRANTED,
-      ],
-      saveState
-    ),
-    takeLatest(
-      [ActionTypes.REMOVE_ACTIVITY, ActionTypes.ADD_ACTIVITY],
-      saveFiltersAsyncSaga
-    ),
-    takeLatest([ActionTypes.SET_CREDENTIAL], saveCredentialAsyncSaga),
-  ];
+export function* watchRequestStatus() {
+  yield takeLatest(
+    [ActionTypes.ALERT_ERROR, ActionTypes.ALERT_SUCCESS],
+    setStatus
+  );
 }
 
-function* saveState(action) {
-  let phone = yield select(state => state.phone);
-  yield call(LocalStorage.savePhoneStateAsync, phone);
-}
-
-function* saveFiltersAsyncSaga(action) {
+function* setStatus(action) {
   yield call(delay, 2000);
-  const filters = yield select(state => state.events.filters);
-  yield call(LocalStorage.saveFiltersAsync, filters);
-}
-
-function* saveCredentialAsyncSaga(action) {
-  console.log("saving credential to local storage");
-  const credential = yield select(state => state.credential);
-  yield call(LocalStorage.saveCredentialAsync, credential);
+  yield put({ type: ActionTypes.RESET_ALERT });
 }

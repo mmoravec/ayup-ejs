@@ -1,4 +1,5 @@
 import { List, Record, Map } from "immutable";
+import ActionTypes from "./ActionTypes";
 
 export const EventState = Record({
   nearbyEvents: new List(),
@@ -63,7 +64,8 @@ export const PhoneState = Record({
   fontLoaded: false,
   filtersLoaded: false,
   imagesLoaded: false,
-  status: "",
+  status: ActionTypes.INACTIVE,
+  statusMessage: "",
   optly: null,
   optlyVariation: "",
   locationGranted: false,

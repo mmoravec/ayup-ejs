@@ -10,12 +10,14 @@ import { User } from "../state/Records";
 import { URL, PUT, GET } from "../constants/rest";
 
 export function* watchGettingStarted() {
-  yield take(ActionTypes.MERGE_PHONESTATE);
+  console.log("waiting for phone state loaded");
+  yield take(ActionTypes.PHONESTATE_LOADED);
   yield call(getStarted);
 }
 
 function* getStarted() {
   const phone = yield select(state => state.phone);
+  console.log("get started called");
   if (!phone.locationGranted) {
     yield fork(grantLocation);
   }

@@ -20,6 +20,14 @@ class PhoneStateReducer {
     return state.merge(Map(action.phone));
   }
 
+  static [ActionTypes.SET_PHONESTATE](state, action) {
+    return new PhoneState({ ...action.phone });
+  }
+
+  static [ActionTypes.NEW_PHONESTATE](state, action) {
+    return new PhoneState({});
+  }
+
   static [ActionTypes.FONT_LOADED](state, action) {
     return state.set("fontLoaded", true);
   }
@@ -49,19 +57,19 @@ class PhoneStateReducer {
   }
 
   static [ActionTypes.ALERT_SAVING](state, action) {
-    return state.set("status", "saving");
+    return state.set("status", ActionTypes.SAVING);
   }
 
   static [ActionTypes.ALERT_SUCCESS](state, action) {
-    return state.set("status", "success");
+    return state.set("status", ActionTypes.SUCCESS);
   }
 
   static [ActionTypes.ALERT_ERROR](state, action) {
-    return state.set("status", "error");
+    return state.set("status", ActionTypes.ERROR);
   }
 
   static [ActionTypes.RESET_ALERT](state, action) {
-    return state.set("status", "");
+    return state.set("status", ActionTypes.INACTIVE);
   }
 
   static [ActionTypes.OPTLY_LOADED](state, action) {

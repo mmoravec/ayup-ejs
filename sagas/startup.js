@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { put, call, take, race } from "redux-saga/effects";
+import { put, call, take, race, select } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import { List } from "immutable";
 import { Image } from "react-native";
@@ -14,7 +14,7 @@ import {
 import ActionTypes from "../state/ActionTypes";
 import LocalStorage from "../utils/LocalStorage";
 import { request } from "../utils/fetch";
-import { User, Filter } from "../state/Records";
+import { PhoneState, Filter } from "../state/Records";
 import activities from "../constants/activities";
 
 //TODO: Add caching scheme for fonts and images from crash example
@@ -22,12 +22,12 @@ export default function* startup() {
   let result = yield [call(getPhoneState), call(getCredential)];
   yield [call(loadFilters), call(loadFonts), call(loadImages)];
   let phone = result[0], cred = result[1];
+  yield put({ type: ActionTypes.PHONESTATE_LOADED });
   //change this to user.locationGranted when implemented
   if (cred !== null) {
     yield call(checkCredential, cred);
   }
   if (phone.locationGranted) {
-    console.log("called getlocation");
     yield call(getLocation);
   }
   if (phone.contactsGranted) {
@@ -54,7 +54,7 @@ function* loadFonts() {
 
 function* loadFilters() {
   let filters = yield call(LocalStorage.getFiltersAsync);
-  if (!filters) {
+  if (!filters || !filters.basketball) {
     let filterList = new List(_.keys(activities));
     yield put({
       type: ActionTypes.SET_FILTERS,
@@ -118,23 +118,24 @@ export function* getContacts() {
 
 function* getPhoneState() {
   let phone = yield call(LocalStorage.getPhoneStateAsync);
-  let merge = {};
   if (phone !== null) {
-    merge.locationGranted = phone.locationGranted;
-    merge.contactsGranted = phone.contactsGranted;
-    merge.notificationsGranted = phone.notificationsGranted;
+    phone.status = ActionTypes.INACTIVE;
+    yield put({
+      type: ActionTypes.SET_PHONESTATE,
+      phone,
+    });
+  } else {
+    phone = yield select(state => state.phone);
   }
-  yield put({
-    type: ActionTypes.MERGE_PHONESTATE,
-    phone: merge,
-  });
-  return merge;
+  return phone;
 }
 
 function* getCredential() {
   let cred = yield call(LocalStorage.getCredentialAsync);
   if (cred != null) {
     yield put({ type: ActionTypes.SET_CREDENTIAL, credential: cred });
+  } else {
+    cred = yield select(state => state.credential);
   }
   yield put({ type: ActionTypes.CREDENTIAL_LOADED });
   return cred;

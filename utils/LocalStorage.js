@@ -1,24 +1,13 @@
 import { AsyncStorage } from "react-native";
 
 const Keys = {
-  Phone: "LayupPhone",
-  Filters: "LayupFilters",
-  Credentials: "LayupCredentials",
+  Phone: "AyupPhone",
+  Filters: "AyupFilters",
+  Credentials: "AyupCredentials",
 };
-
-async function getUserAsync() {
-  let results = await AsyncStorage.getItem(Keys.User);
-
-  try {
-    return JSON.parse(results);
-  } catch (e) {
-    return null;
-  }
-}
 
 async function getCredentialAsync() {
   let results = await AsyncStorage.getItem(Keys.Credentials);
-
   try {
     return JSON.parse(results);
   } catch (e) {
@@ -28,7 +17,6 @@ async function getCredentialAsync() {
 
 async function getPhoneStateAsync() {
   let results = await AsyncStorage.getItem(Keys.Phone);
-
   try {
     return JSON.parse(results);
   } catch (e) {
@@ -47,7 +35,6 @@ async function getFiltersAsync() {
 }
 
 function saveCredentialAsync(credentials) {
-  console.log(credentials);
   return AsyncStorage.setItem(Keys.Credentials, JSON.stringify(credentials));
 }
 
@@ -56,7 +43,6 @@ function savePhoneStateAsync(phone) {
 }
 
 function saveFiltersAsync(filters) {
-  console.log("save filters async");
   return AsyncStorage.setItem(Keys.Filters, JSON.stringify(filters));
 }
 
@@ -64,8 +50,11 @@ function clearAllAsync() {
   return AsyncStorage.clear();
 }
 
+function clearCredentials() {
+  return AsyncStorage.removeItem(Keys.Credentials);
+}
+
 export default {
-  getUserAsync,
   getPhoneStateAsync,
   savePhoneStateAsync,
   clearAllAsync,
@@ -73,4 +62,5 @@ export default {
   getFiltersAsync,
   getCredentialAsync,
   saveCredentialAsync,
+  clearCredentials,
 };
