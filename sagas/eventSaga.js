@@ -31,6 +31,7 @@ function* saveEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield call(delay, 2000);
   yield put({
     type: ActionTypes.REGION_CHANGE,
     longitude: action.event.location.coordinates[0],

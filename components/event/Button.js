@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 import MyText from "../common/MyText";
 import Actions from "../../state/Actions";
+import ActionTypes from "../../state/Actions";
 const { height, width } = Dimensions.get("window");
 
 @connect(data => EventButton.getDataProps(data))
@@ -33,7 +34,7 @@ export default class EventButton extends React.Component {
 
   render() {
     let status = this._getStatus();
-    if (this.props.phone.status === "") {
+    if (this.props.phone.status === ActionTypes.INACTIVE) {
       //If invited to event
       if (status === "invited") {
         return (
@@ -75,13 +76,13 @@ export default class EventButton extends React.Component {
       } else {
         return null;
       }
-    } else if (this.props.phone.status === "success") {
+    } else if (this.props.phone.status === ActionTypes.SUCCESS) {
       return (
         <View style={styles.woohoo}>
           <MyText style={styles.success}> Success! </MyText>
         </View>
       );
-    } else if (this.props.phone.status === "error") {
+    } else if (this.props.phone.status === ActionTypes.ERROR) {
       return (
         <View style={styles.warn}>
           <MyText style={{ fontSize: 16, color: "#fff", textAlign: "center" }}>
