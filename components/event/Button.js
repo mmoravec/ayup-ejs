@@ -11,7 +11,7 @@ import {
 import { connect } from "react-redux";
 import MyText from "../common/MyText";
 import Actions from "../../state/Actions";
-import ActionTypes from "../../state/Actions";
+import ActionTypes from "../../state/ActionTypes";
 const { height, width } = Dimensions.get("window");
 
 @connect(data => EventButton.getDataProps(data))
@@ -20,7 +20,7 @@ export default class EventButton extends React.Component {
     return {
       phone: data.phone,
       selectedEvent: data.events.selectedEvent,
-      user: data.user,
+      profile: data.profile,
     };
   }
 
@@ -103,26 +103,26 @@ export default class EventButton extends React.Component {
     let user = "uninvited";
     let event = this.props.selectedEvent;
     event.invited.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "invited";
       }
     });
     event.requested.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "requested";
       }
     });
     event.rejected.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "rejected";
       }
     });
     event.going.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "accepted";
       }
     });
-    if (event.host.userID === this.props.user.id) {
+    if (event.host.id === this.props.profile.id) {
       user = "host";
     }
     return user;

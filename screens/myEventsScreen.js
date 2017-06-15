@@ -23,12 +23,10 @@ export default class MyEventsScreen extends React.Component {
 
   static getDataProps(data) {
     return {
-      user: data.user,
+      all: data.events.allEvents,
+      hosted: data.events.myEvents,
+      archive: data.events.archivedEvents,
     };
-  }
-
-  componentWillMount() {
-    this.props.dispatch(Actions.getProfile());
   }
 
   state = {
@@ -39,13 +37,6 @@ export default class MyEventsScreen extends React.Component {
   }
 
   render() {
-    // console.log(this.props.user);
-    let hostEvents = this.props.user.events.filter(event => {
-      return event.host.userID === this.props.user.id;
-    });
-    let joinedEvents = this.props.user.events.filter(event => {
-      return event.host.userID !== this.props.user.id;
-    });
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
         <View style={styles.myEventsText}>
@@ -71,7 +62,7 @@ export default class MyEventsScreen extends React.Component {
               <Animated.Text style={{fontFamily: 'LatoRegular', opacity: this.state.myOpac}}>Created by Me</Animated.Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this._selectJoined} hitSlop={{top: 20, left: 30, bottom: 20, right: 20}}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, opacity: this.state.joinOpac}}>Joined</Animated.Text>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, opacity: this.state.joinOpac}}>Completed</Animated.Text>
             </TouchableOpacity>
           </Image>
         </View>
@@ -80,9 +71,9 @@ export default class MyEventsScreen extends React.Component {
           locked={false}
           onChangeTab={this._onChangeTab}
           renderTabBar={false}>
-          <EventList events={this.props.user.events} styles={listStyle} />
-          <EventList events={hostEvents} styles={listStyle} />
-          <EventList events={joinedEvents} styles={listStyle} />
+          <EventList events={this.props.all} styles={listStyle} />
+          <EventList events={this.props.hosted} styles={listStyle} />
+          <EventList events={this.props.archive} styles={listStyle} />
         </ScrollableTabView>
       </Image>
     );

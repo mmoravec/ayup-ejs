@@ -15,6 +15,7 @@ function* authorize() {
   let fbInfo, credential;
   yield put({ type: ActionTypes.ALERT_SAVING });
   const fbLogin = yield call(facebookLogin);
+  debugger;
   if (fbLogin.type === "success") {
     try {
       fbInfo = yield call(fb, fbLogin);

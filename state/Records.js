@@ -16,6 +16,9 @@ export const EventState = Record({
   },
   selectedEvent: null,
   selectedComments: new List(),
+  allEvents: new List(),
+  myEvents: new List(),
+  archivedEvents: new List(),
 });
 
 export const Profile = Record({
@@ -38,6 +41,7 @@ export const Profile = Record({
   email: null,
   gender: null,
   exponent_token: null,
+  events: new List(),
 });
 
 export const Credential = Record({
@@ -71,7 +75,10 @@ export const PhoneState = Record({
   locationGranted: false,
   contactsGranted: false,
   notificationsGranted: false,
-  notification: {},
+  notification: {
+    origin: "meow",
+    data: "I really love beans",
+  },
   contacts: {},
   fbFriends: {},
 });
@@ -86,6 +93,27 @@ export const Comment = Record({
   modified: null,
   author: null,
   content: "",
+});
+
+export const Event = Record({
+  id: null,
+  activity: "basketball",
+  title: "",
+  description: "",
+  location: null,
+  destination: null,
+  start_time: null,
+  end_time: null,
+  host: null,
+  private: null,
+  invited: new List(),
+  invites: new List(),
+  going: new List(),
+  not_going: new List(),
+  rejected: new List(),
+  requested: new List(),
+  capacity: null,
+  age_group: "",
 });
 
 export const FormState = Record({

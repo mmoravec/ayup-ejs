@@ -14,10 +14,10 @@ export default class Actions {
     };
   }
 
-  static getFriends(user) {
+  static receivedNotification(notification) {
     return {
-      type: ActionTypes.GET_FRIENDS,
-      user,
+      type: ActionTypes.NOTIFICATION_RECEIVED,
+      notification,
     };
   }
 
@@ -124,6 +124,22 @@ export default class Actions {
     return {
       type: ActionTypes.ACCEPT_EVENT,
       eventID,
+    };
+  }
+
+  static acceptRequest(eventID, userID) {
+    return {
+      type: ActionTypes.ACCEPT_REQUEST,
+      eventID,
+      userID,
+    };
+  }
+
+  static rejectRequest(eventID, userID) {
+    return {
+      type: ActionTypes.REJECT_REQUEST,
+      eventID,
+      userID,
     };
   }
 

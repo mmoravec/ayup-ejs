@@ -43,7 +43,7 @@ class App extends React.Component {
     BackAndroid.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
   render() {
-    console.log(this.props.startup);
+    // console.log(this.props.startup);
     let {fontLoaded, credLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
     if (fontLoaded && credLoaded && filtersLoaded && imagesLoaded) {
       return (

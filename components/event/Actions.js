@@ -19,7 +19,7 @@ export default class EventActions extends React.Component {
   static getDataProps(data) {
     return {
       event: data.events.selectedEvent,
-      user: data.user,
+      profile: data.profile,
     };
   }
 
@@ -29,7 +29,7 @@ export default class EventActions extends React.Component {
   }
 
   render() {
-    if (this.props.user.id === this.props.event.host.userID) {
+    if (this.props.profile.id === this.props.event.host.id) {
       return (
         <View style={styles.container}>
           {this._renderMenu()}

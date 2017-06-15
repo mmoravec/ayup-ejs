@@ -23,14 +23,14 @@ export default class GuestInfo extends React.Component {
   static getDataProps(data) {
     return {
       event: data.events.selectedEvent,
-      user: data.user,
+      profile: data.profile,
     };
   }
   state = {
     selectedUser: null,
     hostInfo: true,
     index: 0,
-    requested: this.props.event.accepted,
+    requested: this.props.event.requested,
     //TODO: updated to requested when backend switches over
   }
   componentDidUpdate(prevProps) {
@@ -41,7 +41,7 @@ export default class GuestInfo extends React.Component {
 
   render() {
     //TODO: change this to requested once nick pushes new backend
-    if (this.props.user.id === this.props.event.host.userID &&
+    if (this.props.profile.id === this.props.event.host.id &&
       this.state.requested.length > 0 && this.state.hostInfo) {
       return (
         <Modal
@@ -129,7 +129,7 @@ export default class GuestInfo extends React.Component {
 
   _renderGuests = () => {
     let event = this.props.event;
-    let joined = event.accepted.concat(event.requested, event.invited);
+    let joined = event.going.concat(event.requested, event.invited);
     return joined.map(g => {
       return (
         <Card
@@ -156,7 +156,14 @@ export default class GuestInfo extends React.Component {
 
 }
 
+@connect(data => Card.getDataProps(data))
 class Card extends React.Component {
+
+    static getDataProps(data) {
+      return {
+        event: data.events.selectedEvent,
+      };
+    }
 
   state = {
     clicked: '',
@@ -185,11 +192,14 @@ class Card extends React.Component {
 
   _acceptUser = () => {
     //accept user action
+    debugger;
+    this.props.dispatch(Actions.acceptRequest(this.props.event.id, this.props.user.id));
     this.props.nextSlide();
     this.setState({clicked: 'Accepted'});
   }
 
   _rejectUser = () => {
+    this.props.dispatch(Actions.rejectRequest(this.props.event.id, this.props.user.id));
     this.props.nextSlide();
     this.setState({clicked: 'Rejected'});
   }

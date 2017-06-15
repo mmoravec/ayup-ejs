@@ -48,8 +48,8 @@ export default class FriendSelector extends React.Component {
         "name",
     ],
   };
-
-  _fuse = new Fuse(this.props.friends.toJS(), this._fuseOptions);
+  
+  _fuse = new Fuse(this.props.friends, this._fuseOptions);
 
   componentDidMount() {
     setTimeout(() => {

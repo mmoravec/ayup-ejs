@@ -60,7 +60,12 @@ function* grantNotifications() {
     return;
   }
   let token = yield call(Notifications.getExponentPushTokenAsync);
+  let profile = {
+    exponent_token: token,
+  };
+  yield put({ type: ActionTypes.UPDATE_PROFILE, profile });
   console.log(token);
   //save the token to our backend
   yield put({ type: ActionTypes.NOTIFICATIONS_GRANTED });
+  yield put({ type: ActionTypes.SUBSCRIBE_NOTIFICATIONS });
 }

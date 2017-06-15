@@ -4,9 +4,9 @@ import axios from "axios";
 import ActionTypes from "../state/ActionTypes";
 
 export function* request(type, url, body, headers) {
-  // console.log("new request!");
-  // console.log(type + " : " + url);
-  // console.log(headers);
+  console.log("new request!");
+  console.log(type + " : " + url);
+  console.log(headers);
   const cred = yield select(state => state.credential);
   // console.log("current credentials");
   // console.log(cred);
@@ -52,9 +52,9 @@ export function* request(type, url, body, headers) {
         //TODO: create unauthorized func
       } else {
         let error = yield response.json();
-        // console.log("request error but has reponse");
-        // console.log(error);
-        // console.log(response.status);
+        console.log("request error but has reponse");
+        console.log(error);
+        console.log(response.status);
         yield put({ type: ActionTypes.REQUEST_ERROR });
         throw error;
       }
@@ -64,6 +64,7 @@ export function* request(type, url, body, headers) {
     }
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });
+    console.log(error);
     throw error;
   }
 }

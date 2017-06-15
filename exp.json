@@ -17,10 +17,13 @@
     "hideExponentText": true
   },
   "packagerOpts": {
-    "assetExts": ["ttf", "mp4"]
+    "assetExts": [
+      "ttf",
+      "mp4"
+    ]
   },
   "ios": {
-  "bundleIdentifier": "com.ayupapp.exp",
+    "bundleIdentifier": "com.ayupapp.exp",
   },
   "android": {
     "package": "com.ionicframework.ayup140030",

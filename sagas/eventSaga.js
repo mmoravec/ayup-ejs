@@ -2,6 +2,7 @@ import { List } from "immutable";
 import { delay } from "redux-saga";
 import { takeLatest, select, call, put, fork } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
+import { Event } from "../state/Records";
 import { request } from "../utils/fetch";
 import { URL, POST, GET, DELETE } from "../constants/rest";
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
@@ -18,12 +19,13 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.REJECT_EVENT, rejectEvent),
     takeLatest(ActionTypes.LOAD_COMMENTS, loadComments),
     takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
+    takeLatest(ActionTypes.ACCEPT_REQUEST, acceptRequest),
+    takeLatest(ActionTypes.REJECT_REQUEST, rejectRequest),
   ];
 }
 
 function* saveEvent(action) {
   yield put({ type: ActionTypes.ALERT_SAVING });
-  console.log(action.event);
   try {
     yield call(request, POST, URL + "/v1.0/events", action.event);
   } catch (error) {
@@ -56,7 +58,7 @@ function* updateNearbyEvents(action) {
       request,
       GET,
       URL +
-        "/v1.0/events?lat=" +
+        "/v1.0/events/search/adults?lat=" +
         region.latitude +
         "&long=" +
         region.longitude +
@@ -80,10 +82,44 @@ function* acceptEvent(action) {
   yield put({ type: ActionTypes.ALERT_SUCCESS });
 }
 
+function* acceptRequest(action) {
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  try {
+    yield call(
+      request,
+      POST,
+      URL + "/v1.0/events/" + action.eventID + "/accept?userid=" + action.userID
+    );
+  } catch (error) {
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    return;
+  }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+}
+
+function* rejectRequest(action) {
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  try {
+    yield call(
+      request,
+      POST,
+      URL + "/v1.0/events/" + action.eventID + "/reject?userid=" + action.userID
+    );
+  } catch (error) {
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    return;
+  }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+}
+
 function* requestEvent(action) {
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, POST, URL + "/v1.0/events/" + action.eventID);
+    yield call(
+      request,
+      POST,
+      URL + "/v1.0/events/" + action.eventID + "/request"
+    );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
@@ -132,7 +168,11 @@ function* updateSelectedEvent(eventID) {
 function* loadComments(action) {
   let data;
   try {
-    data = yield call(request, GET, URL + "/v1.0/comments/" + action.eventID);
+    data = yield call(
+      request,
+      GET,
+      URL + "/v1.0/comments?eventid=" + action.eventID
+    );
   } catch (error) {
     yield call(delay, 5000);
     yield fork(loadComments, action);
@@ -173,5 +213,8 @@ function* loadEvent(action) {
     yield fork(loadEvent, action);
     return;
   }
-  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
+  yield put({
+    type: ActionTypes.SET_SELECTED_EVENT,
+    selectedEvent: new Event({ ...data.body }),
+  });
 }
