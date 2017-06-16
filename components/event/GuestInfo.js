@@ -192,7 +192,6 @@ class Card extends React.Component {
 
   _acceptUser = () => {
     //accept user action
-    debugger;
     this.props.dispatch(Actions.acceptRequest(this.props.event.id, this.props.user.id));
     this.props.nextSlide();
     this.setState({clicked: 'Accepted'});

@@ -12,6 +12,7 @@ import { URL, POST, GET, DELETE } from "../constants/rest";
 export function* watchNotificationActions() {
   yield [
     takeLatest(ActionTypes.SUBSCRIBE_NOTIFICATIONS, subscribeNotifications),
+    takeLatest(ActionTypes.SET_PROFILE, setAlertBadges),
   ];
 }
 
@@ -24,4 +25,15 @@ function _handleNotification(notification) {
   console.log("handle notification");
   let test = notification.data;
   Store.dispatch(Actions.receivedNotification(notification));
+}
+
+function* setAlertBadges() {
+  let badges = 0;
+  const profile = yield select(state => state.profile);
+  profile.hosted.map(event => {
+    if (event.requested.length > 0) {
+      badges++;
+    }
+  });
+  yield put({ type: ActionTypes.SET_MYEVENT_BADGE, badges });
 }

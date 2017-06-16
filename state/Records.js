@@ -81,6 +81,7 @@ export const PhoneState = Record({
   },
   contacts: {},
   fbFriends: {},
+  myEventAlert: 0,
 });
 
 export const Comment = Record({

@@ -48,6 +48,10 @@ class PhoneStateReducer {
     return state.set("notification", action.notification);
   }
 
+  static [ActionTypes.SET_MYEVENT_BADGE](state, action) {
+    return state.set("myEventAlert", action.badges);
+  }
+
   static [ActionTypes.IMAGES_LOADED](state, action) {
     return state.set("imagesLoaded", true);
   }

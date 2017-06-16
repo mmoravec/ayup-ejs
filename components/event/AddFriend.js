@@ -52,7 +52,7 @@ export default class AddFriend extends React.Component {
             <Image
               style={styles.btnJoin}
               resizeMode={"contain"}
-              source={require("../../assets/images/btn_join.png")}
+              source={require("../../assets/images/btn_invite.png")}
             />
           </TouchableOpacity>
         </View>

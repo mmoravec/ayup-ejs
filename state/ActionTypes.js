@@ -61,6 +61,7 @@ export default defineActionConstants([
   "SET_FILTER",
   "SET_FORMVALUE",
   "SET_FRIENDS",
+  "SET_MYEVENT_BADGE",
   "SET_NEARBY",
   "SET_OPTLY_VARIATION",
   "SET_PHONESTATE",

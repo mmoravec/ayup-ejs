@@ -182,17 +182,16 @@ function* loadComments(action) {
 }
 
 function* saveComment(action) {
-  const user = yield select(state => state.user);
+  const profile = yield select(state => state.profile);
   let comment = {
     content: action.comment,
-    parentID: action.parentID ? action.parentID : null,
+    parent_id: action.parentID ? action.parentID : null,
     author: {
-      fbid: user.fbid,
-      id: user.id,
-      profile_pic: user.profile_pic,
-      name: user.name,
+      id: profile.id,
+      profile_pic: profile.profile_pic,
+      name: profile.name,
     },
-    eventID: action.eventID,
+    event_id: action.eventID,
   };
   try {
     yield call(request, POST, URL + "/v1.0/comments", comment);
