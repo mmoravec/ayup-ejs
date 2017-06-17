@@ -78,11 +78,26 @@ class GuestPic extends React.Component {
   render() {
     return (
       <TouchableOpacity onPress={this.props.selectPic}>
-        <Image
-          source={{ uri: this.props.profilePic }}
-          style={styles.image}
-          opacity={this.props.opacity}
-        />
+        {this.props.profilePic !== "" &&
+          <Image
+            source={{ uri: this.props.profilePic }}
+            style={styles.image}
+            opacity={this.props.opacity}
+          />}
+        {this.props.profilePic === "" &&
+          <Image
+            source={require("../../assets/images/sms_circle.png")}
+            style={styles.image}
+            opacity={this.props.opacity}>
+            <MyText
+              style={{
+                margin: 10,
+                marginTop: 16,
+                backgroundColor: "transparent",
+              }}>
+              SMS
+            </MyText>
+          </Image>}
       </TouchableOpacity>
     );
   }

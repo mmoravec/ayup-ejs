@@ -1,7 +1,7 @@
-import _ from 'lodash';
-import { Record, Map } from 'immutable';
-import ActionTypes from './ActionTypes';
-import { FormState } from './Records';
+import _ from "lodash";
+import { Record, Map } from "immutable";
+import ActionTypes from "./ActionTypes";
+import { FormState } from "./Records";
 
 class FormReducer {
   static reduce(state = new FormState(), action) {
@@ -13,7 +13,7 @@ class FormReducer {
   }
 
   static [ActionTypes.SHOWHIDE_FIELD](state, action) {
-    let newState = {...state[action.field]};
+    let newState = { ...state[action.field] };
     newState.shown = !newState.shown;
     return state.set(action.field, newState);
   }
@@ -35,8 +35,8 @@ class FormReducer {
   static [ActionTypes.BLUR_FIELDS](state, action) {
     let n = {};
     state.map((val, key) => {
-        val.focus = false;
-        n[key] = val;
+      val.focus = false;
+      n[key] = val;
     });
     return state.merge(Map(n));
   }
@@ -51,18 +51,17 @@ class FormReducer {
     // let obj = {};
     // obj[key] = value;
     // this.setState(obj);
-    let val = {...state[action.key]};
+    let val = { ...state[action.key] };
     val.value = action.value;
     return state.set(action.key, val);
   }
 
   static [ActionTypes.SET_GEOCODE_ADDRESS](state, action) {
-    let location = {...state[action.stateKey]};
+    let location = { ...state[action.stateKey] };
     location.value = action.data.name;
     location.lnglat = [action.data.long, action.data.lat];
     return state.set(action.stateKey, location);
   }
-
 }
 
 export default FormReducer.reduce;

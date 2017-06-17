@@ -50,6 +50,7 @@ function* authorize() {
       gender: fbInfo.gender,
     };
     yield put({ type: ActionTypes.UPDATE_PROFILE, profile });
+    yield put({ type: ActionTypes.RESET_ALERT });
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
     return;
   } else {

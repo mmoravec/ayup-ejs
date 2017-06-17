@@ -1,3 +1,4 @@
+import _ from "lodash";
 import Immutable, { List } from "immutable";
 import { call, put, take, select, takeLatest } from "redux-saga/effects";
 import { delay } from "redux-saga";
@@ -31,7 +32,7 @@ function* getFacebookFriends() {
       f[friend.name] = {
         fbid: friend.id,
         name: friend.name,
-        profile_pic: friend.profile_pic,
+        profile_pic: friend.picture.data.url,
       };
     });
   } catch (error) {
@@ -55,11 +56,10 @@ function* sortContacts(contacts) {
         if (phone.length === 10) {
           if (!friends[c.name]) {
             friends[c.name] = {
-              phone: [],
+              phone,
               name: c.name,
             };
           }
-          friends[c.name].phone.push(phone);
         }
       });
     }
@@ -68,7 +68,7 @@ function* sortContacts(contacts) {
 }
 
 function* receivedContacts(action) {
-  let sync = false;
+  let sync = false, contacts;
   const phone = yield select(state => state.phone);
   let result = yield [
     call(sortContacts, action.contacts),
@@ -82,7 +82,18 @@ function* receivedContacts(action) {
     sync = true;
     yield put({ type: ActionTypes.SET_FBFRIENDS, friends: result[1] });
   }
-  if (sync) {
+  let blah = _.values(_.merge(result[1], result[0]));
+  if (true) {
+    try {
+      contacts = yield call(
+        request,
+        POST,
+        URL + "/v1.0/account/synccontacts",
+        blah
+      );
+    } catch (error) {
+      return;
+    }
   }
 }
 

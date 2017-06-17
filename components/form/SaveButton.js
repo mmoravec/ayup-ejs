@@ -87,9 +87,8 @@ export default class SaveButton extends React.Component {
     eventState.friends.value.map(friend => {
       //TODO: update this to be id instead fbid
       invited.push({
-        fbid: friend.fbid,
-        profile_pic: friend.profile_pic,
-        name: friend.name,
+        id: friend.item.ayup_id,
+        name: friend.item.name,
       });
     });
     let event = {

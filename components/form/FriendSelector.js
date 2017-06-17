@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Animated,
+  FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
-import Fuse from 'fuse.js';
 import ImmutableListView from 'react-native-immutable-list-view';
+import Fuse from 'fuse.js';
 import MyText from '../common/MyText';
 import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
@@ -30,8 +31,8 @@ export default class FriendSelector extends React.Component {
     addBtnLeft: new Animated.Value(15),
     addBtnRotate: new Animated.Value(0),
     addingFriend: false,
-    invitedFriends: new List(),
-    filteredFriends: new List(),
+    invitedFriends: [],
+    filteredFriends: [],
     inputText: "",
     incScrollY: 0,
   }
@@ -61,7 +62,7 @@ export default class FriendSelector extends React.Component {
 
   componetDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
-      this._fuse = new Fuse(this.props.friends.toJS(), this._fuseOptions);
+      this._fuse = new Fuse(this.props.friends, this._fuseOptions);
     }
   }
 
@@ -137,7 +138,7 @@ export default class FriendSelector extends React.Component {
   _onChangeText = (text) => {
     this.setState({inputText: text});
     let filteredFriends = this._fuse.search(text);
-    this.setState({filteredFriends: new List(filteredFriends)});
+    this.setState({filteredFriends});
   }
 
   _renderInvitedFriends = () => {
@@ -153,11 +154,12 @@ export default class FriendSelector extends React.Component {
   }
 
   _renderFilteredFriends = () => {
-    if (this.props.focus && this.props.friends.size > 0) {
+    if (this.props.focus && this.props.friends.length > 0) {
       return (
-        <ImmutableListView
-          immutableData={this.state.filteredFriends}
-          renderRow={this._renderFilterRow}
+        <FlatList
+          data={this.state.filteredFriends}
+          renderItem={this._renderFilterRow}
+          keyExtractor={this._keyExtractor}
           keyboardShouldPersistTaps={'always'}
           style={{marginBottom: 300}}
         />
@@ -165,19 +167,18 @@ export default class FriendSelector extends React.Component {
     }
   }
 
+  _keyExtractor = (item, index) => item.name;
+
   _renderFilterRow = (rowData) => {
     let push = this._pushFriend.bind(this, rowData);
     return (
       <TouchableHighlight underlayColor={'#f2f2f2'} onPress={push}>
         <View style={styles.friend}>
           <View style={styles.imageBox}>
-            <Image
-              source={{uri: rowData.profilePic}}
-              style={styles.friendPic}
-            />
+            {this._renderProfPic(rowData)}
           </View>
           <View style={styles.nameBox}>
-            <MyText style={styles.name}>{rowData.name}</MyText>
+            <MyText style={styles.name}>{rowData.item.name}</MyText>
           </View>
         </View>
       </TouchableHighlight>
@@ -189,13 +190,10 @@ export default class FriendSelector extends React.Component {
     return (
       <View style={styles.friend}>
         <View style={styles.imageBox}>
-          <Image
-            source={{uri: rowData.profilePic}}
-            style={styles.friendPic}
-          />
+          {this._renderProfPic(rowData)}
         </View>
         <View style={styles.nameBox}>
-          <MyText style={styles.name}>{rowData.name}</MyText>
+          <MyText style={styles.name}>{rowData.item.name}</MyText>
         </View>
         <TouchableOpacity onPress={remove}>
           <Image
@@ -207,9 +205,28 @@ export default class FriendSelector extends React.Component {
     );
   }
 
+  _renderProfPic = (rowData) => {
+    if (rowData.item.profilePic) {
+      return (
+        <Image
+          source={{uri: rowData.item.profilePic}}
+          style={styles.friendPic}
+        />
+      );
+    } else {
+      return (
+        <Image
+          source={require('../../assets/images/sms_circle.png')}
+          style={styles.friendPic}>
+          <MyText style={{margin: 10, marginTop: 16, backgroundColor: "transparent" }}>SMS</MyText>
+        </Image>
+      );
+    }
+  }
+
   _pushFriend = (friend) => {
     let friends = this.props.value;
-    var result = friends.find(obj => obj.name === friend.name);
+    var result = friends.find(obj => obj.item.name === friend.item.name);
     if (!result) {
       friends = friends.push(friend);
       this.props.onChange(this.props.stateKey, friends);

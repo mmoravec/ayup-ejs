@@ -49,13 +49,14 @@ function* grantContacts() {
 
 function* grantNotifications() {
   yield take([ActionTypes.SAVE_EVENT, ActionTypes.JOIN_EVENT]);
+  const prof = yield select(state => state.profile);
   //show notification dialog to user
   let { status } = yield call(
     Permissions.askAsync,
     Permissions.REMOTE_NOTIFICATIONS
   );
   // Stop here if the user did not grant permissions
-  if (status !== "granted") {
+  if (status !== "granted" || prof.exponent_token !== null) {
     //let user know how to turn on notifications
     return;
   }
@@ -64,7 +65,6 @@ function* grantNotifications() {
     exponent_token: token,
   };
   yield put({ type: ActionTypes.UPDATE_PROFILE, profile });
-  console.log(token);
   //save the token to our backend
   yield put({ type: ActionTypes.NOTIFICATIONS_GRANTED });
   yield put({ type: ActionTypes.SUBSCRIBE_NOTIFICATIONS });

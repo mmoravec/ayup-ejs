@@ -177,10 +177,24 @@ class Card extends React.Component {
           resizeMode={'contain'}
           source={require('../../assets/images/pretty_modal.png')}>
           <View style={styles.picName}>
-            <Image
-              source={{uri: this.props.profilePic}}
-              style={styles.image}
-            />
+            {this.props.profilePic !== "" &&
+              <Image
+                source={{ uri: this.props.profilePic }}
+                style={styles.image}
+              />}
+            {this.props.profilePic === "" &&
+              <Image
+                source={require("../../assets/images/sms_circle.png")}
+                style={styles.image}>
+                <MyText
+                  style={{
+                    marginLeft: 25,
+                    marginTop: 30,
+                    backgroundColor: "transparent",
+                  }}>
+                  SMS
+                </MyText>
+              </Image>}
             <MyText style={styles.name}>{this.props.user.name}</MyText>
           </View>
         </Image>
