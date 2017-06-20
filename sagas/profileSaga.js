@@ -99,14 +99,6 @@ function* receivedContacts(action) {
 
 function* getProfile() {
   let profile;
-  let temp = {
-    hosted: [],
-    going: [],
-    invited: [],
-    requested: [],
-    not_going: [],
-    completed: [],
-  };
   try {
     profile = yield call(request, GET, URL + "/v1.0/profile");
   } catch (error) {
@@ -150,20 +142,27 @@ function transformEvents(profile) {
     requested: [],
     not_going: [],
     completed: [],
+    take_action: [],
   };
   profile.events.map(event => {
-    if (profile.hosted.indexOf(event.id)) {
+    if (profile.hosted.indexOf(event.id) > -1) {
       temp.hosted.push(event);
-    } else if (profile.completed.indexOf(event.id)) {
+    } else if (profile.completed.indexOf(event.id) > -1) {
       temp.completed.push(event);
-    } else if (profile.going.indexOf(event.id)) {
+    } else if (profile.going.indexOf(event.id) > -1) {
       temp.going.push(event);
-    } else if (profile.invited.indexOf(event.id)) {
+    } else if (profile.invited.indexOf(event.id) > -1) {
       temp.invited.push(event);
-    } else if (profile.requested.indexOf(event.id)) {
+      temp.take_action.push(event);
+    } else if (profile.requested.indexOf(event.id) > -1) {
       temp.requested.push(event);
-    } else if (profile.not_going.indexOf(event.id)) {
+    } else if (profile.not_going.indexOf(event.id) > -1) {
       temp.not_going.push(event);
+    }
+  });
+  temp.hosted.map(event => {
+    if (event.requested.length > 0) {
+      temp.take_action.push(event);
     }
   });
   for (var k in temp) {

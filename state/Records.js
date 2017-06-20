@@ -42,6 +42,7 @@ export const Profile = Record({
   gender: null,
   exponent_token: null,
   events: new List(),
+  take_action: new List(),
 });
 
 export const Credential = Record({
@@ -187,4 +188,5 @@ export const FormState = Record({
     value: 0,
     stateKey: "capacity",
   },
+  status: "create",
 });

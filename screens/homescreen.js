@@ -65,7 +65,7 @@ export default class HomeScreen extends React.Component {
               activeOpacity={0.5}
               onPress={this._onMenuBtnPress}>
               <Image
-                source={require('../assets/images/btn_main.png')}
+                source={require('../assets/images/btn_main2.png')}
                 style={styles.btnMain}
               />
             </TouchableOpacity>

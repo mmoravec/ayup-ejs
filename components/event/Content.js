@@ -65,12 +65,6 @@ export default class EventContent extends React.Component {
 
   _renderHeader = () => {
     let event = this.props.event;
-    let guests = {
-      going: event.going,
-      rejected: event.rejected,
-      invited: event.invited,
-      requested: event.requested,
-    };
     let start = new Date(event.start_time);
     let end = new Date(event.end_time);
     let coord = {
@@ -161,7 +155,6 @@ export default class EventContent extends React.Component {
             />
           </View>
           <EventGuests
-            guests={guests}
             guestClick={this.props.guestClick}
             showAddFriend={this.props.showAddFriend}
           />

@@ -18,6 +18,14 @@ class FormReducer {
     return state.set(action.field, newState);
   }
 
+  static [ActionTypes.ZERO_FORM](state, action) {
+    return new FormState();
+  }
+
+  static [ActionTypes.SET_FORM](state, action) {
+    return action.form;
+  }
+
   static [ActionTypes.FOCUS_FIELD](state, action) {
     let n = {};
     state.map((val, key) => {

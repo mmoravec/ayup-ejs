@@ -2,9 +2,9 @@ import { List } from "immutable";
 import { delay } from "redux-saga";
 import { takeLatest, select, call, put, fork } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
-import { Event } from "../state/Records";
+import { Event, FormState } from "../state/Records";
 import { request } from "../utils/fetch";
-import { URL, POST, GET, DELETE } from "../constants/rest";
+import { URL, POST, GET, DELETE, PUT } from "../constants/rest";
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
 
@@ -21,6 +21,8 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.SAVE_COMMENT, saveComment),
     takeLatest(ActionTypes.ACCEPT_REQUEST, acceptRequest),
     takeLatest(ActionTypes.REJECT_REQUEST, rejectRequest),
+    takeLatest(ActionTypes.MODIFY_EVENT, modifyEvent),
+    takeLatest(ActionTypes.UPDATE_EVENT, updateEvent),
   ];
 }
 
@@ -33,12 +35,31 @@ function* saveEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(delay, 2000);
   yield put({
     type: ActionTypes.REGION_CHANGE,
     longitude: action.event.location.coordinates[0],
     latitude: action.event.location.coordinates[1],
   });
+  yield put({ type: ActionTypes.ZERO_FORM });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Back" });
+}
+
+function* updateEvent(action) {
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  try {
+    yield call(
+      request,
+      PUT,
+      URL + "/v1.0/events/" + action.eventID,
+      action.event
+    );
+  } catch (error) {
+    yield put({ type: ActionTypes.ALERT_ERROR, error });
+    return;
+  }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.ZERO_FORM });
+  yield put({ type: ActionTypes.LOAD_EVENT, eventID: action.eventID });
   yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Back" });
 }
 
@@ -74,7 +95,11 @@ function* updateNearbyEvents(action) {
 function* acceptEvent(action) {
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, POST, URL + "/v1.0/events/" + action.eventID);
+    yield call(
+      request,
+      POST,
+      URL + "/v1.0/events/" + action.eventID + "/accept"
+    );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     return;
@@ -130,7 +155,7 @@ function* requestEvent(action) {
 function* deleteEvent(action) {
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, DELETE, URL + "/v1.0/events?id=" + action.eventID);
+    yield call(request, DELETE, URL + "/v1.0/events/" + action.eventID);
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
@@ -216,4 +241,54 @@ function* loadEvent(action) {
     type: ActionTypes.SET_SELECTED_EVENT,
     selectedEvent: new Event({ ...data.body }),
   });
+}
+
+function* modifyEvent(action) {
+  const event = yield select(state => state.events);
+  let form = new FormState();
+  event.selectedEvent.forEach((val, key) => {
+    switch (key) {
+      case "start_time":
+        form["startDate"].value = new Date(val);
+        break;
+      case "end_time":
+        form["endDate"].value = new Date(val);
+        break;
+      case "destination":
+        form["dest"].value = val.text;
+        form["dest"].lnglat = val.coordinates;
+        if (val.text !== "") {
+          form["dest"].shown = true;
+        }
+        break;
+      case "description":
+        form["desc"].value = val;
+        if (val !== "") {
+          form["desc"].shown = true;
+        }
+        break;
+      case "location":
+        form["location"].value = val.text;
+        form["location"].lnglat = val.coordinates;
+        break;
+      case "title":
+        form["title"].value = val;
+        break;
+      case "activity":
+        form["activity"].value = val;
+        break;
+      case "private":
+        form["private"].value = val;
+        break;
+      case "capacity":
+        form["capacity"].value = val;
+        if (val !== 0) {
+          form["capacity"].shown = true;
+        }
+    }
+  });
+  form.friends.shown = false;
+  form = form.set("status", "update");
+  yield put({ type: ActionTypes.SET_FORM, form });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "NewEvent" });
 }

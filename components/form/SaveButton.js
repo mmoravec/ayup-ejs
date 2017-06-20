@@ -21,6 +21,7 @@ export default class SaveButton extends React.Component {
     return {
       phone: data.phone,
       form: data.form,
+      event: data.events.selectedEvent,
     };
   }
 
@@ -43,17 +44,31 @@ export default class SaveButton extends React.Component {
 
   _renderCreate = () => {
     if (this.props.phone.status === ActionTypes.INACTIVE) {
-      return (
-        <TouchableOpacity
-          underlayColor="transparent"
-          style={styles.hlightSave}
-          onPress={this._saveBtnPress}>
-          <Image
-            style={styles.btnSave}
-            source={this.props.image}
-          />
-        </TouchableOpacity>
-      );
+      if (this.props.form.status === "create") {
+        return (
+          <TouchableOpacity
+            underlayColor="transparent"
+            style={styles.hlightSave}
+            onPress={this._saveBtnPress}>
+            <Image
+              style={styles.btnSave}
+              source={this.props.image}
+            />
+          </TouchableOpacity>
+        );
+      } else {
+        return (
+          <TouchableOpacity
+            underlayColor="transparent"
+            style={styles.hlightSave}
+            onPress={this._updateBtnPress}>
+            <Image
+              style={styles.btnSave}
+              source={this.props.image2}
+            />
+          </TouchableOpacity>
+        );
+      }
     } else if (this.props.phone.status === ActionTypes.SUCCESS) {
       return (
         <View style={styles.woohoo}>
@@ -111,6 +126,33 @@ export default class SaveButton extends React.Component {
     };
 
       this.props.dispatch(Actions.saveEvent(event));
+    }
+  }
+
+   _updateBtnPress = () => {
+    let eventState = this.props.form;
+    if (eventState.startDate.value === "" || eventState.endDate.value === "" || eventState.title.value === "" || eventState.location.value === "") {
+      this._warnUser();
+    } else {
+    let event = {
+      start_time: eventState.startDate.value.toISOString(),
+      end_time: eventState.endDate.value.toISOString(),
+      title: eventState.title.value,
+      private: eventState.private.value,
+      description: eventState.desc.value,
+      location: {
+        coordinates: eventState.location.lnglat,
+        text: eventState.location.value,
+      },
+      destination: {
+        coordinates: eventState.dest.lnglat,
+        text: eventState.dest.value,
+      },
+      activity: eventState.activity.value,
+      capacity: eventState.capacity.value,
+    };
+
+      this.props.dispatch(Actions.updateEvent(event, this.props.event.id));
     }
   }
 

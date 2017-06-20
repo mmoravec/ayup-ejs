@@ -28,12 +28,17 @@ function _handleNotification(notification) {
 }
 
 function* setAlertBadges() {
-  let badges = 0;
+  let badges = 0, action = [];
   const profile = yield select(state => state.profile);
   profile.hosted.map(event => {
     if (event.requested.length > 0) {
       badges++;
+      action.push(event);
     }
+  });
+  profile.invited.map(event => {
+    badges++;
+    action.push(event);
   });
   yield put({ type: ActionTypes.SET_MYEVENT_BADGE, badges });
 }

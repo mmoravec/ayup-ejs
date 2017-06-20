@@ -38,11 +38,11 @@ export default class EventList extends React.Component {
       let date = new Date(x.start_time);
       return dateFormat(date, 'fullDate');
     }).sort((a, b) => {
-      let n = new Date(a.get(0).start_time);
-      let f = new Date(b.get(0).start_time);
+      let n = new Date(a.get(0).start_time).getTime();
+      let f = new Date(b.get(0).start_time).getTime();
       if (n > f) {
         return 1;
-      } else if (f < n) {
+      } else if (f > n) {
         return -1;
       } else {
         return 0;

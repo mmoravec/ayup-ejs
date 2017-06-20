@@ -36,10 +36,11 @@ export default class Notifications extends React.Component {
   }
   render() {
     let {fontLoaded} = this.props.phone;
+    debugger;
     if (fontLoaded) {
       return (
         <Animated.View style={[styles.container, {top: this.state.top}]}>
-          <MyText style={styles.message} >{this.props.phone.notification.data.msg}</MyText>
+          <MyText style={styles.message} >{this.props.phone.notification.body}</MyText>
           <TouchableOpacity style={styles.close} onPress={this._close}>
             <MaterialIcons size={30} name={"close"} />
           </TouchableOpacity>

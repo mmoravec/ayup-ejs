@@ -28,6 +28,13 @@ export default class Actions {
     };
   }
 
+  static modifyEvent(eventID) {
+    return {
+      type: ActionTypes.MODIFY_EVENT,
+      eventID,
+    };
+  }
+
   static getProfile() {
     return {
       type: ActionTypes.GET_PROFILE,
@@ -238,6 +245,14 @@ export default class Actions {
     return {
       type: ActionTypes.SAVE_EVENT,
       event,
+    };
+  }
+
+  static updateEvent(event, eventID) {
+    return {
+      type: ActionTypes.UPDATE_EVENT,
+      event,
+      eventID,
     };
   }
 }

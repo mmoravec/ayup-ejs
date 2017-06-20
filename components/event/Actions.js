@@ -80,6 +80,11 @@ export default class EventActions extends React.Component {
     this.props.dispatch(Actions.deleteEvent(this.props.event.id));
   }
 
+  _modifyEvent = () => {
+    this.props.dispatch(Actions.modifyEvent(this.props.event.id));
+    this._settingsPress();
+  }
+
   _settingsPress = () => {
     this.setState({active: !this.state.active});
     if (this.state.active) {
