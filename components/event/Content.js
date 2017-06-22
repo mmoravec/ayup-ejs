@@ -234,7 +234,7 @@ export default class EventContent extends React.Component {
   _renderRow = rowData => {
     let replyPress = this.props.onCommentPress.bind(this, rowData.id);
     let _imageBox = styles.imageBox;
-    if (rowData.parentID) {
+    if (rowData.parent_id) {
       _imageBox = styles.extImageBox;
     }
     return (
@@ -259,7 +259,7 @@ export default class EventContent extends React.Component {
                 <MyText style={{ color: "#5f5f5f" }}> Reply</MyText>
               </TouchableOpacity>
               <MyText style={{ color: "#c7c7c7" }}> • </MyText>
-              {this._renderTime(rowData.modified_on)}
+              {this._renderTime(rowData.posted_on)}
             </View>
           </View>
         </View>

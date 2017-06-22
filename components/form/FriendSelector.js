@@ -46,7 +46,14 @@ export default class FriendSelector extends React.Component {
     maxPatternLength: 32,
     minMatchCharLength: 1,
     keys: [
-        "name",
+      {
+        name: 'name',
+        weight: 0.4,
+      },
+      {
+        name: 'profile_pic',
+        weight: 0.6
+      }
     ],
   };
   
@@ -167,10 +174,14 @@ export default class FriendSelector extends React.Component {
     }
   }
 
-  _keyExtractor = (item, index) => item.name;
+  _keyExtractor = (item, index) => item.ayup_id;
 
   _renderFilterRow = (rowData) => {
-    let push = this._pushFriend.bind(this, rowData);
+    let push = this._pushFriend.bind(this, rowData), num;
+    if (rowData.item.phone) {
+      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
+      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
+    }
     return (
       <TouchableHighlight underlayColor={'#f2f2f2'} onPress={push}>
         <View style={styles.friend}>
@@ -179,6 +190,10 @@ export default class FriendSelector extends React.Component {
           </View>
           <View style={styles.nameBox}>
             <MyText style={styles.name}>{rowData.item.name}</MyText>
+            {
+              rowData.item.phone && !rowData.item.profile_pic &&
+              <MyText style={styles.phone}>{num}</MyText>
+            }
           </View>
         </View>
       </TouchableHighlight>
@@ -186,7 +201,11 @@ export default class FriendSelector extends React.Component {
   }
 
   _renderInvitedRow = (rowData) => {
-    let remove = this._removeFriend.bind(this, rowData);
+    let remove = this._removeFriend.bind(this, rowData), num;
+    if (rowData.item.phone) {
+      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
+      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
+    }
     return (
       <View style={styles.friend}>
         <View style={styles.imageBox}>
@@ -194,6 +213,10 @@ export default class FriendSelector extends React.Component {
         </View>
         <View style={styles.nameBox}>
           <MyText style={styles.name}>{rowData.item.name}</MyText>
+          {
+            rowData.item.phone && !rowData.item.profile_pic &&
+            <MyText style={styles.phone}>{num}</MyText>
+          }
         </View>
         <TouchableOpacity onPress={remove}>
           <Image
@@ -206,10 +229,10 @@ export default class FriendSelector extends React.Component {
   }
 
   _renderProfPic = (rowData) => {
-    if (rowData.item.profilePic) {
+    if (rowData.item.profile_pic) {
       return (
         <Image
-          source={{uri: rowData.item.profilePic}}
+          source={{uri: rowData.item.profile_pic}}
           style={styles.friendPic}
         />
       );
@@ -289,10 +312,17 @@ const styles = StyleSheet.create({
   },
   nameBox: {
     height: 60,
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   name: {
     fontSize: 16,
-    marginTop: 25,
     marginLeft: 10,
+    marginTop: 10,
+  },
+  phone: {
+    fontSize: 10,
+    marginLeft: 10,
+    color: '#758282',
   },
 });

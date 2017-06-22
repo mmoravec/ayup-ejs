@@ -14,6 +14,7 @@ import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import MapView from '../components/EventMap';
+import MyText from '../components/common/MyText';
 import Filters from '../utils/filters';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
@@ -95,15 +96,14 @@ export default class HomeScreen extends React.Component {
 
   _renderLocationWarning = () => {
     if (this.props.phone.locationGranted === "denied") {
-      console.log('render location warning');
       return (
         <Modal
           animationType={"none"}
           transparent={false}
           onRequestClose={this._locationWarningClose}
           visible={this.props.menuVisible}>
-          <View style={{marginTop: 100}}>
-            <Text>You must enable location in settings!</Text>
+          <View style={{marginTop: 100, justifyContent: 'center'}}>
+            <MyText style={{fontSize: 24, width: width * 0.8}}>You must enable location in settings to use the app</MyText>
           </View>
         </Modal>
       );
@@ -117,21 +117,22 @@ export default class HomeScreen extends React.Component {
         <Modal
           animationType={"none"}
           transparent={true}
-          style={{flex: 1}}
           onRequestClose={this._locationWarningClose}
           visible={this.props.menuVisible}>
-          <View style={{margin: 50, backgroundColor: '#fff', height: height * 0.6, marginTop: height * 0.2, justifyContent: 'space-between'}}>
-            <View>
-              <Text>Welcome to Ayup! Let's get started. We'll first need your location to surface events near you.</Text>
-            </View>
-            <TouchableOpacity onPress={this._grantLocation}>
-              <View style={{width: 'auto', alignItems: 'center', marginBottom: 10}}>
-                <Image
-                  style={styles.btnLocation}
-                  source={require('../assets/images/btn_ready.png')}
-                />
-              </View>
-            </TouchableOpacity>
+          <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
+            <Image
+              style={{width, height: width * 1.33, justifyContent: 'flex-end'}}
+              resizeMode={'contain'}
+              source={require('../assets/images/location_grant.png')}>
+              <TouchableOpacity onPress={this._grantLocation}>
+                <View style={{width: 'auto', alignSelf: 'center', marginBottom: 50}}>
+                  <Image
+                    style={styles.btnLocation}
+                    source={require('../assets/images/btn_ready.png')}
+                  />
+                </View>
+              </TouchableOpacity>
+            </Image>
           </View>
         </Modal>
       );

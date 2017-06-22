@@ -43,6 +43,7 @@ export const Profile = Record({
   exponent_token: null,
   events: new List(),
   take_action: new List(),
+  age_group: "",
 });
 
 export const Credential = Record({

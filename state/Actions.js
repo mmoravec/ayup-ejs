@@ -77,7 +77,6 @@ export default class Actions {
   }
 
   static grantLocation() {
-    console.log("grant location yo");
     return {
       type: ActionTypes.GRANT_LOCATION,
     };
@@ -142,6 +141,14 @@ export default class Actions {
     };
   }
 
+  static inviteUser(eventID, userID) {
+    return {
+      type: ActionTypes.INVITE_USER,
+      eventID,
+      userID,
+    };
+  }
+
   static rejectRequest(eventID, userID) {
     return {
       type: ActionTypes.REJECT_REQUEST,
@@ -171,6 +178,12 @@ export default class Actions {
     return {
       type: ActionTypes.ROUTE_CHANGE,
       newRoute,
+    };
+  }
+
+  static zeroForm() {
+    return {
+      type: ActionTypes.ZERO_FORM,
     };
   }
 

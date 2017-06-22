@@ -31,6 +31,7 @@ export default class GuestInfo extends React.Component {
     hostInfo: true,
     index: 0,
     requested: this.props.event.requested,
+    changed: false,
     //TODO: updated to requested when backend switches over
   }
   componentDidUpdate(prevProps) {
@@ -105,6 +106,9 @@ export default class GuestInfo extends React.Component {
   }
 
   _closeModal = () => {
+    if (this.state.changed) {
+      this.props.dispatch(Actions.selectEvent(this.props.event.id));
+    }
     this.props.close();
     this.setState({hostInfo: false});
   }
@@ -148,8 +152,9 @@ export default class GuestInfo extends React.Component {
   }
 
   _nextSlide = () => {
+    this.setState({changed: true});
     if (this.state.requested.length <= this.state.index + 1) {
-      this.setState({hostInfo: false});
+      this._closeModal();
     }
     this._swiper.scrollBy(this.state.index + 1, true);
   }

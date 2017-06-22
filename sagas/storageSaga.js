@@ -37,7 +37,6 @@ function* saveFiltersAsyncSaga(action) {
 }
 
 function* saveCredentialAsyncSaga(action) {
-  console.log("saving credential to local storage");
   const credential = yield select(state => state.credential);
   yield call(LocalStorage.saveCredentialAsync, credential);
 }

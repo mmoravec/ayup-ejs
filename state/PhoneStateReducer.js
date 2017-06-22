@@ -44,7 +44,7 @@ class PhoneStateReducer {
     return state.set("notificationsGranted", true);
   }
 
-  static [ActionTypes.NOTIFICATION_RECEIVED](state, action) {
+  static [ActionTypes.SHOW_NOTIFICATION](state, action) {
     return state.set("notification", action.notification);
   }
 

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { List } from "immutable";
 import { delay } from "redux-saga";
 import { takeLatest, select, call, put, fork } from "redux-saga/effects";
@@ -23,6 +24,7 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.REJECT_REQUEST, rejectRequest),
     takeLatest(ActionTypes.MODIFY_EVENT, modifyEvent),
     takeLatest(ActionTypes.UPDATE_EVENT, updateEvent),
+    takeLatest(ActionTypes.INVITE_USER, inviteUser),
   ];
 }
 
@@ -40,6 +42,7 @@ function* saveEvent(action) {
     longitude: action.event.location.coordinates[0],
     latitude: action.event.location.coordinates[1],
   });
+  yield call(delay, 1000);
   yield put({ type: ActionTypes.ZERO_FORM });
   yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Back" });
 }
@@ -65,6 +68,12 @@ function* updateEvent(action) {
 
 function* updateNearbyEvents(action) {
   //TODO: call to rest api here
+  const profile = yield select(state => state.profile);
+  if (!profile.age_group) {
+    yield delay(500);
+    yield put({ type: ActionTypes.REGION_CHANGE, ...action });
+    return;
+  }
   let region = {
     latitude: action.latitude,
     longitude: action.longitude,
@@ -72,14 +81,14 @@ function* updateNearbyEvents(action) {
     longitudeDelta: action.longitudeDelta ? action.longitudeDelta : 0.017766,
   };
   let scope = Math.floor(region.latitudeDelta * 53000), events;
-  console.log("udpatenearbyevents");
-  console.log(region);
   try {
     events = yield call(
       request,
       GET,
       URL +
-        "/v1.0/events/search/adults?lat=" +
+        "/v1.0/events/search/" +
+        profile.age_group +
+        "?lat=" +
         region.latitude +
         "&long=" +
         region.longitude +
@@ -160,7 +169,10 @@ function* deleteEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield fork(updateSelectedEvent, action.eventID);
+  yield put({ type: ActionTypes.ZERO_SELECTED_COMMENT });
+  yield put({ type: ActionTypes.ZERO_SELECTED_EVENT });
+  yield put({ type: ActionTypes.GET_PROFILE });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Back" });
 }
 
 function* rejectEvent(action) {
@@ -176,6 +188,21 @@ function* rejectEvent(action) {
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield fork(updateSelectedEvent, action.eventID);
+}
+
+function* inviteUser(action) {
+  yield put({ type: ActionTypes.ALERT_SAVING });
+  try {
+    yield call(
+      request,
+      POST,
+      URL + "/v1.0/events/" + action.eventID + "/invite?userid=" + action.userID
+    );
+  } catch (error) {
+    yield put({ type: ActionTypes.ALERT_ERROR });
+    return;
+  }
+  yield put({ type: ActionTypes.ALERT_SUCCESS });
 }
 
 function* updateSelectedEvent(eventID) {
@@ -245,7 +272,7 @@ function* loadEvent(action) {
 
 function* modifyEvent(action) {
   const event = yield select(state => state.events);
-  let form = new FormState();
+  let form = new FormState().toJS();
   event.selectedEvent.forEach((val, key) => {
     switch (key) {
       case "start_time":
@@ -288,7 +315,7 @@ function* modifyEvent(action) {
     }
   });
   form.friends.shown = false;
-  form = form.set("status", "update");
+  form.status = "update";
   yield put({ type: ActionTypes.SET_FORM, form });
   yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "NewEvent" });
 }

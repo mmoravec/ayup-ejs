@@ -17,7 +17,7 @@ export function* watchProfile() {
 }
 
 function* getFacebookFriends() {
-  let friends, f = {};
+  let friends, f = [];
   const cred = yield select(state => state.credential);
   try {
     friends = yield call(
@@ -29,11 +29,11 @@ function* getFacebookFriends() {
         cred.access_token
     );
     friends.body.data.map(friend => {
-      f[friend.name] = {
+      f.push({
         fbid: friend.id,
         name: friend.name,
         profile_pic: friend.picture.data.url,
-      };
+      });
     });
   } catch (error) {
     //log error
@@ -42,7 +42,7 @@ function* getFacebookFriends() {
 }
 
 function* sortContacts(contacts) {
-  let friends = {};
+  let friends = [];
   let f = contacts.data.map(c => {
     if (c.phoneNumbers.length > 0) {
       c.phoneNumbers.map(num => {
@@ -54,12 +54,11 @@ function* sortContacts(contacts) {
           phone = phone.slice(1);
         }
         if (phone.length === 10) {
-          if (!friends[c.name]) {
-            friends[c.name] = {
-              phone,
-              name: c.name,
-            };
-          }
+          friends.push({
+            phone,
+            name: c.name,
+            label: num.label,
+          });
         }
       });
     }
@@ -74,15 +73,15 @@ function* receivedContacts(action) {
     call(sortContacts, action.contacts),
     call(getFacebookFriends),
   ];
-  if (Object.keys(phone.contacts).length !== Object.keys(result[0]).length) {
+  if (phone.contacts.length !== result[0].length) {
     sync = true;
     yield put({ type: ActionTypes.SET_CONTACTS, contacts: result[0] });
   }
-  if (Object.keys(phone.fbFriends).length !== Object.keys(result[1]).length) {
+  if (phone.fbFriends.length !== result[1].length) {
     sync = true;
     yield put({ type: ActionTypes.SET_FBFRIENDS, friends: result[1] });
   }
-  let blah = _.values(_.merge(result[1], result[0]));
+  let blah = result[1].concat(result[0]);
   if (true) {
     try {
       contacts = yield call(
@@ -102,10 +101,10 @@ function* getProfile() {
   try {
     profile = yield call(request, GET, URL + "/v1.0/profile");
   } catch (error) {
-    console.log("error fetching profile");
     return;
   }
   profile = transformEvents(profile.body);
+  profile.friends = filterFriends(profile);
   yield put({ type: ActionTypes.SET_PROFILE, profile });
 }
 
@@ -127,11 +126,11 @@ function* updateProfile(action) {
   try {
     profile = yield call(request, PUT, URL + "/v1.0/profile", action.profile);
   } catch (error) {
-    console.log("error fetching profile");
     return;
   }
   profile = transformEvents(profile.body);
-  yield put({ type: ActionTypes.SET_PROFILE, profile: profile.body });
+  profile.friends = filterFriends(profile);
+  yield put({ type: ActionTypes.SET_PROFILE, profile });
 }
 
 function transformEvents(profile) {
@@ -144,6 +143,9 @@ function transformEvents(profile) {
     completed: [],
     take_action: [],
   };
+  if (!profile.events) {
+    return profile;
+  }
   profile.events.map(event => {
     if (profile.hosted.indexOf(event.id) > -1) {
       temp.hosted.push(event);
@@ -169,4 +171,30 @@ function transformEvents(profile) {
     profile[k] = temp[k];
   }
   return profile;
+}
+
+function filterFriends(profile) {
+  let f = {}, m = {}, p = [];
+  if (!profile.friends) {
+    return;
+  }
+  profile.friends.map(friend => {
+    if (friend.profile_pic) {
+      m[friend.name] = friend;
+    } else if (!f[friend.name]) {
+      f[friend.name] = [friend];
+    } else {
+      f[friend.name].push(friend);
+    }
+  });
+  _.forIn(f, (val, key) => {
+    if (m[key]) {
+      p.push(m[key]);
+      delete m[key];
+    } else {
+      p = p.concat(val);
+    }
+  });
+  p = p.concat(_.values(m));
+  return p;
 }

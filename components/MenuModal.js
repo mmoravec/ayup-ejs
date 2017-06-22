@@ -53,18 +53,6 @@ export default class EventListModal extends React.Component {
         onRequestClose={this.props.menuBtnPress}
         visible={this.props.menuVisible}>
         <View style={styles.container}>
-          <View style={styles.feedback}>
-            <MyText style={{fontSize: 20, margin: 25}}>
-              Ayup - beta
-            </MyText>
-            <TouchableOpacity onPress={this._onFeedback}>
-              <MaterialIcons
-                name={'message'}
-                size={30}
-              />
-              <MyText>Feedback</MyText>
-            </TouchableOpacity>
-          </View>
           <Animated.View style={styles.btnMainContainer}>
             <TouchableOpacity
               onPress={this._menuBtnPress}>
@@ -195,10 +183,6 @@ export default class EventListModal extends React.Component {
   _menuBtnPress = () => {
     this._resetAnimState();
     this.props.menuBtnPress();
-  }
-
-  _onFeedback = () => {
-    Linking.openURL('https://goo.gl/forms/yoyvyrKkxR3PwLeu1');
   }
 
   _resetAnimState = () => {

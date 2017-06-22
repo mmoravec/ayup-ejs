@@ -9,6 +9,7 @@ import {
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from 'react-redux';
 import MyText from './common/MyText';
+import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
 @connect(data => Notifications.getDataProps(data))
@@ -16,6 +17,7 @@ export default class Notifications extends React.Component {
   static getDataProps(data) {
     return {
       phone: data.phone,
+      event: data.events.selectedEvent,
     };
   }
 
@@ -28,7 +30,7 @@ export default class Notifications extends React.Component {
        Animated.timing(this.state.top, {toValue:0, duration: 1000}).start();
        _.delay(() => {
          Animated.timing(this.state.top, {toValue:- height * 0.2, duration: 200,
-         }).start(); }, 5000);
+         }).start(); }, 8000);
       return true;
     } else {
       return false;
@@ -36,11 +38,12 @@ export default class Notifications extends React.Component {
   }
   render() {
     let {fontLoaded} = this.props.phone;
-    debugger;
     if (fontLoaded) {
       return (
         <Animated.View style={[styles.container, {top: this.state.top}]}>
-          <MyText style={styles.message} >{this.props.phone.notification.body}</MyText>
+          <TouchableOpacity onPress={this._handleClick}>
+            <MyText style={styles.message} >{this.props.phone.notification.data.body}</MyText>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.close} onPress={this._close}>
             <MaterialIcons size={30} name={"close"} />
           </TouchableOpacity>
@@ -53,6 +56,17 @@ export default class Notifications extends React.Component {
 
   _close = () => {
     Animated.timing(this.state.top, {toValue:- height * 0.2, duration: 200}).start();
+  }
+
+  _handleClick = () => {
+    let sId = this.props.event ? this.props.event.id : "";
+    let id = this.props.phone.notification.data.event_id;
+    if (!id) {
+      return;
+    } else if (id !== sId) {
+      this.props.dispatch(Actions.selectEvent(this.props.phone.notification.data.event_id));
+      this.props.dispatch(Actions.routeChange('Event'));
+    } 
   }
 }
 
@@ -73,7 +87,8 @@ const styles = StyleSheet.create({
   },
   message: {
     margin: 30,
-    fontSize: 22,
+    fontSize: 18,
     marginTop: 50,
+    marginRight: 10,
   },
 });

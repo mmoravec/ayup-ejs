@@ -22,6 +22,7 @@ export default class SaveButton extends React.Component {
       phone: data.phone,
       form: data.form,
       event: data.events.selectedEvent,
+      profile: data.profile,
     };
   }
 
@@ -104,6 +105,7 @@ export default class SaveButton extends React.Component {
       invited.push({
         id: friend.item.ayup_id,
         name: friend.item.name,
+        profile_pic: friend.item.profile_pic,
       });
     });
     let event = {
@@ -123,8 +125,8 @@ export default class SaveButton extends React.Component {
       invited,
       activity: eventState.activity.value,
       capacity: eventState.capacity.value,
+      age_group: this.props.profile.age_group,
     };
-
       this.props.dispatch(Actions.saveEvent(event));
     }
   }
@@ -150,9 +152,9 @@ export default class SaveButton extends React.Component {
       },
       activity: eventState.activity.value,
       capacity: eventState.capacity.value,
+      age_group: this.props.profile.age_group,
     };
-
-      this.props.dispatch(Actions.updateEvent(event, this.props.event.id));
+    this.props.dispatch(Actions.updateEvent(event, this.props.event.id));
     }
   }
 

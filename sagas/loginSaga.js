@@ -35,7 +35,6 @@ function* authorize() {
     } catch (error) {
       //Alert Error
       yield put({ type: ActionTypes.ALERT_ERROR, error });
-      console.log(error);
       return;
     }
     //TODO: log error message after call
@@ -48,6 +47,7 @@ function* authorize() {
       name: fbInfo.name,
       email: fbInfo.email,
       gender: fbInfo.gender,
+      age_group: fbInfo.age_range.min >= 18 ? "adult" : "kid",
     };
     yield put({ type: ActionTypes.UPDATE_PROFILE, profile });
     yield put({ type: ActionTypes.RESET_ALERT });

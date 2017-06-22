@@ -50,12 +50,14 @@ export default class EventForm extends React.Component {
       onChangeText: text =>
         this.props.dispatch(Actions.setFormValue("title", text)),
       ...this._inputProps,
+      maxLength: 40,
     };
     this._descProps = {
       onFocus: this._focusElement.bind(this, "desc"),
       onChangeText: text =>
         this.props.dispatch(Actions.setFormValue("desc", text)),
       ...this._inputProps,
+      maxLength: 250,
     };
     this._actionProps = {
       action: this._saveBtnPress,
@@ -64,8 +66,6 @@ export default class EventForm extends React.Component {
       warnMessage: "Please fill out Title, Start Date, End Date, and Location",
     };
   }
-
-  componentWillReceiveProps(nextProps) {}
 
   componentWillUpdate() {
     LayoutAnimation.easeInEaseOut();

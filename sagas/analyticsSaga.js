@@ -68,10 +68,24 @@ function* trackOptlyEvent(optly, user, action) {
 function* initAmplitude(user) {
   Expo.Amplitude.initialize("b9b1b7bf1862786ce6473322dff27d1b");
   Expo.Amplitude.setUserId(user.user_id);
-  yield takeEvery([ActionTypes.SAVE_EVENT], trackAmplitudeEvent);
+  yield takeEvery(
+    [
+      ActionTypes.SAVE_EVENT,
+      ActionTypes.JOIN_EVENT,
+      ActionTypes.REQUEST_EVENT,
+      ActionTypes.ACCEPT_EVENT,
+      ActionTypes.ACCEPT_REQUEST,
+      ActionTypes.DELETE_EVENT,
+      ActionTypes.CONTACTS_GRANTED,
+      ActionTypes.NOTIFICATIONS_GRANTED,
+      ActionTypes.REJECT_EVENT,
+      ActionTypes.REJECT_REQUEST,
+      ActionTypes.SET_SELECTED_EVENT,
+    ],
+    trackAmplitudeEvent
+  );
 }
 
 function* trackAmplitudeEvent(action) {
-  console.log("tracking ampy event");
   Expo.Amplitude.logEvent(action.type);
 }
