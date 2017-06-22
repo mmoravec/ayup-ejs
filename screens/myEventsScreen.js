@@ -22,13 +22,15 @@ const data = require('../sample/sampledata.json');
 export default class MyEventsScreen extends React.Component {
 
   static getDataProps(data) {
+    let p = data.profile;
+    let all = new List(p.hosted.concat(p.invited, p.requested, p.going));
+    let archive = new List(p.completed.concat(p.not_going));
     return {
-      user: data.user,
+      all,
+      hosted: new List(p.hosted),
+      archive,
+      action: new List(p.take_action),
     };
-  }
-
-  componentWillMount() {
-    this.props.dispatch(Actions.getProfile());
   }
 
   state = {
@@ -38,14 +40,11 @@ export default class MyEventsScreen extends React.Component {
     mine: false,
   }
 
+  componentWillMount() {
+    this.props.dispatch(Actions.getProfile());
+  }
+
   render() {
-    // console.log(this.props.user);
-    let hostEvents = this.props.user.events.filter(event => {
-      return event.host.userID === this.props.user.id;
-    });
-    let joinedEvents = this.props.user.events.filter(event => {
-      return event.host.userID !== this.props.user.id;
-    });
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
         <View style={styles.myEventsText}>
@@ -65,13 +64,25 @@ export default class MyEventsScreen extends React.Component {
             source={require('../assets/images/event_bar.png')}
             style={styles.contextBar}>
             <TouchableOpacity onPress={this._selectAll} hitSlop={{top: 20, left: 20, bottom: 20, right: 30}}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', paddingLeft: 5, alignSelf: 'center', opacity: this.state.allOpac}}>All</Animated.Text>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingLeft: 5, alignSelf: 'center', opacity: this.state.allOpac}}>
+                {
+                  this.props.action.size > 0 ?
+                  `Action` :
+                  `All`
+                }
+              </Animated.Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this._selectMine} hitSlop={{top: 20, left: 20, bottom: 20, right: 20}}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', opacity: this.state.myOpac}}>Created by Me</Animated.Text>
+              <Animated.Text style={{marginLeft: 20, fontFamily: 'LatoRegular', opacity: this.state.myOpac}}>
+                {
+                  this.props.action.size > 0 ?
+                  `All` :
+                  `Created By Me`
+                }
+              </Animated.Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this._selectJoined} hitSlop={{top: 20, left: 30, bottom: 20, right: 20}}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, opacity: this.state.joinOpac}}>Joined</Animated.Text>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, opacity: this.state.joinOpac}}>Completed</Animated.Text>
             </TouchableOpacity>
           </Image>
         </View>
@@ -80,9 +91,17 @@ export default class MyEventsScreen extends React.Component {
           locked={false}
           onChangeTab={this._onChangeTab}
           renderTabBar={false}>
-          <EventList events={this.props.user.events} styles={listStyle} />
-          <EventList events={hostEvents} styles={listStyle} />
-          <EventList events={joinedEvents} styles={listStyle} />
+          {
+            this.props.action.size > 0 ?
+              <EventList events={this.props.action} styles={listStyle} /> :
+              <EventList events={this.props.all} styles={listStyle} />
+          }
+          {
+            this.props.action.size > 0 ?
+              <EventList events={this.props.all} styles={listStyle} /> :
+              <EventList events={this.props.hosted} styles={listStyle} />
+          }          
+          <EventList events={this.props.archive} styles={listStyle} />
         </ScrollableTabView>
       </Image>
     );

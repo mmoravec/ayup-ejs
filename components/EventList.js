@@ -15,6 +15,7 @@ import Bubble from './common/Bubble';
 import MyText from './common/MyText';
 import Icons from '../constants/activities';
 import Actions from '../state/Actions';
+import { duration } from "../utils/date";
 const {height, width} = Dimensions.get('window');
 
 export default class EventList extends React.Component {
@@ -37,11 +38,11 @@ export default class EventList extends React.Component {
       let date = new Date(x.start_time);
       return dateFormat(date, 'fullDate');
     }).sort((a, b) => {
-      let n = new Date(a.get(0).start_time);
-      let f = new Date(b.get(0).start_time);
+      let n = new Date(a.get(0).start_time).getTime();
+      let f = new Date(b.get(0).start_time).getTime();
       if (n > f) {
         return 1;
-      } else if (f < n) {
+      } else if (f > n) {
         return -1;
       } else {
         return 0;
@@ -72,15 +73,7 @@ class ListRow extends React.Component {
     let image = Icons[rowData.activity].image;
     let start = new Date(rowData.start_time);
     let end = new Date(rowData.end_time);
-    let duration = Math.round(Math.abs(end.getTime() - start.getTime()) / 15) * 15;
-    let format = "";
-    if (duration < 3500000) {
-      format = dateFormat(duration, 'MM') + "min";
-    } else if (duration < 86400000) {
-      format = Math.ceil(duration / (1000 * 3600)) + "hrs";
-    } else {
-      format = Math.ceil(duration / (1000 * 3600 * 24)) + "days";
-    }
+    let format = duration(start, end);
     return (
       <TouchableOpacity onPress={selectEvent}>
         <View style={styles.row}>

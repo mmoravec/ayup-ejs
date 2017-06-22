@@ -17,8 +17,15 @@ import MyText from './common/MyText';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
-@connect()
+@connect((data) => EventListModal.getDataProps(data))
 export default class EventListModal extends React.Component {
+
+
+  static getDataProps(data) {
+    return {
+      phone: data.phone,
+    };
+  }
 
   state = {
     opacity: new Animated.Value(0),
@@ -46,18 +53,6 @@ export default class EventListModal extends React.Component {
         onRequestClose={this.props.menuBtnPress}
         visible={this.props.menuVisible}>
         <View style={styles.container}>
-          <View style={styles.feedback}>
-            <MyText style={{fontSize: 20, margin: 25}}>
-              Ayup - beta
-            </MyText>
-            <TouchableOpacity onPress={this._onFeedback}>
-              <MaterialIcons
-                name={'message'}
-                size={30}
-              />
-              <MyText>Feedback</MyText>
-            </TouchableOpacity>
-          </View>
           <Animated.View style={styles.btnMainContainer}>
             <TouchableOpacity
               onPress={this._menuBtnPress}>
@@ -123,6 +118,16 @@ export default class EventListModal extends React.Component {
                 style={styles.btnAction}
               />
             </TouchableOpacity>
+            {
+              (this.props.phone.myEventAlert > 0) &&
+              <Image
+                source={require('../assets/images/alertBadge.png')}
+                style={styles.myEventBadge}>
+                <MyText style={{fontSize: 14, marginTop: 6, marginLeft: 10}}>
+                  {this.props.phone.myEventAlert}
+                </MyText>
+              </Image>
+            }
             <MyText style={styles.text}>My Events</MyText>
           </Animated.View>
         </View>
@@ -178,10 +183,6 @@ export default class EventListModal extends React.Component {
   _menuBtnPress = () => {
     this._resetAnimState();
     this.props.menuBtnPress();
-  }
-
-  _onFeedback = () => {
-    Linking.openURL('https://goo.gl/forms/yoyvyrKkxR3PwLeu1');
   }
 
   _resetAnimState = () => {
@@ -248,6 +249,13 @@ const styles = StyleSheet.create({
     bottom: 30,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  myEventBadge: {
+    width: 30,
+    height: 30,
+    position: 'absolute',
+    left: 85,
+    top: 0,
   },
   ctnNewEvent: {
     position: 'absolute',

@@ -23,14 +23,15 @@ export default class GuestInfo extends React.Component {
   static getDataProps(data) {
     return {
       event: data.events.selectedEvent,
-      user: data.user,
+      profile: data.profile,
     };
   }
   state = {
     selectedUser: null,
     hostInfo: true,
     index: 0,
-    requested: this.props.event.accepted,
+    requested: this.props.event.requested,
+    changed: false,
     //TODO: updated to requested when backend switches over
   }
   componentDidUpdate(prevProps) {
@@ -41,7 +42,7 @@ export default class GuestInfo extends React.Component {
 
   render() {
     //TODO: change this to requested once nick pushes new backend
-    if (this.props.user.id === this.props.event.host.userID &&
+    if (this.props.profile.id === this.props.event.host.id &&
       this.state.requested.length > 0 && this.state.hostInfo) {
       return (
         <Modal
@@ -105,6 +106,9 @@ export default class GuestInfo extends React.Component {
   }
 
   _closeModal = () => {
+    if (this.state.changed) {
+      this.props.dispatch(Actions.selectEvent(this.props.event.id));
+    }
     this.props.close();
     this.setState({hostInfo: false});
   }
@@ -129,7 +133,7 @@ export default class GuestInfo extends React.Component {
 
   _renderGuests = () => {
     let event = this.props.event;
-    let joined = event.accepted.concat(event.requested, event.invited);
+    let joined = event.going.concat(event.requested, event.invited);
     return joined.map(g => {
       return (
         <Card
@@ -148,15 +152,23 @@ export default class GuestInfo extends React.Component {
   }
 
   _nextSlide = () => {
+    this.setState({changed: true});
     if (this.state.requested.length <= this.state.index + 1) {
-      this.setState({hostInfo: false});
+      this._closeModal();
     }
     this._swiper.scrollBy(this.state.index + 1, true);
   }
 
 }
 
+@connect(data => Card.getDataProps(data))
 class Card extends React.Component {
+
+    static getDataProps(data) {
+      return {
+        event: data.events.selectedEvent,
+      };
+    }
 
   state = {
     clicked: '',
@@ -170,10 +182,24 @@ class Card extends React.Component {
           resizeMode={'contain'}
           source={require('../../assets/images/pretty_modal.png')}>
           <View style={styles.picName}>
-            <Image
-              source={{uri: this.props.profilePic}}
-              style={styles.image}
-            />
+            {this.props.profilePic !== "" &&
+              <Image
+                source={{ uri: this.props.profilePic }}
+                style={styles.image}
+              />}
+            {this.props.profilePic === "" &&
+              <Image
+                source={require("../../assets/images/sms_circle.png")}
+                style={styles.image}>
+                <MyText
+                  style={{
+                    marginLeft: 25,
+                    marginTop: 30,
+                    backgroundColor: "transparent",
+                  }}>
+                  SMS
+                </MyText>
+              </Image>}
             <MyText style={styles.name}>{this.props.user.name}</MyText>
           </View>
         </Image>
@@ -185,11 +211,13 @@ class Card extends React.Component {
 
   _acceptUser = () => {
     //accept user action
+    this.props.dispatch(Actions.acceptRequest(this.props.event.id, this.props.user.id));
     this.props.nextSlide();
     this.setState({clicked: 'Accepted'});
   }
 
   _rejectUser = () => {
+    this.props.dispatch(Actions.rejectRequest(this.props.event.id, this.props.user.id));
     this.props.nextSlide();
     this.setState({clicked: 'Rejected'});
   }

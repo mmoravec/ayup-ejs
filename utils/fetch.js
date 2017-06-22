@@ -36,7 +36,6 @@ export function* request(type, url, body, headers) {
     });
     // console.log(response);
     if (response) {
-      // console.log(response);
       yield put({ type: ActionTypes.REQUEST_ENDED });
       if (response.status === 200) {
         yield put({ type: ActionTypes.REQUEST_SUCCESS });
@@ -70,8 +69,8 @@ export function* request(type, url, body, headers) {
 
 export function* fb(login) {
   try {
-    console.log("login");
-    console.log(login);
+    // console.log("login");
+    // console.log(login);
     const { response } = yield race({
       response: call(
         fetch,
@@ -86,8 +85,8 @@ export function* fb(login) {
       timeout: call(delay, 5000),
     });
     let res = yield response.json();
-    console.log("response");
-    console.log(res);
+    // console.log("response");
+    // console.log(res);
     return res;
   } catch (error) {
     yield put({ type: ActionTypes.REQUEST_ERROR });

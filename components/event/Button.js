@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 import MyText from "../common/MyText";
 import Actions from "../../state/Actions";
+import ActionTypes from "../../state/ActionTypes";
 const { height, width } = Dimensions.get("window");
 
 @connect(data => EventButton.getDataProps(data))
@@ -19,7 +20,7 @@ export default class EventButton extends React.Component {
     return {
       phone: data.phone,
       selectedEvent: data.events.selectedEvent,
-      user: data.user,
+      profile: data.profile,
     };
   }
 
@@ -33,7 +34,7 @@ export default class EventButton extends React.Component {
 
   render() {
     let status = this._getStatus();
-    if (this.props.phone.status === "") {
+    if (this.props.phone.status === ActionTypes.INACTIVE) {
       //If invited to event
       if (status === "invited") {
         return (
@@ -75,13 +76,13 @@ export default class EventButton extends React.Component {
       } else {
         return null;
       }
-    } else if (this.props.phone.status === "success") {
+    } else if (this.props.phone.status === ActionTypes.SUCCESS) {
       return (
         <View style={styles.woohoo}>
           <MyText style={styles.success}> Success! </MyText>
         </View>
       );
-    } else if (this.props.phone.status === "error") {
+    } else if (this.props.phone.status === ActionTypes.ERROR) {
       return (
         <View style={styles.warn}>
           <MyText style={{ fontSize: 16, color: "#fff", textAlign: "center" }}>
@@ -102,26 +103,26 @@ export default class EventButton extends React.Component {
     let user = "uninvited";
     let event = this.props.selectedEvent;
     event.invited.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "invited";
       }
     });
     event.requested.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "requested";
       }
     });
     event.rejected.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "rejected";
       }
     });
     event.going.map(e => {
-      if (e.fbid === this.props.user.fbid) {
+      if (e.id === this.props.profile.id) {
         user = "accepted";
       }
     });
-    if (event.host.userID === this.props.user.id) {
+    if (event.host.id === this.props.profile.id) {
       user = "host";
     }
     return user;

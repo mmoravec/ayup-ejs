@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Animated,
+  FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
-import Fuse from 'fuse.js';
 import ImmutableListView from 'react-native-immutable-list-view';
+import Fuse from 'fuse.js';
 import MyText from '../common/MyText';
 import Actions from '../../state/Actions';
 const {height, width} = Dimensions.get('window');
@@ -30,8 +31,8 @@ export default class FriendSelector extends React.Component {
     addBtnLeft: new Animated.Value(15),
     addBtnRotate: new Animated.Value(0),
     addingFriend: false,
-    invitedFriends: new List(),
-    filteredFriends: new List(),
+    invitedFriends: [],
+    filteredFriends: [],
     inputText: "",
     incScrollY: 0,
   }
@@ -45,11 +46,18 @@ export default class FriendSelector extends React.Component {
     maxPatternLength: 32,
     minMatchCharLength: 1,
     keys: [
-        "name",
+      {
+        name: 'name',
+        weight: 0.4,
+      },
+      {
+        name: 'profile_pic',
+        weight: 0.6
+      }
     ],
   };
-
-  _fuse = new Fuse(this.props.friends.toJS(), this._fuseOptions);
+  
+  _fuse = new Fuse(this.props.friends, this._fuseOptions);
 
   componentDidMount() {
     setTimeout(() => {
@@ -61,7 +69,7 @@ export default class FriendSelector extends React.Component {
 
   componetDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
-      this._fuse = new Fuse(this.props.friends.toJS(), this._fuseOptions);
+      this._fuse = new Fuse(this.props.friends, this._fuseOptions);
     }
   }
 
@@ -137,7 +145,7 @@ export default class FriendSelector extends React.Component {
   _onChangeText = (text) => {
     this.setState({inputText: text});
     let filteredFriends = this._fuse.search(text);
-    this.setState({filteredFriends: new List(filteredFriends)});
+    this.setState({filteredFriends});
   }
 
   _renderInvitedFriends = () => {
@@ -153,11 +161,12 @@ export default class FriendSelector extends React.Component {
   }
 
   _renderFilteredFriends = () => {
-    if (this.props.focus && this.props.friends.size > 0) {
+    if (this.props.focus && this.props.friends.length > 0) {
       return (
-        <ImmutableListView
-          immutableData={this.state.filteredFriends}
-          renderRow={this._renderFilterRow}
+        <FlatList
+          data={this.state.filteredFriends}
+          renderItem={this._renderFilterRow}
+          keyExtractor={this._keyExtractor}
           keyboardShouldPersistTaps={'always'}
           style={{marginBottom: 300}}
         />
@@ -165,19 +174,26 @@ export default class FriendSelector extends React.Component {
     }
   }
 
+  _keyExtractor = (item, index) => item.ayup_id;
+
   _renderFilterRow = (rowData) => {
-    let push = this._pushFriend.bind(this, rowData);
+    let push = this._pushFriend.bind(this, rowData), num;
+    if (rowData.item.phone) {
+      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
+      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
+    }
     return (
       <TouchableHighlight underlayColor={'#f2f2f2'} onPress={push}>
         <View style={styles.friend}>
           <View style={styles.imageBox}>
-            <Image
-              source={{uri: rowData.profilePic}}
-              style={styles.friendPic}
-            />
+            {this._renderProfPic(rowData)}
           </View>
           <View style={styles.nameBox}>
-            <MyText style={styles.name}>{rowData.name}</MyText>
+            <MyText style={styles.name}>{rowData.item.name}</MyText>
+            {
+              rowData.item.phone && !rowData.item.profile_pic &&
+              <MyText style={styles.phone}>{num}</MyText>
+            }
           </View>
         </View>
       </TouchableHighlight>
@@ -185,17 +201,22 @@ export default class FriendSelector extends React.Component {
   }
 
   _renderInvitedRow = (rowData) => {
-    let remove = this._removeFriend.bind(this, rowData);
+    let remove = this._removeFriend.bind(this, rowData), num;
+    if (rowData.item.phone) {
+      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
+      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
+    }
     return (
       <View style={styles.friend}>
         <View style={styles.imageBox}>
-          <Image
-            source={{uri: rowData.profilePic}}
-            style={styles.friendPic}
-          />
+          {this._renderProfPic(rowData)}
         </View>
         <View style={styles.nameBox}>
-          <MyText style={styles.name}>{rowData.name}</MyText>
+          <MyText style={styles.name}>{rowData.item.name}</MyText>
+          {
+            rowData.item.phone && !rowData.item.profile_pic &&
+            <MyText style={styles.phone}>{num}</MyText>
+          }
         </View>
         <TouchableOpacity onPress={remove}>
           <Image
@@ -207,9 +228,28 @@ export default class FriendSelector extends React.Component {
     );
   }
 
+  _renderProfPic = (rowData) => {
+    if (rowData.item.profile_pic) {
+      return (
+        <Image
+          source={{uri: rowData.item.profile_pic}}
+          style={styles.friendPic}
+        />
+      );
+    } else {
+      return (
+        <Image
+          source={require('../../assets/images/sms_circle.png')}
+          style={styles.friendPic}>
+          <MyText style={{margin: 10, marginTop: 16, backgroundColor: "transparent" }}>SMS</MyText>
+        </Image>
+      );
+    }
+  }
+
   _pushFriend = (friend) => {
     let friends = this.props.value;
-    var result = friends.find(obj => obj.name === friend.name);
+    var result = friends.find(obj => obj.item.name === friend.item.name);
     if (!result) {
       friends = friends.push(friend);
       this.props.onChange(this.props.stateKey, friends);
@@ -272,10 +312,17 @@ const styles = StyleSheet.create({
   },
   nameBox: {
     height: 60,
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   name: {
     fontSize: 16,
-    marginTop: 25,
     marginLeft: 10,
+    marginTop: 10,
+  },
+  phone: {
+    fontSize: 10,
+    marginLeft: 10,
+    color: '#758282',
   },
 });

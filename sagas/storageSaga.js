@@ -13,6 +13,8 @@ export function* watchStorageActions() {
         ActionTypes.LOCATION_GRANTED,
         ActionTypes.CONTACTS_GRANTED,
         ActionTypes.NOTIFICATIONS_GRANTED,
+        ActionTypes.SET_FBFRIENDS,
+        ActionTypes.SET_CONTACTS,
       ],
       saveState
     ),
@@ -35,7 +37,6 @@ function* saveFiltersAsyncSaga(action) {
 }
 
 function* saveCredentialAsyncSaga(action) {
-  console.log("saving credential to local storage");
   const credential = yield select(state => state.credential);
   yield call(LocalStorage.saveCredentialAsync, credential);
 }

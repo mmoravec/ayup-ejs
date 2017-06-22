@@ -19,13 +19,14 @@ import activities from "../constants/activities";
 
 //TODO: Add caching scheme for fonts and images from crash example
 export default function* startup() {
-  let result = yield [call(getPhoneState), call(getCredential)];
   yield [call(loadFilters), call(loadFonts), call(loadImages)];
+  let result = yield [call(getPhoneState), call(getCredential)];
   let phone = result[0], cred = result[1];
   yield put({ type: ActionTypes.PHONESTATE_LOADED });
   //change this to user.locationGranted when implemented
-  if (cred !== null) {
+  if (cred && cred.secret !== null) {
     yield call(checkCredential, cred);
+    yield put({ type: ActionTypes.GET_PROFILE });
   }
   if (phone.locationGranted) {
     yield call(getLocation);
@@ -34,7 +35,7 @@ export default function* startup() {
     yield call(getContacts);
   }
   if (phone.notificationsGranted) {
-    yield call(subscribeNotifications);
+    yield put({ type: ActionTypes.SUBSCRIBE_NOTIFICATIONS });
   }
 }
 
@@ -112,7 +113,10 @@ export function* getContacts() {
     fields: [Contacts.PHONE_NUMBERS],
     pageSize: 2000,
   });
-  yield put({ type: ActionTypes.SET_CONTACTS, contacts: contacts.data });
+  yield put({
+    type: ActionTypes.CONTACTS_RECEIVED,
+    contacts,
+  });
   return true;
 }
 
@@ -120,6 +124,10 @@ function* getPhoneState() {
   let phone = yield call(LocalStorage.getPhoneStateAsync);
   if (phone !== null) {
     phone.status = ActionTypes.INACTIVE;
+    phone.notification = {
+      origin: "meow",
+      data: "I really love beans",
+    };
     yield put({
       type: ActionTypes.SET_PHONESTATE,
       phone,
@@ -148,24 +156,15 @@ function* checkCredential(cred) {
   }
 }
 
-function* subscribeNotifications() {
-  console.log("subscribe note called");
-  yield call(Notifications.addListener, _handleNotification);
-}
-
-function* _handleNotification(notification) {
-  console.log("handle notification");
-  yield put({ type: ActionTypes.NOTIFICATION_RECEIVED, notification });
-}
-
-async function getFonts() {
-  return Font.loadAsync({
+function* getFonts() {
+  yield call(Font.loadAsync, {
     LatoRegular: require("../assets/fonts/Lato-Regular.ttf"),
   });
 }
 
 async function exLoadImages() {
   const images = cacheImages([
+    require("../assets/images/bkgd_map.png"),
     require("../assets/images/btn_main.png"),
     require("../assets/images/btn_close.png"),
     require("../assets/images/btn_list.png"),

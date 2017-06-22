@@ -44,6 +44,14 @@ class PhoneStateReducer {
     return state.set("notificationsGranted", true);
   }
 
+  static [ActionTypes.SHOW_NOTIFICATION](state, action) {
+    return state.set("notification", action.notification);
+  }
+
+  static [ActionTypes.SET_MYEVENT_BADGE](state, action) {
+    return state.set("myEventAlert", action.badges);
+  }
+
   static [ActionTypes.IMAGES_LOADED](state, action) {
     return state.set("imagesLoaded", true);
   }
@@ -54,6 +62,10 @@ class PhoneStateReducer {
 
   static [ActionTypes.SET_FBFRIENDS](state, action) {
     return state.set("fbFriends", action.friends);
+  }
+
+  static [ActionTypes.SET_CONTACTS](state, action) {
+    return state.set("contacts", action.contacts);
   }
 
   static [ActionTypes.ALERT_SAVING](state, action) {

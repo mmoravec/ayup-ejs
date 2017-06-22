@@ -14,16 +14,23 @@ export default class Actions {
     };
   }
 
-  static getFriends(user) {
+  static receivedNotification(notification) {
     return {
-      type: ActionTypes.GET_FRIENDS,
-      user,
+      type: ActionTypes.NOTIFICATION_RECEIVED,
+      notification,
     };
   }
 
   static deleteEvent(eventID) {
     return {
       type: ActionTypes.DELETE_EVENT,
+      eventID,
+    };
+  }
+
+  static modifyEvent(eventID) {
+    return {
+      type: ActionTypes.MODIFY_EVENT,
       eventID,
     };
   }
@@ -70,7 +77,6 @@ export default class Actions {
   }
 
   static grantLocation() {
-    console.log("grant location yo");
     return {
       type: ActionTypes.GRANT_LOCATION,
     };
@@ -127,6 +133,30 @@ export default class Actions {
     };
   }
 
+  static acceptRequest(eventID, userID) {
+    return {
+      type: ActionTypes.ACCEPT_REQUEST,
+      eventID,
+      userID,
+    };
+  }
+
+  static inviteUser(eventID, userID) {
+    return {
+      type: ActionTypes.INVITE_USER,
+      eventID,
+      userID,
+    };
+  }
+
+  static rejectRequest(eventID, userID) {
+    return {
+      type: ActionTypes.REJECT_REQUEST,
+      eventID,
+      userID,
+    };
+  }
+
   static rejectEvent(eventID) {
     return {
       type: ActionTypes.REJECT_EVENT,
@@ -148,6 +178,12 @@ export default class Actions {
     return {
       type: ActionTypes.ROUTE_CHANGE,
       newRoute,
+    };
+  }
+
+  static zeroForm() {
+    return {
+      type: ActionTypes.ZERO_FORM,
     };
   }
 
@@ -222,6 +258,14 @@ export default class Actions {
     return {
       type: ActionTypes.SAVE_EVENT,
       event,
+    };
+  }
+
+  static updateEvent(event, eventID) {
+    return {
+      type: ActionTypes.UPDATE_EVENT,
+      event,
+      eventID,
     };
   }
 }

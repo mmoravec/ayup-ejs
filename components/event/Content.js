@@ -65,12 +65,6 @@ export default class EventContent extends React.Component {
 
   _renderHeader = () => {
     let event = this.props.event;
-    let guests = {
-      going: event.going,
-      rejected: event.rejected,
-      invited: event.invited,
-      requested: event.requested,
-    };
     let start = new Date(event.start_time);
     let end = new Date(event.end_time);
     let coord = {
@@ -161,7 +155,6 @@ export default class EventContent extends React.Component {
             />
           </View>
           <EventGuests
-            guests={guests}
             guestClick={this.props.guestClick}
             showAddFriend={this.props.showAddFriend}
           />
@@ -189,11 +182,31 @@ export default class EventContent extends React.Component {
 
   _renderLocation = () => {
     let event = this.props.event;
-    if (event.destination) {
-      return null;
+    if (event.destination.text !== "") {
+      return (
+        <View style={styles.destloc}>
+          <Image
+            source={require("../../assets/images/location_destination.png")}
+            resizeMode={"contain"}
+            style={{ width: 12, position: 'absolute', left: 4 }}
+          />       
+          <TouchableOpacity onPress={this._openLoc} style={styles.locdestRow}>
+            <MyText style={styles.locdestText}>
+              {event.location.text}
+            </MyText>
+            <MaterialIcons size={22} name={"chevron-right"} color={"#e5e5e5"} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.locdestRow2} onPress={this._openDest}>
+            <MyText style={styles.locdestText}>
+              {event.destination.text}
+            </MyText>
+            <MaterialIcons size={22} name={"chevron-right"} color={"#e5e5e5"} />
+          </TouchableOpacity>
+        </View>
+      )
     } else {
       return (
-        <TouchableOpacity style={styles.location} onPress={this._openMaps}>
+        <TouchableOpacity style={styles.location} onPress={this._openLoc}>
           <Image
             source={require("../../assets/images/location_dot.png")}
             resizeMode={"contain"}
@@ -208,15 +221,20 @@ export default class EventContent extends React.Component {
     }
   };
 
-  _openMaps = () => {
+  _openLoc = () => {
     let daddr = this.props.event.location.text;
+    Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
+  };
+
+    _openDest = () => {
+    let daddr = this.props.event.destination.text;
     Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
   };
 
   _renderRow = rowData => {
     let replyPress = this.props.onCommentPress.bind(this, rowData.id);
     let _imageBox = styles.imageBox;
-    if (rowData.parentID) {
+    if (rowData.parent_id) {
       _imageBox = styles.extImageBox;
     }
     return (
@@ -241,7 +259,7 @@ export default class EventContent extends React.Component {
                 <MyText style={{ color: "#5f5f5f" }}> Reply</MyText>
               </TouchableOpacity>
               <MyText style={{ color: "#c7c7c7" }}> • </MyText>
-              {this._renderTime(rowData.modified_on)}
+              {this._renderTime(rowData.posted_on)}
             </View>
           </View>
         </View>
@@ -292,10 +310,37 @@ const styles = StyleSheet.create({
     height: height * 0.3,
     width,
   },
+  destloc: {
+    margin: 10,
+    borderRadius: 4,
+    borderColor: "#e5e5e5",
+    borderWidth: 1,
+  },
+  locdestRow: {
+    flexDirection: 'row',
+    margin: 10,
+    marginLeft: 25,
+    marginRight: 0,
+    marginBottom: 0,
+    justifyContent: 'space-between',
+  },
+  locdestRow2: {
+    flexDirection: 'row',
+    marginRight: 0,
+    marginLeft: 25,
+    margin: 10,
+    justifyContent: 'space-between',
+    borderTopColor: "#e5e5e5",
+    borderTopWidth: 1,
+    paddingTop: 10,
+  },
+  locdestText: {
+    width: width * 0.8,
+  },
   location: {
     borderColor: "#e5e5e5",
     borderWidth: 1,
-    borderRadius: 2,
+    borderRadius: 4,
     height: 40,
     margin: 10,
     flexDirection: "row",

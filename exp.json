@@ -1,6 +1,6 @@
 {
   "name": "Ayup",
-  "description": "play more, be happier",
+  "description": "Recess Revived",
   "slug": "ayup-ejs",
   "sdkVersion": "16.0.0",
   "privacy": "unlisted",
@@ -17,10 +17,13 @@
     "hideExponentText": true
   },
   "packagerOpts": {
-    "assetExts": ["ttf", "mp4"]
+    "assetExts": [
+      "ttf",
+      "mp4"
+    ]
   },
   "ios": {
-  "bundleIdentifier": "com.ayupapp.exp",
+    "bundleIdentifier": "com.ayupapp.exp",
   },
   "android": {
     "package": "com.ionicframework.ayup140030",

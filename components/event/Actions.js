@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   Animated,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -19,7 +20,7 @@ export default class EventActions extends React.Component {
   static getDataProps(data) {
     return {
       event: data.events.selectedEvent,
-      user: data.user,
+      profile: data.profile,
     };
   }
 
@@ -29,7 +30,7 @@ export default class EventActions extends React.Component {
   }
 
   render() {
-    if (this.props.user.id === this.props.event.host.userID) {
+    if (this.props.profile.id === this.props.event.host.id) {
       return (
         <View style={styles.container}>
           {this._renderMenu()}
@@ -65,7 +66,7 @@ export default class EventActions extends React.Component {
       );
     } else {
       return (
-        <TouchableOpacity style={{right: 15, top: 25, position: 'absolute', zIndex: 2}} onPress={this._settingsPress}>
+        <TouchableOpacity style={{right: 25, top: 25, position: 'absolute', zIndex: 2}} onPress={this._settingsPress}>
           <MaterialCommunityIcons
             size={42}
             name={'window-close'}
@@ -80,12 +81,17 @@ export default class EventActions extends React.Component {
     this.props.dispatch(Actions.deleteEvent(this.props.event.id));
   }
 
+  _modifyEvent = () => {
+    this.props.dispatch(Actions.modifyEvent(this.props.event.id));
+    this._settingsPress();
+  }
+
   _settingsPress = () => {
     this.setState({active: !this.state.active});
     if (this.state.active) {
-      Animated.spring(this.state.bottom, {toValue: height * 0.5, tension: 20, friction: 4, velocity: 300}).start();
+      Animated.spring(this.state.bottom, {toValue: height * 0.5, tension: 60, friction: 6, velocity: 300}).start();
     } else {
-      Animated.spring(this.state.bottom, {toValue: 0, tension: 20, friction: 4, velocity: 300}).start();
+      Animated.spring(this.state.bottom, {toValue: 0, tension: 60, friction: 6, velocity: 300}).start();
     }
 
   }
@@ -103,14 +109,21 @@ const styles = StyleSheet.create({
   },
   settings: {
     height: height * 0.4,
-    width,
+    width: width * 0.9,
     position: 'absolute',
     backgroundColor: '#fff',
     zIndex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    borderBottomWidth: 1,
-    borderBottomColor: '#808080',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    marginLeft: width * 0.05,
+    borderWidth: Platform.OS === 'android' ? 1 : 0,
   },
   delete: {
     fontSize: 24,

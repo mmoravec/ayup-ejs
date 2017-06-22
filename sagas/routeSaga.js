@@ -20,6 +20,7 @@ function* changeRoute(action) {
     Store.dispatch(NavigationActions.back());
   } else {
     Store.dispatch(NavigationActions.navigate({ routeName: action.newRoute }));
+    yield put({ type: ActionTypes.ROUTE_CHANGED });
   }
 }
 

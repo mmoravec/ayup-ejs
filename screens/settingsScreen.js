@@ -7,6 +7,8 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  Linking,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -21,10 +23,13 @@ export default class SettingsScreen extends React.Component {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
         <TouchableOpacity style={styles.backPress} underlayColor="transparent" onPress={this._home}>
-          <Image
-            source={require('../assets/images/btn_back.png')}
-            style={styles.btnBack}
-          />
+          {
+            (Platform.OS === 'ios') &&
+            <Image
+              source={require('../assets/images/btn_back.png')}
+              style={styles.btnBack}
+            />
+          }
         </TouchableOpacity>
         <ScrollView style={styles.scrollParent}>
           <View style={styles.group}>
@@ -41,10 +46,10 @@ export default class SettingsScreen extends React.Component {
               </View>
             </TouchableOpacity>
             <View style={styles.seperator} />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._feedback}>
               <View style={styles.signOutButton}>
                 <MyText>
-                  Sample
+                  Feedback
                 </MyText>
                 <MaterialIcons
                   size={24}
@@ -63,6 +68,9 @@ export default class SettingsScreen extends React.Component {
   }
   _home = () => {
     this.props.dispatch(Actions.routeChange('Back'));
+  }
+  _feedback = () => {
+    Linking.openURL('https://goo.gl/forms/yoyvyrKkxR3PwLeu1');
   }
 }
 

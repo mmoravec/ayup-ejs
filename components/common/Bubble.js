@@ -5,8 +5,8 @@ import MyText from "./MyText";
 export default class Bubble extends React.Component {
   render() {
     let image = this.props.data.capacity === 0 ?
-      require("../../assets/images/joined.png") :
-      require("../../assets/images/joined_notjoined.png");
+      require("../../assets/images/joined2.png") :
+      require("../../assets/images/joined_notjoined2.png");
     let event = this.props.data;
     return (
       <View style={[styles.container, this.props.style]}>

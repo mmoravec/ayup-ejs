@@ -10,8 +10,14 @@ import Actions from '../state/Actions';
 import Form from '../components/form/EventForm';
 
 
-@connect()
+@connect((data) => NewEventScreen.getDataProps(data))
 export default class NewEventScreen extends React.Component {
+
+    static getDataProps(data) {
+    return {
+      form: data.form,
+    };
+  }
 
   state = {
     warn: false,
@@ -34,6 +40,9 @@ export default class NewEventScreen extends React.Component {
     );
   }
   _backBtnPress = () => {
+    if (this.props.form.status === "update") {
+      this.props.dispatch(Actions.zeroForm());
+    }
     this.props.dispatch(Actions.routeChange('Back'));
   }
 }

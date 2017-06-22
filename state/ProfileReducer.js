@@ -12,9 +12,7 @@ class ProfileReducer {
   }
 
   static [ActionTypes.SET_PROFILE](state, action) {
-    console.log("profile here");
-    console.log(action.profile);
-    return new Profile(...action.profile);
+    return new Profile({ ...action.profile });
   }
 }
 

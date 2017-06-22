@@ -27,12 +27,21 @@ class App extends React.Component {
       nav: data.navigation,
     };
   }
+  //TODO: move this to a saga
   handleBackPress = () => {
     const { dispatch, nav } = this.props;
     const navigation = addNavigationHelpers({
       dispatch,
       state: nav,
     });
+    let lastRoute = navigation.state.routes[navigation.state.routes.length - 1];
+    let secondToLast = navigation.state.routes[navigation.state.routes.length - 2];
+    if (lastRoute.routeName === "Event") {
+      this.props.dispatch(Actions.zeroSelectedEvent());
+      this.props.dispatch(Actions.zeroSelectedComment());
+    } else if (secondToLast.routeName === "Event" && lastRoute === "NewEvent") {
+      this.props.dispatch(Actions.zeroForm());
+    }
     navigation.goBack();
     return true;
   };
@@ -43,7 +52,7 @@ class App extends React.Component {
     BackAndroid.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
   render() {
-    console.log(this.props.startup);
+    // console.log(this.props.startup);
     let {fontLoaded, credLoaded, filtersLoaded, imagesLoaded} = this.props.startup;
     if (fontLoaded && credLoaded && filtersLoaded && imagesLoaded) {
       return (

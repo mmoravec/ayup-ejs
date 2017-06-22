@@ -10,50 +10,48 @@ import { GET, OPTLY_URL } from "../constants/rest";
 //use this endpoint for bus info in SF
 
 export function* watchInitAnalytics() {
-  let init = true;
-  while (init) {
-    yield take(ActionTypes.SET_CREDENTIAL);
-    const cred = yield select(state => state.cred);
-    // if (cred.id !== null) {
-    //   //    yield call(initOptimizely, user);
-    //   init = false;
-    // }
-  }
+  yield take(ActionTypes.SET_CREDENTIAL);
+  const cred = yield select(state => state.credential);
+  // if (cred.id !== null) {
+  //   //    yield call(initOptimizely, user);
+  //   init = false;
+  // }
+  yield call(initAmplitude, cred);
 }
 
-function* initOptimizely(user) {
-  let data;
-  try {
-    data = yield call(request, GET, OPTLY_URL);
-  } catch (error) {
-    yield call(delay, 5000);
-    yield fork(initOptimizely);
-    return;
-  }
-  let optly = Optly.createInstance({ datafile: data.body, logLevel: 5 });
-  yield put({
-    type: ActionTypes.OPTLY_LOADED,
-    optly,
-  });
-  let variation = optly.activate("Alpha_v1", user.id);
-  yield put({ type: ActionTypes.SET_OPTLY_VARIATION, variation });
-  yield takeEvery(
-    [
-      ActionTypes.ROUTE_CHANGE,
-      ActionTypes.SAVE_EVENT,
-      ActionTypes.REQUEST_ERROR,
-      ActionTypes.ACCEPT_EVENT,
-      ActionTypes.JOIN_EVENT,
-      ActionTypes.SET_SELECTED_EVENT,
-      ActionTypes.REGION_CHANGE,
-    ],
-    trackEvent,
-    optly,
-    user
-  );
-}
+// function* initOptimizely(user) {
+//   let data;
+//   try {
+//     data = yield call(request, GET, OPTLY_URL);
+//   } catch (error) {
+//     yield call(delay, 5000);
+//     yield fork(initOptimizely);
+//     return;
+//   }
+//   let optly = Optly.createInstance({ datafile: data.body, logLevel: 5 });
+//   yield put({
+//     type: ActionTypes.OPTLY_LOADED,
+//     optly,
+//   });
+//   let variation = optly.activate("Alpha_v1", user.id);
+//   yield put({ type: ActionTypes.SET_OPTLY_VARIATION, variation });
+//   yield takeEvery(
+//     [
+//       ActionTypes.ROUTE_CHANGE,
+//       ActionTypes.SAVE_EVENT,
+//       ActionTypes.REQUEST_ERROR,
+//       ActionTypes.ACCEPT_EVENT,
+//       ActionTypes.JOIN_EVENT,
+//       ActionTypes.SET_SELECTED_EVENT,
+//       ActionTypes.REGION_CHANGE,
+//     ],
+//     trackEvent,
+//     optly,
+//     user
+//   );
+// }
 
-function* trackEvent(optly, user, action) {
+function* trackOptlyEvent(optly, user, action) {
   let attr = {
     platform: Platform.OS,
     version: Platform.Version,
@@ -65,4 +63,29 @@ function* trackEvent(optly, user, action) {
     attr.model = Expo.Constants.platform.ios.model;
   }
   optly.track(action.type, user.id, attr);
+}
+
+function* initAmplitude(user) {
+  Expo.Amplitude.initialize("b9b1b7bf1862786ce6473322dff27d1b");
+  Expo.Amplitude.setUserId(user.user_id);
+  yield takeEvery(
+    [
+      ActionTypes.SAVE_EVENT,
+      ActionTypes.JOIN_EVENT,
+      ActionTypes.REQUEST_EVENT,
+      ActionTypes.ACCEPT_EVENT,
+      ActionTypes.ACCEPT_REQUEST,
+      ActionTypes.DELETE_EVENT,
+      ActionTypes.CONTACTS_GRANTED,
+      ActionTypes.NOTIFICATIONS_GRANTED,
+      ActionTypes.REJECT_EVENT,
+      ActionTypes.REJECT_REQUEST,
+      ActionTypes.SET_SELECTED_EVENT,
+    ],
+    trackAmplitudeEvent
+  );
+}
+
+function* trackAmplitudeEvent(action) {
+  Expo.Amplitude.logEvent(action.type);
 }

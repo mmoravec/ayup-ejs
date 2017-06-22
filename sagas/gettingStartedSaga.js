@@ -10,28 +10,23 @@ import { User } from "../state/Records";
 import { URL, PUT, GET } from "../constants/rest";
 
 export function* watchGettingStarted() {
-  console.log("waiting for phone state loaded");
   yield take(ActionTypes.PHONESTATE_LOADED);
   yield call(getStarted);
 }
 
 function* getStarted() {
   const phone = yield select(state => state.phone);
-  console.log("get started called");
   if (!phone.locationGranted) {
     yield fork(grantLocation);
   }
   if (!phone.contactsGranted) {
     yield fork(grantContacts);
   }
-  if (!phone.notificationGranted) {
-    yield fork(grantNotifications);
-  }
+  yield fork(grantNotifications);
 }
 
 function* grantLocation() {
   yield take(ActionTypes.GRANT_LOCATION);
-  console.log("grant location working");
   let grant = yield call(getLocation);
   if (grant) {
     yield put({ type: ActionTypes.LOCATION_GRANTED });
@@ -40,7 +35,6 @@ function* grantLocation() {
 
 function* grantContacts() {
   yield take(ActionTypes.INVITE_FRIENDS);
-  console.log("inviting friends");
   let grant = yield call(getContacts);
   if (grant) {
     yield put({ type: ActionTypes.CONTACTS_GRANTED });
@@ -49,6 +43,7 @@ function* grantContacts() {
 
 function* grantNotifications() {
   yield take([ActionTypes.SAVE_EVENT, ActionTypes.JOIN_EVENT]);
+  const prof = yield select(state => state.profile);
   //show notification dialog to user
   let { status } = yield call(
     Permissions.askAsync,
@@ -60,7 +55,14 @@ function* grantNotifications() {
     return;
   }
   let token = yield call(Notifications.getExponentPushTokenAsync);
-  console.log(token);
+  if (token === prof.exponent_token) {
+    return;
+  }
+  let profile = {
+    exponent_token: token,
+  };
+  yield put({ type: ActionTypes.UPDATE_PROFILE, profile });
   //save the token to our backend
   yield put({ type: ActionTypes.NOTIFICATIONS_GRANTED });
+  yield put({ type: ActionTypes.SUBSCRIBE_NOTIFICATIONS });
 }

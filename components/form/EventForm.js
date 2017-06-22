@@ -50,21 +50,22 @@ export default class EventForm extends React.Component {
       onChangeText: text =>
         this.props.dispatch(Actions.setFormValue("title", text)),
       ...this._inputProps,
+      maxLength: 40,
     };
     this._descProps = {
       onFocus: this._focusElement.bind(this, "desc"),
       onChangeText: text =>
         this.props.dispatch(Actions.setFormValue("desc", text)),
       ...this._inputProps,
+      maxLength: 250,
     };
     this._actionProps = {
       action: this._saveBtnPress,
       image: require("../../assets/images/btn_save.png"),
+      image2: require("../../assets/images/btn_update.png"),
       warnMessage: "Please fill out Title, Start Date, End Date, and Location",
     };
   }
-
-  componentWillReceiveProps(nextProps) {}
 
   componentWillUpdate() {
     LayoutAnimation.easeInEaseOut();
@@ -136,12 +137,14 @@ export default class EventForm extends React.Component {
                 />
               </View>}
             <View style={styles.input}>
-              <FriendSelector
-                {...this.props.form.friends}
-                onFocus={this._focusElement}
-                scrollTo={this._scrollTo}
-                onChange={this._onChange}
-              />
+              {this.props.form.friends.shown &&
+                <FriendSelector
+                  {...this.props.form.friends}
+                  onFocus={this._focusElement}
+                  scrollTo={this._scrollTo}
+                  onChange={this._onChange}
+                />
+              }
             </View>
             {this.props.form.capacity.shown &&
               <View style={styles.input}>

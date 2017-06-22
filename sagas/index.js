@@ -9,6 +9,7 @@ import { watchGettingStarted } from "./gettingStartedSaga";
 import { watchStorageActions } from "./storageSaga";
 import { watchRequestStatus } from "./utilsSaga";
 import { watchProfile } from "./profileSaga";
+import { watchNotificationActions } from "./notificationSaga";
 /*
  * The entry point for all the sagas used in this application.
  */
@@ -25,5 +26,6 @@ export default function* root() {
     fork(watchStorageActions),
     fork(watchRequestStatus),
     fork(watchProfile),
+    fork(watchNotificationActions),
   ];
 }

@@ -1,15 +1,14 @@
-import { List } from 'immutable';
-import all from '../constants/activities';
+import { List } from "immutable";
+import all from "../constants/activities";
 
 export default class Filters {
-
   static sortComments(comments) {
     let unsorted = [];
     comments = comments.sort(function(a, b) {
-      return new Date(b.published) - new Date(a.published);
+      return new Date(b.posted_on) - new Date(a.posted_on);
     });
     comments = comments.filter(comment => {
-      if (comment.parentID === "") {
+      if (comment.parent_id === "") {
         return comment;
       } else {
         unsorted.splice(0, 0, comment);
@@ -17,7 +16,9 @@ export default class Filters {
     });
     if (unsorted.length > 0) {
       unsorted.map(unsort => {
-        var result = comments.findIndex(function(obj) { return obj.id === unsort.parentID; });
+        var result = comments.findIndex(function(obj) {
+          return obj.id === unsort.parent_id;
+        });
         comments = comments.splice(result + 1, 0, unsort);
       });
     }
@@ -52,10 +53,10 @@ export default class Filters {
   static filtersFromIds(ids) {
     return all.map(fil => {
       if (ids.indexOf(fil.id) > -1) {
-        fil['selected'] = true;
+        fil["selected"] = true;
         return fil;
       } else {
-        fil['selected'] = false;
+        fil["selected"] = false;
         return fil;
       }
     });
