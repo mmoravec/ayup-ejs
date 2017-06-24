@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { BackAndroid, View } from 'react-native';
+import { BackHandler, View } from 'react-native';
 import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import Navigation from './navigation/Navigator';
@@ -42,14 +42,17 @@ class App extends React.Component {
     } else if (secondToLast.routeName === "Event" && lastRoute === "NewEvent") {
       this.props.dispatch(Actions.zeroForm());
     }
+    if (lastRoute.routeName === "Home") {
+      return false;
+    }
     navigation.goBack();
     return true;
   };
   componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.handleBackPress);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
   componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress', this.handleBackPress);
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
   render() {
     // console.log(this.props.startup);

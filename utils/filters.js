@@ -1,4 +1,5 @@
 import { List } from "immutable";
+import dateFormat from "dateformat";
 import all from "../constants/activities";
 
 export default class Filters {
@@ -50,6 +51,44 @@ export default class Filters {
     });
   }
 
+  static getHeadersAscend = events => {
+    events = events
+      .groupBy(x => {
+        let date = new Date(x.start_time);
+        return dateFormat(date, "fullDate");
+      })
+      .sort((a, b) => {
+        let n = new Date(a.get(0).start_time).getTime();
+        let f = new Date(b.get(0).start_time).getTime();
+        if (n > f) {
+          return 1;
+        } else if (f > n) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    return events;
+  };
+  static getHeadersDescend = events => {
+    events = events
+      .groupBy(x => {
+        let date = new Date(x.start_time);
+        return dateFormat(date, "fullDate");
+      })
+      .sort((a, b) => {
+        let n = new Date(a.get(0).start_time).getTime();
+        let f = new Date(b.get(0).start_time).getTime();
+        if (n < f) {
+          return 1;
+        } else if (f < n) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    return events;
+  };
   static filtersFromIds(ids) {
     return all.map(fil => {
       if (ids.indexOf(fil.id) > -1) {

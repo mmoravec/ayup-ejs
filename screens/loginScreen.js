@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import Expo from 'expo';
 import { connect } from 'react-redux';
 import FadeIn from '@expo/react-native-fade-in-image';
 import ActionTypes from '../state/ActionTypes';
@@ -60,6 +61,7 @@ export default class AuthenticationScreen extends React.Component {
       type: ActionTypes.SIGN_IN,
     });
   }
+
 }
 
 const styles = StyleSheet.create({

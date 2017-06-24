@@ -92,10 +92,6 @@ export default class EventForm extends React.Component {
                 returnKeyType={"next"}
               />
             </View>
-            {this.props.form.desc.shown &&
-              <View style={styles.input}>
-                <Hoshi {...this._descProps} {...this.props.form.desc} />
-              </View>}
             <View style={styles.switch}>
               <MyText style={styles.text}>Private</MyText>
               <Switch
@@ -153,6 +149,10 @@ export default class EventForm extends React.Component {
                   onChange={this._onChange}
                 />
               </View>}
+            {this.props.form.desc.shown &&
+            <View style={styles.input}>
+              <Hoshi {...this._descProps} {...this.props.form.desc} />
+            </View>}
             <View style={styles.optionalFields}>
               <MyText style={styles.optText}>
                 Add Field

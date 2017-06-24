@@ -5,6 +5,7 @@ import {
   Animated,
   Dimensions,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from 'react-redux';
@@ -73,22 +74,28 @@ export default class Notifications extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    height: height * 0.2,
-    width,
+    height: height * 0.18,
+    width: width * 0.95,
     backgroundColor: '#fff',
     zIndex: 10,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    borderWidth: Platform.OS === 'android' ? 1 : 0,
   },
   close: {
     position: 'absolute',
-    right: 15,
+    right: width * 0.05,
     top: 30,
   },
   message: {
-    margin: 30,
     fontSize: 18,
-    marginTop: 50,
-    marginRight: 10,
+    marginTop: 60,
+    marginLeft: width * 0.1,
+    width: width * 0.8,
   },
 });

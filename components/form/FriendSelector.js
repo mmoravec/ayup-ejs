@@ -48,12 +48,7 @@ export default class FriendSelector extends React.Component {
     keys: [
       {
         name: 'name',
-        weight: 0.4,
       },
-      {
-        name: 'profile_pic',
-        weight: 0.6
-      }
     ],
   };
   
@@ -164,7 +159,7 @@ export default class FriendSelector extends React.Component {
     if (this.props.focus && this.props.friends.length > 0) {
       return (
         <FlatList
-          data={this.state.filteredFriends}
+          data={this.state.filteredFriends.slice(0, 6)}
           renderItem={this._renderFilterRow}
           keyExtractor={this._keyExtractor}
           keyboardShouldPersistTaps={'always'}
@@ -178,10 +173,6 @@ export default class FriendSelector extends React.Component {
 
   _renderFilterRow = (rowData) => {
     let push = this._pushFriend.bind(this, rowData), num;
-    if (rowData.item.phone) {
-      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
-      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
-    }
     return (
       <TouchableHighlight underlayColor={'#f2f2f2'} onPress={push}>
         <View style={styles.friend}>
@@ -192,7 +183,7 @@ export default class FriendSelector extends React.Component {
             <MyText style={styles.name}>{rowData.item.name}</MyText>
             {
               rowData.item.phone && !rowData.item.profile_pic &&
-              <MyText style={styles.phone}>{num}</MyText>
+              <MyText style={styles.phone}>{rowData.item.phone}</MyText>
             }
           </View>
         </View>
@@ -202,10 +193,6 @@ export default class FriendSelector extends React.Component {
 
   _renderInvitedRow = (rowData) => {
     let remove = this._removeFriend.bind(this, rowData), num;
-    if (rowData.item.phone) {
-      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
-      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
-    }
     return (
       <View style={styles.friend}>
         <View style={styles.imageBox}>
@@ -215,7 +202,7 @@ export default class FriendSelector extends React.Component {
           <MyText style={styles.name}>{rowData.item.name}</MyText>
           {
             rowData.item.phone && !rowData.item.profile_pic &&
-            <MyText style={styles.phone}>{num}</MyText>
+            <MyText style={styles.phone}>{rowData.item.phone}</MyText>
           }
         </View>
         <TouchableOpacity onPress={remove}>

@@ -2,13 +2,15 @@ import _ from "lodash";
 import { put, call, take, race, select } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import { List } from "immutable";
-import { Image } from "react-native";
+import { Image, Alert } from "react-native";
+import qs from "qs";
 import {
   Font,
   Asset,
   Location,
   Permissions,
   Contacts,
+  Constants,
   Notifications,
 } from "expo";
 import ActionTypes from "../state/ActionTypes";
@@ -22,6 +24,7 @@ export default function* startup() {
   yield [call(loadFilters), call(loadFonts), call(loadImages)];
   let result = yield [call(getPhoneState), call(getCredential)];
   let phone = result[0], cred = result[1];
+  yield call(getParams);
   yield put({ type: ActionTypes.PHONESTATE_LOADED });
   //change this to user.locationGranted when implemented
   if (cred && cred.secret !== null) {
@@ -118,6 +121,18 @@ export function* getContacts() {
     contacts,
   });
   return true;
+}
+
+function* getParams() {
+  if (Constants.intentUri) {
+    let queryString = Constants.intentUri.substr(
+      Constants.intentUri.indexOf("?") + 1
+    );
+    if (queryString) {
+      let data = qs.parse(queryString);
+      yield put({ type: ActionTypes.SET_PARAMS, data });
+    }
+  }
 }
 
 function* getPhoneState() {

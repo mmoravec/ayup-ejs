@@ -15,6 +15,7 @@ import dateFormat from 'dateformat';
 import MyText from '../components/common/MyText';
 import Actions from '../state/Actions';
 import EventList from '../components/EventList';
+import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
 const data = require('../sample/sampledata.json');
 
@@ -93,15 +94,15 @@ export default class MyEventsScreen extends React.Component {
           renderTabBar={false}>
           {
             this.props.action.size > 0 ?
-              <EventList events={this.props.action} styles={listStyle} /> :
-              <EventList events={this.props.all} styles={listStyle} />
+              <EventList events={Filters.getHeadersAscend(this.props.action)} styles={listStyle} /> :
+              <EventList events={Filters.getHeadersAscend(this.props.all)} styles={listStyle} />
           }
           {
             this.props.action.size > 0 ?
-              <EventList events={this.props.all} styles={listStyle} /> :
-              <EventList events={this.props.hosted} styles={listStyle} />
+              <EventList events={Filters.getHeadersAscend(this.props.all)} styles={listStyle} /> :
+              <EventList events={Filters.getHeadersAscend(this.props.hosted)} styles={listStyle} />
           }          
-          <EventList events={this.props.archive} styles={listStyle} />
+          <EventList events={Filters.getHeadersDescend(this.props.archive)} styles={listStyle} />
         </ScrollableTabView>
       </Image>
     );

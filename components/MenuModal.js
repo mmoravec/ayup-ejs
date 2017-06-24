@@ -53,6 +53,11 @@ export default class EventListModal extends React.Component {
         onRequestClose={this.props.menuBtnPress}
         visible={this.props.menuVisible}>
         <View style={styles.container}>
+          <View style={styles.feedback}>
+            <MyText style={{fontSize: 14, margin: 25}}>
+              Ayup: beta 1.0 - unreleased
+            </MyText>
+          </View>
           <Animated.View style={styles.btnMainContainer}>
             <TouchableOpacity
               onPress={this._menuBtnPress}>

@@ -196,5 +196,20 @@ function filterFriends(profile) {
     }
   });
   p = p.concat(_.values(m));
+  p = p.map(per => {
+    if (per.phone) {
+      per.phone =
+        "(" +
+        per.phone.substring(0, 3) +
+        ") " +
+        per.phone.substring(3, 6) +
+        "-" +
+        per.phone.substring(6);
+    }
+    return per;
+  });
+  p = p.filter(per => {
+    return per.profile_pic || per.phone;
+  });
   return p;
 }

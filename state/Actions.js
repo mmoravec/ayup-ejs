@@ -35,6 +35,13 @@ export default class Actions {
     };
   }
 
+  static copyEvent(eventID) {
+    return {
+      type: ActionTypes.COPY_EVENT,
+      eventID,
+    };
+  }
+
   static getProfile() {
     return {
       type: ActionTypes.GET_PROFILE,

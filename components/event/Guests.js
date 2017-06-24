@@ -32,6 +32,7 @@ export default class EventGuests extends React.Component {
       <View>
         <ScrollView style={styles.scrollview} horizontal>
           {(this._getStatus() === "accepted" || this._getStatus() === "host") &&
+          !this.props.selectedEvent.completed &&
             <TouchableOpacity onPress={this.props.showAddFriend}>
               <Image
                 source={require("../../assets/images/add_friend.png")}

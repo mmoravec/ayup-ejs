@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import { Facebook } from "expo";
-import { fork, call, put, takeEvery } from "redux-saga/effects";
+import { fork, call, put, takeEvery, select } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
 import { Credential } from "../state/Records";
 import { request, fb } from "../utils/fetch";
@@ -12,7 +12,8 @@ export function* watchLogin() {
 }
 
 function* authorize() {
-  let fbInfo, credential;
+  let fbInfo, credential, userid = "";
+  const params = yield select(state => state.phone.params);
   yield put({ type: ActionTypes.ALERT_SAVING });
   const fbLogin = yield call(facebookLogin);
   if (fbLogin.type === "success") {
@@ -23,12 +24,15 @@ function* authorize() {
       yield put({ type: ActionTypes.ALERT_ERROR, error });
       return;
     }
+    if (params.userid) {
+      userid = "&userid=" + params.userid;
+    }
     try {
       // console.log(fbInfo);
       credential = yield call(
         request,
         POST,
-        URL + "/v1.0/account/login/facebook?fbid=" + fbInfo.id,
+        URL + "/v1.0/account/login/facebook?fbid=" + fbInfo.id + userid,
         null,
         { Token: fbLogin.token }
       );

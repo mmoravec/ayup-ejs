@@ -1,16 +1,8 @@
-import React, {
-  PropTypes,
-  Component,
-} from 'react';
+import React, { PropTypes, Component } from "react";
 
-import {
-  Animated,
-  Text,
-  View,
-} from 'react-native';
+import { Animated, Text, View } from "react-native";
 
 export default class BaseInput extends Component {
-
   static propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
@@ -48,7 +40,7 @@ export default class BaseInput extends Component {
 
   componentWillReceiveProps(newProps) {
     const newValue = newProps.value;
-    if (newProps.hasOwnProperty('value') && newValue !== this.state.value) {
+    if (newProps.hasOwnProperty("value") && newValue !== this.state.value) {
       this.setState({
         value: newValue,
       });
@@ -104,13 +96,11 @@ export default class BaseInput extends Component {
 
   _toggle(isActive) {
     this.isActive = isActive;
-    Animated.timing(
-      this.state.focusedAnim, {
-        toValue: isActive ? 1 : 0,
-        duration: this.props.animationDuration,
-        easing: this.props.easing,
-      },
-    ).start();
+    Animated.timing(this.state.focusedAnim, {
+      toValue: isActive ? 1 : 0,
+      duration: this.props.animationDuration,
+      easing: this.props.easing,
+    }).start();
   }
 
   // public methods
@@ -134,5 +124,4 @@ export default class BaseInput extends Component {
   clear() {
     this.inputRef().clear();
   }
-
 }

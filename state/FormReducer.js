@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Immutable, { List, Map } from "immutable";
 import ActionTypes from "./ActionTypes";
-import { FormState } from "./Records";
+import { FormState, Form } from "./Records";
 
 class FormReducer {
   static reduce(state = new FormState(), action) {
@@ -19,7 +19,7 @@ class FormReducer {
   }
 
   static [ActionTypes.ZERO_FORM](state, action) {
-    return new FormState({ ...cement.toJS() });
+    return new FormState(Form.toJS());
   }
 
   static [ActionTypes.FOCUS_FIELD](state, action) {
@@ -73,76 +73,3 @@ class FormReducer {
 }
 
 export default FormReducer.reduce;
-
-const cement = Immutable.fromJS({
-  startDate: {
-    focus: false,
-    shown: true,
-    value: "",
-    label: "Start Date",
-    stateKey: "startDate",
-  },
-  endDate: {
-    focus: false,
-    shown: true,
-    value: "",
-    label: "End Date",
-    stateKey: "endDate",
-  },
-  title: {
-    label: "Title",
-    focus: false,
-    shown: true,
-    value: "",
-    stateKey: "title",
-  },
-  desc: {
-    label: "Description",
-    focus: false,
-    shown: false,
-    value: "",
-    stateKey: "desc",
-  },
-  location: {
-    focus: false,
-    label: "Meeting Location",
-    shown: true,
-    value: "",
-    lnglat: [],
-    stateKey: "location",
-  },
-  dest: {
-    focus: false,
-    shown: false,
-    label: "Destination",
-    value: "",
-    lnglat: [],
-    stateKey: "dest",
-  },
-  friends: {
-    focus: false,
-    shown: true,
-    value: [],
-    stateKey: "friends",
-    label: "Friends",
-  },
-  activity: {
-    focus: false,
-    shown: true,
-    value: "basketball",
-    stateKey: "activity",
-  },
-  private: {
-    focus: false,
-    shown: true,
-    value: false,
-    stateKey: "private",
-  },
-  capacity: {
-    focus: false,
-    shown: false,
-    value: 0,
-    stateKey: "capacity",
-  },
-  status: "create",
-});
