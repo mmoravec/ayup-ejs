@@ -71,7 +71,6 @@ function* initAmplitude(user) {
   yield takeEvery(
     [
       ActionTypes.SAVE_EVENT,
-      ActionTypes.JOIN_EVENT,
       ActionTypes.REQUEST_EVENT,
       ActionTypes.ACCEPT_EVENT,
       ActionTypes.ACCEPT_REQUEST,

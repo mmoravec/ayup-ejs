@@ -48,7 +48,12 @@ export default class FriendSelector extends React.Component {
     keys: [
       {
         name: 'name',
+        weight: 0.4,
       },
+      {
+        name: 'first_name',
+        weight: 0.8,
+      }
     ],
   };
   
@@ -62,7 +67,11 @@ export default class FriendSelector extends React.Component {
     }, 200);
   }
 
-  componetDidUpdate(prevProps, prevState) {
+  componentWillUnmount() {
+    this._scrollY = 0;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
       this._fuse = new Fuse(this.props.friends, this._fuseOptions);
     }
@@ -236,7 +245,7 @@ export default class FriendSelector extends React.Component {
 
   _pushFriend = (friend) => {
     let friends = this.props.value;
-    var result = friends.find(obj => obj.item.name === friend.item.name);
+    var result = friends.find(obj => obj.item.ayup_id === friend.item.ayup_id);
     if (!result) {
       friends = friends.push(friend);
       this.props.onChange(this.props.stateKey, friends);
@@ -245,7 +254,7 @@ export default class FriendSelector extends React.Component {
 
   _removeFriend = (friend) => {
     let friends = this.props.value;
-    let newFriends = friends.filter(obj => obj.fbid !== friend.fbid);
+    let newFriends = friends.filter(obj => obj.item.ayup_id !== friend.item.ayup_id);
     this.props.onChange(this.props.stateKey, newFriends);
   }
 }

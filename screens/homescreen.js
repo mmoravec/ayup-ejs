@@ -14,6 +14,7 @@ import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
 import MapView from '../components/EventMap';
+import InformUser from '../components/InformUser';
 import MyText from '../components/common/MyText';
 import Filters from '../utils/filters';
 import Actions from '../state/Actions';
@@ -81,6 +82,7 @@ export default class HomeScreen extends React.Component {
           </View>
           <EventListModal {...listProps} />
           <MenuModal {...menuProps} />
+          <InformUser events={this.props.events} />
         </View>
       );
     } else {

@@ -1,26 +1,8 @@
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
 
 import { Animated, Text, View } from "react-native";
 
 export default class BaseInput extends Component {
-  static propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    defaultValue: PropTypes.string,
-    style: View.propTypes.style,
-    inputStyle: Text.propTypes.style,
-    labelStyle: Text.propTypes.style,
-    easing: PropTypes.func,
-    animationDuration: PropTypes.number,
-
-    /* those are TextInput props which are overridden
-     * so, i'm calling them manually
-     */
-    onBlur: PropTypes.func,
-    onFocus: PropTypes.func,
-    onChange: PropTypes.func,
-  };
-
   constructor(props, context) {
     super(props, context);
 

@@ -77,6 +77,11 @@ class PhoneStateReducer {
   }
 
   static [ActionTypes.ALERT_SUCCESS](state, action) {
+    if (action.message) {
+      state = state.set("statusMessage", action.message);
+    } else {
+      state = state.set("statusMessage", "Success!");
+    }
     return state.set("status", ActionTypes.SUCCESS);
   }
 

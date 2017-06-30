@@ -21,10 +21,6 @@ export default class ProfileScreen extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.props.dispatch(Actions.getProfile())
-  }
-
   render() {
     let user = this.props.user;
     return (

@@ -79,7 +79,7 @@ export default class EventButton extends React.Component {
     } else if (this.props.phone.status === ActionTypes.SUCCESS) {
       return (
         <View style={styles.woohoo}>
-          <MyText style={styles.success}> Success! </MyText>
+          <MyText style={styles.success}> {this.props.phone.statusMessage} </MyText>
         </View>
       );
     } else if (this.props.phone.status === ActionTypes.ERROR) {

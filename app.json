@@ -4,7 +4,7 @@
     "description": "Recess Revived",
     "slug": "ayup-ejs",
     "sdkVersion": "18.0.0",
-    "privacy": "unlisted",
+    "privacy": "public",
     "version": "0.0.4",
     "orientation": "portrait",
     "primaryColor": "#cccccc",

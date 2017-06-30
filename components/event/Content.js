@@ -131,6 +131,7 @@ export default class EventContent extends React.Component {
                 margin: 14,
                 color: "#808080",
                 marginTop: 0,
+                marginBottom: 0,
               }}>
               {event.description}
             </MyText>}
@@ -377,6 +378,7 @@ const styles = StyleSheet.create({
   seeAll: {
     fontSize: 18,
     margin: 10,
+    marginLeft: 14,
     color: "#5f5f5f",
   },
   headerName: {

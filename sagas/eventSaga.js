@@ -115,6 +115,7 @@ function* acceptEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield fork(loadEvent, action);
 }
 
 function* acceptRequest(action) {
@@ -130,6 +131,7 @@ function* acceptRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield fork(loadEvent, action);
 }
 
 function* rejectRequest(action) {
@@ -145,6 +147,7 @@ function* rejectRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield fork(loadEvent, action);
 }
 
 function* requestEvent(action) {
@@ -159,7 +162,7 @@ function* requestEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(updateSelectedEvent, action.eventID);
+  yield fork(loadEvent, action);
 }
 
 function* deleteEvent(action) {
@@ -191,7 +194,7 @@ function* rejectEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield fork(updateSelectedEvent, action.eventID);
+  yield fork(loadEvent, action);
 }
 
 function* inviteUser(action) {
@@ -206,19 +209,8 @@ function* inviteUser(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     return;
   }
-  yield put({ type: ActionTypes.ALERT_SUCCESS });
-}
-
-function* updateSelectedEvent(eventID) {
-  let data;
-  try {
-    data = yield call(request, GET, URL + "/v1.0/events/" + eventID);
-  } catch (error) {
-    yield call(delay, 5000);
-    yield fork(updateSelectedEvent, eventID);
-    return;
-  }
-  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
+  yield put({ type: ActionTypes.ALERT_SUCCESS, message: "Invites Sent!" });
+  yield fork(loadEvent, action);
 }
 
 function* loadComments(action) {

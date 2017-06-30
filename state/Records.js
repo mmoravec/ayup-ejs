@@ -44,6 +44,8 @@ export const Profile = Record({
   events: new List(),
   take_action: new List(),
   age_group: "",
+  all: new List(),
+  archive: new List(),
 });
 
 export const Credential = Record({

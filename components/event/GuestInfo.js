@@ -106,9 +106,6 @@ export default class GuestInfo extends React.Component {
   }
 
   _closeModal = () => {
-    if (this.state.changed) {
-      this.props.dispatch(Actions.selectEvent(this.props.event.id));
-    }
     this.props.close();
     this.setState({hostInfo: false});
   }

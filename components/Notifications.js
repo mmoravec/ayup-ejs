@@ -46,7 +46,7 @@ export default class Notifications extends React.Component {
             <MyText style={styles.message} >{this.props.phone.notification.data.body}</MyText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.close} onPress={this._close}>
-            <MaterialIcons size={30} name={"close"} />
+            <MaterialIcons size={36} name={"close"} />
           </TouchableOpacity>
         </Animated.View>
       );
@@ -74,8 +74,8 @@ export default class Notifications extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    height: height * 0.18,
-    width: width * 0.95,
+    paddingBottom: 20,
+    width: width * 0.90,
     backgroundColor: '#fff',
     zIndex: 10,
     borderBottomLeftRadius: 20,
@@ -86,16 +86,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 10,
     borderWidth: Platform.OS === 'android' ? 1 : 0,
+    left: width * 0.05,
+    paddingLeft: 20,
+    paddingRight: 40,
   },
   close: {
     position: 'absolute',
-    right: width * 0.05,
-    top: 30,
+    right: 10,
+    top: 25,
   },
   message: {
     fontSize: 18,
-    marginTop: 60,
-    marginLeft: width * 0.1,
-    width: width * 0.8,
+    marginTop: 30,
   },
 });

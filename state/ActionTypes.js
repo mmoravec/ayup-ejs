@@ -24,7 +24,6 @@ export default defineActionConstants([
   "INACTIVE",
   "INVITE_FRIENDS",
   "INVITE_USER",
-  "JOIN_EVENT",
   "LOAD_COMMENTS",
   "LOAD_EVENT",
   "LOCATION_DENIED",

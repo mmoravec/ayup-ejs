@@ -17,20 +17,17 @@ import Actions from '../state/Actions';
 import EventList from '../components/EventList';
 import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
-const data = require('../sample/sampledata.json');
 
 @connect(data => MyEventsScreen.getDataProps(data))
 export default class MyEventsScreen extends React.Component {
 
   static getDataProps(data) {
     let p = data.profile;
-    let all = new List(p.hosted.concat(p.invited, p.requested, p.going));
-    let archive = new List(p.completed.concat(p.not_going));
     return {
-      all,
-      hosted: new List(p.hosted),
-      archive,
-      action: new List(p.take_action),
+      all: p.all,
+      hosted: p.hosted,
+      archive: p.archive,
+      action: p.take_action,
     };
   }
 
@@ -199,7 +196,7 @@ const styles = StyleSheet.create({
   },
   ctnBack: {
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 3,
   },
   time: {
     fontSize: 8,

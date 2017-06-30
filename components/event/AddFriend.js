@@ -96,7 +96,7 @@ export default class AddFriend extends React.Component {
     this.state.value.map(user => {
       this.props.dispatch(Actions.inviteUser(this.props.event.id, user.item.ayup_id));
     });
-    this.props.dispatch(Actions.selectEvent(this.props.event.id));
+    this.setState({value: new List()});
     this.props.hide();
   };
 }

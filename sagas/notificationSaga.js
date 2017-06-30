@@ -22,7 +22,6 @@ function* subscribeNotifications() {
 }
 
 function _handleNotification(notification) {
-  let test = notification.data;
   Store.dispatch(Actions.receivedNotification(notification));
 }
 

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import {
   StyleSheet,
@@ -11,11 +12,11 @@ import {
   Platform,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import _ from 'lodash';
 import { connect } from 'react-redux';
 import Actions from '../state/Actions';
 import Activities from '../constants/activities'
 import MyText from '../components/common/MyText';
+import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
 
 @connect(data => ActivitiesScreen.getDataProps(data))
@@ -23,28 +24,44 @@ export default class ActivitiesScreen extends React.Component {
 
   state = {
     all: true,
+    opacity: new Animated.Value(0),
   }
+
+  animate = _.debounce(() => {
+    Animated.sequence([
+      Animated.timing(this.state.opacity, {toValue: 1, duration: 200}),
+      Animated.delay(1000),
+      Animated.timing(this.state.opacity, {toValue: 0, duration: 200}),
+    ]).start();
+  }, 1000);
 
   static getDataProps(data) {
     return {
       filters: data.events.filters,
-      events: data.events.nearbyEvents,
+      events: Filters.filterEvents(data.events.nearbyEvents, data.events.filters),
     };
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.animate();
   }
 
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-      {
-        (Platform.OS === 'ios') &&
-        <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
-          <Image
-            source={require('../assets/images/btn_back.png')}
-            style={styles.btnBack}
-          />
-        </TouchableOpacity>
-      }
+        <Animated.View style={[{opacity: this.state.opacity}, styles.results]}>
+          <MyText style={styles.resultText}>{this.props.events.size} results</MyText>
+        </Animated.View>
         <MyText style={styles.title}>Tap to Filter Activities</MyText>
+        {
+          (Platform.OS === 'ios') &&
+          <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
+            <Image
+              source={require('../assets/images/btn_back.png')}
+              style={styles.btnBack}
+            />
+          </TouchableOpacity>
+        }
         <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 20, zIndex: 2}}>
           <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
             <MaterialCommunityIcons
@@ -226,24 +243,24 @@ const styles = StyleSheet.create({
     height: undefined,
     backgroundColor:'transparent',
   },
-  btnBack: {
-    width: 80,
-    height: 80,
-  },
-  backPress: {
-    zIndex: 2,
-    width: 80,
-    height: 80,
-  },
   title: {
     position: 'absolute',
     textAlign: 'center',
-    fontSize: 16,
-    left: 0,
+    fontSize: 20,
+    left: width * 0.2,
     right: 0,
     top: 30,
     fontFamily: 'LatoRegular',
     zIndex: 1,
+    width: width * 0.6,
+  },
+  btnBack: {
+    width: 80,
+    height: 80,
+  },
+  back: {
+    position: 'absolute',
+    zIndex: 3,
   },
   checkContainer: {
     position: 'absolute',
@@ -299,5 +316,20 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     flexWrap: 'wrap',
     paddingBottom: 10,
+  },
+  results: {
+    position: 'absolute',
+    zIndex: 4,
+    bottom: height * 0.4,
+    backgroundColor: '#222',
+    borderRadius: 20,
+    left: width * 0.25,
+    padding: 10,
+    width: width * 0.5,
+    alignItems: 'center',
+  },
+  resultText: {
+    fontSize: 36,
+    color: '#fff',
   },
 });

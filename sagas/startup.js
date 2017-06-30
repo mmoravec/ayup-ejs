@@ -2,7 +2,7 @@ import _ from "lodash";
 import { put, call, take, race, select } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import { List } from "immutable";
-import { Image, Alert } from "react-native";
+import { Image, Alert, Linking } from "react-native";
 import qs from "qs";
 import {
   Font,
@@ -13,6 +13,7 @@ import {
   Constants,
   Notifications,
 } from "expo";
+import { URL, POST } from "../constants/rest";
 import ActionTypes from "../state/ActionTypes";
 import LocalStorage from "../utils/LocalStorage";
 import { request } from "../utils/fetch";
@@ -124,10 +125,17 @@ export function* getContacts() {
 }
 
 function* getParams() {
+  let url = yield call(Linking.getInitialURL);
   if (Constants.intentUri) {
     let queryString = Constants.intentUri.substr(
       Constants.intentUri.indexOf("?") + 1
     );
+    if (queryString) {
+      let data = qs.parse(queryString);
+      yield put({ type: ActionTypes.SET_PARAMS, data });
+    }
+  } else if (url) {
+    let queryString = url.substr(url.indexOf("?") + 1);
     if (queryString) {
       let data = qs.parse(queryString);
       yield put({ type: ActionTypes.SET_PARAMS, data });
@@ -166,8 +174,27 @@ function* getCredential() {
 
 function* checkCredential(cred) {
   //TODO: check credential expiration and set to expire if it is dead
+  const params = yield select(state => state.phone.params);
   if (cred.secret) {
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
+    if (params.userid && params.eventid) {
+      try {
+        // console.log(fbInfo);
+        yield call(
+          request,
+          POST,
+          URL +
+            "/v1.0/events/" +
+            params.eventid +
+            "/accepttextinvite?userid=" +
+            params.userid
+        );
+      } catch (error) {
+        //Alert Error
+        yield put({ type: ActionTypes.ALERT_ERROR, error });
+        return;
+      }
+    }
   }
 }
 
