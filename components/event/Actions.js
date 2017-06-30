@@ -35,21 +35,41 @@ export default class EventActions extends React.Component {
         <View style={styles.container}>
           {this._renderMenu()}
           <Animated.View style={[styles.settings, {bottom: this.state.bottom}]}>
-            <TouchableOpacity onPress={this._modifyEvent}>
-              <MyText style={styles.modify}>
-                Modify
-              </MyText>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this._deleteEvent}>
-              <MyText style={styles.delete}>
-                Delete
-              </MyText>
-            </TouchableOpacity>
+            {this._renderItems()}
           </Animated.View>
         </View>
       );
     } else {
       return null;
+    }
+  }
+
+  _renderItems = () => {
+    if (this.props.event.completed) {
+      return (
+        <View>
+          <TouchableOpacity onPress={this._copyEvent}>
+            <MyText style={styles.modify}>
+              Copy
+            </MyText>
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <TouchableOpacity onPress={this._modifyEvent}>
+            <MyText style={styles.modify}>
+              Modify
+            </MyText>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._deleteEvent}>
+            <MyText style={styles.delete}>
+              Delete
+            </MyText>
+          </TouchableOpacity>
+        </View>
+      );
     }
   }
 
@@ -82,7 +102,12 @@ export default class EventActions extends React.Component {
   }
 
   _modifyEvent = () => {
-    this.props.dispatch(Actions.modifyEvent(this.props.event.id));
+    this.props.dispatch(Actions.modifyEvent());
+    this._settingsPress();
+  }
+
+  _copyEvent = () => {
+    this.props.dispatch(Actions.copyEvent());
     this._settingsPress();
   }
 

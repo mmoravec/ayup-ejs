@@ -42,7 +42,11 @@ function* grantContacts() {
 }
 
 function* grantNotifications() {
-  yield take([ActionTypes.SAVE_EVENT, ActionTypes.JOIN_EVENT]);
+  yield take([
+    ActionTypes.SAVE_EVENT,
+    ActionTypes.ACCEPT_EVENT,
+    ActionTypes.REQUEST_EVENT,
+  ]);
   const prof = yield select(state => state.profile);
   //show notification dialog to user
   let { status } = yield call(

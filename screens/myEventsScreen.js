@@ -15,21 +15,19 @@ import dateFormat from 'dateformat';
 import MyText from '../components/common/MyText';
 import Actions from '../state/Actions';
 import EventList from '../components/EventList';
+import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
-const data = require('../sample/sampledata.json');
 
 @connect(data => MyEventsScreen.getDataProps(data))
 export default class MyEventsScreen extends React.Component {
 
   static getDataProps(data) {
     let p = data.profile;
-    let all = new List(p.hosted.concat(p.invited, p.requested, p.going));
-    let archive = new List(p.completed.concat(p.not_going));
     return {
-      all,
-      hosted: new List(p.hosted),
-      archive,
-      action: new List(p.take_action),
+      all: p.all,
+      hosted: p.hosted,
+      archive: p.archive,
+      action: p.take_action,
     };
   }
 
@@ -93,15 +91,15 @@ export default class MyEventsScreen extends React.Component {
           renderTabBar={false}>
           {
             this.props.action.size > 0 ?
-              <EventList events={this.props.action} styles={listStyle} /> :
-              <EventList events={this.props.all} styles={listStyle} />
+              <EventList events={Filters.getHeadersAscend(this.props.action)} styles={listStyle} /> :
+              <EventList events={Filters.getHeadersAscend(this.props.all)} styles={listStyle} />
           }
           {
             this.props.action.size > 0 ?
-              <EventList events={this.props.all} styles={listStyle} /> :
-              <EventList events={this.props.hosted} styles={listStyle} />
+              <EventList events={Filters.getHeadersAscend(this.props.all)} styles={listStyle} /> :
+              <EventList events={Filters.getHeadersAscend(this.props.hosted)} styles={listStyle} />
           }          
-          <EventList events={this.props.archive} styles={listStyle} />
+          <EventList events={Filters.getHeadersDescend(this.props.archive)} styles={listStyle} />
         </ScrollableTabView>
       </Image>
     );
@@ -198,7 +196,7 @@ const styles = StyleSheet.create({
   },
   ctnBack: {
     position: 'absolute',
-    zIndex: 2,
+    zIndex: 3,
   },
   time: {
     fontSize: 8,

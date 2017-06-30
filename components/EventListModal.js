@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import EventList from "./EventList";
+import Filters from "../utils/filters";
 const { width } = Dimensions.get("window");
 
 export default class EventListModal extends React.Component {
@@ -21,7 +22,7 @@ export default class EventListModal extends React.Component {
         visible={this.props.listVisible}>
         <View style={styles.container}>
           <EventList
-            events={this.props.events}
+            events={Filters.getHeadersAscend(this.props.events)}
             closeBtn={this.props.closeBtnPress}
             styles={listStyle}
           />

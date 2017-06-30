@@ -26,6 +26,7 @@ export default class NewEventScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
+        <Form />
         {
           (Platform.OS === 'ios') &&
           <TouchableOpacity style={styles.ctnBack} underlayColor="transparent" onPress={this._backBtnPress}>
@@ -35,7 +36,6 @@ export default class NewEventScreen extends React.Component {
             />
           </TouchableOpacity>
         }
-        <Form />
       </Image>
     );
   }
@@ -60,6 +60,5 @@ const styles = StyleSheet.create({
   },
   ctnBack: {
     position: 'absolute',
-    zIndex: 2,
   },
 });

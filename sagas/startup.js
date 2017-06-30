@@ -2,15 +2,18 @@ import _ from "lodash";
 import { put, call, take, race, select } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import { List } from "immutable";
-import { Image } from "react-native";
+import { Image, Alert, Linking } from "react-native";
+import qs from "qs";
 import {
   Font,
   Asset,
   Location,
   Permissions,
   Contacts,
+  Constants,
   Notifications,
 } from "expo";
+import { URL, POST } from "../constants/rest";
 import ActionTypes from "../state/ActionTypes";
 import LocalStorage from "../utils/LocalStorage";
 import { request } from "../utils/fetch";
@@ -22,6 +25,7 @@ export default function* startup() {
   yield [call(loadFilters), call(loadFonts), call(loadImages)];
   let result = yield [call(getPhoneState), call(getCredential)];
   let phone = result[0], cred = result[1];
+  yield call(getParams);
   yield put({ type: ActionTypes.PHONESTATE_LOADED });
   //change this to user.locationGranted when implemented
   if (cred && cred.secret !== null) {
@@ -120,6 +124,25 @@ export function* getContacts() {
   return true;
 }
 
+function* getParams() {
+  let url = yield call(Linking.getInitialURL);
+  if (Constants.intentUri) {
+    let queryString = Constants.intentUri.substr(
+      Constants.intentUri.indexOf("?") + 1
+    );
+    if (queryString) {
+      let data = qs.parse(queryString);
+      yield put({ type: ActionTypes.SET_PARAMS, data });
+    }
+  } else if (url) {
+    let queryString = url.substr(url.indexOf("?") + 1);
+    if (queryString) {
+      let data = qs.parse(queryString);
+      yield put({ type: ActionTypes.SET_PARAMS, data });
+    }
+  }
+}
+
 function* getPhoneState() {
   let phone = yield call(LocalStorage.getPhoneStateAsync);
   if (phone !== null) {
@@ -151,8 +174,27 @@ function* getCredential() {
 
 function* checkCredential(cred) {
   //TODO: check credential expiration and set to expire if it is dead
+  const params = yield select(state => state.phone.params);
   if (cred.secret) {
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
+    if (params.userid && params.eventid) {
+      try {
+        // console.log(fbInfo);
+        yield call(
+          request,
+          POST,
+          URL +
+            "/v1.0/events/" +
+            params.eventid +
+            "/accepttextinvite?userid=" +
+            params.userid
+        );
+      } catch (error) {
+        //Alert Error
+        yield put({ type: ActionTypes.ALERT_ERROR, error });
+        return;
+      }
+    }
   }
 }
 

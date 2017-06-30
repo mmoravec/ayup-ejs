@@ -1,4 +1,4 @@
-import { List, Record, Map } from "immutable";
+import Immutable, { List, Record, Map } from "immutable";
 import ActionTypes from "./ActionTypes";
 
 export const EventState = Record({
@@ -44,6 +44,8 @@ export const Profile = Record({
   events: new List(),
   take_action: new List(),
   age_group: "",
+  all: new List(),
+  archive: new List(),
 });
 
 export const Credential = Record({
@@ -84,6 +86,7 @@ export const PhoneState = Record({
   contacts: {},
   fbFriends: {},
   myEventAlert: 0,
+  params: {},
 });
 
 export const Comment = Record({
@@ -117,6 +120,7 @@ export const Event = Record({
   requested: new List(),
   capacity: null,
   age_group: "",
+  completed: false,
 });
 
 export const FormState = Record({
@@ -168,6 +172,79 @@ export const FormState = Record({
     focus: false,
     shown: true,
     value: new List(),
+    stateKey: "friends",
+    label: "Friends",
+  },
+  activity: {
+    focus: false,
+    shown: true,
+    value: "basketball",
+    stateKey: "activity",
+  },
+  private: {
+    focus: false,
+    shown: true,
+    value: false,
+    stateKey: "private",
+  },
+  capacity: {
+    focus: false,
+    shown: false,
+    value: 0,
+    stateKey: "capacity",
+  },
+  status: "create",
+});
+
+export const Form = Immutable.fromJS({
+  startDate: {
+    focus: false,
+    shown: true,
+    value: "",
+    label: "Start Date",
+    stateKey: "startDate",
+  },
+  endDate: {
+    focus: false,
+    shown: true,
+    value: "",
+    label: "End Date",
+    stateKey: "endDate",
+  },
+  title: {
+    label: "Title",
+    focus: false,
+    shown: true,
+    value: "",
+    stateKey: "title",
+  },
+  desc: {
+    label: "Description",
+    focus: false,
+    shown: false,
+    value: "",
+    stateKey: "desc",
+  },
+  location: {
+    focus: false,
+    label: "Meeting Location",
+    shown: true,
+    value: "",
+    lnglat: [],
+    stateKey: "location",
+  },
+  dest: {
+    focus: false,
+    shown: false,
+    label: "Destination",
+    value: "",
+    lnglat: [],
+    stateKey: "dest",
+  },
+  friends: {
+    focus: false,
+    shown: true,
+    value: [],
     stateKey: "friends",
     label: "Friends",
   },

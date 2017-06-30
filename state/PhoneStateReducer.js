@@ -56,6 +56,10 @@ class PhoneStateReducer {
     return state.set("imagesLoaded", true);
   }
 
+  static [ActionTypes.SET_PARAMS](state, action) {
+    return state.set("params", action.data);
+  }
+
   static [ActionTypes.CREDENTIAL_LOADED](state, action) {
     return state.set("credLoaded", true);
   }
@@ -73,6 +77,11 @@ class PhoneStateReducer {
   }
 
   static [ActionTypes.ALERT_SUCCESS](state, action) {
+    if (action.message) {
+      state = state.set("statusMessage", action.message);
+    } else {
+      state = state.set("statusMessage", "Success!");
+    }
     return state.set("status", ActionTypes.SUCCESS);
   }
 

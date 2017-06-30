@@ -71,7 +71,6 @@ function* initAmplitude(user) {
   yield takeEvery(
     [
       ActionTypes.SAVE_EVENT,
-      ActionTypes.JOIN_EVENT,
       ActionTypes.REQUEST_EVENT,
       ActionTypes.ACCEPT_EVENT,
       ActionTypes.ACCEPT_REQUEST,
@@ -81,6 +80,7 @@ function* initAmplitude(user) {
       ActionTypes.REJECT_EVENT,
       ActionTypes.REJECT_REQUEST,
       ActionTypes.SET_SELECTED_EVENT,
+      ActionTypes.MODIFY_EVENT,
     ],
     trackAmplitudeEvent
   );

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from "react";
 import {
   StyleSheet,
@@ -10,6 +11,7 @@ import {
   LayoutAnimation,
   TouchableOpacity,
   Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import { connect } from "react-redux";
 import LocationSearch from "./LocationSearch";
@@ -30,6 +32,10 @@ export default class EventForm extends React.Component {
       form: data.form,
     };
   }
+
+  onScroll = _.debounce(() => {
+      this.setState({ scrollTo: false });
+    }, 1400);
 
   state = {
     scrollY: new Animated.Value(0),
@@ -92,10 +98,6 @@ export default class EventForm extends React.Component {
                 returnKeyType={"next"}
               />
             </View>
-            {this.props.form.desc.shown &&
-              <View style={styles.input}>
-                <Hoshi {...this._descProps} {...this.props.form.desc} />
-              </View>}
             <View style={styles.switch}>
               <MyText style={styles.text}>Private</MyText>
               <Switch
@@ -153,6 +155,10 @@ export default class EventForm extends React.Component {
                   onChange={this._onChange}
                 />
               </View>}
+            {this.props.form.desc.shown &&
+            <View style={styles.input}>
+              <Hoshi {...this._descProps} {...this.props.form.desc} />
+            </View>}
             <View style={styles.optionalFields}>
               <MyText style={styles.optText}>
                 Add Field
@@ -160,7 +166,7 @@ export default class EventForm extends React.Component {
               <View style={styles.fieldContainer}>
                 {!this.props.form.capacity.shown &&
                   <TouchableOpacity
-                    onPress={this._show.bind(null, "capacity")}
+                    onPress={this._showCapacity}
                     style={{ margin: 5 }}>
                     <Image
                       source={require("../../assets/images/capacity_btn.png")}
@@ -170,7 +176,7 @@ export default class EventForm extends React.Component {
                   </TouchableOpacity>}
                 {!this.props.form.desc.shown &&
                   <TouchableOpacity
-                    onPress={this._show.bind(null, "desc")}
+                    onPress={this._showDescription}
                     style={{ margin: 5 }}>
                     <Image
                       source={require("../../assets/images/description_btn.png")}
@@ -179,7 +185,7 @@ export default class EventForm extends React.Component {
                   </TouchableOpacity>}
                 {!this.props.form.dest.shown &&
                   <TouchableOpacity
-                    onPress={this._show.bind(null, "dest")}
+                    onPress={this._showDestination}
                     style={{ margin: 5 }}>
                     <Image
                       source={require("../../assets/images/destination_btn.png")}
@@ -196,29 +202,29 @@ export default class EventForm extends React.Component {
               <View style={styles.fieldContainer}>
                 {this.props.form.capacity.shown &&
                   <TouchableOpacity
-                    onPress={this._show.bind(null, "capacity")}
+                    onPress={this._showCapacity}
                     style={{ margin: 5 }}>
                     <Image
-                      source={require("../../assets/images/capacity_btn.png")}
+                      source={require("../../assets/images/-capacity_btn.png")}
                       style={{ height: 40, width: 114 }}
                       resizeMode={"contain"}
                     />
                   </TouchableOpacity>}
                 {this.props.form.desc.shown &&
                   <TouchableOpacity
-                    onPress={this._show.bind(null, "desc")}
+                    onPress={this._showDescription}
                     style={{ margin: 5 }}>
                     <Image
-                      source={require("../../assets/images/description_btn.png")}
+                      source={require("../../assets/images/-description_btn.png")}
                       style={{ height: 40, width: 131 }}
                     />
                   </TouchableOpacity>}
                 {this.props.form.dest.shown &&
                   <TouchableOpacity
-                    onPress={this._show.bind(null, "dest")}
+                    onPress={this._showDestination}
                     style={{ margin: 5 }}>
                     <Image
-                      source={require("../../assets/images/destination_btn.png")}
+                      source={require("../../assets/images/-destination_btn.png")}
                       style={{ height: 40, width: 122 }}
                       resizeMode={"contain"}
                     />
@@ -240,9 +246,18 @@ export default class EventForm extends React.Component {
     }
   };
 
-  _show = field => {
-    this.props.dispatch(Actions.showhideField(field));
+  _showDestination = field => {
+    this.props.dispatch(Actions.showhideField('dest'));
   };
+
+  _showCapacity = field => {
+    this.props.dispatch(Actions.showhideField('capacity'));
+  };
+
+  _showDescription = field => {
+    this.props.dispatch(Actions.showhideField('desc'));
+  };
+  
 
   _privateSwitch = () => {
     this.props.dispatch(
@@ -253,9 +268,7 @@ export default class EventForm extends React.Component {
   _scrollTo = num => {
     this.setState({ scrollTo: true });
     this.refs.scrollView.scrollTo({ y: num, animated: true });
-    setTimeout(() => {
-      this.setState({ scrollTo: false });
-    }, 1200);
+    this.onScroll();
   };
 
   _focusElement = el => {

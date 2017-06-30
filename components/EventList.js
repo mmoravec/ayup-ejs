@@ -21,34 +21,15 @@ const {height, width} = Dimensions.get('window');
 export default class EventList extends React.Component {
 
   render() {
-    let data = this._getHeaders(this.props.events);
     return (
       <View style={this.props.styles.container}>
         <ImmutableListView
-          immutableData={data}
+          immutableData={this.props.events}
           renderRow={this._renderRow}
           renderSectionHeader={this._renderSectionHeader}
         />
       </View>
     );
-  }
-
-  _getHeaders = (events) => {
-    events = events.groupBy(x => {
-      let date = new Date(x.start_time);
-      return dateFormat(date, 'fullDate');
-    }).sort((a, b) => {
-      let n = new Date(a.get(0).start_time).getTime();
-      let f = new Date(b.get(0).start_time).getTime();
-      if (n > f) {
-        return 1;
-      } else if (f > n) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
-    return events;
   }
 
   _renderRow = (rowData) => {
@@ -59,7 +40,9 @@ export default class EventList extends React.Component {
 
   _renderSectionHeader = (sectionData, header) => {
     return (
-      <MyText style={this.props.styles.header}>{header}</MyText>
+      <View>
+        <MyText style={this.props.styles.header}>{header}</MyText>
+      </View>
     );
   }
 }

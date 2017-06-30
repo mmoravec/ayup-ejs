@@ -51,8 +51,8 @@ export default class FriendSelector extends React.Component {
         weight: 0.4,
       },
       {
-        name: 'profile_pic',
-        weight: 0.6
+        name: 'first_name',
+        weight: 0.8,
       }
     ],
   };
@@ -67,7 +67,11 @@ export default class FriendSelector extends React.Component {
     }, 200);
   }
 
-  componetDidUpdate(prevProps, prevState) {
+  componentWillUnmount() {
+    this._scrollY = 0;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
       this._fuse = new Fuse(this.props.friends, this._fuseOptions);
     }
@@ -164,7 +168,7 @@ export default class FriendSelector extends React.Component {
     if (this.props.focus && this.props.friends.length > 0) {
       return (
         <FlatList
-          data={this.state.filteredFriends}
+          data={this.state.filteredFriends.slice(0, 6)}
           renderItem={this._renderFilterRow}
           keyExtractor={this._keyExtractor}
           keyboardShouldPersistTaps={'always'}
@@ -178,10 +182,6 @@ export default class FriendSelector extends React.Component {
 
   _renderFilterRow = (rowData) => {
     let push = this._pushFriend.bind(this, rowData), num;
-    if (rowData.item.phone) {
-      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
-      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
-    }
     return (
       <TouchableHighlight underlayColor={'#f2f2f2'} onPress={push}>
         <View style={styles.friend}>
@@ -192,7 +192,7 @@ export default class FriendSelector extends React.Component {
             <MyText style={styles.name}>{rowData.item.name}</MyText>
             {
               rowData.item.phone && !rowData.item.profile_pic &&
-              <MyText style={styles.phone}>{num}</MyText>
+              <MyText style={styles.phone}>{rowData.item.phone}</MyText>
             }
           </View>
         </View>
@@ -202,10 +202,6 @@ export default class FriendSelector extends React.Component {
 
   _renderInvitedRow = (rowData) => {
     let remove = this._removeFriend.bind(this, rowData), num;
-    if (rowData.item.phone) {
-      num = "(" + rowData.item.phone.substring(0, 3) + ") " +
-      rowData.item.phone.substring(3, 6) + "-" + rowData.item.phone.substring(6);
-    }
     return (
       <View style={styles.friend}>
         <View style={styles.imageBox}>
@@ -215,7 +211,7 @@ export default class FriendSelector extends React.Component {
           <MyText style={styles.name}>{rowData.item.name}</MyText>
           {
             rowData.item.phone && !rowData.item.profile_pic &&
-            <MyText style={styles.phone}>{num}</MyText>
+            <MyText style={styles.phone}>{rowData.item.phone}</MyText>
           }
         </View>
         <TouchableOpacity onPress={remove}>
@@ -249,7 +245,7 @@ export default class FriendSelector extends React.Component {
 
   _pushFriend = (friend) => {
     let friends = this.props.value;
-    var result = friends.find(obj => obj.item.name === friend.item.name);
+    var result = friends.find(obj => obj.item.ayup_id === friend.item.ayup_id);
     if (!result) {
       friends = friends.push(friend);
       this.props.onChange(this.props.stateKey, friends);
@@ -258,7 +254,7 @@ export default class FriendSelector extends React.Component {
 
   _removeFriend = (friend) => {
     let friends = this.props.value;
-    let newFriends = friends.filter(obj => obj.fbid !== friend.fbid);
+    let newFriends = friends.filter(obj => obj.item.ayup_id !== friend.item.ayup_id);
     this.props.onChange(this.props.stateKey, newFriends);
   }
 }

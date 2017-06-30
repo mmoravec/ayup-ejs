@@ -24,7 +24,7 @@ function* getFacebookFriends() {
       request,
       GET,
       "https://graph.facebook.com/v2.8/me/friends/" +
-        "?fields=name,id,picture.width(120).height(120)&" +
+        "?limit=5000&fields=name,id,picture.width(120).height(120)&" +
         "access_token=" +
         cred.access_token
     );
@@ -73,16 +73,16 @@ function* receivedContacts(action) {
     call(sortContacts, action.contacts),
     call(getFacebookFriends),
   ];
-  if (phone.contacts.length !== result[0].length) {
-    sync = true;
+  if (Object.keys(phone.contacts).length !== Object.keys(result[0]).length) {
     yield put({ type: ActionTypes.SET_CONTACTS, contacts: result[0] });
-  }
-  if (phone.fbFriends.length !== result[1].length) {
     sync = true;
+  }
+  if (Object.keys(phone.fbFriends).length !== Object.keys(result[1]).length) {
     yield put({ type: ActionTypes.SET_FBFRIENDS, friends: result[1] });
+    sync = true;
   }
   let blah = result[1].concat(result[0]);
-  if (true) {
+  if (sync) {
     try {
       contacts = yield call(
         request,
@@ -93,6 +93,8 @@ function* receivedContacts(action) {
     } catch (error) {
       return;
     }
+    yield call(delay, 1000);
+    yield call(getProfile);
   }
 }
 
@@ -162,13 +164,15 @@ function transformEvents(profile) {
       temp.not_going.push(event);
     }
   });
+  temp.all = temp.hosted.concat(temp.invited, temp.requested, temp.going);
+  temp.archive = temp.completed.concat(temp.not_going);
   temp.hosted.map(event => {
     if (event.requested.length > 0) {
       temp.take_action.push(event);
     }
   });
   for (var k in temp) {
-    profile[k] = temp[k];
+    profile[k] = new List(temp[k]);
   }
   return profile;
 }
@@ -196,5 +200,22 @@ function filterFriends(profile) {
     }
   });
   p = p.concat(_.values(m));
+  p = p.filter(per => {
+    return per.profile_pic || per.phone;
+  });
+  p = p.map(per => {
+    if (per.phone) {
+      per.phone =
+        "(" +
+        per.phone.substring(0, 3) +
+        ") " +
+        per.phone.substring(3, 6) +
+        "-" +
+        per.phone.substring(6);
+    } else if (per.name.indexOf(" ") > -1) {
+      per.first_name = per.name.substring(0, per.name.indexOf(" "));
+    }
+    return per;
+  });
   return p;
 }

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {
   Animated,
   Text,
@@ -16,17 +16,6 @@ const PADDING = 24;
 
 @connect()
 export default class Hoshi extends BaseInput {
-
-  static propTypes = {
-    borderColor: PropTypes.string,
-
-    /*
-     * this is used to set backgroundColor of label mask.
-     * this should be replaced if we can find a better way to mask label animation.
-     */
-    maskColor: PropTypes.string,
-    height: PropTypes.number,
-  };
 
   static defaultProps = {
     borderColor: 'red',

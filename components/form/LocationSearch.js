@@ -30,14 +30,13 @@ export default class LocationSearch extends React.Component {
     regionChangeCount: 0,
   }
   _yOffset = 0;
+  _scrollY = height * 0.25 + 3 * 48;
 
   componentDidMount() {
-    setTimeout(() => {
-      this._view.measure((fx, fy, width, height, px, py) => {
-        this._scrollY = py;
-      });
-    }, 200);
     this.props.dispatch(Actions.resetAddress());
+    if (this.props.label === "Destination") {
+      this._scrollY = height * 0.25 + 4 * 48;
+    } 
   }
 
   componentWillReceiveProps(nextProps) {

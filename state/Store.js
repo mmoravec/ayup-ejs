@@ -17,19 +17,28 @@ const navReducer = (state, action) => {
   return newState || state;
 };
 
+const allReducers = combineReducers({
+  navigation: navReducer,
+  events: EventsReducer,
+  phone: PhoneStateReducer,
+  form: FormReducer,
+  credential: CredentialReducer,
+  account: AccountReducer,
+  profile: ProfileReducer,
+});
+
 const store = createStore(
   //combine all reducers here
-  combineReducers({
-    navigation: navReducer,
-    events: EventsReducer,
-    phone: PhoneStateReducer,
-    form: FormReducer,
-    credential: CredentialReducer,
-    account: AccountReducer,
-    profile: ProfileReducer,
-  }),
+  allReducers,
   applyMiddleware(sagaMiddleware, routeTracker)
 );
+
+if (module.hot) {
+  module.hot.accept(() => {
+    const nextRootReducer = allReducers.default;
+    store.replaceReducer(nextRootReducer);
+  });
+}
 
 sagaMiddleware.run(sagas);
 

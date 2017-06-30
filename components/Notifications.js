@@ -5,6 +5,7 @@ import {
   Animated,
   Dimensions,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { connect } from 'react-redux';
@@ -45,7 +46,7 @@ export default class Notifications extends React.Component {
             <MyText style={styles.message} >{this.props.phone.notification.data.body}</MyText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.close} onPress={this._close}>
-            <MaterialIcons size={30} name={"close"} />
+            <MaterialIcons size={36} name={"close"} />
           </TouchableOpacity>
         </Animated.View>
       );
@@ -73,22 +74,29 @@ export default class Notifications extends React.Component {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    height: height * 0.2,
-    width,
+    paddingBottom: 20,
+    width: width * 0.90,
     backgroundColor: '#fff',
     zIndex: 10,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    borderWidth: Platform.OS === 'android' ? 1 : 0,
+    left: width * 0.05,
+    paddingLeft: 20,
+    paddingRight: 40,
   },
   close: {
     position: 'absolute',
-    right: 15,
-    top: 30,
+    right: 10,
+    top: 25,
   },
   message: {
-    margin: 30,
     fontSize: 18,
-    marginTop: 50,
-    marginRight: 10,
+    marginTop: 30,
   },
 });

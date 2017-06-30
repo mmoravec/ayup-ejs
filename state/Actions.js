@@ -28,10 +28,15 @@ export default class Actions {
     };
   }
 
-  static modifyEvent(eventID) {
+  static modifyEvent() {
     return {
       type: ActionTypes.MODIFY_EVENT,
-      eventID,
+    };
+  }
+
+  static copyEvent() {
+    return {
+      type: ActionTypes.COPY_EVENT,
     };
   }
 
@@ -109,13 +114,6 @@ export default class Actions {
       comment,
       eventID,
       parentID,
-    };
-  }
-
-  static joinEvent(eventID) {
-    return {
-      type: ActionTypes.JOIN_EVENT,
-      eventID,
     };
   }
 

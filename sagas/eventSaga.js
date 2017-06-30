@@ -3,7 +3,7 @@ import { List } from "immutable";
 import { delay } from "redux-saga";
 import { takeLatest, select, call, put, fork } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
-import { Event, FormState } from "../state/Records";
+import { Event, Form } from "../state/Records";
 import { request } from "../utils/fetch";
 import { URL, POST, GET, DELETE, PUT } from "../constants/rest";
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
@@ -25,6 +25,7 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.MODIFY_EVENT, modifyEvent),
     takeLatest(ActionTypes.UPDATE_EVENT, updateEvent),
     takeLatest(ActionTypes.INVITE_USER, inviteUser),
+    takeLatest(ActionTypes.COPY_EVENT, copyEvent),
   ];
 }
 
@@ -114,6 +115,7 @@ function* acceptEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield fork(loadEvent, action);
 }
 
 function* acceptRequest(action) {
@@ -129,6 +131,7 @@ function* acceptRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield fork(loadEvent, action);
 }
 
 function* rejectRequest(action) {
@@ -144,6 +147,7 @@ function* rejectRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield fork(loadEvent, action);
 }
 
 function* requestEvent(action) {
@@ -158,10 +162,11 @@ function* requestEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield call(updateSelectedEvent, action.eventID);
+  yield fork(loadEvent, action);
 }
 
 function* deleteEvent(action) {
+  const region = yield select(state => state.events.region);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
     yield call(request, DELETE, URL + "/v1.0/events/" + action.eventID);
@@ -169,6 +174,8 @@ function* deleteEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield call(delay, 2000);
+  yield call(updateNearbyEvents, region);
   yield put({ type: ActionTypes.ZERO_SELECTED_COMMENT });
   yield put({ type: ActionTypes.ZERO_SELECTED_EVENT });
   yield put({ type: ActionTypes.GET_PROFILE });
@@ -187,7 +194,7 @@ function* rejectEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
-  yield fork(updateSelectedEvent, action.eventID);
+  yield fork(loadEvent, action);
 }
 
 function* inviteUser(action) {
@@ -202,19 +209,8 @@ function* inviteUser(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     return;
   }
-  yield put({ type: ActionTypes.ALERT_SUCCESS });
-}
-
-function* updateSelectedEvent(eventID) {
-  let data;
-  try {
-    data = yield call(request, GET, URL + "/v1.0/events/" + eventID);
-  } catch (error) {
-    yield call(delay, 5000);
-    yield fork(updateSelectedEvent, eventID);
-    return;
-  }
-  yield put({ type: ActionTypes.SET_SELECTED_EVENT, selectedEvent: data.body });
+  yield put({ type: ActionTypes.ALERT_SUCCESS, message: "Invites Sent!" });
+  yield fork(loadEvent, action);
 }
 
 function* loadComments(action) {
@@ -264,6 +260,11 @@ function* loadEvent(action) {
     yield fork(loadEvent, action);
     return;
   }
+  data.body.completed = new Date(data.body.end_time) < new Date();
+  data.body.invited = data.body.invited.filter(friend => {
+    return friend.profile_pic;
+  });
+
   yield put({
     type: ActionTypes.SET_SELECTED_EVENT,
     selectedEvent: new Event({ ...data.body }),
@@ -272,7 +273,25 @@ function* loadEvent(action) {
 
 function* modifyEvent(action) {
   const event = yield select(state => state.events);
-  let form = new FormState().toJS();
+  let form = Form.toJS();
+  form = transformEvent(event, form);
+  form.friends.shown = false;
+  form.status = "update";
+  yield put({ type: ActionTypes.SET_FORM, form });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "NewEvent" });
+}
+
+function* copyEvent(action) {
+  const event = yield select(state => state.events);
+  let form = Form.toJS();
+  form = transformEvent(event, form);
+  form.friends.shown = true;
+  form.status = "create";
+  yield put({ type: ActionTypes.SET_FORM, form });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "NewEvent" });
+}
+
+function transformEvent(event, form) {
   event.selectedEvent.forEach((val, key) => {
     switch (key) {
       case "start_time":
@@ -314,8 +333,5 @@ function* modifyEvent(action) {
         }
     }
   });
-  form.friends.shown = false;
-  form.status = "update";
-  yield put({ type: ActionTypes.SET_FORM, form });
-  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "NewEvent" });
+  return form;
 }
