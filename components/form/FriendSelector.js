@@ -123,7 +123,12 @@ export default class FriendSelector extends React.Component {
   _addFriend = () => {
     if (!this.props.focus) {
       this.setState({inputText: ''});
-      setTimeout(() => { this.props.scrollTo(this._scrollY + this.props.value.size * 60 - 80); }, 200);
+    setTimeout(() => {
+      this._view.measure((fx, fy, width, height, px, py) => {
+        this.props.scrollTo(py - 80);
+      });
+    }, 100);
+      // setTimeout(() => { this.props.scrollTo(this._scrollY + this.props.value.size * 60 - 80); }, 200);
     }
     this.props.onFocus(this.props.stateKey);
     this.props.dispatch(Actions.inviteFriends());

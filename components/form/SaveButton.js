@@ -127,6 +127,13 @@ export default class SaveButton extends React.Component {
       capacity: eventState.capacity.value,
       age_group: this.props.profile.age_group,
     };
+    debugger;
+    event.map(field => {
+      if (!field.shown) {
+        delete event[field.key];
+      }
+    });
+    debugger;
       this.props.dispatch(Actions.saveEvent(event));
     }
   }

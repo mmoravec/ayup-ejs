@@ -21,14 +21,6 @@ export default class TimeSelector extends React.Component {
   }
   _yOffset = 0;
 
-  componentDidMount() {
-    setTimeout(() => {
-      this._view.measure((fx, fy, width, height, px, py) => {
-        this._scrollY = py;
-      });
-    }, 200);
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.focus) {
       this.setState({focusDate: true});
@@ -119,7 +111,11 @@ export default class TimeSelector extends React.Component {
       let d = new Date(date.year, date.month, date.day, time.hour, minute);
       this._onChange(d);
     } else {
-      this.props.scrollTo(this._scrollY - 80);
+      setTimeout(() => {
+        this._view.measure((fx, fy, width, height, px, py) => {
+          this.props.scrollTo(py - 80);
+        });
+      }, 100);
     }
   }
 

@@ -99,7 +99,8 @@ function* updateNearbyEvents(action) {
   } catch (error) {
     return;
   }
-  yield put({ type: ActionTypes.SET_NEARBY, data: events.body });
+  events = events.body ? pushEvents(events.body) : events.body;
+  yield put({ type: ActionTypes.SET_NEARBY, data: events });
 }
 
 function* acceptEvent(action) {
@@ -115,6 +116,7 @@ function* acceptEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -131,6 +133,7 @@ function* acceptRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -147,6 +150,7 @@ function* rejectRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -194,6 +198,7 @@ function* rejectEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -334,4 +339,30 @@ function transformEvent(event, form) {
     }
   });
   return form;
+}
+
+function pushEvents(events) {
+  let map = {};
+  let result = events.map(event => {
+    let long = event.location.coordinates[0];
+    let lat = event.location.coordinates[1];
+    if (map[long]) {
+      event.location.coordinates[0] =
+        event.location.coordinates[0] + getRandomInt(1, 10) * 0.000001;
+    }
+    if (map[lat]) {
+      event.location.coordinates[1] =
+        event.location.coordinates[1] + getRandomInt(1, 10) * 0.000001;
+    }
+    map[lat] = true;
+    map[long] = true;
+    return event;
+  });
+  return result;
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }

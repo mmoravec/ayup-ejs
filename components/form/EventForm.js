@@ -4,14 +4,12 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  ScrollView,
   Animated,
   Switch,
   Image,
   LayoutAnimation,
   TouchableOpacity,
   Keyboard,
-  KeyboardAvoidingView,
 } from "react-native";
 import { connect } from "react-redux";
 import LocationSearch from "./LocationSearch";
@@ -39,6 +37,7 @@ export default class EventForm extends React.Component {
 
   state = {
     scrollY: new Animated.Value(0),
+    staticY: 0,
     warn: false,
     scrollTo: true,
   };
@@ -57,6 +56,7 @@ export default class EventForm extends React.Component {
         this.props.dispatch(Actions.setFormValue("title", text)),
       ...this._inputProps,
       maxLength: 40,
+      scrollTo: this._scrollTo,
     };
     this._descProps = {
       onFocus: this._focusElement.bind(this, "desc"),
@@ -64,6 +64,7 @@ export default class EventForm extends React.Component {
         this.props.dispatch(Actions.setFormValue("desc", text)),
       ...this._inputProps,
       maxLength: 250,
+      scrollTo: this._scrollTo,
     };
     this._actionProps = {
       action: this._saveBtnPress,
@@ -78,19 +79,31 @@ export default class EventForm extends React.Component {
   }
 
   render() {
+    let margin = this.state.scrollY.interpolate({
+      inputRange: [-150, 0, 90, 400],
+      outputRange: [0.9, 0.9, 1, 1],
+    });
+    let y = this.state.scrollY.interpolate({
+      inputRange: [-150, 0, 90, 400],
+      outputRange: [-50, -50, 0, 0],
+    });
     return (
       <View>
-        <View style={styles.scrollView}>
-          <ScrollView
-            ref="scrollView"
+        <Animated.View style={styles.scrollView}>
+          <Animated.ScrollView
+            ref={view => { this._scrollView = view; }}
             keyboardShouldPersistTaps={"always"}
-            scrollEventThrottle={300}
-            onScroll={this._onScroll}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+              { useNativeDriver: true, listener: this._onScroll }
+            )}
             contentContainerStyle={styles.form}>
             <ActivitySelector
               {...this.props.form.activity}
               onChange={this._onChange}
             />
+            <Animated.View style={{transform: [{scale: margin}, {translateY: y}]}}>
             <View style={[styles.input, styles.topInput]}>
               <Hoshi
                 {...this._titleProps}
@@ -167,7 +180,7 @@ export default class EventForm extends React.Component {
                 {!this.props.form.capacity.shown &&
                   <TouchableOpacity
                     onPress={this._showCapacity}
-                    style={{ margin: 5 }}>
+                    style={{ margin: 5, height: 40 }}>
                     <Image
                       source={require("../../assets/images/capacity_btn.png")}
                       style={{ height: 40, width: 114 }}
@@ -177,7 +190,7 @@ export default class EventForm extends React.Component {
                 {!this.props.form.desc.shown &&
                   <TouchableOpacity
                     onPress={this._showDescription}
-                    style={{ margin: 5 }}>
+                    style={{ margin: 5, height: 40 }}>
                     <Image
                       source={require("../../assets/images/description_btn.png")}
                       style={{ height: 40, width: 131 }}
@@ -186,7 +199,7 @@ export default class EventForm extends React.Component {
                 {!this.props.form.dest.shown &&
                   <TouchableOpacity
                     onPress={this._showDestination}
-                    style={{ margin: 5 }}>
+                    style={{ margin: 5, height: 40 }}>
                     <Image
                       source={require("../../assets/images/destination_btn.png")}
                       style={{ height: 40, width: 122 }}
@@ -203,7 +216,7 @@ export default class EventForm extends React.Component {
                 {this.props.form.capacity.shown &&
                   <TouchableOpacity
                     onPress={this._showCapacity}
-                    style={{ margin: 5 }}>
+                    style={{ margin: 5, height: 40 }}>
                     <Image
                       source={require("../../assets/images/-capacity_btn.png")}
                       style={{ height: 40, width: 114 }}
@@ -213,7 +226,7 @@ export default class EventForm extends React.Component {
                 {this.props.form.desc.shown &&
                   <TouchableOpacity
                     onPress={this._showDescription}
-                    style={{ margin: 5 }}>
+                    style={{ margin: 5, height: 40 }}>
                     <Image
                       source={require("../../assets/images/-description_btn.png")}
                       style={{ height: 40, width: 131 }}
@@ -222,7 +235,7 @@ export default class EventForm extends React.Component {
                 {this.props.form.dest.shown &&
                   <TouchableOpacity
                     onPress={this._showDestination}
-                    style={{ margin: 5 }}>
+                    style={{ margin: 5, height: 40 }}>
                     <Image
                       source={require("../../assets/images/-destination_btn.png")}
                       style={{ height: 40, width: 122 }}
@@ -232,18 +245,20 @@ export default class EventForm extends React.Component {
               </View>
             </View>
             <View style={{ height: height * 0.1 }} />
-          </ScrollView>
-        </View>
+            </Animated.View>
+          </Animated.ScrollView>
+        </Animated.View>
         <SaveButton {...this._actionProps} event={this.state} />
       </View>
     );
   }
 
-  _onScroll = () => {
+  _onScroll = (event) => {
     if (!this.state.scrollTo && !this.props.form.friends.focus) {
       this.props.dispatch(Actions.blurFields());
       Keyboard.dismiss();
     }
+    this.setState({staticY: event.nativeEvent.contentOffset.y });
   };
 
   _showDestination = field => {
@@ -257,7 +272,6 @@ export default class EventForm extends React.Component {
   _showDescription = field => {
     this.props.dispatch(Actions.showhideField('desc'));
   };
-  
 
   _privateSwitch = () => {
     this.props.dispatch(
@@ -267,7 +281,8 @@ export default class EventForm extends React.Component {
 
   _scrollTo = num => {
     this.setState({ scrollTo: true });
-    this.refs.scrollView.scrollTo({ y: num, animated: true });
+    console.log(this.state.staticY);
+    this._scrollView._component.scrollTo({ y: num + this.state.staticY, animated: true });
     this.onScroll();
   };
 
@@ -299,8 +314,6 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: "rgba(0,0,0,0)",
     borderRadius: 10,
-    marginLeft: width * 0.05,
-    marginRight: width * 0.05,
     height,
   },
   form: {
