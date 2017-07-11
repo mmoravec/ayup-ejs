@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import {
   View,
@@ -79,12 +80,13 @@ class ListRow extends React.Component {
       </TouchableOpacity>
     );
   }
-  _onItemPress = (id) => {
-    //TODO: create a saga for this when fetching comments becomes
-    this.props.dispatch(Actions.selectEvent(id));
-    this.props.dispatch(Actions.routeChange('Event'));
-    if (this.props.closeBtn) {
-      this.props.closeBtn();
-    }
-  }
+  _onItemPress = _.debounce(() => {
+      this.props.dispatch(Actions.selectEvent(this.props.data.id));
+      this.props.dispatch(Actions.routeChange('Event'));
+      if (this.props.closeBtn) {
+        this.props.closeBtn();
+      }
+    }, 1000, {
+      leading: true,
+    });
 }

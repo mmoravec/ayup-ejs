@@ -70,7 +70,6 @@ export default class EventForm extends React.Component {
       action: this._saveBtnPress,
       image: require("../../assets/images/btn_save.png"),
       image2: require("../../assets/images/btn_update.png"),
-      warnMessage: "Please fill out Title, Start Date, End Date, and Location",
     };
   }
 

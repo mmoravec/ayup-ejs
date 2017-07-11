@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import {
   StyleSheet,
@@ -87,11 +88,13 @@ export default class EventScreen extends React.Component {
     this.setState({showGuestInfo: false});
   }
 
-  _backBtnPress = () => {
-    this.props.dispatch(Actions.zeroSelectedEvent());
-    this.props.dispatch(Actions.zeroSelectedComment());
-    this.props.dispatch(Actions.routeChange('Back'));
-  }
+  _backBtnPress = _.debounce(() => {
+      this.props.dispatch(Actions.zeroSelectedEvent());
+      this.props.dispatch(Actions.zeroSelectedComment());
+      this.props.dispatch(Actions.routeChange('Back'));
+    }, 1000, {
+      leading: true,
+   });
 
   _onCommentPress = (parentID) => {
     if (typeof parentID === 'string') {

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import {
   View,
@@ -28,6 +29,7 @@ export default class SaveButton extends React.Component {
 
   state = {
     warn: false,
+    warnMessage: "Please fill out Title, Start Date, End Date, and Location",
   }
 
   componentWillUpdate() {
@@ -97,6 +99,10 @@ export default class SaveButton extends React.Component {
   _saveBtnPress = () => {
     let eventState = this.props.form;
     if (eventState.startDate.value === "" || eventState.endDate.value === "" || eventState.title.value === "" || eventState.location.value === "") {
+      this.setState({warnMessage: "Please fill out Title, Start Date, End Date, and Location"});
+      this._warnUser();
+    } else if (eventState.startDate.value < new Date()) {
+      this.setState({warnMessage: "Start time cannot be in the past. Please udpate."});
       this._warnUser();
     } else {
     let invited = [];
@@ -127,13 +133,11 @@ export default class SaveButton extends React.Component {
       capacity: eventState.capacity.value,
       age_group: this.props.profile.age_group,
     };
-    debugger;
-    event.map(field => {
-      if (!field.shown) {
-        delete event[field.key];
+    eventState.map((val, key) => {
+      if (!val.shown) {
+        delete event[key];
       }
     });
-    debugger;
       this.props.dispatch(Actions.saveEvent(event));
     }
   }
@@ -141,6 +145,7 @@ export default class SaveButton extends React.Component {
    _updateBtnPress = () => {
     let eventState = this.props.form;
     if (eventState.startDate.value === "" || eventState.endDate.value === "" || eventState.title.value === "" || eventState.location.value === "") {
+      this.setState({warnMessage: "Please fill out Title, Start Date, End Date, and Location"});
       this._warnUser();
     } else {
     let event = {
@@ -170,7 +175,7 @@ export default class SaveButton extends React.Component {
       return (
         <View style={styles.warn}>
           <MyText style={{fontSize: 16, color: '#fff', textAlign: 'center'}}>
-            {this.props.warnMessage}
+            {this.state.warnMessage}
           </MyText>
         </View>
       );

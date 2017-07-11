@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import { MapView } from 'expo';
 import { connect } from 'react-redux';
@@ -26,10 +27,13 @@ export default class EventList extends React.Component {
    );
  }
 
- _onMarkerPress = () => {
+  _onMarkerPress = _.debounce(() => {
+      this.props.dispatch(Actions.selectEvent(this.props.event.id));
+      this.props.dispatch(Actions.routeChange('Event'));
+    }, 1000, {
+      leading: true,
+    });
    //TODO: create a saga for this when fetching comments becomes
-   this.props.dispatch(Actions.selectEvent(this.props.event.id));
-   this.props.dispatch(Actions.routeChange('Event'));
- }
+
 
 }

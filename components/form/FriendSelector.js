@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Animated,
+  LayoutAnimation,
   FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -71,6 +72,10 @@ export default class FriendSelector extends React.Component {
     this._scrollY = 0;
   }
 
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
       this._fuse = new Fuse(this.props.friends, this._fuseOptions);
@@ -123,11 +128,11 @@ export default class FriendSelector extends React.Component {
   _addFriend = () => {
     if (!this.props.focus) {
       this.setState({inputText: ''});
-    setTimeout(() => {
-      this._view.measure((fx, fy, width, height, px, py) => {
-        this.props.scrollTo(py - 80);
-      });
-    }, 100);
+      setTimeout(() => {
+        this._view.measure((fx, fy, width, height, px, py) => {
+          this.props.scrollTo(py - 80);
+        });
+      }, 100);
       // setTimeout(() => { this.props.scrollTo(this._scrollY + this.props.value.size * 60 - 80); }, 200);
     }
     this.props.onFocus(this.props.stateKey);

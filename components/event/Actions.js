@@ -26,7 +26,7 @@ export default class EventActions extends React.Component {
 
   state = {
     active: false,
-    bottom: new Animated.Value(height * 1.5),
+    top: new Animated.Value(- height * 0.5),
   }
 
   render() {
@@ -34,9 +34,7 @@ export default class EventActions extends React.Component {
       return (
         <View style={styles.container}>
           {this._renderMenu()}
-          <Animated.View style={[styles.settings, {bottom: this.state.bottom}]}>
             {this._renderItems()}
-          </Animated.View>
         </View>
       );
     } else {
@@ -47,28 +45,32 @@ export default class EventActions extends React.Component {
   _renderItems = () => {
     if (this.props.event.completed) {
       return (
-        <View>
-          <TouchableOpacity onPress={this._copyEvent}>
-            <MyText style={styles.modify}>
-              Copy
-            </MyText>
-          </TouchableOpacity>
-        </View>
+        <Animated.View style={[styles.settings, {top: this.state.top}]}>
+          <View style={{marginTop: 40}}>
+            <TouchableOpacity onPress={this._copyEvent}>
+              <MyText style={styles.copy}>
+                Copy
+              </MyText>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
       );
     } else {
       return (
-        <View>
-          <TouchableOpacity onPress={this._modifyEvent}>
-            <MyText style={styles.modify}>
-              Modify
-            </MyText>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this._deleteEvent}>
-            <MyText style={styles.delete}>
-              Delete
-            </MyText>
-          </TouchableOpacity>
-        </View>
+        <Animated.View style={[styles.settings, {top: this.state.top}]}>
+          <View style={{marginTop: 30}}>
+            <TouchableOpacity onPress={this._modifyEvent}>
+              <MyText style={styles.modify}>
+                Modify
+              </MyText>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this._deleteEvent}>
+              <MyText style={styles.delete}>
+                Delete
+              </MyText>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
       );
     }
   }
@@ -114,9 +116,9 @@ export default class EventActions extends React.Component {
   _settingsPress = () => {
     this.setState({active: !this.state.active});
     if (this.state.active) {
-      Animated.spring(this.state.bottom, {toValue: height * 0.5, tension: 60, friction: 6, velocity: 300}).start();
+      Animated.spring(this.state.top, {toValue: -height * 0.5, tension: 60, friction: 6, velocity: 300}).start();
     } else {
-      Animated.spring(this.state.bottom, {toValue: 0, tension: 60, friction: 6, velocity: 300}).start();
+      Animated.spring(this.state.top, {toValue: 0, tension: 60, friction: 6, velocity: 300}).start();
     }
 
   }
@@ -126,14 +128,12 @@ export default class EventActions extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height * 0.2,
-    zIndex: 1,
+    zIndex: 5,
     backgroundColor: 'rgba(0,0,0,0)',
     position: 'absolute',
     top: 0,
   },
   settings: {
-    height: height * 0.4,
     width: width * 0.9,
     position: 'absolute',
     backgroundColor: '#fff',
@@ -159,5 +159,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 10,
     color: '#222',
-  }
+  },
+  copy: {
+    fontSize: 24,
+    marginBottom: 20,
+    color: '#222',
+  },
 });

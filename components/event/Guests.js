@@ -26,6 +26,7 @@ export default class EventGuests extends React.Component {
   state = {
     selectedUser: null,
   };
+
   render() {
     let i = -1;
     return (

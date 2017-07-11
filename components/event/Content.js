@@ -322,7 +322,8 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 25,
     marginRight: 0,
-    marginBottom: 0,
+    marginBottom: 5,
+    paddingTop: 5,
     justifyContent: 'space-between',
   },
   locdestRow2: {
@@ -333,7 +334,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderTopColor: "#e5e5e5",
     borderTopWidth: 1,
-    paddingTop: 10,
+    paddingTop: 15,
   },
   locdestText: {
     width: width * 0.8,

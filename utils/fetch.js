@@ -34,34 +34,21 @@ export function* request(type, url, body, headers) {
       }),
       timeout: call(delay, 5000),
     });
-    // console.log(response);
-    if (response) {
+    console.log(response);
+    if (response && response.status === 200) {
       yield put({ type: ActionTypes.REQUEST_ENDED });
-      if (response.status === 200) {
-        yield put({ type: ActionTypes.REQUEST_SUCCESS });
-        // console.log("request success : " + url);
-        return { body: response.data, headers: response.headers };
-      } else if (response.status === 401) {
-        // console.log("request 401");
-        // console.log(error);
-        yield put({
-          type: ActionTypes.REQUEST_UNAUTHENTICATED,
-          response: response.statusText,
-        });
-        //TODO: create unauthorized func
-      } else {
-        let error = yield response.json();
-        // console.log("request error but has reponse");
-        // console.log(error);
-        // console.log(response.status);
-        yield put({ type: ActionTypes.REQUEST_ERROR });
-        throw error;
-      }
+      yield put({ type: ActionTypes.REQUEST_SUCCESS });
+      // console.log("request success : " + url);
+      return { body: response.data, headers: response.headers };
     } else {
-      yield put({ type: ActionTypes.REQUEST_ERROR });
-      throw new Error("Request timed out");
+      return;
     }
   } catch (error) {
+    if (error && error.response.status === 401) {
+      yield put({
+        type: ActionTypes.REQUEST_UNAUTHENTICATED,
+      });
+    }
     yield put({ type: ActionTypes.REQUEST_ERROR });
     throw error;
   }
