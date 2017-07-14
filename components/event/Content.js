@@ -82,7 +82,6 @@ export default class EventContent extends React.Component {
     let icon = Icons[event.activity].icon;
     return (
       <View style={{ backgroundColor: "#fff", flex: 1 }}>
-        <EventActions event={this.props.event} />
         <View style={{ height: height * 0.2, width }}>
           <MapView
             style={styles.map}
@@ -177,6 +176,7 @@ export default class EventContent extends React.Component {
             <MyText style={styles.commentTxt}>Comment</MyText>
           </TouchableOpacity>
         </View>
+                <EventActions />
       </View>
     );
   };

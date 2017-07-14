@@ -43,6 +43,7 @@ function* setAlertBadges() {
 
 function* receivedNotification(action) {
   const event = yield select(state => state.events.selectedEvent);
+  yield put({ type: ActionTypes.GET_PROFILE });
   if (event && event.id === action.notification.data.event_id) {
     yield put({ type: ActionTypes.LOAD_EVENT, eventID: event.id });
     yield put({ type: ActionTypes.LOAD_COMMENTS, eventID: event.id });

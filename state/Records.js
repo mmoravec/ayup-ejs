@@ -121,6 +121,7 @@ export const Event = Record({
   capacity: null,
   age_group: "",
   completed: false,
+  atCapacity: false,
 });
 
 export const FormState = Record({

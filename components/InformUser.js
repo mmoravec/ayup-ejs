@@ -15,13 +15,18 @@ export default class InformUser extends React.Component {
   state = {
     top: new Animated.Value(-height * 0.3),
     shown: false,
+    delay: false,
   };
 
   showInfo = _.debounce(() => this.setState({ shown: false }), 15000);
 
+  componentDidMount() {
+    _.delay(() => this.setState({ delay: true }), 1000);
+  }
+
   componentWillReceiveProps(nextProps, nextState) {
     if (nextProps.events.size === 0) {
-      if (!this.state.shown) {
+      if (!this.state.shown && this.state.delay) {
         Animated.timing(this.state.top, { toValue: 0, duration: 1000 }).start();
       }
     } else {

@@ -49,7 +49,7 @@ export default class Hoshi extends BaseInput {
           ref="input"
           {...this.props}
           style={[styles.textInput, inputStyle, {
-            width,
+            width: width * 0.9,
             height: inputHeight,
           }]}
           value={value}

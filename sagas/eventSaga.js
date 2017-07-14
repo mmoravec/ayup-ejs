@@ -71,6 +71,8 @@ function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const profile = yield select(state => state.profile);
   if (!profile.age_group) {
+    yield call(delay, 1000);
+    yield call(updateNearbyEvents, action);
     return;
   }
   let region = {
@@ -191,7 +193,7 @@ function* rejectEvent(action) {
     yield call(
       request,
       POST,
-      URL + "/v1.0/events/" + action.eventID + "?fbid="
+      URL + "/v1.0/events/" + action.eventID + "/reject"
     );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
@@ -264,11 +266,14 @@ function* loadEvent(action) {
     yield fork(loadEvent, action);
     return;
   }
-  data.body.completed = new Date(data.body.end_time) < new Date();
-  data.body.invited = data.body.invited.filter(friend => {
+  let body = data.body;
+  body.completed = new Date(data.body.end_time) < new Date();
+  body.invited = data.body.invited.filter(friend => {
     return friend.profile_pic;
   });
-
+  if (body.capacity > 0 && body.capacity >= body.going.length) {
+    body.atCapacity = true;
+  }
   yield put({
     type: ActionTypes.SET_SELECTED_EVENT,
     selectedEvent: new Event({ ...data.body }),

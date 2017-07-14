@@ -41,7 +41,7 @@ export function* request(type, url, body, headers) {
       // console.log("request success : " + url);
       return { body: response.data, headers: response.headers };
     } else {
-      return;
+      throw new Error("something went wrong");
     }
   } catch (error) {
     if (error && error.response.status === 401) {

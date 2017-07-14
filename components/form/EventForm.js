@@ -65,6 +65,8 @@ export default class EventForm extends React.Component {
       ...this._inputProps,
       maxLength: 250,
       scrollTo: this._scrollTo,
+      multiline: true,
+      height: 70,
     };
     this._actionProps = {
       action: this._saveBtnPress,

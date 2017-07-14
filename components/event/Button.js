@@ -36,6 +36,9 @@ export default class EventButton extends React.Component {
     let status = this._getStatus();
     if (this.props.phone.status === ActionTypes.INACTIVE) {
       //If invited to event
+      if (this.props.selectedEvent.atCapacity) {
+        return null;
+      }
       if (status === "invited") {
         return (
           <View style={styles.bottom}>
