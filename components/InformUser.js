@@ -21,7 +21,7 @@ export default class InformUser extends React.Component {
   showInfo = _.debounce(() => this.setState({ shown: false }), 15000);
 
   componentDidMount() {
-    _.delay(() => this.setState({ delay: true }), 1000);
+    _.delay(() => this.setState({ delay: true }), 5000);
   }
 
   componentWillReceiveProps(nextProps, nextState) {

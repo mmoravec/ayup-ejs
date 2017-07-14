@@ -84,7 +84,7 @@ export function* getLocation() {
   } else {
     let { location, timeout } = yield race({
       location: call(Location.getCurrentPositionAsync, {}),
-      timeout: call(delay, 2000),
+      timeout: call(delay, 5000),
     });
     // console.log('getting  location');
     // let location = yield call(Location.getCurrentPositionAsync, {});
