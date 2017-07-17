@@ -97,9 +97,12 @@ export default class ActivitiesScreen extends React.Component {
     );
   }
 
-  _backBtnPress = () => {
+
+  _backBtnPress = _.debounce(() => {
     this.props.dispatch(Actions.routeChange('Back'));
-  }
+  }, 3000, {
+    leading: true,
+  });
 
   _resetActivities = () => {
     if (this.state.all) {
@@ -249,10 +252,10 @@ const styles = StyleSheet.create({
   title: {
     position: 'absolute',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 22,
     left: width * 0.2,
     right: 0,
-    top: 30,
+    top: 35,
     fontFamily: 'LatoRegular',
     zIndex: 1,
     width: width * 0.6,

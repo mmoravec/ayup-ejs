@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import {
   View,
@@ -79,9 +80,11 @@ export default class SettingsScreen extends React.Component {
   _onSignOutPress = () => {
     this.props.dispatch(Actions.logOut());
   }
-  _onBackPress = () => {
-    this.props.dispatch(Actions.routeChange('Back'));
-  }
+  _onBackPress = _.debounce(() => {
+      this.props.dispatch(Actions.routeChange('Back'));
+    }, 3000, {
+      leading: true,
+   });
   _onFeedbackPress = () => {
     Linking.openURL('https://goo.gl/forms/yoyvyrKkxR3PwLeu1');
   }

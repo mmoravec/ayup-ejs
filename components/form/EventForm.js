@@ -45,7 +45,7 @@ export default class EventForm extends React.Component {
   constructor(props) {
     super(props);
     this._inputProps = {
-          style: styles.hoshi,
+      style: styles.hoshi,
       editable: true,
       borderColor: "#8bd1c6",
       scrollTo: this._scrollTo,
@@ -113,7 +113,11 @@ export default class EventForm extends React.Component {
               />
             </View>
             <View style={styles.switch}>
-              <MyText style={styles.text}>Private</MyText>
+              {
+                this.props.form.private.value ?
+                <MyText style={styles.text}>Private</MyText> :
+                <MyText style={styles.text}>Public</MyText>
+              }
               <Switch
                 style={styles.swButton}
                 onValueChange={this._privateSwitch}
@@ -175,7 +179,7 @@ export default class EventForm extends React.Component {
             </View>}
             <View style={styles.optionalFields}>
               <MyText style={styles.optText}>
-                Add Field
+                Optional Fields
               </MyText>
               <View style={styles.fieldContainer}>
                 {!this.props.form.capacity.shown &&

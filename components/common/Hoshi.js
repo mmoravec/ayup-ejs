@@ -89,7 +89,7 @@ export default class Hoshi extends BaseInput {
               inputRange: [0, 1],
               outputRange: [0, width],
             }),
-            backgroundColor: borderColor,
+            backgroundColor: this.props.focus ? borderColor : 'transparent',
           }]}
         />
       </View>

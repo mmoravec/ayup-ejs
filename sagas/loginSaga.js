@@ -24,6 +24,7 @@ function* authorize() {
       yield put({ type: ActionTypes.ALERT_ERROR, error });
       return;
     }
+    debugger;
     if (params.userid) {
       userid = "&userid=" + params.userid;
     }

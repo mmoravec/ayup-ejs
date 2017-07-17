@@ -45,7 +45,7 @@ export default class NewEventScreen extends React.Component {
       this.props.dispatch(Actions.zeroForm());
     }
     this.props.dispatch(Actions.routeChange('Back'));
-   }, 1000, {
+   }, 3000, {
     leading: true,
    });
 }

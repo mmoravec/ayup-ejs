@@ -177,7 +177,7 @@ function* deleteEvent(action) {
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield call(delay, 2000);
-  yield call(updateNearbyEvents, region);
+  yield fork(updateNearbyEvents, region);
   yield put({ type: ActionTypes.ZERO_SELECTED_COMMENT });
   yield put({ type: ActionTypes.ZERO_SELECTED_EVENT });
   yield put({ type: ActionTypes.GET_PROFILE });
@@ -268,7 +268,7 @@ function* loadEvent(action) {
   body.invited = data.body.invited.filter(friend => {
     return friend.profile_pic;
   });
-  if (body.capacity > 0 && body.capacity >= body.going.length) {
+  if (body.capacity > 0 && body.capacity <= body.going.length) {
     body.atCapacity = true;
   }
   yield put({

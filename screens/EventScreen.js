@@ -92,7 +92,7 @@ export default class EventScreen extends React.Component {
       this.props.dispatch(Actions.zeroSelectedEvent());
       this.props.dispatch(Actions.zeroSelectedComment());
       this.props.dispatch(Actions.routeChange('Back'));
-    }, 1000, {
+    }, 3000, {
       leading: true,
    });
 
@@ -138,6 +138,5 @@ const styles = StyleSheet.create({
   back: {
     position: 'absolute',
     zIndex: 3,
-    top: 10,
   },
 });

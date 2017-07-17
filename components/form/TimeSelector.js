@@ -49,6 +49,7 @@ export default class TimeSelector extends React.Component {
               label={this.props.label}
               borderColor={'#8bd1c6'}
               onFocus={this._onDatePress}
+              focus={this.state.focusDate}
             />
           </View>
           {this._renderDate()}

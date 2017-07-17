@@ -64,6 +64,7 @@ export default class LocationSearch extends React.Component {
                 label={this.props.label}
                 borderColor={'#8bd1c6'}
                 onFocus={this._onLocationPress}
+                focus={this.props.focus}
               />
             </View>
           </View>

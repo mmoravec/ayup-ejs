@@ -16,6 +16,12 @@ export function* watchUnauthenticated() {
 }
 
 function* changeRoute(action) {
+  const nav = yield select(state => state.navigation);
+  if (
+    nav.routes[nav.index].routeName === "Login" && action.newRoute === "Back"
+  ) {
+    return;
+  }
   if (action.newRoute === "Back") {
     Store.dispatch(NavigationActions.back());
   } else {

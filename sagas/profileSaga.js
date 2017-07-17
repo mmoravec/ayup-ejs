@@ -145,6 +145,7 @@ function transformEvents(profile) {
     not_going: [],
     completed: [],
     take_action: [],
+    deleted: [],
   };
   if (!profile.events) {
     return profile;
@@ -163,10 +164,12 @@ function transformEvents(profile) {
       temp.requested.push(event);
     } else if (profile.not_going.indexOf(event.id) > -1) {
       temp.not_going.push(event);
+    } else if (profile.deleted.indexOf(event.id) > -1) {
+      temp.deleted.push(event);
     }
   });
   temp.all = temp.hosted.concat(temp.invited, temp.requested, temp.going);
-  temp.archive = temp.completed.concat(temp.not_going);
+  temp.archive = temp.completed.concat(temp.not_going, temp.deleted);
   temp.hosted.map(event => {
     if (event.requested.length > 0) {
       temp.take_action.push(event);

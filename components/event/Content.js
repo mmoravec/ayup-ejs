@@ -93,10 +93,10 @@ export default class EventContent extends React.Component {
         </View>
         <View style={styles.topInfo}>
           <View style={{flexDirection: 'column'}}>
-            <MyText style={{ fontSize: 22, marginLeft: 20, marginTop: 10, marginBottom: 0 }}>
+            <MyText style={{ fontSize: 22, marginLeft: 14, marginTop: 10, marginBottom: 0 }}>
               {event.title}
             </MyText>
-            <MyText style={{ fontSize: 14, marginLeft: 20, marginTop: 5, marginBottom: 8, }}>
+            <MyText style={{ fontSize: 14, marginLeft: 14, marginTop: 5, marginBottom: 8, }}>
               Hosted by {event.host.name}
             </MyText>
           </View>
@@ -193,7 +193,7 @@ export default class EventContent extends React.Component {
             resizeMode={"contain"}
             style={{ height: 12 }}
           />
-          <MyText style={{ fontSize: 14, width: width * 0.8 }}>
+          <MyText style={{ fontSize: 14, width: width * 0.8, flex: 1 }} numberOfLines={1}>
             {event.location.text}
           </MyText>
           <MaterialIcons size={22} name={"chevron-right"} color={"#e5e5e5"} />

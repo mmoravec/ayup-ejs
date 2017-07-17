@@ -72,7 +72,7 @@ export default class EventActions extends React.Component {
       return (
         <View>
           <TouchableOpacity onPress={this._copyEvent}>
-            <MyText style={styles.copy}>
+            <MyText style={styles.button}>
               Duplicate
             </MyText>
           </TouchableOpacity>
@@ -80,19 +80,19 @@ export default class EventActions extends React.Component {
       );
     } else {
       return (
-        <View>
+        <View style={{}}>
           <TouchableOpacity onPress={this._modifyEvent}>
-            <MyText style={styles.modify}>
+            <MyText style={styles.button}>
               Edit
             </MyText>
           </TouchableOpacity>
           <TouchableOpacity onPress={this._copyEvent}>
-            <MyText style={styles.modify}>
+            <MyText style={styles.button}>
               Duplicate
             </MyText>
           </TouchableOpacity>
           <TouchableOpacity onPress={this._deleteEvent}>
-            <MyText style={styles.delete}>
+            <MyText style={styles.button}>
               Delete
             </MyText>
           </TouchableOpacity>
@@ -183,16 +183,7 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.05,
     borderWidth: Platform.OS === "android" ? 1 : 0,
   },
-  delete: {
-    fontSize: 24,
-    marginBottom: 10,
-  },
-  modify: {
-    fontSize: 24,
-    marginBottom: 5,
-    color: '#222',
-  },
-  copy: {
+  button: {
     fontSize: 24,
     marginBottom: 15,
     color: '#222',
