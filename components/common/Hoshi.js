@@ -37,6 +37,7 @@ export default class Hoshi extends BaseInput {
       focusedAnim,
       value,
     } = this.state;
+    let top = this.props.multiline ? 5 : 15;
     return (
       <View
         style={[styles.container, containerStyle, {
@@ -66,7 +67,7 @@ export default class Hoshi extends BaseInput {
             }),
             top: focusedAnim.interpolate({
               inputRange: [0, 0.5, 0.51, 1],
-              outputRange: [PADDING * 1.5, PADDING * 1.5, 15, 15],
+              outputRange: [PADDING * 1.5, PADDING * 1.5, top, top],
             }),
             left: focusedAnim.interpolate({
               inputRange: [0, 0.5, 0.51, 1],

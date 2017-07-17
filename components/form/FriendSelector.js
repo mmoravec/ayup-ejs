@@ -150,6 +150,8 @@ export default class FriendSelector extends React.Component {
             onChangeText={this._onChangeText}
             returnKeyType={'done'}
             onSubmitEditing={this._addFriend}
+            underlineColorAndroid={'transparent'}
+            autoCorrect={false}
           />
         </View>
       );

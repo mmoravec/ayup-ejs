@@ -270,7 +270,6 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     marginLeft: 35,
-    marginTop: 35,
     borderRadius: 40,
   },
   imageContainer : {
@@ -284,19 +283,19 @@ const styles = StyleSheet.create({
     height: 216,
     width: 340,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   picName: {
     width: 340,
-    height: 120,
+    height: 80,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   name: {
     fontSize: 18,
-    marginTop: 60,
     marginRight: 35,
     width: 160,
-    justifyContent: 'center',
+    alignSelf: 'center',
   },
   buttons: {
     width: 260,

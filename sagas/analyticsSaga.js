@@ -81,6 +81,8 @@ function* initAmplitude(user) {
       ActionTypes.REJECT_REQUEST,
       ActionTypes.SET_SELECTED_EVENT,
       ActionTypes.MODIFY_EVENT,
+      ActionTypes.UPDATE_EVENT,
+      ActionTypes.SAVE_COMMENT,
     ],
     trackAmplitudeEvent
   );

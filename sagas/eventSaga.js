@@ -71,8 +71,6 @@ function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const profile = yield select(state => state.profile);
   if (!profile.age_group) {
-    yield call(delay, 1000);
-    yield call(updateNearbyEvents, action);
     return;
   }
   let region = {
@@ -97,7 +95,6 @@ function* updateNearbyEvents(action) {
         scope
     );
   } catch (error) {
-    console.log(error);
     return;
   }
   events = events.body ? pushEvents(events.body) : events.body;

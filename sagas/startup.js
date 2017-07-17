@@ -13,6 +13,7 @@ import {
   Constants,
   Notifications,
 } from "expo";
+import { getProfile } from "./profileSaga";
 import { URL, POST } from "../constants/rest";
 import ActionTypes from "../state/ActionTypes";
 import LocalStorage from "../utils/LocalStorage";
@@ -30,7 +31,7 @@ export default function* startup() {
   //change this to user.locationGranted when implemented
   if (cred && cred.secret !== null) {
     yield call(checkCredential, cred);
-    yield put({ type: ActionTypes.GET_PROFILE });
+    yield call(getProfile);
   }
   if (phone.locationGranted) {
     yield call(getLocation);

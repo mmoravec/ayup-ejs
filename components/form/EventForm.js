@@ -63,10 +63,10 @@ export default class EventForm extends React.Component {
       onChangeText: text =>
         this.props.dispatch(Actions.setFormValue("desc", text)),
       ...this._inputProps,
-      maxLength: 250,
+      maxLength: 400,
       scrollTo: this._scrollTo,
       multiline: true,
-      height: 70,
+      height: 60,
     };
     this._actionProps = {
       action: this._saveBtnPress,
@@ -282,7 +282,6 @@ export default class EventForm extends React.Component {
 
   _scrollTo = num => {
     this.setState({ scrollTo: true });
-    console.log(this.state.staticY);
     this._scrollView._component.scrollTo({ y: num + this.state.staticY, animated: true });
     this.onScroll();
   };

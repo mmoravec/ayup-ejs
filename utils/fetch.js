@@ -4,9 +4,9 @@ import axios from "axios";
 import ActionTypes from "../state/ActionTypes";
 
 export function* request(type, url, body, headers) {
-  console.log("new request!");
-  console.log(type + " : " + url);
-  console.log(headers);
+  // console.log("new request!");
+  // console.log(type + " : " + url);
+  // console.log(headers);
   const cred = yield select(state => state.credential);
   // console.log("current credentials");
   // console.log(cred);
@@ -18,7 +18,7 @@ export function* request(type, url, body, headers) {
     // console.log(bodyString);
   }
   yield put({ type: ActionTypes.REQUEST_STARTED });
-  console.log(cred);
+  // console.log(cred);
   try {
     const { response } = yield race({
       response: call(axios, {
@@ -34,7 +34,7 @@ export function* request(type, url, body, headers) {
       }),
       timeout: call(delay, 5000),
     });
-    console.log(response);
+    // console.log(response);
     if (response && response.status === 200) {
       yield put({ type: ActionTypes.REQUEST_ENDED });
       yield put({ type: ActionTypes.REQUEST_SUCCESS });

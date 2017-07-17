@@ -90,7 +90,7 @@ class ListRow extends React.Component {
     let start = new Date(this.props.data.start_time);
     let end = new Date(this.props.data.end_time);
     let format = duration(start, end);
-    let hours = (end.getHours() - start.getHours()) + "hrs";
+    let hours = (end.getHours() - start.getHours()) + " hrs";
     if (end - start > 2678400000) {
       return <MyText style={this.props.styles.duration}>{hours}</MyText>;
     } else {

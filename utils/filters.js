@@ -57,7 +57,7 @@ export default class Filters {
         let start = new Date(x.start_time);
         let end = new Date(x.end_time);
         if (end - start > 2678400000) {
-          return "Every Day";
+          return "Daily";
         } else {
           return dateFormat(start, "fullDate");
         }

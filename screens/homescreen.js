@@ -28,7 +28,6 @@ export default class HomeScreen extends React.Component {
       events: Filters.filterEvents(data.events.nearbyEvents, data.events.filters),
       region: data.events.region,
       phone: data.phone,
-      cred: data.credential,
     };
   }
 
@@ -114,7 +113,6 @@ export default class HomeScreen extends React.Component {
 
   _renderLocationGreeting = () => {
     if (this.props.phone.locationGranted === false) {
-      console.log('render location greeting');
       return (
         <Modal
           animationType={"none"}

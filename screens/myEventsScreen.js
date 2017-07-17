@@ -143,7 +143,7 @@ export default class MyEventsScreen extends React.Component {
   }
   _backBtnPress = _.debounce(() => {
     this.props.dispatch(Actions.routeChange('Back'));
-   }, 1000, {
+   }, 2000, {
     leading: true,
    });
 }

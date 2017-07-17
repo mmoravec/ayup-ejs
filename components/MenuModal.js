@@ -204,7 +204,7 @@ export default class EventListModal extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(250, 250, 250, 0.9)',
+    backgroundColor: 'rgba(250, 250, 250, 0.7)',
   },
   btnMainContainer: {
     position: 'absolute',

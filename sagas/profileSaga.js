@@ -98,7 +98,7 @@ function* receivedContacts(action) {
   }
 }
 
-function* getProfile() {
+export function* getProfile() {
   let profile;
   try {
     profile = yield call(request, GET, URL + "/v1.0/profile");
@@ -107,7 +107,7 @@ function* getProfile() {
   }
   profile = transformEvents(profile.body);
   profile.friends = filterFriends(profile);
-  console.log(profile);
+  // console.log(profile);
   yield put({ type: ActionTypes.SET_PROFILE, profile });
 }
 

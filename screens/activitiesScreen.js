@@ -25,13 +25,16 @@ export default class ActivitiesScreen extends React.Component {
   state = {
     all: true,
     opacity: new Animated.Value(0),
+    height: new Animated.Value(0),
   }
 
   animate = _.debounce(() => {
     Animated.sequence([
+      Animated.timing(this.state.height, {toValue: 75, duration: 1}),
       Animated.timing(this.state.opacity, {toValue: 1, duration: 200}),
       Animated.delay(1000),
       Animated.timing(this.state.opacity, {toValue: 0, duration: 200}),
+      Animated.timing(this.state.height, {toValue: 0, duration: 1}),
     ]).start();
   }, 1000);
 
@@ -49,7 +52,7 @@ export default class ActivitiesScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <Animated.View style={[{opacity: this.state.opacity}, styles.results]}>
+        <Animated.View style={[{opacity: this.state.opacity, height: this.state.height}, styles.results]}>
           <MyText style={styles.resultText}>{this.props.events.size} results</MyText>
         </Animated.View>
         <MyText style={styles.title}>Tap to Filter Activities</MyText>

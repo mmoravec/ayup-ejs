@@ -73,7 +73,7 @@ export default class EventActions extends React.Component {
         <View>
           <TouchableOpacity onPress={this._copyEvent}>
             <MyText style={styles.copy}>
-              Copy
+              Duplicate
             </MyText>
           </TouchableOpacity>
         </View>
@@ -83,12 +83,12 @@ export default class EventActions extends React.Component {
         <View>
           <TouchableOpacity onPress={this._modifyEvent}>
             <MyText style={styles.modify}>
-              Modify
+              Edit
             </MyText>
           </TouchableOpacity>
           <TouchableOpacity onPress={this._copyEvent}>
             <MyText style={styles.modify}>
-              Copy
+              Duplicate
             </MyText>
           </TouchableOpacity>
           <TouchableOpacity onPress={this._deleteEvent}>
@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
   delete: {
     fontSize: 24,
     marginBottom: 10,
-    color: '#EE3870',
   },
   modify: {
     fontSize: 24,

@@ -65,8 +65,6 @@ export default class EventContent extends React.Component {
 
   _renderHeader = () => {
     let event = this.props.event;
-    let start = new Date(event.start_time);
-    let end = new Date(event.end_time);
     let coord = {
       longitude: event.location.coordinates[0],
       latitude: event.location.coordinates[1],
@@ -94,39 +92,21 @@ export default class EventContent extends React.Component {
           </MapView>
         </View>
         <View style={styles.topInfo}>
-          <View>
-            <Image
-              source={{ uri: event.host.profile_pic }}
-              style={styles.profilePic}
-            />
-          </View>
-          <View style={styles.headerName}>
-            <MyText style={{ fontSize: 18, marginBottom: 5 }}>
-              {event.host.name}
+          <View style={{flexDirection: 'column'}}>
+            <MyText style={{ fontSize: 22, marginLeft: 20, marginTop: 10, marginBottom: 0 }}>
+              {event.title}
+            </MyText>
+            <MyText style={{ fontSize: 14, marginLeft: 20, marginTop: 5, marginBottom: 8, }}>
+              Hosted by {event.host.name}
             </MyText>
           </View>
-          <View style={styles.figure}>
-            <MyText style={{ alignSelf: "center", fontSize: 14 }}>
-              {dateFormat(start, "ddd, mmm dd")}
-            </MyText>
-            <MyText style={{ alignSelf: "center", fontSize: 14 }}>
-              {dateFormat(start, "shortTime")}
-            </MyText>
-            <MyText
-              style={{ alignSelf: "center", fontSize: 14, color: "#b3b3b3" }}>
-              {duration(start, end)}
-            </MyText>
-          </View>
+          {this._showTime()}
         </View>
         <View style={styles.middleInfo}>
-          <MyText style={{ fontSize: 24, margin: 14, marginBottom: 6 }}>
-            {event.title}
-          </MyText>
-          {this._renderLocation()}
           {event.description !== "" &&
             <MyText
               style={{
-                fontSize: 16,
+                fontSize: 15,
                 margin: 14,
                 color: "#808080",
                 marginTop: 0,
@@ -134,6 +114,7 @@ export default class EventContent extends React.Component {
               }}>
               {event.description}
             </MyText>}
+            {this._renderLocation()}
         </View>
         <View style={styles.bottomInfo}>
           <View style={{ flexDirection: "row" }}>
@@ -146,13 +127,12 @@ export default class EventContent extends React.Component {
               }}>
               Going{" "}
             </MyText>
-            <MyText style={{ color: "#ee366f", fontSize: 16, marginTop: 14 }}>
-              / Unconfirmed
+            <MyText style={{ color: "#808080", fontSize: 16, marginTop: 14 }}>
+              |
             </MyText>
-            <Bubble
-              data={event}
-              style={{ alignSelf: "center", position: "absolute", right: 10 }}
-            />
+            <MyText style={{ color: "#ee366f", fontSize: 16, marginTop: 14 }}>
+              {" "}Unconfirmed
+            </MyText>
           </View>
           <EventGuests
             guestClick={this.props.guestClick}
@@ -161,7 +141,7 @@ export default class EventContent extends React.Component {
         </View>
         <View style={styles.comments}>
           <MyText style={styles.seeAll}>
-            Comments({this.props.comments.size})
+            Comments ({this.props.comments.size})
           </MyText>
           <TouchableOpacity
             style={styles.commentBtn}
@@ -176,7 +156,7 @@ export default class EventContent extends React.Component {
             <MyText style={styles.commentTxt}>Comment</MyText>
           </TouchableOpacity>
         </View>
-                <EventActions />
+        <EventActions />
       </View>
     );
   };
@@ -189,16 +169,16 @@ export default class EventContent extends React.Component {
           <Image
             source={require("../../assets/images/location_destination.png")}
             resizeMode={"contain"}
-            style={{ width: 12, position: 'absolute', left: 4 }}
+            style={{ width: 10, position: 'absolute', left: 4, top: -2 }}
           />       
           <TouchableOpacity onPress={this._openLoc} style={styles.locdestRow}>
-            <MyText style={styles.locdestText}>
+            <MyText style={styles.locdestText} numberOfLines={1}>
               {event.location.text}
             </MyText>
             <MaterialIcons size={22} name={"chevron-right"} color={"#e5e5e5"} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.locdestRow2} onPress={this._openDest}>
-            <MyText style={styles.locdestText}>
+            <MyText style={styles.locdestText} numberOfLines={1}>
               {event.destination.text}
             </MyText>
             <MaterialIcons size={22} name={"chevron-right"} color={"#e5e5e5"} />
@@ -296,6 +276,29 @@ export default class EventContent extends React.Component {
       );
     }
   };
+
+  _showTime = () => {
+    let start = new Date(this.props.event.start_time);
+    let end = new Date(this.props.event.end_time);
+    if (end - start > 2678400000) {
+      return <View style={{width: width * 0.2}} />;
+    } else {
+      return (
+        <View style={styles.figure}>
+          <MyText style={{ alignSelf: "center", fontSize: 14 }}>
+            {dateFormat(start, "ddd, mmm dd")}
+          </MyText>
+          <MyText style={{ alignSelf: "center", fontSize: 14 }}>
+            {dateFormat(start, "shortTime")}
+          </MyText>
+          <MyText
+            style={{ alignSelf: "center", fontSize: 14, color: "#b3b3b3" }}>
+            {duration(start, end)}
+          </MyText>
+        </View>
+      );
+    }
+  }
 }
 
 const styles = StyleSheet.create({
@@ -322,7 +325,7 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 25,
     marginRight: 0,
-    marginBottom: 5,
+    marginBottom: 0,
     paddingTop: 5,
     justifyContent: 'space-between',
   },
@@ -338,6 +341,8 @@ const styles = StyleSheet.create({
   },
   locdestText: {
     width: width * 0.8,
+    flex: 1,
+    fontSize: 14,
   },
   location: {
     borderColor: "#e5e5e5",
@@ -373,11 +378,11 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   name: {
-    fontSize: 18,
-    marginBottom: 5,
+    fontSize: 14,
+    marginBottom: 2,
   },
   seeAll: {
-    fontSize: 18,
+    fontSize: 16,
     margin: 10,
     marginLeft: 14,
     color: "#5f5f5f",
@@ -396,25 +401,28 @@ const styles = StyleSheet.create({
   },
   middleInfo: {
     flexDirection: "column",
+    backgroundColor: "#fff",
     borderTopWidth: 1,
     borderTopColor: "#e6e6e6",
-    backgroundColor: "#fff",
+    paddingTop: 10,
   },
   bottomInfo: {
     flexDirection: "column",
     backgroundColor: "#fff",
   },
   topInfo: {
-    height: 100,
+    height: 70,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flexDirection: "row",
     backgroundColor: "#fff",
     justifyContent: "space-between",
+    alignItems: 'flex-end',
   },
   figure: {
     justifyContent: "center",
     width: width * 0.3,
+    marginBottom: 8,
   },
   content: {
     fontSize: 14,
@@ -437,5 +445,6 @@ const styles = StyleSheet.create({
   contentParent: {
     flex: 4,
     margin: 5,
+    marginLeft: 0,
   },
 });
