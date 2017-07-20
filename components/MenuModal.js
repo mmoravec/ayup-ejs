@@ -94,7 +94,7 @@ export default class EventListModal extends React.Component {
                 style={styles.btnAction}
               />
             </TouchableOpacity>
-            <MyText style={styles.text}>Activities</MyText>
+            <MyText style={styles.text}>Filters</MyText>
           </Animated.View>
           <Animated.View
             style={[styles.ctnProfile,
@@ -135,6 +135,16 @@ export default class EventListModal extends React.Component {
             }
             <MyText style={styles.text}>My Events</MyText>
           </Animated.View>
+          <TouchableOpacity onPress={this._onlocationResetPress} style={{position: 'absolute', right: 20, top: 25, zIndex: 2, flexDirection: 'row'}}>
+            <MyText style={{alignSelf: 'center'}}>Reset Location </MyText>
+            <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
+              <MaterialIcons
+                size={20}
+                name={'my-location'}
+                style={{backgroundColor: 'transparent'}}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </Modal>
     );
@@ -199,12 +209,16 @@ export default class EventListModal extends React.Component {
       thirdRowBottom: new Animated.Value(20),
     });
   }
+
+  _onlocationResetPress = () => {
+    this.props.dispatch(Actions.resetLocation());
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(250, 250, 250, 0.7)',
+    backgroundColor: 'rgba(250, 250, 250, 0.8)',
   },
   btnMainContainer: {
     position: 'absolute',

@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { Facebook } from "expo";
+import { Facebook, Constants } from "expo";
 import { fork, call, put, takeEvery, select } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
 import { Credential } from "../state/Records";
@@ -24,7 +24,6 @@ function* authorize() {
       yield put({ type: ActionTypes.ALERT_ERROR, error });
       return;
     }
-    debugger;
     if (params.userid) {
       userid = "&userid=" + params.userid;
     }
@@ -70,7 +69,7 @@ async function facebookLogin() {
     "1521840934725105",
     {
       permissions: ["public_profile", "email", "user_friends"],
-      behavior: Platform.OS === "ios" ? "web" : "system",
+      behavior: Constants.appOwnership === "standalone" ? "browser" : "web",
     }
   );
   return login;

@@ -17,14 +17,12 @@ export default class TimeSelector extends React.Component {
 
   state = {
     focusDate: false,
-    hasFocused: false,
   }
   _yOffset = 0;
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.focus) {
       this.setState({focusDate: true});
-      this.setState({hasFocused: true});
       dismissKeyboard();
     } else {
       this.setState({focusDate: false});

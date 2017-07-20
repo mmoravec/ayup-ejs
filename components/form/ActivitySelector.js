@@ -8,6 +8,7 @@ import {
   Modal,
   ScrollView,
   TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
 import {
   Ionicons,
@@ -16,14 +17,12 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import Activities from '../../constants/activities';
 import MyText from '../common/MyText';
+import Hoshi from '../common/Hoshi';
+const dismissKeyboard = require('dismissKeyboard');
 const {height, width} = Dimensions.get('window');
 
 @connect()
-export default class ActivitySelector extends React.Component {
-
-  state = {
-    showSelect: false,
-  }
+export class ActivitySelector extends React.Component {
 
    render() {
      return (
@@ -32,22 +31,27 @@ export default class ActivitySelector extends React.Component {
            <TouchableOpacity onPress={this._activityPunch}>
              <View>
                <Image style={styles.circle} source={require('../../assets/images/small_circle.png')}>
-                 <Image
-                   source={Activities[this.props.value].image}
-                   style={styles.activityImage}
-                 />
+                 {(this.props.value !== "") ?
+                  <Image
+                    source={Activities[this.props.value].image}
+                    style={styles.activityImage}
+                  /> :
+                  <Image
+                    source={require('../../assets/images/ayup_icon.png')}
+                    style={styles.activityImage}
+                  />
+                 }
                </Image>
              </View>
            </TouchableOpacity>
-           <Text style={styles.text}>Tap to Select Activity</Text>
          </View>
-         {this._renderSelectForm()}
+         {this._renderSelectForm()}  
        </View>
      );
    }
 
    _renderSelectForm() {
-     if (this.state.showSelect) {
+     if (this.props.focus) {
        return (
          <Modal style={styles.scrollView} onRequestClose={this._activityPunch}>
            <Text style={styles.pickText}>Select an Activity</Text>
@@ -85,13 +89,55 @@ export default class ActivitySelector extends React.Component {
    }
 
    _activityPunch = () => {
-     this.setState({showSelect: !this.state.showSelect});
+     this.props.onFocus(this.props.stateKey);
    }
 
    _filterClick = (type) => {
      this.props.onChange(this.props.stateKey, type);
-     this.setState({showSelect: !this.state.showSelect});
+     this.props.onFocus(this.props.stateKey);
    }
+
+}
+
+@connect()
+export class ActivityInput extends React.Component {
+  state = {
+    focus: false,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.focus) {
+      this.setState({focus: true});
+      dismissKeyboard();
+    } else {
+      this.setState({focus: false});
+    }
+  }
+  render() {
+    return (
+      <TouchableHighlight
+        onPress={this._onActivityPress}
+        ref={view => { this._view = view; }}
+        underlayColor={'#f1f1f1'}>
+        <View>
+          <View pointerEvents={'none'}>
+            <Hoshi
+              value={this.props.value ? Activities[this.props.value].name : ""}
+              editable={false}
+              label={this.props.label}
+              borderColor={'#8bd1c6'}
+              onFocus={this._onDatePress}
+              focus={this.state.focus}
+            />
+          </View>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+
+  _onActivityPress = () => {
+    this.props.onFocus(this.props.stateKey);
+  }
 
 }
 const styles = StyleSheet.create({
@@ -132,7 +178,7 @@ const styles = StyleSheet.create({
   },
   activity: {
     backgroundColor: 'rgba(0,0,0,0)',
-    height: height * 0.25,
+    height: height * 0.20,
     justifyContent: 'center',
     alignItems: 'center',
   },

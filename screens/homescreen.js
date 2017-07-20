@@ -10,6 +10,7 @@ import {
   Modal,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { MaterialIcons } from '@expo/vector-icons';
 import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
@@ -170,6 +171,10 @@ export default class HomeScreen extends React.Component {
     this.setState({
       menuVisible: !this.state.menuVisible,
     });
+  }
+
+  _onlocationResetPress = () => {
+    this.props.dispatch(Actions.resetLocation());
   }
 
 }

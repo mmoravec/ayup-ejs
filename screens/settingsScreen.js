@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
+  WebView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';

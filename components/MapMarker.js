@@ -30,7 +30,7 @@ export default class EventList extends React.Component {
   _onMarkerPress = _.debounce(() => {
       this.props.dispatch(Actions.selectEvent(this.props.event.id));
       this.props.dispatch(Actions.routeChange('Event'));
-    }, 1000, {
+    }, 3000, {
       leading: true,
     });
    //TODO: create a saga for this when fetching comments becomes

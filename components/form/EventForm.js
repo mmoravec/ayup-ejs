@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import LocationSearch from "./LocationSearch";
-import ActivitySelector from "./ActivitySelector";
+import { ActivitySelector, ActivityInput} from "./ActivitySelector";
 import TimeSelector from "./TimeSelector";
 import FriendSelector from "./FriendSelector";
 import Capacity from "./Capacity";
@@ -47,7 +47,7 @@ export default class EventForm extends React.Component {
     this._inputProps = {
       style: styles.hoshi,
       editable: true,
-      borderColor: "#8bd1c6",
+      borderColor: "#0bbcd1",
       scrollTo: this._scrollTo,
     };
     this._titleProps = {
@@ -103,153 +103,161 @@ export default class EventForm extends React.Component {
             <ActivitySelector
               {...this.props.form.activity}
               onChange={this._onChange}
+              onFocus={this._focusElement}
             />
             <Animated.View style={{transform: [{scale: margin}, {translateY: y}]}}>
-            <View style={[styles.input, styles.topInput]}>
-              <Hoshi
-                {...this._titleProps}
-                {...this.props.form.title}
-                returnKeyType={"next"}
-              />
-            </View>
-            <View style={styles.switch}>
-              {
-                this.props.form.private.value ?
-                <MyText style={styles.text}>Private</MyText> :
-                <MyText style={styles.text}>Public</MyText>
-              }
-              <Switch
-                style={styles.swButton}
-                onValueChange={this._privateSwitch}
-                value={this.props.form.private.value}
-              />
-            </View>
-            {this.props.form.location.shown &&
-              <View style={styles.input}>
-                <LocationSearch
-                  {...this._inputProps}
-                  {...this.props.form.location}
-                />
-              </View>}
-            {this.props.form.dest.shown &&
-              <View style={styles.input}>
-                <LocationSearch
-                  {...this._inputProps}
-                  {...this.props.form.dest}
-                />
-              </View>}
-            {this.props.form.startDate.shown &&
-              <View style={styles.input}>
-                <TimeSelector
-                  {...this.props.form.startDate}
+              <View style={[styles.input, styles.topInput]}>
+                <ActivityInput
+                  {...this.props.form.activity}
                   onFocus={this._focusElement}
                   onChange={this._onDateChange}
-                  scrollTo={this._scrollTo}
                 />
-              </View>}
-            {this.props.form.endDate.shown &&
-              <View style={styles.input}>
-                <TimeSelector
-                  {...this.props.form.endDate}
-                  onFocus={this._focusElement}
-                  onChange={this._onDateChange}
-                  scrollTo={this._scrollTo}
-                />
-              </View>}
-            <View style={styles.input}>
-              {this.props.form.friends.shown &&
-                <FriendSelector
-                  {...this.props.form.friends}
-                  onFocus={this._focusElement}
-                  scrollTo={this._scrollTo}
-                  onChange={this._onChange}
-                />
-              }
-            </View>
-            {this.props.form.capacity.shown &&
-              <View style={styles.input}>
-                <Capacity
-                  {...this.props.form.capacity}
-                  onChange={this._onChange}
-                />
-              </View>}
-            {this.props.form.desc.shown &&
-            <View style={styles.input}>
-              <Hoshi {...this._descProps} {...this.props.form.desc} />
-            </View>}
-            <View style={styles.optionalFields}>
-              <MyText style={styles.optText}>
-                Optional Fields
-              </MyText>
-              <View style={styles.fieldContainer}>
-                {!this.props.form.capacity.shown &&
-                  <TouchableOpacity
-                    onPress={this._showCapacity}
-                    style={{ margin: 5, height: 40 }}>
-                    <Image
-                      source={require("../../assets/images/capacity_btn.png")}
-                      style={{ height: 40, width: 114 }}
-                      resizeMode={"contain"}
-                    />
-                  </TouchableOpacity>}
-                {!this.props.form.desc.shown &&
-                  <TouchableOpacity
-                    onPress={this._showDescription}
-                    style={{ margin: 5, height: 40 }}>
-                    <Image
-                      source={require("../../assets/images/description_btn.png")}
-                      style={{ height: 40, width: 131 }}
-                    />
-                  </TouchableOpacity>}
-                {!this.props.form.dest.shown &&
-                  <TouchableOpacity
-                    onPress={this._showDestination}
-                    style={{ margin: 5, height: 40 }}>
-                    <Image
-                      source={require("../../assets/images/destination_btn.png")}
-                      style={{ height: 40, width: 122 }}
-                      resizeMode={"contain"}
-                    />
-                  </TouchableOpacity>}
               </View>
-            </View>
-            <View style={styles.optionalFields}>
-              <MyText style={styles.optText}>
-                Remove Field
-              </MyText>
-              <View style={styles.fieldContainer}>
-                {this.props.form.capacity.shown &&
-                  <TouchableOpacity
-                    onPress={this._showCapacity}
-                    style={{ margin: 5, height: 40 }}>
-                    <Image
-                      source={require("../../assets/images/-capacity_btn.png")}
-                      style={{ height: 40, width: 114 }}
-                      resizeMode={"contain"}
-                    />
-                  </TouchableOpacity>}
-                {this.props.form.desc.shown &&
-                  <TouchableOpacity
-                    onPress={this._showDescription}
-                    style={{ margin: 5, height: 40 }}>
-                    <Image
-                      source={require("../../assets/images/-description_btn.png")}
-                      style={{ height: 40, width: 131 }}
-                    />
-                  </TouchableOpacity>}
-                {this.props.form.dest.shown &&
-                  <TouchableOpacity
-                    onPress={this._showDestination}
-                    style={{ margin: 5, height: 40 }}>
-                    <Image
-                      source={require("../../assets/images/-destination_btn.png")}
-                      style={{ height: 40, width: 122 }}
-                      resizeMode={"contain"}
-                    />
-                  </TouchableOpacity>}
+              <View style={styles.input}>
+                <Hoshi
+                  {...this._titleProps}
+                  {...this.props.form.title}
+                  returnKeyType={"next"}
+                />
               </View>
-            </View>
-            <View style={{ height: height * 0.1 }} />
+              <View style={styles.switch}>
+                {
+                  this.props.form.private.value ?
+                  <MyText style={styles.text}>Private</MyText> :
+                  <MyText style={styles.text}>Public</MyText>
+                }
+                <Switch
+                  style={styles.swButton}
+                  onValueChange={this._privateSwitch}
+                  value={this.props.form.private.value}
+                />
+              </View>
+              {this.props.form.location.shown &&
+                <View style={styles.input}>
+                  <LocationSearch
+                    {...this._inputProps}
+                    {...this.props.form.location}
+                  />
+                </View>}
+              {this.props.form.dest.shown &&
+                <View style={styles.input}>
+                  <LocationSearch
+                    {...this._inputProps}
+                    {...this.props.form.dest}
+                  />
+                </View>}
+              {this.props.form.startDate.shown &&
+                <View style={styles.input}>
+                  <TimeSelector
+                    {...this.props.form.startDate}
+                    onFocus={this._focusElement}
+                    onChange={this._onDateChange}
+                    scrollTo={this._scrollTo}
+                  />
+                </View>}
+              {this.props.form.endDate.shown &&
+                <View style={styles.input}>
+                  <TimeSelector
+                    {...this.props.form.endDate}
+                    onFocus={this._focusElement}
+                    onChange={this._onDateChange}
+                    scrollTo={this._scrollTo}
+                  />
+                </View>}
+              <View style={styles.input}>
+                {this.props.form.friends.shown &&
+                  <FriendSelector
+                    {...this.props.form.friends}
+                    onFocus={this._focusElement}
+                    scrollTo={this._scrollTo}
+                    onChange={this._onChange}
+                  />
+                }
+              </View>
+              {this.props.form.capacity.shown &&
+                <View style={styles.input}>
+                  <Capacity
+                    {...this.props.form.capacity}
+                    onChange={this._onChange}
+                  />
+                </View>}
+              {this.props.form.desc.shown &&
+              <View style={styles.input}>
+                <Hoshi {...this._descProps} {...this.props.form.desc} />
+              </View>}
+              <View style={styles.optionalFields}>
+                <MyText style={styles.optText}>
+                  Optional Fields
+                </MyText>
+                <View style={styles.fieldContainer}>
+                  {!this.props.form.capacity.shown &&
+                    <TouchableOpacity
+                      onPress={this._showCapacity}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/capacity_btn.png")}
+                        style={{ height: 40, width: 114 }}
+                        resizeMode={"contain"}
+                      />
+                    </TouchableOpacity>}
+                  {!this.props.form.desc.shown &&
+                    <TouchableOpacity
+                      onPress={this._showDescription}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/description_btn.png")}
+                        style={{ height: 40, width: 131 }}
+                      />
+                    </TouchableOpacity>}
+                  {!this.props.form.dest.shown &&
+                    <TouchableOpacity
+                      onPress={this._showDestination}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/destination_btn.png")}
+                        style={{ height: 40, width: 122 }}
+                        resizeMode={"contain"}
+                      />
+                    </TouchableOpacity>}
+                </View>
+              </View>
+              <View style={styles.optionalFields}>
+                <MyText style={styles.optText}>
+                  Remove Field
+                </MyText>
+                <View style={styles.fieldContainer}>
+                  {this.props.form.capacity.shown &&
+                    <TouchableOpacity
+                      onPress={this._showCapacity}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/-capacity_btn.png")}
+                        style={{ height: 40, width: 114 }}
+                        resizeMode={"contain"}
+                      />
+                    </TouchableOpacity>}
+                  {this.props.form.desc.shown &&
+                    <TouchableOpacity
+                      onPress={this._showDescription}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/-description_btn.png")}
+                        style={{ height: 40, width: 131 }}
+                      />
+                    </TouchableOpacity>}
+                  {this.props.form.dest.shown &&
+                    <TouchableOpacity
+                      onPress={this._showDestination}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/-destination_btn.png")}
+                        style={{ height: 40, width: 122 }}
+                        resizeMode={"contain"}
+                      />
+                    </TouchableOpacity>}
+                </View>
+              </View>
+              <View style={{ height: height * 0.1 }} />
             </Animated.View>
           </Animated.ScrollView>
         </Animated.View>

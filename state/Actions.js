@@ -162,6 +162,13 @@ export default class Actions {
     };
   }
 
+  static handleURL(url) {
+    return {
+      type: ActionTypes.HANDLE_URL,
+      url,
+    };
+  }
+
   static regionChange(longitude, latitude, longitudeDelta, latitudeDelta) {
     return {
       type: ActionTypes.REGION_CHANGE,
@@ -182,6 +189,12 @@ export default class Actions {
   static zeroForm() {
     return {
       type: ActionTypes.ZERO_FORM,
+    };
+  }
+
+  static resetLocation() {
+    return {
+      type: ActionTypes.RESET_LOCATION,
     };
   }
 

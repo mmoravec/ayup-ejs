@@ -135,10 +135,18 @@ export default class SaveButton extends React.Component {
     };
     eventState.map((val, key) => {
       if (!val.shown) {
-        delete event[key];
+        if (key === "dest") {
+          event['destination'].coordinates = [];
+          event['destination'].text = "";
+        } else if (key === "capacity") {
+          event[key].value = 0;
+        } else if (key === "desc") {
+          event['description'].value = "";
+        }
       }
     });
-      this.props.dispatch(Actions.saveEvent(event));
+    debugger;
+    this.props.dispatch(Actions.saveEvent(event));
     }
   }
 
@@ -166,6 +174,19 @@ export default class SaveButton extends React.Component {
       capacity: eventState.capacity.value,
       age_group: this.props.profile.age_group,
     };
+    eventState.map((val, key) => {
+      if (!val.shown) {
+        if (key === "dest") {
+          event['destination'].coordinates = [];
+          event['destination'].text = "";
+        } else if (key === "capacity") {
+          event[key].value = 0;
+        } else if (key === "desc") {
+          event['description'].value = "";
+        }
+      }
+    });
+    debugger;
     this.props.dispatch(Actions.updateEvent(event, this.props.event.id));
     }
   }

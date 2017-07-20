@@ -33,7 +33,9 @@ export default class Capacity extends React.Component {
   };
   _decrement = () => {
     let dec = this.props.value;
-    if (dec > 0) { dec--; }
+    if (dec > 0) {
+      dec--;
+    }
     this.props.onChange(this.props.stateKey, dec);
   };
 }
@@ -60,10 +62,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     color: "#6a7989",
-    marginTop: 30,
-    marginLeft: 20,
+    marginLeft: 12,
     marginRight: width * 0.3,
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
+    marginBottom: 20,
   },
   swButton: {
     position: "absolute",
