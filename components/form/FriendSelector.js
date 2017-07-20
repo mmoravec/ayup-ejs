@@ -180,7 +180,10 @@ export default class FriendSelector extends React.Component {
     if (this.props.focus && this.props.friends.length > 0) {
       return (
         <FlatList
-          data={this.state.filteredFriends.slice(0, 6)}
+          data={this.state.filteredFriends.length > 0 ?
+            this.state.filteredFriends.slice(0, 6) :
+            this.props.friends.slice(0, 6)
+          }
           renderItem={this._renderFilterRow}
           keyExtractor={this._keyExtractor}
           keyboardShouldPersistTaps={'always'}
