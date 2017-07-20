@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,
+  Platform,
 } from 'react-native';
 import {
   Ionicons,
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   },
   activity: {
     backgroundColor: 'rgba(0,0,0,0)',
-    height: height * 0.20,
+    height: Platform.OS === "android" ? height * 0.25 : height * 0.20,
     justifyContent: 'center',
     alignItems: 'center',
   },

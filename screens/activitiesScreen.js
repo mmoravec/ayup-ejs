@@ -10,6 +10,7 @@ import {
   Dimensions,
   Animated,
   Platform,
+  Modal,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -52,52 +53,58 @@ export default class ActivitiesScreen extends React.Component {
 
   render() {
     return (
-      <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <MyText style={styles.title}>
-          {
-            this.state.filterClicked ? 
-              this.props.events.size + ` Events Shown` : 
-              `Tap to Filter Activities`
-          }
-        </MyText>
-        {
-          (Platform.OS === 'ios') &&
-          <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
-            <Image
-              source={require('../assets/images/btn_back.png')}
-              style={styles.btnBack}
-            />
-          </TouchableOpacity>
-        }
-        <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 25, zIndex: 2}}>
-          <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-            <MaterialCommunityIcons
-              size={20}
-              name={'refresh'}
-              style={{backgroundColor: 'transparent'}}
-            />
-          </View>
-          <MyText style={{fontSize: 10, color: "#666666"}}>Reset</MyText>
-        </TouchableOpacity>
-        <View style={styles.scrollView}>
-          <ScrollView contentContainerStyle={styles.form}>
+      <Modal
+        animationType={"none"}
+        transparent
+        onRequestClose={this.props.menuBtnPress}
+        visible={this.props.filtersVisible}>
+        <View style={styles.container}>
+          <MyText style={styles.title}>
             {
-              _.values(Activities).map(activity => {
-                if (this.props.filters.indexOf(activity.type) > -1) {
-                  return (
-                    <Activity key={activity.type} activity={activity} selected={true} clickedActivity={this._clickedActivity} />
-                  );
-                } else {
-                  return (
-                    <Activity key={activity.type} activity={activity} selected={false} clickedActivity={this._clickedActivity} />
-                  );
-                }
-
-            })
+              this.state.filterClicked ? 
+                this.props.events.size + ` Events Shown` : 
+                `Tap to Filter Activities`
+            }
+          </MyText>
+          {
+            (Platform.OS === 'ios') &&
+            <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
+              <Image
+                source={require('../assets/images/btn_back.png')}
+                style={styles.btnBack}
+              />
+            </TouchableOpacity>
           }
-          </ScrollView>
+          <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 25, zIndex: 2}}>
+            <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
+              <MaterialCommunityIcons
+                size={20}
+                name={'refresh'}
+                style={{backgroundColor: 'transparent'}}
+              />
+            </View>
+            <MyText style={{fontSize: 10, color: "#666666"}}>Reset</MyText>
+          </TouchableOpacity>
+          <View style={styles.scrollView}>
+            <ScrollView contentContainerStyle={styles.form}>
+              {
+                _.values(Activities).map(activity => {
+                  if (this.props.filters.indexOf(activity.type) > -1) {
+                    return (
+                      <Activity key={activity.type} activity={activity} selected={true} clickedActivity={this._clickedActivity} />
+                    );
+                  } else {
+                    return (
+                      <Activity key={activity.type} activity={activity} selected={false} clickedActivity={this._clickedActivity} />
+                    );
+                  }
+
+              })
+            }
+            </ScrollView>
+          </View>
         </View>
-      </Image>
+      </Modal>
     );
   }
 

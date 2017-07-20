@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   settings: {
-    height: height * 0.4,
+    height: Platform.OS === "android" ? height * 0.45 : height * 0.4,
     width: width * 0.9,
     position: 'absolute',
     backgroundColor: '#fff',

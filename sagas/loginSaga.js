@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { Platform, Alert } from "react-native";
 import { Facebook, Constants } from "expo";
 import { fork, call, put, takeEvery, select } from "redux-saga/effects";
 import ActionTypes from "../state/ActionTypes";
@@ -65,11 +65,12 @@ function* authorize() {
 }
 
 async function facebookLogin() {
+  let type = Platform.OS === "android" ? "native" : "browser";
   const login = await Facebook.logInWithReadPermissionsAsync(
     "1521840934725105",
     {
       permissions: ["public_profile", "email", "user_friends"],
-      behavior: Constants.appOwnership === "standalone" ? "browser" : "web",
+      behavior: Constants.appOwnership === "standalone" ? type : "web",
     }
   );
   return login;
