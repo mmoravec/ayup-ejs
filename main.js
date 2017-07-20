@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { BackHandler, View } from 'react-native';
+import { BackHandler, View, Linking, Alert } from 'react-native';
 import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import Navigation from './navigation/Navigator';
@@ -48,8 +48,9 @@ class App extends React.Component {
     navigation.goBack();
     return true;
   };
-  componentDidMount() {
+  async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    Linking.addEventListener('url', this._handleURL);
   }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
@@ -73,6 +74,11 @@ class App extends React.Component {
       return <Expo.AppLoading />;
     }
   }
+
+  _handleURL = (action) => {
+    this.props.dispatch(Actions.handleURL(action.url));
+  }
+
 }
 
 Expo.registerRootComponent(AppContainer);

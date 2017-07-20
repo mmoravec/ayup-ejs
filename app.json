@@ -5,10 +5,11 @@
     "slug": "ayup-ejs",
     "sdkVersion": "18.0.0",
     "privacy": "public",
-    "version": "0.0.4",
+    "version": "0.0.9",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/images/ayup_icon.png",
+    "icon": "./assets/images/512icon.png",
+    "scheme": "ayup",
     "notification": {
       "icon": "./assets/images/ayup_icon.png",
       "color": "#000000"
@@ -24,10 +25,21 @@
       ]
     },
     "ios": {
-      "bundleIdentifier": "com.ayupapp.exp",
+      "bundleIdentifier": "com.ionicframework.ayup140039",
+      "icon": "./assets/images/120icon.png",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAR07HjVWTxOGv9Zc4lPT9h8dS2G3098UI"
+      }
     },
     "android": {
-      "package": "com.ionicframework.ayup140030",
-    }
+      "package": "com.ayupapp.ayup000001",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBrIy3izIoPhVLmCATGgZXLLmIYDVUW-Oo"
+        },
+      },
+      "icon": "./assets/images/512icon.png"
+    },
+    "facebookScheme": "fb1521840934725105"
   }
 }

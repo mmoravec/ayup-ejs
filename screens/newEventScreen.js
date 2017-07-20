@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import {
   StyleSheet,
@@ -39,12 +40,14 @@ export default class NewEventScreen extends React.Component {
       </Image>
     );
   }
-  _backBtnPress = () => {
+  _backBtnPress = _.debounce(() => {
     if (this.props.form.status === "update") {
       this.props.dispatch(Actions.zeroForm());
     }
     this.props.dispatch(Actions.routeChange('Back'));
-  }
+   }, 3000, {
+    leading: true,
+   });
 }
 
 const styles = StyleSheet.create({

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import {
   View,
@@ -54,9 +55,6 @@ class ListRow extends React.Component {
     let rowData = this.props.data;
     let selectEvent = this._onItemPress.bind(this, rowData.id);
     let image = Icons[rowData.activity].image;
-    let start = new Date(rowData.start_time);
-    let end = new Date(rowData.end_time);
-    let format = duration(start, end);
     return (
       <TouchableOpacity onPress={selectEvent}>
         <View style={styles.row}>
@@ -65,8 +63,7 @@ class ListRow extends React.Component {
               source={image}
               style={styles.activityImage}
             />
-            <MyText style={styles.time}>{dateFormat(rowData.start_time, 'h:MM tt')}</MyText>
-            <MyText style={styles.duration}>{format}</MyText>
+            {this._showTime()}
           </View>
           <View style={styles.info}>
             <MyText style={styles.title}>{rowData.title}</MyText>
@@ -79,12 +76,30 @@ class ListRow extends React.Component {
       </TouchableOpacity>
     );
   }
-  _onItemPress = (id) => {
-    //TODO: create a saga for this when fetching comments becomes
-    this.props.dispatch(Actions.selectEvent(id));
-    this.props.dispatch(Actions.routeChange('Event'));
-    if (this.props.closeBtn) {
-      this.props.closeBtn();
+  _onItemPress = _.debounce(() => {
+      this.props.dispatch(Actions.selectEvent(this.props.data.id));
+      this.props.dispatch(Actions.routeChange('Event'));
+      if (this.props.closeBtn) {
+        this.props.closeBtn();
+      }
+    }, 1000, {
+      leading: true,
+    });
+
+  _showTime = () => {
+    let start = new Date(this.props.data.start_time);
+    let end = new Date(this.props.data.end_time);
+    let format = duration(start, end);
+    let hours = (end.getHours() - start.getHours()) + " hrs";
+    if (end - start > 2678400000) {
+      return <MyText style={this.props.styles.duration}>{hours}</MyText>;
+    } else {
+      return (
+        <View>
+          <MyText style={this.props.styles.time}>{dateFormat(this.props.data.start_time, 'h:MM tt')}</MyText>
+          <MyText style={this.props.styles.duration}>{format}</MyText>
+        </View>
+      );
     }
   }
 }

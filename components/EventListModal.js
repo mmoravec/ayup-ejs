@@ -90,7 +90,7 @@ const listStyle = StyleSheet.create({
   },
   icon: {
     height: 80,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   header: {
     color: "#808080",

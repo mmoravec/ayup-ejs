@@ -17,22 +17,12 @@ export default class TimeSelector extends React.Component {
 
   state = {
     focusDate: false,
-    hasFocused: false,
   }
   _yOffset = 0;
-
-  componentDidMount() {
-    setTimeout(() => {
-      this._view.measure((fx, fy, width, height, px, py) => {
-        this._scrollY = py;
-      });
-    }, 200);
-  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.focus) {
       this.setState({focusDate: true});
-      this.setState({hasFocused: true});
       dismissKeyboard();
     } else {
       this.setState({focusDate: false});
@@ -57,6 +47,7 @@ export default class TimeSelector extends React.Component {
               label={this.props.label}
               borderColor={'#8bd1c6'}
               onFocus={this._onDatePress}
+              focus={this.state.focusDate}
             />
           </View>
           {this._renderDate()}
@@ -119,7 +110,11 @@ export default class TimeSelector extends React.Component {
       let d = new Date(date.year, date.month, date.day, time.hour, minute);
       this._onChange(d);
     } else {
-      this.props.scrollTo(this._scrollY - 80);
+      setTimeout(() => {
+        this._view.measure((fx, fy, width, height, px, py) => {
+          this.props.scrollTo(py - 80);
+        });
+      }, 100);
     }
   }
 

@@ -18,15 +18,23 @@ const {height, width} = Dimensions.get('window');
 export default class EventActions extends React.Component {
 
   static getDataProps(data) {
+    let going = false;
+    data.events.selectedEvent.going.map(user => {
+      if (user.id === data.profile.id) {
+        going = true;
+      }
+    });
     return {
       event: data.events.selectedEvent,
       profile: data.profile,
+      going,
     };
   }
 
   state = {
     active: false,
-    bottom: new Animated.Value(height * 1.5),
+    top: new Animated.Value(- height * 0.5),
+    going: false,
   }
 
   render() {
@@ -34,8 +42,23 @@ export default class EventActions extends React.Component {
       return (
         <View style={styles.container}>
           {this._renderMenu()}
-          <Animated.View style={[styles.settings, {bottom: this.state.bottom}]}>
+          <Animated.View style={[styles.settings, {top: this.state.top}]}>
             {this._renderItems()}
+          </Animated.View>
+        </View>
+      );
+    } else if (this.props.going) {
+      return (
+        <View style={styles.container}>
+          {this._renderMenu()}
+          <Animated.View style={[styles.settings, {top: this.state.top}]}>
+            <View>
+              <TouchableOpacity onPress={this._onCantGoClick}>
+                <MyText style={styles.copy}>
+                  Can't Go
+                </MyText>
+              </TouchableOpacity>
+            </View>
           </Animated.View>
         </View>
       );
@@ -49,22 +72,27 @@ export default class EventActions extends React.Component {
       return (
         <View>
           <TouchableOpacity onPress={this._copyEvent}>
-            <MyText style={styles.modify}>
-              Copy
+            <MyText style={styles.button}>
+              Duplicate
             </MyText>
           </TouchableOpacity>
         </View>
       );
     } else {
       return (
-        <View>
+        <View style={{}}>
           <TouchableOpacity onPress={this._modifyEvent}>
-            <MyText style={styles.modify}>
-              Modify
+            <MyText style={styles.button}>
+              Edit
+            </MyText>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._copyEvent}>
+            <MyText style={styles.button}>
+              Duplicate
             </MyText>
           </TouchableOpacity>
           <TouchableOpacity onPress={this._deleteEvent}>
-            <MyText style={styles.delete}>
+            <MyText style={styles.button}>
               Delete
             </MyText>
           </TouchableOpacity>
@@ -96,6 +124,10 @@ export default class EventActions extends React.Component {
       );
     }
   }
+  
+  _onCantGoClick = () => {
+    this.props.dispatch(Actions.rejectEvent(this.props.event.id));
+  }
 
   _deleteEvent = () => {
     this.props.dispatch(Actions.deleteEvent(this.props.event.id));
@@ -114,9 +146,10 @@ export default class EventActions extends React.Component {
   _settingsPress = () => {
     this.setState({active: !this.state.active});
     if (this.state.active) {
-      Animated.spring(this.state.bottom, {toValue: height * 0.5, tension: 60, friction: 6, velocity: 300}).start();
+      Animated.spring(this.state.top, {toValue: -height * 0.5, tension: 60, friction: 6, velocity: 300}).start();
     } else {
-      Animated.spring(this.state.bottom, {toValue: 0, tension: 60, friction: 6, velocity: 300}).start();
+      let comp = (this.props.event.completed || this.props.going) ? -height * 0.25 : -height * 0.15;
+      Animated.spring(this.state.top, {toValue: comp, tension: 60, friction: 6, velocity: 300}).start();
     }
 
   }
@@ -126,14 +159,14 @@ export default class EventActions extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height * 0.2,
-    zIndex: 1,
+    height: height * 0.5,
+    zIndex: 5,
     backgroundColor: 'rgba(0,0,0,0)',
     position: 'absolute',
     top: 0,
   },
   settings: {
-    height: height * 0.4,
+    height: Platform.OS === "android" ? height * 0.45 : height * 0.4,
     width: width * 0.9,
     position: 'absolute',
     backgroundColor: '#fff',
@@ -148,16 +181,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     marginLeft: width * 0.05,
-    borderWidth: Platform.OS === 'android' ? 1 : 0,
+    borderWidth: Platform.OS === "android" ? 1 : 0,
   },
-  delete: {
+  button: {
     fontSize: 24,
-    marginBottom: 10,
-    color: '#EE3870',
-  },
-  modify: {
-    fontSize: 24,
-    marginBottom: 10,
+    marginBottom: 15,
     color: '#222',
-  }
+  },
 });

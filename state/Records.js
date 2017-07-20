@@ -121,6 +121,7 @@ export const Event = Record({
   capacity: null,
   age_group: "",
   completed: false,
+  atCapacity: false,
 });
 
 export const FormState = Record({
@@ -178,8 +179,9 @@ export const FormState = Record({
   activity: {
     focus: false,
     shown: true,
-    value: "basketball",
+    value: "",
     stateKey: "activity",
+    label: "Activity",
   },
   private: {
     focus: false,
@@ -251,8 +253,9 @@ export const Form = Immutable.fromJS({
   activity: {
     focus: false,
     shown: true,
-    value: "basketball",
+    value: "",
     stateKey: "activity",
+    label: "Activity",
   },
   private: {
     focus: false,

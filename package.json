@@ -1,6 +1,6 @@
 {
   "name": "ayup-ejs",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "connecting people and their passions",
   "author": "Matt Moravec",
   "private": false,
@@ -26,8 +26,8 @@
     "react-native-maps": "^0.12.4",
     "react-native-scrollable-tab-view": "^0.7.4",
     "react-native-segment-io-analytics": "0.0.6",
-    "react-native-swiper": "mmoravec/react-native-swiper",
     "react-navigation": "^1.0.0-beta.11",
+    "react-native-swiper": "1.5.4",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
     "redux-saga": "^0.14.6",

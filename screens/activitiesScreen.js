@@ -10,6 +10,7 @@ import {
   Dimensions,
   Animated,
   Platform,
+  Modal,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -25,13 +26,17 @@ export default class ActivitiesScreen extends React.Component {
   state = {
     all: true,
     opacity: new Animated.Value(0),
+    height: new Animated.Value(0),
+    filterClicked: false,
   }
 
   animate = _.debounce(() => {
     Animated.sequence([
+      Animated.timing(this.state.height, {toValue: 70, duration: 1}),
       Animated.timing(this.state.opacity, {toValue: 1, duration: 200}),
       Animated.delay(1000),
       Animated.timing(this.state.opacity, {toValue: 0, duration: 200}),
+      Animated.timing(this.state.height, {toValue: 0, duration: 1}),
     ]).start();
   }, 1000);
 
@@ -48,55 +53,67 @@ export default class ActivitiesScreen extends React.Component {
 
   render() {
     return (
-      <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <Animated.View style={[{opacity: this.state.opacity}, styles.results]}>
-          <MyText style={styles.resultText}>{this.props.events.size} results</MyText>
-        </Animated.View>
-        <MyText style={styles.title}>Tap to Filter Activities</MyText>
-        {
-          (Platform.OS === 'ios') &&
-          <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
-            <Image
-              source={require('../assets/images/btn_back.png')}
-              style={styles.btnBack}
-            />
-          </TouchableOpacity>
-        }
-        <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 20, zIndex: 2}}>
-          <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-            <MaterialCommunityIcons
-              size={20}
-              name={'refresh'}
-              style={{backgroundColor: 'transparent'}}
-            />
-          </View>
-          <MyText style={{fontSize: 10, color: "#666666"}}>Reset</MyText>
-        </TouchableOpacity>
-        <View style={styles.scrollView}>
-          <ScrollView contentContainerStyle={styles.form}>
+      <Modal
+        animationType={"none"}
+        transparent
+        onRequestClose={this.props.menuBtnPress}
+        visible={this.props.filtersVisible}>
+        <View style={styles.container}>
+          <MyText style={styles.title}>
             {
-              _.values(Activities).map(activity => {
-                if (this.props.filters.indexOf(activity.type) > -1) {
-                  return (
-                    <Activity key={activity.type} activity={activity} selected={true} />
-                  );
-                } else {
-                  return (
-                    <Activity key={activity.type} activity={activity} selected={false} />
-                  );
-                }
-
-            })
+              this.state.filterClicked ? 
+                this.props.events.size + ` Events Shown` : 
+                `Tap to Filter Activities`
+            }
+          </MyText>
+          {
+            (Platform.OS === 'ios') &&
+            <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
+              <Image
+                source={require('../assets/images/btn_back.png')}
+                style={styles.btnBack}
+              />
+            </TouchableOpacity>
           }
-          </ScrollView>
+          <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 25, zIndex: 2}}>
+            <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
+              <MaterialCommunityIcons
+                size={20}
+                name={'refresh'}
+                style={{backgroundColor: 'transparent'}}
+              />
+            </View>
+            <MyText style={{fontSize: 10, color: "#666666"}}>Reset</MyText>
+          </TouchableOpacity>
+          <View style={styles.scrollView}>
+            <ScrollView contentContainerStyle={styles.form}>
+              {
+                _.values(Activities).map(activity => {
+                  if (this.props.filters.indexOf(activity.type) > -1) {
+                    return (
+                      <Activity key={activity.type} activity={activity} selected={true} clickedActivity={this._clickedActivity} />
+                    );
+                  } else {
+                    return (
+                      <Activity key={activity.type} activity={activity} selected={false} clickedActivity={this._clickedActivity} />
+                    );
+                  }
+
+              })
+            }
+            </ScrollView>
+          </View>
         </View>
-      </Image>
+      </Modal>
     );
   }
 
-  _backBtnPress = () => {
+
+  _backBtnPress = _.debounce(() => {
     this.props.dispatch(Actions.routeChange('Back'));
-  }
+  }, 3000, {
+    leading: true,
+  });
 
   _resetActivities = () => {
     if (this.state.all) {
@@ -109,6 +126,10 @@ export default class ActivitiesScreen extends React.Component {
       });
     }
     this.setState({all: !this.state.all});
+  }
+
+  _clickedActivity = () => {
+    this.setState({filterClicked: true});
   }
 }
 
@@ -145,6 +166,7 @@ class Activity extends React.Component {
 
   _filterClick = () => {
     this.setState({activityClicked: true});
+    this.props.clickedActivity();
     if (this.props.selected) {
       this.props.dispatch(Actions.removeActivity(this.props.activity.type));
     } else {
@@ -154,7 +176,6 @@ class Activity extends React.Component {
 }
 
 class Heart extends React.Component {
-
   state = {
     removed: false,
   }
@@ -246,10 +267,10 @@ const styles = StyleSheet.create({
   title: {
     position: 'absolute',
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 22,
     left: width * 0.2,
     right: 0,
-    top: 30,
+    top: 35,
     fontFamily: 'LatoRegular',
     zIndex: 1,
     width: width * 0.6,

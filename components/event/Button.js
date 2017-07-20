@@ -36,6 +36,15 @@ export default class EventButton extends React.Component {
     let status = this._getStatus();
     if (this.props.phone.status === ActionTypes.INACTIVE) {
       //If invited to event
+      if (this.props.selectedEvent.atCapacity) {
+        return (
+        <View style={styles.sorry}>
+          <MyText style={{ fontSize: 16, color: "#fff", textAlign: "center" }}>
+            Event is at capacity
+          </MyText>
+        </View>
+        );
+      }
       if (status === "invited") {
         return (
           <View style={styles.bottom}>
@@ -184,6 +193,15 @@ const styles = StyleSheet.create({
     height: height * 0.1,
     width,
     backgroundColor: "#ee366f",
+    justifyContent: "center",
+    bottom: 0,
+    zIndex: 3,
+  },
+  sorry: {
+    position: "absolute",
+    height: height * 0.1,
+    width,
+    backgroundColor: "rgba(255,255,255,0.6)",
     justifyContent: "center",
     bottom: 0,
     zIndex: 3,

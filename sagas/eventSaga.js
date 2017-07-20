@@ -71,8 +71,6 @@ function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const profile = yield select(state => state.profile);
   if (!profile.age_group) {
-    yield delay(500);
-    yield put({ type: ActionTypes.REGION_CHANGE, ...action });
     return;
   }
   let region = {
@@ -99,7 +97,8 @@ function* updateNearbyEvents(action) {
   } catch (error) {
     return;
   }
-  yield put({ type: ActionTypes.SET_NEARBY, data: events.body });
+  events = events.body ? pushEvents(events.body) : events.body;
+  yield put({ type: ActionTypes.SET_NEARBY, data: events });
 }
 
 function* acceptEvent(action) {
@@ -115,6 +114,7 @@ function* acceptEvent(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -131,6 +131,7 @@ function* acceptRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -147,6 +148,7 @@ function* rejectRequest(action) {
     return;
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -175,7 +177,7 @@ function* deleteEvent(action) {
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield call(delay, 2000);
-  yield call(updateNearbyEvents, region);
+  yield fork(updateNearbyEvents, region);
   yield put({ type: ActionTypes.ZERO_SELECTED_COMMENT });
   yield put({ type: ActionTypes.ZERO_SELECTED_EVENT });
   yield put({ type: ActionTypes.GET_PROFILE });
@@ -188,12 +190,13 @@ function* rejectEvent(action) {
     yield call(
       request,
       POST,
-      URL + "/v1.0/events/" + action.eventID + "?fbid="
+      URL + "/v1.0/events/" + action.eventID + "/reject"
     );
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
+  yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
@@ -260,11 +263,14 @@ function* loadEvent(action) {
     yield fork(loadEvent, action);
     return;
   }
-  data.body.completed = new Date(data.body.end_time) < new Date();
-  data.body.invited = data.body.invited.filter(friend => {
+  let body = data.body;
+  body.completed = new Date(data.body.end_time) < new Date();
+  body.invited = data.body.invited.filter(friend => {
     return friend.profile_pic;
   });
-
+  if (body.capacity > 0 && body.capacity <= body.going.length) {
+    body.atCapacity = true;
+  }
   yield put({
     type: ActionTypes.SET_SELECTED_EVENT,
     selectedEvent: new Event({ ...data.body }),
@@ -334,4 +340,30 @@ function transformEvent(event, form) {
     }
   });
   return form;
+}
+
+function pushEvents(events) {
+  let map = {};
+  let result = events.map(event => {
+    let long = event.location.coordinates[0];
+    let lat = event.location.coordinates[1];
+    if (map[long]) {
+      event.location.coordinates[0] =
+        event.location.coordinates[0] + getRandomInt(1, 10) * 0.000001;
+    }
+    if (map[lat]) {
+      event.location.coordinates[1] =
+        event.location.coordinates[1] + getRandomInt(1, 10) * 0.000001;
+    }
+    map[lat] = true;
+    map[long] = true;
+    return event;
+  });
+  return result;
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }

@@ -69,11 +69,15 @@ export default class BaseInput extends Component {
 
   _onFocus(event) {
     this._toggle(true);
-
     const onFocus = this.props.onFocus;
     if (onFocus) {
       onFocus(event);
     }
+    setTimeout(() => {
+      this.refs.input.measure((fx, fy, width, height, px, py) => {
+        this.props.scrollTo(py - 80);
+      });
+    }, 100);
   }
 
   _toggle(isActive) {

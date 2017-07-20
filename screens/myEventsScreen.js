@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import {
   View,
@@ -80,7 +81,7 @@ export default class MyEventsScreen extends React.Component {
               </Animated.Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this._selectJoined} hitSlop={{top: 20, left: 30, bottom: 20, right: 20}}>
-              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, opacity: this.state.joinOpac}}>Completed</Animated.Text>
+              <Animated.Text style={{fontFamily: 'LatoRegular', paddingRight: 5, opacity: this.state.joinOpac}}>Archived</Animated.Text>
             </TouchableOpacity>
           </Image>
         </View>
@@ -140,9 +141,11 @@ export default class MyEventsScreen extends React.Component {
   _selectJoined = () => {
     this.tabView.goToPage(2);
   }
-  _backBtnPress = () => {
+  _backBtnPress = _.debounce(() => {
     this.props.dispatch(Actions.routeChange('Back'));
-  }
+   }, 3000, {
+    leading: true,
+   });
 }
 
 
@@ -273,7 +276,7 @@ const listStyle = StyleSheet.create({
   },
   icon: {
     height: 80,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   header: {
     color: '#808080',

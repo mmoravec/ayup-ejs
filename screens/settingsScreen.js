@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from 'react';
 import {
   View,
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
   Platform,
+  WebView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -22,7 +24,7 @@ export default class SettingsScreen extends React.Component {
   render() {
     return (
       <Image source={require('../assets/images/bkgd_map.png')} style={styles.container}>
-        <TouchableOpacity style={styles.backPress} underlayColor="transparent" onPress={this._home}>
+        <TouchableOpacity style={styles.backPress} underlayColor="transparent" onPress={this._onBackPress}>
           {
             (Platform.OS === 'ios') &&
             <Image
@@ -33,7 +35,7 @@ export default class SettingsScreen extends React.Component {
         </TouchableOpacity>
         <ScrollView style={styles.scrollParent}>
           <View style={styles.group}>
-            <TouchableOpacity onPress={this._signOut}>
+            <TouchableOpacity onPress={this._onSignOutPress}>
               <View style={styles.signOutButton}>
                 <MyText>
                   Sign Out
@@ -46,10 +48,23 @@ export default class SettingsScreen extends React.Component {
               </View>
             </TouchableOpacity>
             <View style={styles.seperator} />
-            <TouchableOpacity onPress={this._feedback}>
+            <TouchableOpacity onPress={this._onFeedbackPress}>
               <View style={styles.signOutButton}>
                 <MyText>
                   Feedback
+                </MyText>
+                <MaterialIcons
+                  size={24}
+                  style={{marginRight: 20}}
+                  name={'keyboard-arrow-right'}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.seperator} />
+            <TouchableOpacity onPress={this._onSupportPress}>
+              <View style={styles.signOutButton}>
+                <MyText>
+                  Support
                 </MyText>
                 <MaterialIcons
                   size={24}
@@ -63,14 +78,20 @@ export default class SettingsScreen extends React.Component {
       </Image>
     );
   }
-  _signOut = () => {
+  _onSignOutPress = () => {
     this.props.dispatch(Actions.logOut());
   }
-  _home = () => {
-    this.props.dispatch(Actions.routeChange('Back'));
-  }
-  _feedback = () => {
+  _onBackPress = _.debounce(() => {
+      this.props.dispatch(Actions.routeChange('Back'));
+    }, 3000, {
+      leading: true,
+   });
+  _onFeedbackPress = () => {
     Linking.openURL('https://goo.gl/forms/yoyvyrKkxR3PwLeu1');
+  }
+
+  _onSupportPress = () => {
+    Linking.openURL('mailto:support@ayup.events');
   }
 }
 

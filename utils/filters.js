@@ -54,8 +54,13 @@ export default class Filters {
   static getHeadersAscend = events => {
     events = events
       .groupBy(x => {
-        let date = new Date(x.start_time);
-        return dateFormat(date, "fullDate");
+        let start = new Date(x.start_time);
+        let end = new Date(x.end_time);
+        if (end - start > 2678400000) {
+          return "Daily";
+        } else {
+          return dateFormat(start, "fullDate");
+        }
       })
       .sort((a, b) => {
         let n = new Date(a.get(0).start_time).getTime();

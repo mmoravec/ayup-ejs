@@ -13,20 +13,25 @@ const { height, width } = Dimensions.get("window");
 
 export default class InformUser extends React.Component {
   state = {
-    top: new Animated.Value(-height * 0.2),
+    top: new Animated.Value(-height * 0.3),
     shown: false,
+    delay: false,
   };
 
   showInfo = _.debounce(() => this.setState({ shown: false }), 15000);
 
+  componentDidMount() {
+    _.delay(() => this.setState({ delay: true }), 5000);
+  }
+
   componentWillReceiveProps(nextProps, nextState) {
     if (nextProps.events.size === 0) {
-      if (!this.state.shown) {
+      if (!this.state.shown && this.state.delay) {
         Animated.timing(this.state.top, { toValue: 0, duration: 1000 }).start();
       }
     } else {
       Animated.timing(this.state.top, {
-        toValue: -height * 0.2,
+        toValue: -height * 0.3,
         duration: 1000,
       }).start();
       this.setState({ shown: true });
@@ -50,7 +55,7 @@ export default class InformUser extends React.Component {
 
   _close = () => {
     Animated.timing(this.state.top, {
-      toValue: -height * 0.2,
+      toValue: -height * 0.3,
       duration: 200,
     }).start();
     this.setState({ shown: true });
