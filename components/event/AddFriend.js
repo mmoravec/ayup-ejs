@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   Modal,
+  LayoutAnimation,
 } from "react-native";
 import { List } from "immutable";
 import { connect } from 'react-redux';
@@ -25,6 +26,9 @@ export default class AddFriend extends React.Component {
     value: new List(),
     focus: true,
   };
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut();
+  }
   render() {
     if (this.props.show) {
       return (

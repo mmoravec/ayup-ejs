@@ -72,10 +72,6 @@ export default class FriendSelector extends React.Component {
     this._scrollY = 0;
   }
 
-  componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut();
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
       this._fuse = new Fuse(this.props.friends, this._fuseOptions);
