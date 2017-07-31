@@ -61,6 +61,15 @@ class EventsReducer {
     };
     return state.set("region", region);
   }
+  static [ActionTypes.UPDATE_REGION](state, action) {
+    let region = {
+      latitude: action.latitude,
+      longitude: action.longitude,
+      latitudeDelta: action.latitudeDelta ? action.latitudeDelta : 0.0249666,
+      longitudeDelta: action.longitudeDelta ? action.longitudeDelta : 0.017766,
+    };
+    return state.set("updateRegion", region);
+  }
 }
 
 export default EventsReducer.reduce;

@@ -14,7 +14,7 @@ export const EventState = Record({
     latitudeDelta: null,
     longitudeDelta: null,
   },
-  changeRegion: {
+  updateRegion: {
     latitude: null,
     longitude: null,
     latitudeDelta: null,

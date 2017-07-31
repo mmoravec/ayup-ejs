@@ -1,8 +1,8 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19002,
+  "packagerPort": 19003,
+  "packagerPid": 7362,
+  "expoServerNgrokUrl": "https://ii-ckb.mmoravec.ayup-ejs.exp.direct",
+  "packagerNgrokUrl": "https://packager.ii-ckb.mmoravec.ayup-ejs.exp.direct",
+  "ngrokPid": 7376
 }

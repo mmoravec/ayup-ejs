@@ -39,7 +39,7 @@ function* saveEvent(action) {
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield put({
-    type: ActionTypes.REGION_CHANGE,
+    type: ActionTypes.UPDATE_REGION,
     longitude: action.event.location.coordinates[0],
     latitude: action.event.location.coordinates[1],
   });
