@@ -92,7 +92,7 @@ export default class EventContent extends React.Component {
           </MapView>
         </View>
         <View style={styles.topInfo}>
-          <View style={{flexDirection: 'column'}}>
+          <View style={{flexDirection: 'column', }}>
             <MyText style={{ fontSize: 22, marginLeft: 14, marginTop: 10, marginBottom: 0 }}>
               {event.title}
             </MyText>
@@ -411,7 +411,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   topInfo: {
-    height: 70,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     flexDirection: "row",

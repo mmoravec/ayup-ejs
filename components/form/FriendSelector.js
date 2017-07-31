@@ -260,6 +260,7 @@ export default class FriendSelector extends React.Component {
 
   _pushFriend = (friend) => {
     let friends = this.props.value;
+    
     var result = friends.find(obj => obj.item.ayup_id === friend.item.ayup_id);
     if (!result) {
       friends = friends.push(friend);

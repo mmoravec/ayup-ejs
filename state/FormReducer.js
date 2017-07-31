@@ -19,7 +19,10 @@ class FormReducer {
   }
 
   static [ActionTypes.ZERO_FORM](state, action) {
-    return new FormState(Form.toJS());
+    let form = Form.toJS();
+    form.friends.value = new List();
+    let newState = new FormState({ ...form });
+    return newState;
   }
 
   static [ActionTypes.FOCUS_FIELD](state, action) {

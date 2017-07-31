@@ -12,6 +12,7 @@ import {
   Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import LocationSearch from "./LocationSearch";
 import { ActivitySelector, ActivityInput} from "./ActivitySelector";
 import TimeSelector from "./TimeSelector";
@@ -47,7 +48,7 @@ export default class EventForm extends React.Component {
     this._inputProps = {
       style: styles.hoshi,
       editable: true,
-      borderColor: "#0bbcd1",
+      borderColor: "#8bd1c6",
       scrollTo: this._scrollTo,
     };
     this._titleProps = {
@@ -55,7 +56,7 @@ export default class EventForm extends React.Component {
       onChangeText: text =>
         this.props.dispatch(Actions.setFormValue("title", text)),
       ...this._inputProps,
-      maxLength: 40,
+      maxLength: 22,
       scrollTo: this._scrollTo,
     };
     this._descProps = {
@@ -100,6 +101,16 @@ export default class EventForm extends React.Component {
               { useNativeDriver: true, listener: this._onScroll }
             )}
             contentContainerStyle={styles.form}>
+            <TouchableOpacity onPress={this._resetForm} style={{position: 'absolute', right: 20, top: 25, zIndex: 2}}>
+              <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
+                <MaterialCommunityIcons
+                  size={20}
+                  name={'refresh'}
+                  style={{backgroundColor: 'transparent'}}
+                />
+              </View>
+              <MyText style={{fontSize: 10, color: "#666666"}}>Reset</MyText>
+            </TouchableOpacity>
             <ActivitySelector
               {...this.props.form.activity}
               onChange={this._onChange}
@@ -185,6 +196,21 @@ export default class EventForm extends React.Component {
               <View style={styles.input}>
                 <Hoshi {...this._descProps} {...this.props.form.desc} />
               </View>}
+              {
+                this.props.form.request.shown &&
+                <View style={styles.switch}>
+                  {
+                    !this.props.form.request.value ?
+                    <MyText style={styles.text}>Manually Accept Requests</MyText> :
+                    <MyText style={styles.text}>Automatically Accept Requests</MyText>
+                  }
+                  <Switch
+                    style={styles.swButton}
+                    onValueChange={this._requestSwitch}
+                    value={this.props.form.request.value}
+                  />
+                </View>
+              }
               <View style={styles.optionalFields}>
                 <MyText style={styles.optText}>
                   Optional Fields
@@ -216,6 +242,16 @@ export default class EventForm extends React.Component {
                       <Image
                         source={require("../../assets/images/destination_btn.png")}
                         style={{ height: 40, width: 122 }}
+                        resizeMode={"contain"}
+                      />
+                    </TouchableOpacity>}
+                  {!this.props.form.request.shown &&
+                    <TouchableOpacity
+                      onPress={this._showRequest}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/request_btn.png")}
+                        style={{ height: 40, width: 111 }}
                         resizeMode={"contain"}
                       />
                     </TouchableOpacity>}
@@ -255,6 +291,16 @@ export default class EventForm extends React.Component {
                         resizeMode={"contain"}
                       />
                     </TouchableOpacity>}
+                  {this.props.form.request.shown &&
+                    <TouchableOpacity
+                      onPress={this._showRequest}
+                      style={{ margin: 5, height: 40 }}>
+                      <Image
+                        source={require("../../assets/images/-request_btn.png")}
+                        style={{ height: 40, width: 111 }}
+                        resizeMode={"contain"}
+                      />
+                    </TouchableOpacity>}
                 </View>
               </View>
               <View style={{ height: height * 0.1 }} />
@@ -282,6 +328,10 @@ export default class EventForm extends React.Component {
     this.props.dispatch(Actions.showhideField('capacity'));
   };
 
+  _showRequest = field => {
+    this.props.dispatch(Actions.showhideField('request'));
+  };
+
   _showDescription = field => {
     this.props.dispatch(Actions.showhideField('desc'));
   };
@@ -289,6 +339,12 @@ export default class EventForm extends React.Component {
   _privateSwitch = () => {
     this.props.dispatch(
       Actions.setFormValue("private", !this.props.form.private.value)
+    );
+  };
+
+  _requestSwitch = () => {
+    this.props.dispatch(
+      Actions.setFormValue("request", !this.props.form.request.value)
     );
   };
 
@@ -309,12 +365,19 @@ export default class EventForm extends React.Component {
     if (key === "endDate" && value < this.props.form.startDate.value) {
       value = this.props.form.startDate.value;
     }
+    if (key === "endDate" && value > new Date(this.props.form.startDate.value.getTime() + 12096e5)) {
+      value = new Date(this.props.form.startDate.value.getTime() + 12096e5);
+    }
     this.props.dispatch(Actions.setFormValue(key, value));
   };
 
   _onChange = (stateKey, value) => {
     this.props.dispatch(Actions.setFormValue(stateKey, value));
   };
+
+  _resetForm = () => {
+    this.props.dispatch(Actions.zeroForm());
+  }
 }
 
 const styles = StyleSheet.create({

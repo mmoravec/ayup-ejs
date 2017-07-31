@@ -95,7 +95,7 @@ export default {
     id: 13,
     type: "running",
     image: require("../assets/images/figures/running.png"),
-    name: "Run-Walk",
+    name: "Run/Walk",
   },
   soccer: {
     icon: require("../assets/images/icons/icon_soccer.png"),
@@ -153,13 +153,6 @@ export default {
     image: require("../assets/images/figures/smoothie.png"),
     name: "Smoothie",
   },
-  skiing: {
-    icon: require("../assets/images/icons/icon_skiing.png"),
-    id: 22,
-    type: "skiing",
-    image: require("../assets/images/figures/skiing.png"),
-    name: "Skiing",
-  },
   weights: {
     icon: require("../assets/images/icons/icon_weightlifting.png"),
     id: 23,
@@ -168,3 +161,11 @@ export default {
     name: "Lifting",
   },
 };
+
+// skiing: {
+//   icon: require("../assets/images/icons/icon_skiing.png"),
+//   id: 22,
+//   type: "skiing",
+//   image: require("../assets/images/figures/skiing.png"),
+//   name: "Skiing",
+// },

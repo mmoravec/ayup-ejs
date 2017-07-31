@@ -5,10 +5,17 @@ import MapMarker from './MapMarker';
 import Actions from '../state/Actions';
 import MapStyle from '../constants/mapstyle';
 
-@connect()
+@connect((data) => EventMap.getDataProps(data))
 export default class EventMap extends React.Component {
 
+  static getDataProps(data) {
+    return {
+      region: data.events.region,
+    };
+  }
+
   render() {
+    if (this.props.region.latitude) {
       return (
         <MapView
           style={{ flex: 1, backgroundColor: '#fff' }}
@@ -24,6 +31,9 @@ export default class EventMap extends React.Component {
           }
         </MapView>
       );
+    } else {
+      return null;
+    }
   }
 
   _onRegionChange = (region) => {

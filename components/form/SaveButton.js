@@ -132,6 +132,7 @@ export default class SaveButton extends React.Component {
       activity: eventState.activity.value,
       capacity: eventState.capacity.value,
       age_group: this.props.profile.age_group,
+      auto_accept: eventState.request.value,
     };
     eventState.map((val, key) => {
       if (!val.shown) {
@@ -142,10 +143,11 @@ export default class SaveButton extends React.Component {
           event[key].value = 0;
         } else if (key === "desc") {
           event['description'].value = "";
+        } else if (key === "request") {
+          event['auto_accept'] = false;
         }
       }
     });
-    debugger;
     this.props.dispatch(Actions.saveEvent(event));
     }
   }
@@ -173,6 +175,7 @@ export default class SaveButton extends React.Component {
       activity: eventState.activity.value,
       capacity: eventState.capacity.value,
       age_group: this.props.profile.age_group,
+      auto_accept: eventState.request.value,
     };
     eventState.map((val, key) => {
       if (!val.shown) {
@@ -183,10 +186,11 @@ export default class SaveButton extends React.Component {
           event[key].value = 0;
         } else if (key === "desc") {
           event['description'].value = "";
+        } else if (key === "request") {
+          event['auto_accept'] = false;
         }
       }
     });
-    debugger;
     this.props.dispatch(Actions.updateEvent(event, this.props.event.id));
     }
   }

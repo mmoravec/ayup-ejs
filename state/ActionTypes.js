@@ -54,6 +54,7 @@ export default defineActionConstants([
   "RESET_LOCATION",
   "RESET_ALERT",
   "ROUTE_CHANGED",
+  "RESET_REGION",
   "SAVING",
   "SAVE_EVENT",
   "SAVE_COMMENT",

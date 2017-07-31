@@ -14,6 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ActionTypes from '../state/ActionTypes';
 import EventListModal from '../components/EventListModal';
 import MenuModal from '../components/MenuModal';
+import ActivitiesModal from '../components/ActivitiesModal';
 import MapView from '../components/EventMap';
 import InformUser from '../components/InformUser';
 import MyText from '../components/common/MyText';
@@ -27,14 +28,15 @@ export default class HomeScreen extends React.Component {
   static getDataProps(data) {
     return {
       events: Filters.filterEvents(data.events.nearbyEvents, data.events.filters),
-      region: data.events.region,
       phone: data.phone,
+      filters: data.events.filters,
     };
   }
 
   state = {
     listVisible: false,
     menuVisible: false,
+    filtersVisible: false,
     listBtnStyle: styles.listBtnStyle,
   }
 
@@ -52,13 +54,20 @@ export default class HomeScreen extends React.Component {
       menuVisible: this.state.menuVisible,
       menuBtnPress: this._onMenuBtnPress,
       navAway: this._onNavAway,
+      onFilterPress: this._onFilterPress,
     };
+
+    let filterProps = {
+      onFilterPress: this._onFilterPress,
+      events: this.props.events,
+      filtersVisible: this.state.filtersVisible,
+      filters: this.props.filters,
+    }
 
     let mapProps = {
       events: this.props.events,
-      region: this.props.region,
     };
-    if (this.props.phone.locationGranted && this.props.region.latitude) {
+    if (this.props.phone.locationGranted) {
       return (
         <View style={{flex: 1}}>
           <MapView {...mapProps} />
@@ -68,7 +77,7 @@ export default class HomeScreen extends React.Component {
               onPress={this._onMenuBtnPress}>
               <Image
                 source={require('../assets/images/btn_main2.png')}
-                style={styles.btnMain}
+                style={[styles.btnMain, {opacity: !this.state.menuVisible ? 1 : 0}]}
               />
             </TouchableOpacity>
           </View>
@@ -82,6 +91,7 @@ export default class HomeScreen extends React.Component {
           </View>
           <EventListModal {...listProps} />
           <MenuModal {...menuProps} />
+          <ActivitiesModal {...filterProps} />
           <InformUser events={this.props.events} />
         </View>
       );
@@ -175,6 +185,10 @@ export default class HomeScreen extends React.Component {
 
   _onlocationResetPress = () => {
     this.props.dispatch(Actions.resetLocation());
+  }
+
+  _onFilterPress = () => {
+    this.setState({filtersVisible: !this.state.filtersVisible});
   }
 
 }
