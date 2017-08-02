@@ -5,14 +5,14 @@
     "slug": "ayup-ejs",
     "sdkVersion": "18.0.0",
     "privacy": "public",
-    "version": "0.0.9",
+    "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/512icon.png",
     "scheme": "ayup",
     "notification": {
       "icon": "./assets/images/ayup_icon.png",
-      "color": "#000000"
+      "color": "#f2f2f2"
     },
     "loading": {
       "icon": "./assets/images/ayup_logo.png",
@@ -28,8 +28,14 @@
       "bundleIdentifier": "com.ionicframework.ayup140039",
       "icon": "./assets/images/120icon.png",
       "config": {
-        "googleMapsApiKey": "AIzaSyAR07HjVWTxOGv9Zc4lPT9h8dS2G3098UI"
-      }
+        "googleMapsApiKey": "AIzaSyAR07HjVWTxOGv9Zc4lPT9h8dS2G3098UI",
+        "branch": {
+          "apiKey": "key_live_fcrDWEUh7JoFFwn5IKZoxfhcqDkLdKLw"
+        }
+      },
+      "associatedDomains": [
+        "applinks:ayup.app.link"
+      ]
     },
     "android": {
       "package": "com.ayupapp.ayup000001",
@@ -37,6 +43,9 @@
         "googleMaps": {
           "apiKey": "AIzaSyBrIy3izIoPhVLmCATGgZXLLmIYDVUW-Oo"
         },
+        "branch": {
+          "apiKey": "key_live_fcrDWEUh7JoFFwn5IKZoxfhcqDkLdKLw"
+        }
       },
       "icon": "./assets/images/512icon.png"
     },

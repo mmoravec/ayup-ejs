@@ -16,7 +16,7 @@ export function* watchInitAnalytics() {
   //   //    yield call(initOptimizely, user);
   //   init = false;
   // }
-  yield call(initAmplitude, cred);
+  yield call(initSegment, cred);
 }
 
 // function* initOptimizely(user) {
@@ -65,29 +65,47 @@ function* trackOptlyEvent(optly, user, action) {
   optly.track(action.type, user.id, attr);
 }
 
-function* initAmplitude(user) {
-  Expo.Amplitude.initialize("b9b1b7bf1862786ce6473322dff27d1b");
-  Expo.Amplitude.setUserId(user.user_id);
+function* initSegment(user) {
+  Platform.OS === "ios" ?
+    Expo.Segment.initializeIOS("t8y864kX9D6PeLkTEsY8NrYoyh5IZkR2") :
+    Expo.Segment.initializeAndroid("qAk3SVjTD5ksTkdpfWflhUxXmW0gXvhE");
+  Expo.Segment.identify(user.user_id);
+  yield takeEvery(
+    [ActionTypes.SAVE_EVENT, ActionTypes.UPDATE_EVENT],
+    trackEventAction
+  );
   yield takeEvery(
     [
-      ActionTypes.SAVE_EVENT,
       ActionTypes.REQUEST_EVENT,
       ActionTypes.ACCEPT_EVENT,
       ActionTypes.ACCEPT_REQUEST,
-      ActionTypes.DELETE_EVENT,
-      ActionTypes.CONTACTS_GRANTED,
-      ActionTypes.NOTIFICATIONS_GRANTED,
       ActionTypes.REJECT_EVENT,
       ActionTypes.REJECT_REQUEST,
       ActionTypes.SET_SELECTED_EVENT,
-      ActionTypes.MODIFY_EVENT,
-      ActionTypes.UPDATE_EVENT,
       ActionTypes.SAVE_COMMENT,
+      ActionTypes.DELETE_EVENT,
+      ActionTypes.MODIFY_EVENT,
     ],
-    trackAmplitudeEvent
+    trackSelectedEventAction
+  );
+  yield takeEvery(
+    [ActionTypes.CONTACTS_GRANTED, ActionTypes.NOTIFICATIONS_GRANTED],
+    trackSegmentEvent
   );
 }
 
-function* trackAmplitudeEvent(action) {
-  Expo.Amplitude.logEvent(action.type);
+function* trackSegmentEvent(action) {
+  Expo.Segment.track(action.type);
+}
+
+function* trackEventAction(action) {
+  Expo.Segment.trackWithProperties(action.type, { ...action.event });
+}
+
+function* trackSelectedEventAction(action) {
+  yield call(delay, 200);
+  const event = yield select(state => state.events);
+  Expo.Segment.trackWithProperties(action.type, {
+    ...event.selectedEvent.toJS(),
+  });
 }
