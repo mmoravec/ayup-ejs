@@ -3,7 +3,7 @@
     "name": "Ayup",
     "description": "Recess Revived",
     "slug": "ayup-ejs",
-    "sdkVersion": "18.0.0",
+    "sdkVersion": "19.0.0",
     "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -39,6 +39,7 @@
     },
     "android": {
       "package": "com.ayupapp.ayup000001",
+      "versionCode": 2,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBrIy3izIoPhVLmCATGgZXLLmIYDVUW-Oo"
