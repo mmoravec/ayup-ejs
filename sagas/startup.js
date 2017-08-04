@@ -99,17 +99,14 @@ export function* getLocation() {
       };
     }
     yield put({
-      type: ActionTypes.REGION_CHANGE,
+      type: ActionTypes.UPDATE_REGION,
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
+      latitudeDelta: 0.086552,
+      longitudeDelta: 0.061562,
     });
     return true;
   }
-}
-
-function* getInitialURL() {
-  let url = yield call(Linking.getInitialURL);
-  yield put({ type: ActionTypes.GET_PARAMETERS, url });
 }
 
 export function* getContacts() {

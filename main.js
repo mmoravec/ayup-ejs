@@ -7,6 +7,7 @@ import Navigation from './navigation/Navigator';
 import Store from './state/Store';
 import Actions from './state/Actions';
 import Notifications from './components/Notifications';
+console.disableYellowBox = true;
 // import Actions from './state/Actions';
 
 class AppContainer extends React.Component {

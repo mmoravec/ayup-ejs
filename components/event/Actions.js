@@ -54,7 +54,7 @@ export default class EventActions extends React.Component {
           <Animated.View style={[styles.settings, {top: this.state.top}]}>
             <View>
               <TouchableOpacity onPress={this._onCantGoClick}>
-                <MyText style={styles.copy}>
+                <MyText style={styles.button}>
                   Can't Go
                 </MyText>
               </TouchableOpacity>

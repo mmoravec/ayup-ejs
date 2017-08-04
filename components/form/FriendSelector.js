@@ -72,10 +72,6 @@ export default class FriendSelector extends React.Component {
     this._scrollY = 0;
   }
 
-  componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut();
-  }
-
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.friends !== this.props.friends) {
       this._fuse = new Fuse(this.props.friends, this._fuseOptions);
@@ -260,6 +256,7 @@ export default class FriendSelector extends React.Component {
 
   _pushFriend = (friend) => {
     let friends = this.props.value;
+    
     var result = friends.find(obj => obj.item.ayup_id === friend.item.ayup_id);
     if (!result) {
       friends = friends.push(friend);

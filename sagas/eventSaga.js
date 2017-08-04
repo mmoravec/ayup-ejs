@@ -39,7 +39,7 @@ function* saveEvent(action) {
   }
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield put({
-    type: ActionTypes.REGION_CHANGE,
+    type: ActionTypes.UPDATE_REGION,
     longitude: action.event.location.coordinates[0],
     latitude: action.event.location.coordinates[1],
   });
@@ -76,8 +76,8 @@ function* updateNearbyEvents(action) {
   let region = {
     latitude: action.latitude,
     longitude: action.longitude,
-    latitudeDelta: action.latitudeDelta ? action.latitudeDelta : 0.0249666,
-    longitudeDelta: action.longitudeDelta ? action.longitudeDelta : 0.017766,
+    latitudeDelta: action.latitudeDelta ? action.latitudeDelta : 0.086552,
+    longitudeDelta: action.longitudeDelta ? action.longitudeDelta : 0.061562,
   };
   let scope = Math.floor(region.latitudeDelta * 53000), events;
   try {
@@ -271,6 +271,7 @@ function* loadEvent(action) {
   if (body.capacity > 0 && body.capacity <= body.going.length) {
     body.atCapacity = true;
   }
+
   yield put({
     type: ActionTypes.SET_SELECTED_EVENT,
     selectedEvent: new Event({ ...data.body }),
@@ -279,6 +280,7 @@ function* loadEvent(action) {
 
 function* modifyEvent(action) {
   const event = yield select(state => state.events);
+
   let form = Form.toJS();
   form = transformEvent(event, form);
   form.friends.shown = false;
@@ -331,6 +333,12 @@ function transformEvent(event, form) {
         break;
       case "private":
         form["private"].value = val;
+        break;
+      case "auto_accept":
+        form["request"].value = val;
+        if (val === true) {
+          form["request"].shown = true;
+        }
         break;
       case "capacity":
         form["capacity"].value = val;

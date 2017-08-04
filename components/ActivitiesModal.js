@@ -20,7 +20,7 @@ import MyText from '../components/common/MyText';
 import Filters from '../utils/filters';
 const {height, width} = Dimensions.get('window');
 
-@connect(data => ActivitiesScreen.getDataProps(data))
+@connect()
 export default class ActivitiesScreen extends React.Component {
 
   state = {
@@ -40,13 +40,6 @@ export default class ActivitiesScreen extends React.Component {
     ]).start();
   }, 1000);
 
-  static getDataProps(data) {
-    return {
-      filters: data.events.filters,
-      events: Filters.filterEvents(data.events.nearbyEvents, data.events.filters),
-    };
-  }
-
   componentWillReceiveProps(newProps) {
     this.animate();
   }
@@ -54,9 +47,9 @@ export default class ActivitiesScreen extends React.Component {
   render() {
     return (
       <Modal
-        animationType={"none"}
+        animationType={"slide"}
         transparent
-        onRequestClose={this.props.menuBtnPress}
+        onRequestClose={this.props.onFilterPress}
         visible={this.props.filtersVisible}>
         <View style={styles.container}>
           <MyText style={styles.title}>
@@ -66,15 +59,12 @@ export default class ActivitiesScreen extends React.Component {
                 `Tap to Filter Activities`
             }
           </MyText>
-          {
-            (Platform.OS === 'ios') &&
-            <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
-              <Image
-                source={require('../assets/images/btn_back.png')}
-                style={styles.btnBack}
-              />
-            </TouchableOpacity>
-          }
+          <TouchableOpacity style={styles.back} underlayColor="transparent" onPress={this._backBtnPress}>
+            <Image
+              source={require('../assets/images/btn_close.png')}
+              style={styles.btnBack}
+            />
+          </TouchableOpacity>
           <TouchableOpacity onPress={this._resetActivities} style={{position: 'absolute', right: 20, top: 25, zIndex: 2}}>
             <View style={{borderRadius: 25, width: 30, height: 30, backgroundColor: "#fff", alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
               <MaterialCommunityIcons
@@ -110,7 +100,7 @@ export default class ActivitiesScreen extends React.Component {
 
 
   _backBtnPress = _.debounce(() => {
-    this.props.dispatch(Actions.routeChange('Back'));
+    this.props.onFilterPress();
   }, 3000, {
     leading: true,
   });
@@ -262,7 +252,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: undefined,
     height: undefined,
-    backgroundColor:'transparent',
+    backgroundColor:'rgba(255,255,255,0.8)',
   },
   title: {
     position: 'absolute',
@@ -270,7 +260,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     left: width * 0.2,
     right: 0,
-    top: 35,
+    top: 25,
     fontFamily: 'LatoRegular',
     zIndex: 1,
     width: width * 0.6,
@@ -322,7 +312,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     top: height * 0.12,
-    backgroundColor: '#FFF',
     borderRadius: 10,
     marginLeft: width * 0.05,
     marginRight: width * 0.05,
@@ -330,6 +319,7 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     position: 'absolute',
     zIndex: 0,
+    backgroundColor:'rgba(255,255,255,0.5)',
   },
   form: {
     flexDirection: 'row',

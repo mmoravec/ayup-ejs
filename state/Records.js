@@ -14,6 +14,12 @@ export const EventState = Record({
     latitudeDelta: null,
     longitudeDelta: null,
   },
+  updateRegion: {
+    latitude: null,
+    longitude: null,
+    latitudeDelta: null,
+    longitudeDelta: null,
+  },
   selectedEvent: null,
   selectedComments: new List(),
   allEvents: new List(),
@@ -122,6 +128,7 @@ export const Event = Record({
   age_group: "",
   completed: false,
   atCapacity: false,
+  auto_accept: false,
 });
 
 export const FormState = Record({
@@ -189,6 +196,12 @@ export const FormState = Record({
     value: false,
     stateKey: "private",
   },
+  request: {
+    focus: false,
+    shown: false,
+    value: false,
+    stateKey: "request",
+  },
   capacity: {
     focus: false,
     shown: false,
@@ -246,7 +259,7 @@ export const Form = Immutable.fromJS({
   friends: {
     focus: false,
     shown: true,
-    value: [],
+    value: new List(),
     stateKey: "friends",
     label: "Friends",
   },
@@ -262,6 +275,12 @@ export const Form = Immutable.fromJS({
     shown: true,
     value: false,
     stateKey: "private",
+  },
+  request: {
+    focus: false,
+    shown: false,
+    value: false,
+    stateKey: "request",
   },
   capacity: {
     focus: false,

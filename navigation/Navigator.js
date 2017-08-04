@@ -3,7 +3,6 @@ import { StackNavigator } from "react-navigation";
 import HomeScreen from "../screens/homeScreen";
 import LoginScreen from "../screens/loginScreen";
 import NewEventScreen from "../screens/newEventScreen";
-import ActivitiesScreen from "../screens/activitiesScreen";
 import EventScreen from "../screens/eventScreen";
 import SettingsScreen from "../screens/settingsScreen";
 import ProfileScreen from "../screens/profileScreen";
@@ -22,9 +21,6 @@ const Navigator = StackNavigator(
     },
     Event: {
       screen: EventScreen,
-    },
-    Activities: {
-      screen: ActivitiesScreen,
     },
     MyEvents: {
       screen: MyEventsScreen,
