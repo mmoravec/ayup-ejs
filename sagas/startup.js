@@ -2,7 +2,7 @@ import _ from "lodash";
 import { put, call, take, race, select, fork } from "redux-saga/effects";
 import { delay } from "redux-saga";
 import { List } from "immutable";
-import { Image, Alert, Linking } from "react-native";
+import { Image, Alert } from "react-native";
 import {
   Font,
   Asset,

@@ -44,6 +44,10 @@ class PhoneStateReducer {
     return state.set("notificationsGranted", true);
   }
 
+  static [ActionTypes.ACCOUNT_MERGED](state, action) {
+    return state.set("accountMerged", true);
+  }
+
   static [ActionTypes.SHOW_NOTIFICATION](state, action) {
     return state.set("notification", action.notification);
   }

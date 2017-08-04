@@ -1,7 +1,7 @@
 import Expo from 'expo';
 import React from 'react';
-import { BackHandler, View, Linking, Alert } from 'react-native';
-import { addNavigationHelpers, NavigationActions } from 'react-navigation';
+import { BackHandler, View, Alert } from 'react-native';
+import { addNavigationHelpers } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import Navigation from './navigation/Navigator';
 import Store from './state/Store';
@@ -11,6 +11,7 @@ console.disableYellowBox = true;
 // import Actions from './state/Actions';
 
 class AppContainer extends React.Component {
+
   render() {
     return (
       <Provider store={Store}>
@@ -28,33 +29,12 @@ class App extends React.Component {
       nav: data.navigation,
     };
   }
-  //TODO: move this to a saga
-  handleBackPress = () => {
-    const { dispatch, nav } = this.props;
-    const navigation = addNavigationHelpers({
-      dispatch,
-      state: nav,
-    });
-    let lastRoute = navigation.state.routes[navigation.state.routes.length - 1];
-    let secondToLast = navigation.state.routes[navigation.state.routes.length - 2];
-    if (lastRoute.routeName === "Event") {
-      this.props.dispatch(Actions.zeroSelectedEvent());
-      this.props.dispatch(Actions.zeroSelectedComment());
-    } else if (secondToLast.routeName === "Event" && lastRoute === "NewEvent") {
-      this.props.dispatch(Actions.zeroForm());
-    }
-    if (lastRoute.routeName === "Home") {
-      return false;
-    }
-    navigation.goBack();
-    return true;
-  };
+
   async componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-    Linking.addEventListener('url', this._handleURL);
+    BackHandler.addEventListener('hardwareBackPress', this._handleBackPress);
   }
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+    BackHandler.removeEventListener('hardwareBackPress', this._handleBackPress);
   }
   render() {
     // console.log(this.props.startup);
@@ -76,9 +56,27 @@ class App extends React.Component {
     }
   }
 
-  _handleURL = (action) => {
-    this.props.dispatch(Actions.handleURL(action.url));
-  }
+    //TODO: move this to a saga
+  _handleBackPress = () => {
+    const { dispatch, nav } = this.props;
+    const navigation = addNavigationHelpers({
+      dispatch,
+      state: nav,
+    });
+    let lastRoute = navigation.state.routes[navigation.state.routes.length - 1];
+    let secondToLast = navigation.state.routes[navigation.state.routes.length - 2];
+    if (lastRoute.routeName === "Event") {
+      this.props.dispatch(Actions.zeroSelectedEvent());
+      this.props.dispatch(Actions.zeroSelectedComment());
+    } else if (secondToLast.routeName === "Event" && lastRoute === "NewEvent") {
+      this.props.dispatch(Actions.zeroForm());
+    }
+    if (lastRoute.routeName === "Home") {
+      return false;
+    }
+    navigation.goBack();
+    return true;
+  };
 
 }
 

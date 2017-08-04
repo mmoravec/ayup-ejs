@@ -85,6 +85,7 @@ export const PhoneState = Record({
   locationGranted: false,
   contactsGranted: false,
   notificationsGranted: false,
+  accountMerged: false,
   notification: {
     origin: "meow",
     data: "I really love beans",

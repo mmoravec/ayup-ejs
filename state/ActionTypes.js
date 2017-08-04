@@ -1,6 +1,7 @@
 export default defineActionConstants([
   "ACCEPT_EVENT",
   "ACCEPT_REQUEST",
+  "ACCOUNT_MERGED",
   "ALERT_SAVING",
   "ALERT_SUCCESS",
   "ALERT_ERROR",
