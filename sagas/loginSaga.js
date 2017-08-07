@@ -65,7 +65,7 @@ function* authorize() {
 }
 
 async function facebookLogin() {
-  let type = Platform.OS === "android" ? "native" : "browser";
+  let type = "native";
   const login = await Facebook.logInWithReadPermissionsAsync(
     "1521840934725105",
     {

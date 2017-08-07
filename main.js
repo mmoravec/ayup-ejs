@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { BackHandler, View, Linking, Alert } from 'react-native';
+import { BackHandler, View, Linking, Alert, Platform } from 'react-native';
 import { addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import Navigation from './navigation/Navigator';
@@ -51,7 +51,17 @@ class App extends React.Component {
   };
   async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-    Linking.addEventListener('url', this._handleURL);
+    let url;
+    if (Platform.OS === "android") {
+      url = await Expo.DangerZone.Branch.getLatestReferringParams();
+      this._handleURL(url);
+    }
+    Expo.DangerZone.Branch.subscribe(({ error, params }) => {
+      if (params && !error) {
+        // grab deep link data and route appropriately.
+        this._handleURL(params);
+      }
+    });
   }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
@@ -77,7 +87,7 @@ class App extends React.Component {
   }
 
   _handleURL = (action) => {
-    this.props.dispatch(Actions.handleURL(action.url));
+    this.props.dispatch(Actions.handleURL(action));
   }
 
 }

@@ -1,8 +1,8 @@
 {
-  "expoServerPort": 19002,
-  "packagerPort": 19004,
-  "packagerPid": 29738,
-  "expoServerNgrokUrl": "https://ii-ckb.mmoravec.ayup-ejs.exp.direct",
-  "packagerNgrokUrl": "https://packager.ii-ckb.mmoravec.ayup-ejs.exp.direct",
-  "ngrokPid": 29753
+  "expoServerPort": 19000,
+  "packagerPort": 19002,
+  "packagerPid": 29610,
+  "expoServerNgrokUrl": "https://kw-mnq.mmoravec.ayup-ejs.exp.direct",
+  "packagerNgrokUrl": "https://packager.kw-mnq.mmoravec.ayup-ejs.exp.direct",
+  "ngrokPid": 29624
 }

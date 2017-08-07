@@ -3,7 +3,7 @@ import { delay } from "redux-saga";
 import qs from "qs";
 import { Image, Alert, Linking } from "react-native";
 import { Constants } from "expo";
-import { takeLatest, select, call, put, fork } from "redux-saga/effects";
+import { takeLatest, select, call, put, take, fork } from "redux-saga/effects";
 import { getLocation } from "./startup";
 import ActionTypes from "../state/ActionTypes";
 import LocalStorage from "../utils/LocalStorage";
@@ -24,29 +24,27 @@ function* setStatus(action) {
 }
 
 function* handleURL(action) {
-  let url = action.url, data;
-  // if (Constants.intentUri) {
-  //   let queryString = Constants.intentUri.substr(
-  //     Constants.intentUri.indexOf("?") + 1
-  //   );
-  //   if (queryString) {
-  //     let data = qs.parse(queryString);
-  //     Alert.alert(data);
-  //     yield put({ type: ActionTypes.SET_PARAMS, data });
-  //   }
-  // } else
-  if (url) {
+  let data = {}, url = action.url;
+  if (url.eventID) {
+    data.eventid = url.eventID;
+    data.userid = url.userID;
+  } else {
     let queryString = url.substr(url.indexOf("?") + 1);
     if (queryString) {
       data = qs.parse(queryString);
     }
-    if (data.userid && data.eventid) {
-      yield call(mergeAccountsAndRedirect, data);
-    }
+  }
+  if (data.userid && data.eventid) {
+    yield call(mergeAccountsAndRedirect, data);
   }
 }
 
 function* mergeAccountsAndRedirect(data) {
+  const cred = yield select(state => state.credential);
+  if (!cred.secret && !cred.user_id) {
+    yield take(ActionTypes.SET_CREDENTIAL);
+    yield call(delay, 200);
+  }
   try {
     yield call(
       request,
