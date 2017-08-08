@@ -290,9 +290,23 @@ function* modifyEvent(action) {
 }
 
 function* copyEvent(action) {
-  const event = yield select(state => state.events);
+  const event = yield select(state => state.events.selectedEvent);
   let form = Form.toJS();
   form = transformEvent(event, form);
+  form.friends.value = new List(
+    _.map(
+      event.going.concat(event.invited, event.requested, event.not_going),
+      event => {
+        return {
+          item: {
+            ayup_id: event.id,
+            ...event,
+          },
+          key: event.id,
+        };
+      }
+    )
+  );
   form.friends.shown = true;
   form.status = "create";
   yield put({ type: ActionTypes.SET_FORM, form });
@@ -300,7 +314,7 @@ function* copyEvent(action) {
 }
 
 function transformEvent(event, form) {
-  event.selectedEvent.forEach((val, key) => {
+  event.forEach((val, key) => {
     switch (key) {
       case "start_time":
         form["startDate"].value = new Date(val);

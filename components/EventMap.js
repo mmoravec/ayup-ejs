@@ -58,21 +58,16 @@ export default class EventMap extends React.Component {
 
   _onRegionChangeComplete = (region) => {
     //sometimes map resets, make sure its not
-    if (region.latitude !== 0) {
+    console.log('onRegionChangeComplete fired');
+    if (region.latitude !== 0 && this.state.setRegion) {
       this.props.dispatch(Actions.regionChange(
         region.longitude,
         region.latitude,
         region.longitudeDelta,
         region.latitudeDelta,
       ));
-    }
-
-  }
-
-  _onRegionChange = (region) => {
-    if (this.state.setRegion) {
       this.setState({region});
     }
-  }
 
+  }
 }

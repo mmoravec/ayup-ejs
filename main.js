@@ -52,10 +52,6 @@ class App extends React.Component {
   async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     let url;
-    if (Platform.OS === "android") {
-      url = await Expo.DangerZone.Branch.getLatestReferringParams();
-      this._handleURL(url);
-    }
     Expo.DangerZone.Branch.subscribe(({ error, params }) => {
       if (params && !error) {
         // grab deep link data and route appropriately.
