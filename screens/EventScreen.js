@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux';
 import EventButton from '../components/event/Button';
 import EventComments from '../components/event/Comments';
+import Notifications from '../components/event/Notifications';
 import GuestInfo from '../components/event/GuestInfo';
 import AddFriend from '../components/event/AddFriend';
 import Content from '../components/event/Content';
@@ -25,6 +26,7 @@ export default class EventScreen extends React.Component {
     showCommentBox: false,
     showGuestInfo: false,
     showAddFriend: false,
+    showNotification: false,
     comment: '',
     parentID: null,
     guestIndex: 0,
@@ -51,16 +53,18 @@ export default class EventScreen extends React.Component {
         onScroll: this._onScroll,
         guestClick: this._onGuestClick,
         showAddFriend: this.showAddFriend,
+        onNotificationClick: this._onNotificationClick,
       };
       return (
         <View style={styles.scrollView}>
           <Content {...contentProps} />
+          <Notifications show={this.state.showNotification} close={this._closeNotification} />
           <GuestInfo showGuestInfo={this.state.showGuestInfo} close={this._closeGuestInfo} index={this.state.guestIndex} />
           <AddFriend show={this.state.showAddFriend} hide={this.showAddFriend} />
           <EventButton />
           {this._renderBackBtn()}
           <EventComments {...commentProps} />
-        </View>
+        </View> 
       );
     }
   }
@@ -88,6 +92,10 @@ export default class EventScreen extends React.Component {
     this.setState({showGuestInfo: false});
   }
 
+  _closeNotification = () => {
+    this.setState({showNotification: false});
+  }
+
   _backBtnPress = _.debounce(() => {
       this.props.dispatch(Actions.zeroSelectedEvent());
       this.props.dispatch(Actions.zeroSelectedComment());
@@ -107,6 +115,10 @@ export default class EventScreen extends React.Component {
   _onGuestClick = (i) => {
     this.setState({showGuestInfo: true});
     this.setState({guestIndex: i});
+  }
+
+  _onNotificationClick = () => {
+     this.setState({showNotification: true});
   }
 
   _onScroll = () => {

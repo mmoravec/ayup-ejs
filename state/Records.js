@@ -3,6 +3,9 @@ import ActionTypes from "./ActionTypes";
 
 export const EventState = Record({
   nearbyEvents: new List(),
+  nearbyVenues: new List(),
+  allEvents: new List(),
+  unfilteredEvents: new List(),
   filters: new List(),
   filter: {
     startTime: null,
@@ -22,7 +25,6 @@ export const EventState = Record({
   },
   selectedEvent: null,
   selectedComments: new List(),
-  allEvents: new List(),
   myEvents: new List(),
   archivedEvents: new List(),
 });
@@ -89,10 +91,12 @@ export const PhoneState = Record({
     origin: "meow",
     data: "I really love beans",
   },
+  notificationShown: false,
   contacts: {},
   fbFriends: {},
   myEventAlert: 0,
   params: {},
+  localNotifications: {},
 });
 
 export const Comment = Record({

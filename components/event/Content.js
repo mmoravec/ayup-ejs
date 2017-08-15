@@ -156,7 +156,7 @@ export default class EventContent extends React.Component {
             <MyText style={styles.commentTxt}>Comment</MyText>
           </TouchableOpacity>
         </View>
-        <EventActions />
+        <EventActions onNotificationClick={this.props.onNotificationClick} />
       </View>
     );
   };
@@ -207,7 +207,7 @@ export default class EventContent extends React.Component {
     Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
   };
 
-    _openDest = () => {
+  _openDest = () => {
     let daddr = this.props.event.destination.text;
     Linking.openURL(`http://maps.google.com/?daddr=${daddr}`);
   };

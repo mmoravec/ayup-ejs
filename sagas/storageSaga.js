@@ -15,6 +15,7 @@ export function* watchStorageActions() {
         ActionTypes.NOTIFICATIONS_GRANTED,
         ActionTypes.SET_FBFRIENDS,
         ActionTypes.SET_CONTACTS,
+        ActionTypes.SET_LOCAL_NOTIFICATIONS,
       ],
       saveState
     ),

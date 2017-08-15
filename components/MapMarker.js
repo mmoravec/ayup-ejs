@@ -28,8 +28,13 @@ export default class EventList extends React.Component {
  }
 
   _onMarkerPress = _.debounce(() => {
-      this.props.dispatch(Actions.selectEvent(this.props.event.id));
-      this.props.dispatch(Actions.routeChange('Event'));
+      if (this.props.venue) {
+        this.props.onMarkerClick(true, this.props.event.events);
+      } else {
+        this.props.onMarkerClick(false, null);
+        this.props.dispatch(Actions.selectEvent(this.props.event.id));
+        this.props.dispatch(Actions.routeChange('Event'));
+      }
     }, 3000, {
       leading: true,
     });
