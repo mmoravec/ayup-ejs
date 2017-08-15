@@ -16,6 +16,21 @@ class EventsReducer {
     return state.set("nearbyEvents", newData);
   }
 
+  static [ActionTypes.SET_ALLEVENTS](state, action) {
+    let newData = new List(action.data);
+    return state.set("allEvents", newData);
+  }
+
+  static [ActionTypes.SET_UNFILTERED_EVENTS](state, action) {
+    let newData = new List(action.data);
+    return state.set("unfilteredEvents", newData);
+  }
+
+  static [ActionTypes.SET_VENUES](state, action) {
+    let newData = new List(action.data);
+    return state.set("nearbyVenues", newData);
+  }
+
   static [ActionTypes.SET_FILTERS](state, action) {
     return state.set("filters", action.filterList);
   }

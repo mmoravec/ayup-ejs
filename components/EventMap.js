@@ -46,7 +46,22 @@ export default class EventMap extends React.Component {
           onRegionChangeComplete={this._onRegionChangeComplete}>
           {
             this.props.events.map(event =>
-              <MapMarker key={event.id} event={event} />
+              <MapMarker 
+                key={event.id}
+                event={event}
+                venue={false}
+                onMarkerClick={this.props.onMarkerClick}
+              />
+            )
+          }
+          {
+            this.props.venues.map(event =>
+              <MapMarker 
+                key={event.id}
+                event={event}
+                venue={true}
+                onMarkerClick={this.props.onMarkerClick}
+              />
             )
           }
         </MapView>

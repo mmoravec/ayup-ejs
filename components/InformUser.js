@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
+import { connect } from 'react-redux';
 import { MaterialIcons } from "@expo/vector-icons";
 import MyText from "./common/MyText";
+import Actions from "../state/Actions";
 const { height, width } = Dimensions.get("window");
 
+@connect()
 export default class InformUser extends React.Component {
   state = {
     top: new Animated.Value(-height * 0.3),
@@ -18,7 +21,7 @@ export default class InformUser extends React.Component {
     delay: false,
   };
 
-  showInfo = _.debounce(() => this.setState({ shown: false }), 15000);
+  showInfo = _.debounce(() => this.setState({ shown: false }), 8000);
 
   componentDidMount() {
     _.delay(() => this.setState({ delay: true }), 5000);
@@ -43,7 +46,7 @@ export default class InformUser extends React.Component {
       <Animated.View style={[styles.container, { top: this.state.top }]}>
         <TouchableOpacity onPress={this._handleClick}>
           <MyText style={styles.message}>
-            No events shown. Pinch to zoom out or change filters under "Activities" found under the menu.
+            No events shown. Pinch to zoom out or change filters under "Activities" found under the menu. Click to create an event!
           </MyText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.close} onPress={this._close}>
@@ -60,6 +63,10 @@ export default class InformUser extends React.Component {
     }).start();
     this.setState({ shown: true });
     this.showInfo();
+  };
+
+  _handleClick = () => {
+    this.props.dispatch(Actions.routeChange("NewEvent"));
   };
 }
 

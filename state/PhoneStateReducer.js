@@ -56,6 +56,10 @@ class PhoneStateReducer {
     return state.set("imagesLoaded", true);
   }
 
+  static [ActionTypes.SET_LOCAL_NOTIFICATIONS](state, action) {
+    return state.set("localNotifications", action.notifications);
+  }
+
   static [ActionTypes.SET_PARAMS](state, action) {
     return state.set("params", action.data);
   }

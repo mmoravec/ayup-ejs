@@ -205,6 +205,22 @@ export default class Actions {
     };
   }
 
+  static addNotification(notification, event) {
+    return {
+      type: ActionTypes.ADD_NOTIFICATION,
+      notification,
+      event,
+    };
+  }
+
+  static removeNotification(notification, event) {
+    return {
+      type: ActionTypes.REMOVE_NOTIFICATION,
+      notification,
+      event,
+    };
+  }
+
   static removeActivity(id) {
     return {
       type: ActionTypes.REMOVE_ACTIVITY,

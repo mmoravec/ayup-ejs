@@ -103,7 +103,6 @@ function* trackEventAction(action) {
 }
 
 function* trackSelectedEventAction(action) {
-  yield call(delay, 200);
   const event = yield select(state => state.events);
   Expo.Segment.trackWithProperties(action.type, {
     ...event.selectedEvent.toJS(),

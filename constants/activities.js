@@ -1,17 +1,17 @@
 export default {
-  basketball: {
-    icon: require("../assets/images/icons/icon_basketball.png"),
-    id: 0,
-    type: "basketball",
-    image: require("../assets/images/figures/basketball.png"),
-    name: "Basketball",
-  },
   baseball: {
     icon: require("../assets/images/icons/icon_baseball.png"),
     id: 2,
     type: "baseball",
     image: require("../assets/images/figures/baseball.png"),
     name: "Baseball",
+  },
+  basketball: {
+    icon: require("../assets/images/icons/icon_basketball.png"),
+    id: 0,
+    type: "basketball",
+    image: require("../assets/images/figures/basketball.png"),
+    name: "Basketball",
   },
   bicycle: {
     icon: require("../assets/images/icons/icon_bicycle.png"),
@@ -25,7 +25,7 @@ export default {
     id: 24,
     type: "boardgame",
     image: require("../assets/images/figures/boardgame.png"),
-    name: "Board Game",
+    name: "Games",
   },
   boxing: {
     icon: require("../assets/images/icons/icon_boxing.png"),
@@ -33,6 +33,13 @@ export default {
     type: "boxing",
     image: require("../assets/images/figures/boxing.png"),
     name: "Boxing",
+  },
+  camping: {
+    icon: require("../assets/images/icons/icon_camping.png"),
+    id: 28,
+    type: "camping",
+    image: require("../assets/images/figures/camping.png"),
+    name: "Camping",
   },
   climbing: {
     icon: require("../assets/images/icons/icon_climbing.png"),
@@ -54,6 +61,13 @@ export default {
     type: "football",
     image: require("../assets/images/figures/football.png"),
     name: "Football",
+  },
+  frisbee: {
+    icon: require("../assets/images/icons/icon_frisbee.png"),
+    id: 27,
+    type: "frisbee",
+    image: require("../assets/images/figures/frisbee.png"),
+    name: "Frisbee",
   },
   golf: {
     icon: require("../assets/images/icons/icon_golf.png"),
@@ -118,27 +132,6 @@ export default {
     image: require("../assets/images/figures/tennis.png"),
     name: "Tennis",
   },
-  volleyball: {
-    icon: require("../assets/images/icons/icon_volleyball.png"),
-    id: 17,
-    type: "volleyball",
-    image: require("../assets/images/figures/volleyball.png"),
-    name: "Volleyball",
-  },
-  videogame: {
-    icon: require("../assets/images/icons/icon_videogame.png"),
-    id: 18,
-    type: "videogame",
-    image: require("../assets/images/figures/videogame.png"),
-    name: "Video Games",
-  },
-  yoga: {
-    icon: require("../assets/images/icons/icon_yoga.png"),
-    id: 19,
-    type: "yoga",
-    image: require("../assets/images/figures/yoga.png"),
-    name: "Yoga",
-  },
   music: {
     icon: require("../assets/images/icons/icon_music.png"),
     id: 20,
@@ -160,11 +153,46 @@ export default {
     image: require("../assets/images/figures/skiing.png"),
     name: "Skiing",
   },
+  videogame: {
+    icon: require("../assets/images/icons/icon_videogame.png"),
+    id: 18,
+    type: "videogame",
+    image: require("../assets/images/figures/videogame.png"),
+    name: "Video Games",
+  },
+  volleyball: {
+    icon: require("../assets/images/icons/icon_volleyball.png"),
+    id: 17,
+    type: "volleyball",
+    image: require("../assets/images/figures/volleyball.png"),
+    name: "Volleyball",
+  },
+  water_sports: {
+    icon: require("../assets/images/icons/icon_water_sports.png"),
+    id: 25,
+    type: "water_sports",
+    image: require("../assets/images/figures/water_sports.png"),
+    name: "Water Sport",
+  },
   weights: {
     icon: require("../assets/images/icons/icon_weightlifting.png"),
     id: 23,
     type: "weights",
     image: require("../assets/images/figures/weightlifting.png"),
-    name: "Lifting",
+    name: "Workout",
+  },
+  yoga: {
+    icon: require("../assets/images/icons/icon_yoga.png"),
+    id: 19,
+    type: "yoga",
+    image: require("../assets/images/figures/yoga.png"),
+    name: "Yoga",
+  },
+  other: {
+    icon: require("../assets/images/icons/icon_other.png"),
+    id: 26,
+    type: "other",
+    image: require("../assets/images/figures/other.png"),
+    name: "Other",
   },
 };

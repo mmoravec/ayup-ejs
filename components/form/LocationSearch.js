@@ -89,7 +89,7 @@ export default class LocationSearch extends React.Component {
         <View>
           <GooglePlacesAutocomplete
             ref={view => { this._gplaces = view; }}
-            placeholder={'Location Search'}
+            placeholder={'Search for a location'}
             placeholderTextColor={'#6a7989'}
             minLength={2}
             keyboardShouldPersistTaps={'always'}
@@ -98,7 +98,7 @@ export default class LocationSearch extends React.Component {
             onPress={this._getLocation}
             query={{
               // available options: https://developers.google.com/places/web-service/autocomplete
-              key: 'AIzaSyBJrRZZzqMfcfZwHy5oxg_7R_gjlNCHiTQ',
+              key: 'AIzaSyBXSlc3T0mW34NYrZBFGomG5VdNTMeHMXg',
               language: 'en', // language of the results
             }}
             textInputProps={{

@@ -58,6 +58,11 @@ export default class EventActions extends React.Component {
                   Can't Go
                 </MyText>
               </TouchableOpacity>
+              <TouchableOpacity onPress={this._onNotificationClick}>
+                <MyText style={styles.button}>
+                  Notification
+                </MyText>
+              </TouchableOpacity>
             </View>
           </Animated.View>
         </View>
@@ -94,6 +99,11 @@ export default class EventActions extends React.Component {
           <TouchableOpacity onPress={this._deleteEvent}>
             <MyText style={styles.button}>
               Delete
+            </MyText>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._onNotificationClick}>
+            <MyText style={styles.button}>
+              Notification
             </MyText>
           </TouchableOpacity>
         </View>
@@ -143,12 +153,17 @@ export default class EventActions extends React.Component {
     this._settingsPress();
   }
 
+  _onNotificationClick = () => {
+    this.props.onNotificationClick();
+    this._settingsPress();
+  }
+
   _settingsPress = () => {
     this.setState({active: !this.state.active});
     if (this.state.active) {
       Animated.spring(this.state.top, {toValue: -height * 0.5, tension: 60, friction: 6, velocity: 300}).start();
     } else {
-      let comp = (this.props.event.completed || this.props.going) ? -height * 0.25 : -height * 0.15;
+      let comp = (this.props.event.completed || this.props.going) ? -height * 0.2 : -height * 0.05;
       Animated.spring(this.state.top, {toValue: comp, tension: 60, friction: 6, velocity: 300}).start();
     }
 

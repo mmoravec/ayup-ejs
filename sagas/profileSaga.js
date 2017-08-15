@@ -148,6 +148,7 @@ function transformEvents(profile) {
     deleted: [],
   };
   if (!profile.events) {
+    profile.hosted = new List();
     return profile;
   }
   profile.events.map(event => {

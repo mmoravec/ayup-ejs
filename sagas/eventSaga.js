@@ -6,6 +6,7 @@ import ActionTypes from "../state/ActionTypes";
 import { Event, Form } from "../state/Records";
 import { request } from "../utils/fetch";
 import { URL, POST, GET, DELETE, PUT } from "../constants/rest";
+import Filters from "../utils/filters";
 //http://restbus.info/api/locations/37.784825,-122.395592/predictions
 //use this endpoint for bus info in SF
 
@@ -26,13 +27,18 @@ export function* watchEventAction() {
     takeLatest(ActionTypes.UPDATE_EVENT, updateEvent),
     takeLatest(ActionTypes.INVITE_USER, inviteUser),
     takeLatest(ActionTypes.COPY_EVENT, copyEvent),
+    takeLatest(
+      [ActionTypes.REMOVE_ACTIVITY, ActionTypes.ADD_ACTIVITY],
+      filterEvents
+    ),
   ];
 }
 
 function* saveEvent(action) {
+  let event;
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
-    yield call(request, POST, URL + "/v1.0/events", action.event);
+    event = yield call(request, POST, URL + "/v1.0/events", action.event);
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR, error });
     return;
@@ -43,9 +49,33 @@ function* saveEvent(action) {
     longitude: action.event.location.coordinates[0],
     latitude: action.event.location.coordinates[1],
   });
+  let notification = {
+    id: 0,
+    label: "15 Minutes Before Start",
+    value: new Date(action.event.start_time).getTime() - 15 * (60 * 1000),
+    title: "15 minutes",
+  };
+  yield put({
+    type: ActionTypes.ADD_NOTIFICATION,
+    notification,
+    event: event.body,
+  });
   yield call(delay, 1000);
   yield put({ type: ActionTypes.ZERO_FORM });
   yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Back" });
+}
+
+function* filterEvents(action) {
+  const eventState = yield select(state => state.events);
+  let activities = Filters.filterEvents(
+    eventState.allEvents,
+    eventState.filters
+  );
+  let filter = pushEvents(activities);
+  yield put({ type: ActionTypes.SET_NEARBY, data: filter.events });
+  if (filter.venues) {
+    yield put({ type: ActionTypes.SET_VENUES, data: filter.venues });
+  }
 }
 
 function* updateEvent(action) {
@@ -70,6 +100,7 @@ function* updateEvent(action) {
 function* updateNearbyEvents(action) {
   //TODO: call to rest api here
   const profile = yield select(state => state.profile);
+  const eventState = yield select(state => state.events);
   if (!profile.age_group) {
     return;
   }
@@ -97,11 +128,25 @@ function* updateNearbyEvents(action) {
   } catch (error) {
     return;
   }
-  events = events.body ? pushEvents(events.body) : events.body;
-  yield put({ type: ActionTypes.SET_NEARBY, data: events });
+  if (events.body) {
+    let all = events.body;
+    yield put({ type: ActionTypes.SET_UNFILTERED_EVENTS, data: all });
+    let activities = Filters.filterEvents(all, eventState.filters);
+    yield put({ type: ActionTypes.SET_ALLEVENTS, data: activities });
+    let filter = pushEvents(activities);
+    yield put({ type: ActionTypes.SET_NEARBY, data: filter.events });
+    if (filter.venues) {
+      yield put({ type: ActionTypes.SET_VENUES, data: filter.venues });
+    }
+  } else {
+    yield put({ type: ActionTypes.SET_ALLEVENTS, data: null });
+    yield put({ type: ActionTypes.SET_NEARBY, data: null });
+    yield put({ type: ActionTypes.SET_UNFILTERED_EVENTS, data: null });
+  }
 }
 
 function* acceptEvent(action) {
+  const eventState = yield select(state => state.events.selectedEvent);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
     yield call(
@@ -113,12 +158,24 @@ function* acceptEvent(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     return;
   }
+  let notification = {
+    id: 0,
+    label: "15 Minutes Before Start",
+    value: new Date(eventState.start_time).getTime() - 15 * (60 * 1000),
+    title: "15 minutes",
+  };
+  yield put({
+    type: ActionTypes.ADD_NOTIFICATION,
+    notification,
+    event: eventState,
+  });
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
 }
 
 function* acceptRequest(action) {
+  const eventState = yield select(state => state.events.selectedEvent);
   yield put({ type: ActionTypes.ALERT_SAVING });
   try {
     yield call(
@@ -130,6 +187,17 @@ function* acceptRequest(action) {
     yield put({ type: ActionTypes.ALERT_ERROR });
     return;
   }
+  let notification = {
+    id: 0,
+    label: "15 Minutes Before Start",
+    value: new Date(eventState.start_time).getTime() - 15 * (60 * 1000),
+    title: "15 minutes",
+  };
+  yield put({
+    type: ActionTypes.ADD_NOTIFICATION,
+    notification,
+    event: eventState,
+  });
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
@@ -178,6 +246,10 @@ function* deleteEvent(action) {
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield call(delay, 2000);
   yield fork(updateNearbyEvents, region);
+  yield put({
+    type: ActionTypes.CANCEL_EVENT_NOTIFICATIONS,
+    eventID: action.eventID,
+  });
   yield put({ type: ActionTypes.ZERO_SELECTED_COMMENT });
   yield put({ type: ActionTypes.ZERO_SELECTED_EVENT });
   yield put({ type: ActionTypes.GET_PROFILE });
@@ -195,6 +267,10 @@ function* rejectEvent(action) {
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR });
   }
+  yield put({
+    type: ActionTypes.CANCEL_EVENT_NOTIFICATIONS,
+    eventID: action.eventID,
+  });
   yield put({ type: ActionTypes.ALERT_SUCCESS });
   yield put({ type: ActionTypes.GET_PROFILE });
   yield fork(loadEvent, action);
@@ -366,22 +442,37 @@ function transformEvent(event, form) {
 
 function pushEvents(events) {
   let map = {};
-  let result = events.map(event => {
+  let filtered = [], venues = [];
+  events.map(event => {
     let long = event.location.coordinates[0];
     let lat = event.location.coordinates[1];
-    if (map[long]) {
-      event.location.coordinates[0] =
-        event.location.coordinates[0] + getRandomInt(1, 10) * 0.000001;
+    let latlong = lat.toString() + long.toString();
+    if (!map[latlong]) {
+      map[latlong] = event;
+    } else if (Array.isArray(map[latlong])) {
+      map[latlong].push(event);
+    } else {
+      let temp = map[latlong];
+      map[latlong] = [temp];
     }
-    if (map[lat]) {
-      event.location.coordinates[1] =
-        event.location.coordinates[1] + getRandomInt(1, 10) * 0.000001;
-    }
-    map[lat] = true;
-    map[long] = true;
     return event;
   });
-  return result;
+  _.mapValues(map, o => {
+    if (Array.isArray(o)) {
+      let venue = {
+        location: o[0].location,
+        text: o[0].location.text,
+        events: new List(o),
+        activity: o[0].activity,
+        id: o[0].id,
+        private: false,
+      };
+      venues.push(venue);
+    } else {
+      filtered.push(o);
+    }
+  });
+  return { events: filtered, venues };
 }
 
 function getRandomInt(min, max) {

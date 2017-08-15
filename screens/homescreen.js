@@ -18,7 +18,6 @@ import ActivitiesModal from '../components/ActivitiesModal';
 import MapView from '../components/EventMap';
 import InformUser from '../components/InformUser';
 import MyText from '../components/common/MyText';
-import Filters from '../utils/filters';
 import Actions from '../state/Actions';
 const {height, width} = Dimensions.get('window');
 
@@ -27,7 +26,10 @@ export default class HomeScreen extends React.Component {
 
   static getDataProps(data) {
     return {
-      events: Filters.filterEvents(data.events.nearbyEvents, data.events.filters),
+      unfiltered: data.events.unfilteredEvents,
+      events: data.events.nearbyEvents,
+      venues: data.events.nearbyVenues,
+      allEvents: data.events.allEvents,
       phone: data.phone,
       filters: data.events.filters,
     };
@@ -38,12 +40,14 @@ export default class HomeScreen extends React.Component {
     menuVisible: false,
     filtersVisible: false,
     listBtnStyle: styles.listBtnStyle,
+    showVenue: false,
+    venueEvents: [],
   }
 
   render() {
     let listProps = {
       key: 'list',
-      events: this.props.events,
+      events: this.state.showVenue ? this.state.venueEvents : this.props.allEvents,
       listVisible: this.state.listVisible,
       listBtnPress: this._onListBtnPress,
       closeBtnPress: this._onCloseBtnPress,
@@ -66,6 +70,8 @@ export default class HomeScreen extends React.Component {
 
     let mapProps = {
       events: this.props.events,
+      venues: this.props.venues,
+      onMarkerClick: this._onMarkerClick,
     };
     if (this.props.phone.locationGranted) {
       return (
@@ -92,7 +98,7 @@ export default class HomeScreen extends React.Component {
           <EventListModal {...listProps} />
           <MenuModal {...menuProps} />
           <ActivitiesModal {...filterProps} />
-          <InformUser events={this.props.events} />
+          <InformUser events={this.props.allEvents} />
         </View>
       );
     } else {
@@ -150,6 +156,19 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  _onMarkerClick = (showVenue, venueEvents) => {
+    this.setState({
+      showVenue,
+      venueEvents,
+    });
+    if (showVenue) {
+      this.setState({
+        listVisible: !this.state.listVisible,
+        listBtnStyle: styles.listBtnHidden,
+      });
+    }
+  }
+
   _locationWarningClose = () => {
     // console.log("won't close");
   }
@@ -162,6 +181,7 @@ export default class HomeScreen extends React.Component {
     this.setState({
       listVisible: !this.state.listVisible,
       listBtnStyle: styles.listBtnHidden,
+      showVenue: false,
     });
   }
 

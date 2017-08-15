@@ -52,6 +52,9 @@ export default class Filters {
   }
 
   static getHeadersAscend = events => {
+    if (!events) {
+      return;
+    }
     events = events
       .groupBy(x => {
         let start = new Date(x.start_time);
@@ -76,6 +79,9 @@ export default class Filters {
     return events;
   };
   static getHeadersDescend = events => {
+    if (!events) {
+      return;
+    }
     events = events
       .groupBy(x => {
         let date = new Date(x.start_time);
