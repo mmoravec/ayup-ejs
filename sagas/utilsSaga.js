@@ -28,14 +28,11 @@ function* handleURL(action) {
   if (url.eventID) {
     data.eventid = url.eventID;
     data.userid = url.userID;
-  } else {
-    let queryString = url.substr(url.indexOf("?") + 1);
-    if (queryString) {
-      data = qs.parse(queryString);
-    }
   }
   if (data.userid && data.eventid) {
     yield call(mergeAccountsAndRedirect, data);
+  } else if (data.eventid) {
+    yield call(directToEvent, data);
   }
 }
 
@@ -43,7 +40,6 @@ function* mergeAccountsAndRedirect(data) {
   const cred = yield select(state => state.credential);
   if (!cred.secret && !cred.user_id) {
     yield take(ActionTypes.SET_CREDENTIAL);
-    yield call(delay, 200);
   }
   try {
     yield call(
@@ -58,6 +54,15 @@ function* mergeAccountsAndRedirect(data) {
   } catch (error) {
     yield put({ type: ActionTypes.ALERT_ERROR, error });
     return;
+  }
+  yield put({ type: ActionTypes.LOAD_EVENT, eventID: data.eventid });
+  yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Event" });
+}
+
+function* directToEvent(data) {
+  const cred = yield select(state => state.credential);
+  if (!cred.secret && !cred.user_id) {
+    yield take(ActionTypes.SET_CREDENTIAL);
   }
   yield put({ type: ActionTypes.LOAD_EVENT, eventID: data.eventid });
   yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Event" });

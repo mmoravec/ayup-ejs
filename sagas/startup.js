@@ -163,28 +163,8 @@ function* getCredential() {
 }
 
 function* checkCredential(cred) {
-  //TODO: check credential expiration and set to expire if it is dead
-  const params = yield select(state => state.phone.params);
   if (cred.secret) {
     yield put({ type: ActionTypes.ROUTE_CHANGE, newRoute: "Home" });
-    if (params.userid && params.eventid) {
-      try {
-        // console.log(fbInfo);
-        yield call(
-          request,
-          POST,
-          URL +
-            "/v1.0/events/" +
-            params.eventid +
-            "/accepttextinvite?userid=" +
-            params.userid
-        );
-      } catch (error) {
-        //Alert Error
-        yield put({ type: ActionTypes.ALERT_ERROR, error });
-        return;
-      }
-    }
   }
 }
 

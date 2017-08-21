@@ -7,6 +7,8 @@ import {
   Animated,
   Dimensions,
   Platform,
+  Clipboard,
+  Share,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -60,7 +62,12 @@ export default class EventActions extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity onPress={this._onNotificationClick}>
                 <MyText style={styles.button}>
-                  Notification
+                  Notifications
+                </MyText>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this._onShareClick}>
+                <MyText style={styles.button}>
+                  Share
                 </MyText>
               </TouchableOpacity>
             </View>
@@ -103,7 +110,12 @@ export default class EventActions extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={this._onNotificationClick}>
             <MyText style={styles.button}>
-              Notification
+              Notifications
+            </MyText>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._onShareClick}>
+            <MyText style={styles.button}>
+              Share
             </MyText>
           </TouchableOpacity>
         </View>
@@ -134,13 +146,20 @@ export default class EventActions extends React.Component {
       );
     }
   }
-  
+
   _onCantGoClick = () => {
     this.props.dispatch(Actions.rejectEvent(this.props.event.id));
   }
 
   _deleteEvent = () => {
     this.props.dispatch(Actions.deleteEvent(this.props.event.id));
+  }
+
+  _onShareClick = () => {
+    Share.share({
+      message: "https://ayup.app.link/m9iafpOhFF?eventID=" + this.props.event.id, 
+      title: "Let's Play!",
+    });
   }
 
   _modifyEvent = () => {
@@ -163,7 +182,7 @@ export default class EventActions extends React.Component {
     if (this.state.active) {
       Animated.spring(this.state.top, {toValue: -height * 0.5, tension: 60, friction: 6, velocity: 300}).start();
     } else {
-      let comp = (this.props.event.completed || this.props.going) ? -height * 0.2 : -height * 0.05;
+      let comp = (this.props.event.completed || this.props.going) ? -height * 0.15 : -height * 0.02;
       Animated.spring(this.state.top, {toValue: comp, tension: 60, friction: 6, velocity: 300}).start();
     }
 

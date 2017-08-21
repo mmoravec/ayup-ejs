@@ -28,7 +28,8 @@ export default class EventGuests extends React.Component {
   };
 
   render() {
-    let i = -1;
+    let i = 0;
+    let host = this.props.selectedEvent.host;
     return (
       <View>
         <ScrollView style={styles.scrollview} horizontal>
@@ -40,6 +41,13 @@ export default class EventGuests extends React.Component {
                 style={{ height: 50, width: 50, margin: 5 }}
               />
             </TouchableOpacity>}
+          <GuestPic
+            key={host.name}
+            profilePic={host.profile_pic}
+            opacity={1}
+            user={host}
+            selectPic={this.props.guestClick.bind(this, i)}
+          />
           {this.props.selectedEvent.going.map(g => {
             i++;
             return (

@@ -130,7 +130,7 @@ export default class GuestInfo extends React.Component {
 
   _renderGuests = () => {
     let event = this.props.event;
-    let joined = event.going.concat(event.requested, event.invited);
+    let joined = [this.props.event.host].concat(event.going, event.requested, event.invited);
     return joined.map(g => {
       return (
         <Card

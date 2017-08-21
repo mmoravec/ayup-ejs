@@ -49,7 +49,7 @@ export default class FriendSelector extends React.Component {
     keys: [
       {
         name: 'name',
-        weight: 0.4,
+        weight: 0.6,
       },
       {
         name: 'first_name',

@@ -355,8 +355,7 @@ function* loadEvent(action) {
 }
 
 function* modifyEvent(action) {
-  const event = yield select(state => state.events);
-
+  const event = yield select(state => state.events.selectedEvent);
   let form = Form.toJS();
   form = transformEvent(event, form);
   form.friends.shown = false;
@@ -453,7 +452,7 @@ function pushEvents(events) {
       map[latlong].push(event);
     } else {
       let temp = map[latlong];
-      map[latlong] = [temp];
+      map[latlong] = [temp, event];
     }
     return event;
   });
